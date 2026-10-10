@@ -85,6 +85,22 @@
     }
   }
 
+  /* ---------- Sponsorstripe under menyen ---------- */
+  .sponsorstripe {
+    background: #fff; border-bottom: 1px solid var(--kant);
+    display: flex; align-items: center; justify-content: center; gap: 28px; padding: 12px 20px;
+  }
+  .stripe-tekst { font-size: 11px; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; color: var(--dempet); white-space: nowrap; }
+  .stripe-logoer { display: flex; align-items: center; gap: 40px; }
+  .stripe-logoer a { display: block; line-height: 0; transition: transform .2s, opacity .2s; }
+  .stripe-logoer a:hover { transform: translateY(-2px); opacity: .8; }
+  .stripe-logoer img { height: 40px; width: auto; max-width: 170px; object-fit: contain; }
+  @media (max-width: 700px) {
+    .sponsorstripe { flex-direction: column; gap: 8px; padding: 10px 12px 12px; }
+    .stripe-logoer { gap: 22px; }
+    .stripe-logoer img { height: 30px; max-width: 28vw; }
+  }
+
   /* ---------- Toppseksjon ---------- */
   .hero {
     position: relative; color: #fff;
@@ -473,6 +489,11 @@
   </div>
 </header>
 
+<div class="sponsorstripe" id="sponsorstripe" hidden>
+  <span class="stripe-tekst">Våre sponsorer</span>
+  <div class="stripe-logoer" id="stripe-logoer"></div>
+</div>
+
 <div class="hero" id="hero">
   <div class="hero-innhold">
     <div class="hero-tekst">
@@ -618,7 +639,7 @@
   <button class="bla neste" onclick="blaBilde(1)" aria-label="Neste bilde">›</button>
 </div>
 
-<script src="innhold.js?v=1791643332"></script>
+<script src="innhold.js?v=1791645514"></script>
 <script>
 const ANTALL_NYHETER_FORST = 6;
 
@@ -858,6 +879,11 @@ function visSponsorer(s, forbund, epost) {
       ? `<a class="sponsor" href="${esc(p.lenke)}" target="_blank" rel="noopener">${indre}</a>`
       : `<div class="sponsor">${indre}</div>`;
   }).join("");
+  if ((s || []).length) {
+    $("stripe-logoer").innerHTML = s.map(p =>
+      `<a href="${esc(p.lenke || "#sponsorer")}"${p.lenke ? ' target="_blank" rel="noopener"' : ""} title="${esc(p.navn)}"><img src="${esc(p.logo)}" alt="${esc(p.navn)}"></a>`).join("");
+    $("sponsorstripe").hidden = false;
+  }
   if (forbund) $("forbund").innerHTML = `<img src="${esc(forbund.logo)}" alt="${esc(forbund.navn)}" loading="lazy"><span>Medlem av<br><strong>${esc(forbund.navn)}</strong></span>`;
   if (epost) $("bli-sponsor").href = "mailto:" + epost + "?subject=" + encodeURIComponent("Sponsor for Figgjo Bordtennisklubb");
   else $("bli-sponsor").hidden = true;
