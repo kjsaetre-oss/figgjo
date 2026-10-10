@@ -277,6 +277,29 @@
   .personer.kompakt .initialer { font-size: 44px; }
   .personer.kompakt .initialer span { width: 100px; height: 100px; }
 
+  /* ---------- Sponsorer ---------- */
+  section.sponsorband {
+    position: relative; overflow: hidden; color: #fff;
+    background:
+      radial-gradient(900px 500px at 100% 0%, color-mix(in srgb, var(--farge) 45%, transparent), transparent 60%),
+      linear-gradient(160deg, var(--natt), #1d2027);
+  }
+  .sponsorband h2 { color: #fff; }
+  .sponsor-intro { color: rgba(255,255,255,.75); font-size: 18px; margin: -16px 0 32px; max-width: 620px; }
+  .sponsorer { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 20px; }
+  .sponsor {
+    display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 14px;
+    background: #fff; border-radius: var(--radius); padding: 34px 26px 22px; min-height: 210px;
+    text-decoration: none; color: var(--dempet); box-shadow: 0 10px 30px rgba(0,0,0,.25);
+    transition: transform .25s, box-shadow .25s;
+  }
+  a.sponsor:hover { transform: translateY(-4px); box-shadow: 0 18px 40px rgba(0,0,0,.35); }
+  .sponsor img { max-width: 82%; max-height: 110px; width: auto; height: auto; object-fit: contain; flex: 1 1 auto; }
+  .sponsor .sponsornavn { font-size: 13px; font-weight: 600; letter-spacing: .04em; }
+  .sponsor-bunn { display: flex; align-items: center; justify-content: space-between; gap: 20px; flex-wrap: wrap; margin-top: 36px; }
+  .forbund { display: flex; align-items: center; gap: 14px; color: rgba(255,255,255,.75); font-size: 14px; }
+  .forbund img { height: 54px; width: auto; background: #fff; border-radius: 10px; padding: 6px 10px; }
+
   /* ---------- Priser ---------- */
   .priser { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 22px; margin-bottom: 32px; }
   .pris {
@@ -353,6 +376,7 @@
       <a href="#medlem">Bli medlem</a>
       <a href="#om">Om oss</a>
       <a href="#styret">Styret</a>
+      <a href="#sponsorer">Sponsorer</a>
       <a href="#kontakt">Kontakt</a>
     </nav>
   </div>
@@ -461,6 +485,18 @@
   </div>
 </section>
 
+<section id="sponsorer" class="sponsorband">
+  <div class="innhold">
+    <div class="seksjonstopp"><span class="eyebrow">Takk for støtten</span><h2>Våre sponsorer</h2></div>
+    <p class="sponsor-intro">Disse bedriftene gjør det mulig for oss å være en klubb for alle. Tusen takk! 🏓</p>
+    <div class="sponsorer" id="sponsorliste"></div>
+    <div class="sponsor-bunn">
+      <div class="forbund" id="forbund"></div>
+      <a class="knapp" id="bli-sponsor">Vil bedriften din støtte oss? Ta kontakt →</a>
+    </div>
+  </div>
+</section>
+
 <section id="kontakt">
   <div class="innhold">
     <div class="seksjonstopp"><span class="eyebrow">Ta kontakt</span><h2>Kontakt</h2></div>
@@ -480,7 +516,7 @@
   <button class="bla neste" onclick="blaBilde(1)" aria-label="Neste bilde">›</button>
 </div>
 
-<script src="innhold.js?v=1791642352"></script>
+<script src="innhold.js?v=1791642698"></script>
 <script>
 const ANTALL_NYHETER_FORST = 6;
 
@@ -714,6 +750,18 @@ function visPersoner(id, personer) {
     </div>`).join("") : '<p class="tom">Kommer snart.</p>';
 }
 
+function visSponsorer(s, forbund, epost) {
+  $("sponsorliste").innerHTML = (s || []).map(p => {
+    const indre = `<img src="${esc(p.logo)}" alt="${esc(p.navn)}" loading="lazy"><span class="sponsornavn">${esc(p.navn)}</span>`;
+    return p.lenke
+      ? `<a class="sponsor" href="${esc(p.lenke)}" target="_blank" rel="noopener">${indre}</a>`
+      : `<div class="sponsor">${indre}</div>`;
+  }).join("");
+  if (forbund) $("forbund").innerHTML = `<img src="${esc(forbund.logo)}" alt="${esc(forbund.navn)}" loading="lazy"><span>Medlem av<br><strong>${esc(forbund.navn)}</strong></span>`;
+  if (epost) $("bli-sponsor").href = "mailto:" + epost + "?subject=" + encodeURIComponent("Sponsor for Figgjo Bordtennisklubb");
+  else $("bli-sponsor").hidden = true;
+}
+
 visKlubbinfo(INNHOLD);
 visNyheter(INNHOLD.nyheter);
 visTrening(INNHOLD.treningstider);
@@ -721,6 +769,7 @@ visPriser(INNHOLD.priser);
 visSerielag(INNHOLD.serielag);
 visPersoner("trenerliste", INNHOLD.trenere);
 visPersoner("styreliste", INNHOLD.styret);
+visSponsorer(INNHOLD.sponsorer, INNHOLD.forbund, INNHOLD.epost);
 visGalleri(INNHOLD.galleri);
 visKampfilter();
 tegnKamper(6);

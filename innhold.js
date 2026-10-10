@@ -97,6 +97,14 @@ const INNHOLD = {
     { navn: "Egil Klungtveit", rolle: "Styremedlem", bilde: "", tekst: "" },
   ],
 
+  // Sponsorer. lenke er valgfri
+  sponsorer: [
+    { navn: "Kongeparken Camping", logo: "bilder/sponsorer/kongeparken.png", lenke: "" },
+    { navn: "Metabolsktesting.no", logo: "bilder/sponsorer/metabolsktesting.png", lenke: "https://metabolsktesting.no" },
+    { navn: "HEAD Energy", logo: "bilder/sponsorer/head-energy.png", lenke: "" },
+  ],
+  forbund: { navn: "Norges Bordtennisforbund", logo: "bilder/sponsorer/nbtf.png", lenke: "" },
+
   // Bildegalleri. Album med tittel, dato og bilder (bilde + valgfri tekst)
   // Eksempel: { tittel: "Klubbmesterskap", dato: "2026-10-05", bilder: [{ bilde: "bilder/km-1.jpg", tekst: "Finalen" }] }
   galleri: [
