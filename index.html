@@ -516,7 +516,7 @@
   <button class="bla neste" onclick="blaBilde(1)" aria-label="Neste bilde">›</button>
 </div>
 
-<script src="innhold.js?v=1791642930"></script>
+<script src="innhold.js?v=1791642939"></script>
 <script>
 const ANTALL_NYHETER_FORST = 6;
 
@@ -690,7 +690,6 @@ function tegnKamper(antall) {
     const hjemme = erFiggjo(k.hjemme);
     const d = k.datoObj;
     const ukedag = d.toLocaleDateString("nb-NO", { weekday: "long" });
-    const lagnavn = n => erFiggjo(n) ? `<b>${esc(n)}</b>` : esc(n);
     return `<div class="kamp">
       <div class="dato"><span class="dag">${d.getDate()}</span><span class="mnd">${d.toLocaleDateString("nb-NO", { month: "short" }).replace(".", "")}</span></div>
       <div>
