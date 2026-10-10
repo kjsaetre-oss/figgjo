@@ -492,7 +492,8 @@
     .serietabell .lagnavn { gap: 9px; }
     .serietabell .poeng { min-width: 34px; height: 28px; font-size: 15px; padding: 0 8px; }
     .tabellkort-bunn { padding: 12px 14px; }
-    .kamp .stilling { grid-column: 2; justify-self: start; font-size: 17px; }
+    .kamp.spilt { grid-template-columns: 60px 1fr auto; }
+    .kamp .stilling { font-size: 17px; padding: 5px 11px; }
   }
 
   /* ---------- Priser ---------- */
@@ -746,8 +747,8 @@
   <button class="bla neste" onclick="blaBilde(1)" aria-label="Neste bilde">›</button>
 </div>
 
-<script src="innhold.js?v=1791646559"></script>
-<script src="serie.js?v=1791646559"></script>
+<script src="innhold.js?v=1791646681"></script>
+<script src="serie.js?v=1791646681"></script>
 <script>
 const ANTALL_NYHETER_FORST = 6;
 
@@ -931,7 +932,7 @@ function tegnResultater() {
     const [h, b] = k.resultat.split("-").map(Number);
     const vi = hjemme ? h : b, de = hjemme ? b : h;
     const d = k.datoObj;
-    return `<div class="kamp">
+    return `<div class="kamp spilt">
       <div class="dato"><span class="dag">${d.getDate()}</span><span class="mnd">${d.toLocaleDateString("nb-NO", { month: "short" }).replace(".", "")}</span></div>
       <div>
         <div class="lagene">${esc(hjemme ? k.borte : k.hjemme)}</div>
@@ -957,7 +958,7 @@ function visTabell() {
   const dato = lesDato(SERIEDATA.oppdatert);
   $("tabelltittel").textContent = d.divisjon;
   $("tabellstatus").textContent = startet
-    ? (dato ? "Oppdatert " + dato.toLocaleDateString("nb-NO", { day: "numeric", month: "short" }).replace(".", "") : "")
+    ? (dato ? "Oppdatert " + dato.toLocaleDateString("nb-NO", { day: "numeric", month: "short" }).replace(/\./g, "") : "")
     : "Serien har ikke startet";
   $("tabellstatus").hidden = !$("tabellstatus").textContent;
 
