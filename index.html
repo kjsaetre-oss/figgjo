@@ -409,6 +409,92 @@
   .avslor { opacity: 0; transform: translateY(22px); transition: opacity .7s ease, transform .7s cubic-bezier(.2,.7,.2,1); }
   .avslor.synlig { opacity: 1; transform: none; }
 
+  /* ---------- Serietabell og resultater ---------- */
+  #tabellblokk, #resultatblokk { margin-bottom: 56px; }
+  .tabellkort { background: #fff; border-radius: 22px; overflow: hidden; box-shadow: 0 2px 4px rgba(20,22,27,.05), 0 20px 50px rgba(20,22,27,.12); }
+  .tabellkort-topp {
+    position: relative; overflow: hidden; color: #fff; padding: 22px 26px;
+    display: flex; align-items: center; justify-content: space-between; gap: 16px; flex-wrap: wrap;
+    background:
+      radial-gradient(500px 220px at 100% 0%, color-mix(in srgb, var(--farge) 60%, transparent), transparent 70%),
+      linear-gradient(135deg, var(--natt), #23262e);
+  }
+  .tabellkort-topp::after {
+    content: ""; position: absolute; right: -30px; bottom: -60px; width: 150px; height: 150px; border-radius: 50%;
+    border: 2px solid rgba(255,255,255,.08); box-shadow: 0 0 0 26px rgba(255,255,255,.03);
+  }
+  .tk-etikett { display: block; font-size: 11px; font-weight: 700; letter-spacing: .16em; text-transform: uppercase; color: color-mix(in srgb, var(--farge) 60%, #fff); }
+  .tabellkort-topp h3 { margin: 2px 0 0; font-size: 24px; color: #fff; }
+  .tk-status {
+    position: relative; z-index: 1; font-size: 13px; font-weight: 600; padding: 6px 14px; border-radius: 999px;
+    background: rgba(255,255,255,.1); border: 1px solid rgba(255,255,255,.16); white-space: nowrap;
+  }
+  .tabell-rull { overflow-x: auto; }
+  .serietabell { width: 100%; border-collapse: separate; border-spacing: 0; }
+  .serietabell th {
+    position: static; padding: 14px 10px; text-align: center; background: #fafafb; border-bottom: 1px solid var(--kant);
+    font-size: 11px; font-weight: 700; letter-spacing: .1em; color: var(--dempet);
+  }
+  .serietabell td { padding: 12px 10px; text-align: center; white-space: nowrap; border-bottom: 1px solid var(--kant); font-variant-numeric: tabular-nums; transition: background .15s; }
+  .serietabell tbody tr:last-child td { border-bottom: 0; }
+  .serietabell tbody tr:hover td { background: #fafafb; }
+  .serietabell th:first-child, .serietabell td:first-child { padding-left: 22px; width: 56px; }
+  .serietabell th:last-child, .serietabell td:last-child { padding-right: 22px; }
+  .serietabell th:nth-child(2), .serietabell td:nth-child(2) { text-align: left; width: 100%; white-space: normal; }
+  .serietabell .plass {
+    display: inline-grid; place-items: center; width: 30px; height: 30px; border-radius: 50%;
+    background: var(--flate); color: var(--dempet); font-weight: 700; font-size: 13px;
+  }
+  .serietabell tr.topp .plass { background: linear-gradient(135deg, #f6d365, #e0a81c); color: #4a3500; }
+  .serietabell .lagnavn { display: flex; align-items: center; gap: 12px; font-weight: 600; }
+  .serietabell .lagmerke {
+    flex: none; display: grid; place-items: center; width: 34px; height: 34px; border-radius: 11px;
+    font-family: "Outfit", sans-serif; font-weight: 800; font-size: 15px; color: #fff; background: #9aa1ad;
+  }
+  .serietabell .dempet { color: var(--dempet); }
+  .serietabell .poeng {
+    display: inline-grid; place-items: center; min-width: 40px; height: 32px; padding: 0 10px; border-radius: 10px;
+    font-family: "Outfit", sans-serif; font-weight: 800; font-size: 17px; background: var(--natt); color: #fff;
+  }
+  /* Figgjo-raden */
+  .serietabell tr.oss td, .serietabell tbody tr.oss:hover td { background: color-mix(in srgb, var(--farge) 7%, #fff); }
+  .serietabell tr.oss td:first-child { box-shadow: inset 4px 0 0 var(--farge); }
+  .serietabell tr.oss .lagnavn { font-weight: 800; color: var(--farge-mork); }
+  .serietabell tr.oss .lagmerke { background: linear-gradient(135deg, var(--farge), var(--farge-mork)); box-shadow: 0 4px 12px color-mix(in srgb, var(--farge) 35%, transparent); }
+  .serietabell tr.oss .poeng { background: var(--farge); }
+  .serietabell tr.oss .plass { background: #fff; color: var(--farge-mork); }
+  .tabellkort-bunn {
+    display: flex; justify-content: space-between; gap: 8px 20px; flex-wrap: wrap;
+    padding: 14px 22px; background: #fafafb; border-top: 1px solid var(--kant); font-size: 12px; color: var(--dempet);
+  }
+  .tabellkort-bunn a { font-weight: 600; text-decoration: none; }
+  .kamp .stilling {
+    font-family: "Outfit", sans-serif; font-weight: 800; font-size: 20px; white-space: nowrap;
+    padding: 6px 14px; border-radius: 12px; background: var(--flate); color: var(--tekst);
+  }
+  .kamp .stilling.seier { background: #e4f5ea; color: #17663a; }
+  .kamp .stilling.tap { background: #fde8ea; color: #9a1b2a; }
+  @media (max-width: 600px) {
+    .tabellkort { border-radius: 18px; }
+    .tabellkort-topp { padding: 18px 18px; }
+    .tabellkort-topp h3 { font-size: 20px; }
+    .serietabell { display: table; }
+    .serietabell thead { display: table-header-group; }
+    .serietabell tbody { display: table-row-group; }
+    .serietabell tr { display: table-row; padding: 0; border: 0; }
+    .serietabell th, .serietabell td { display: table-cell; width: auto; padding: 11px 6px; font-size: 14px; border-bottom: 1px solid var(--kant); }
+    .serietabell th:first-child, .serietabell td:first-child { padding-left: 12px; width: 40px; }
+    .serietabell th:last-child, .serietabell td:last-child { padding-right: 12px; }
+    .serietabell th:nth-child(2), .serietabell td:nth-child(2) { width: 100%; }
+    .serietabell .bred { display: none; }
+    .serietabell .plass { width: 26px; height: 26px; font-size: 12px; }
+    .serietabell .lagmerke { width: 28px; height: 28px; border-radius: 9px; font-size: 13px; }
+    .serietabell .lagnavn { gap: 9px; }
+    .serietabell .poeng { min-width: 34px; height: 28px; font-size: 15px; padding: 0 8px; }
+    .tabellkort-bunn { padding: 12px 14px; }
+    .kamp .stilling { grid-column: 2; justify-self: start; font-size: 17px; }
+  }
+
   /* ---------- Priser ---------- */
   .priser { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 22px; margin-bottom: 32px; }
   .pris {
@@ -546,6 +632,27 @@
     <div class="seksjonstopp"><span class="eyebrow">Sesongen 2026/27</span><h2>Serielagene</h2></div>
     <p class="forklaring"><span class="kaptein-tegn">C</span> = kaptein</p>
     <div class="lagkort" id="lagkort"></div>
+    <div id="tabellblokk" hidden>
+      <div class="lagfilter" id="tabellfaner"></div>
+      <div class="tabellkort">
+        <div class="tabellkort-topp">
+          <div>
+            <span class="tk-etikett">Tabell</span>
+            <h3 id="tabelltittel"></h3>
+          </div>
+          <span class="tk-status" id="tabellstatus"></span>
+        </div>
+        <div class="tabell-rull"><table class="serietabell" id="serietabell"></table></div>
+        <div class="tabellkort-bunn">
+          <span class="tk-forklaring">K = kamper · V = vunnet · U = uavgjort · T = tapt · P = poeng</span>
+          <span id="tabellkilde"></span>
+        </div>
+      </div>
+    </div>
+    <div id="resultatblokk" hidden>
+      <h3 class="kamptittel">Siste resultater</h3>
+      <div class="kamper" id="resultater"></div>
+    </div>
     <h3 class="kamptittel">Kommende kamper</h3>
     <div class="lagfilter" id="lagfilter"></div>
     <div class="kamper" id="kamper"></div>
@@ -639,7 +746,8 @@
   <button class="bla neste" onclick="blaBilde(1)" aria-label="Neste bilde">›</button>
 </div>
 
-<script src="innhold.js?v=1791645514"></script>
+<script src="innhold.js?v=1791646559"></script>
+<script src="serie.js?v=1791646559"></script>
 <script>
 const ANTALL_NYHETER_FORST = 6;
 
@@ -798,16 +906,81 @@ function visSerielag(lag) {
 }
 
 let valgtLag = "Alle";
-function kommendeKamper() {
+const SERIEDATA = (typeof SERIE !== "undefined" && SERIE.lag) ? SERIE : { oppdatert: "", lag: {} };
+
+// Kamper fra bordtennislive (serie.js) + kamper lagt inn for hånd i innhold.js for lag som ikke ligger der
+function alleKamper() {
+  const fraSerie = Object.entries(SERIEDATA.lag).flatMap(([lag, d]) => (d.kamper || []).map(k => ({ ...k, lag })));
+  const forHand = (INNHOLD.kamper || []).filter(k => !SERIEDATA.lag[k.lag]);
+  return [...fraSerie, ...forHand].map(k => ({ ...k, datoObj: lesDato(k.dato) })).filter(k => k.datoObj);
+}
+
+function kommendeKamper(lag) {
   const idag = new Date(); idag.setHours(0, 0, 0, 0);
-  return (INNHOLD.kamper || [])
-    .map(k => ({ ...k, datoObj: lesDato(k.dato) }))
-    .filter(k => k.datoObj && k.datoObj >= idag && (valgtLag === "Alle" || k.lag === valgtLag))
+  return alleKamper()
+    .filter(k => !k.resultat && k.datoObj >= idag && (!lag || lag === "Alle" || k.lag === lag))
     .sort((a, b) => a.datoObj - b.datoObj || a.kl.localeCompare(b.kl));
 }
 
+function tegnResultater() {
+  const spilt = alleKamper().filter(k => k.resultat)
+    .sort((a, b) => b.datoObj - a.datoObj || b.kl.localeCompare(a.kl)).slice(0, 6);
+  $("resultatblokk").hidden = !spilt.length;
+  $("resultater").innerHTML = spilt.map(k => {
+    const hjemme = /figgjo/i.test(k.hjemme);
+    const [h, b] = k.resultat.split("-").map(Number);
+    const vi = hjemme ? h : b, de = hjemme ? b : h;
+    const d = k.datoObj;
+    return `<div class="kamp">
+      <div class="dato"><span class="dag">${d.getDate()}</span><span class="mnd">${d.toLocaleDateString("nb-NO", { month: "short" }).replace(".", "")}</span></div>
+      <div>
+        <div class="lagene">${esc(hjemme ? k.borte : k.hjemme)}</div>
+        <div class="info">${esc(k.lag)} · ${hjemme ? "Hjemme" : "Borte"} · ${esc(k.sted)}</div>
+      </div>
+      <span class="stilling ${vi > de ? "seier" : vi < de ? "tap" : ""}">${vi}–${de}</span>
+    </div>`;
+  }).join("");
+}
+
+let valgtTabell = null;
+function visTabell() {
+  const lag = Object.keys(SERIEDATA.lag).filter(l => (SERIEDATA.lag[l].tabell || []).length).sort();
+  $("tabellblokk").hidden = !lag.length;
+  if (!lag.length) return;
+  if (!lag.includes(valgtTabell)) valgtTabell = lag[0];
+  const d = SERIEDATA.lag[valgtTabell];
+  $("tabellfaner").hidden = lag.length < 2;
+  $("tabellfaner").innerHTML = lag.map(l => `<button class="${l === valgtTabell ? "valgt" : ""}" data-lag="${esc(l)}">${esc(l)}</button>`).join("");
+  $("tabellfaner").onclick = e => { const b = e.target.closest("button"); if (b) { valgtTabell = b.dataset.lag; visTabell(); } };
+
+  const startet = d.tabell.some(r => +r.k > 0);
+  const dato = lesDato(SERIEDATA.oppdatert);
+  $("tabelltittel").textContent = d.divisjon;
+  $("tabellstatus").textContent = startet
+    ? (dato ? "Oppdatert " + dato.toLocaleDateString("nb-NO", { day: "numeric", month: "short" }).replace(".", "") : "")
+    : "Serien har ikke startet";
+  $("tabellstatus").hidden = !$("tabellstatus").textContent;
+
+  // Fast farge per lag ut fra navnet, så merkene er like hver gang
+  const farger = ["#3b6fd4", "#0f8a7e", "#7a52c7", "#c2681b", "#2f7d3b", "#b8457a", "#4a5568", "#1f7fa8"];
+  const farge = navn => farger[[...navn].reduce((s, t) => s + t.charCodeAt(0), 0) % farger.length];
+
+  $("serietabell").innerHTML = `<thead><tr><th>#</th><th>LAG</th><th title="Kamper spilt">K</th><th title="Vunnet">V</th><th title="Uavgjort">U</th><th title="Tapt">T</th><th class="bred" title="Enkeltkamper vunnet–tapt">KAMPER</th><th class="bred" title="Sett vunnet–tapt">SETT</th><th title="Poeng">P</th></tr></thead><tbody>` +
+    d.tabell.map((r, i) => {
+      const oss = /figgjo/i.test(r.lag);
+      const plass = /^\d+$/.test(r.plass) ? r.plass : (startet ? i + 1 : "–");
+      return `<tr class="${oss ? "oss" : ""}${startet && String(plass) === "1" ? " topp" : ""}">
+        <td><span class="plass">${plass}</span></td>
+        <td><span class="lagnavn"><span class="lagmerke"${oss ? "" : ` style="background:${farge(r.lag)}"`}>${esc(r.lag[0])}</span>${esc(r.lag)}</span></td>
+        <td>${esc(r.k)}</td><td>${esc(r.v)}</td><td>${esc(r.u)}</td><td>${esc(r.t)}</td>
+        <td class="bred dempet">${esc(r.kamper)}</td><td class="bred dempet">${esc(r.sett)}</td>
+        <td><span class="poeng">${esc(r.p)}</span></td></tr>`;
+    }).join("") + "</tbody>";
+  $("tabellkilde").innerHTML = `Kilde: <a href="${esc(d.kilde)}" target="_blank" rel="noopener">bordtennislive.no ↗</a>`;
+}
+
 function tegnKamper(antall) {
-  const kamper = kommendeKamper();
+  const kamper = kommendeKamper(valgtLag);
   const erFiggjo = navn => /figgjo/i.test(navn);
   $("kamper").innerHTML = kamper.length ? kamper.slice(0, antall).map(k => {
     const hjemme = erFiggjo(k.hjemme);
@@ -826,7 +999,7 @@ function tegnKamper(antall) {
 }
 
 function visKampfilter() {
-  const lag = ["Alle", ...new Set((INNHOLD.kamper || []).map(k => k.lag))];
+  const lag = ["Alle", ...[...new Set(alleKamper().map(k => k.lag))].sort()];
   if (lag.length <= 2) { $("lagfilter").hidden = true; return; }
   $("lagfilter").innerHTML = lag.map(l => `<button class="${l === valgtLag ? "valgt" : ""}" data-lag="${esc(l)}">${esc(l)}</button>`).join("");
   $("lagfilter").onclick = e => {
@@ -908,9 +1081,7 @@ function visTopp(s) {
   if (s.utmerkelse) { $("flyt-tekst").innerHTML = `<b>${esc(s.utmerkelse[0])}</b><br>${esc(s.utmerkelse[1] || "")}`; $("flyt-merke").hidden = false; }
 
   const idag = new Date(); idag.setHours(0, 0, 0, 0);
-  const neste = (s.kamper || []).map(k => ({ ...k, datoObj: lesDato(k.dato) }))
-    .filter(k => k.datoObj && k.datoObj >= idag)
-    .sort((a, b) => a.datoObj - b.datoObj || a.kl.localeCompare(b.kl))[0];
+  const neste = kommendeKamper()[0];
   if (neste) {
     const hjemme = /figgjo/i.test(neste.hjemme);
     const d = neste.datoObj.toLocaleDateString("nb-NO", { weekday: "short", day: "numeric", month: "short" }).replace(/\./g, "");
@@ -956,7 +1127,7 @@ function tellOpp(el) {
 
 function startAnimasjoner() {
   if (matchMedia("(prefers-reduced-motion: reduce)").matches || !("IntersectionObserver" in window)) return;
-  const velg = ".seksjonstopp, .nyhet, .lag, .kamp, .person, .pris, .sponsor, .tilbud-kort, .bildenett figure, .tabell-boks, .tall, .kontakt dl, .kart";
+  const velg = ".seksjonstopp, .nyhet, .lag, .kamp, .person, .pris, .sponsor, .tilbud-kort, .bildenett figure, .tabell-boks, .tall, .kontakt dl, .kart, .tabellkort";
   const obs = new IntersectionObserver(oppf => oppf.forEach(o => {
     if (!o.isIntersecting) return;
     o.target.classList.add("synlig"); obs.unobserve(o.target);
@@ -981,6 +1152,8 @@ visPersoner("trenerliste", INNHOLD.trenere);
 visPersoner("styreliste", INNHOLD.styret);
 visSponsorer(INNHOLD.sponsorer, INNHOLD.forbund, INNHOLD.epost);
 visGalleri(INNHOLD.galleri);
+visTabell();
+tegnResultater();
 visKampfilter();
 tegnKamper(6);
 

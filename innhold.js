@@ -70,38 +70,11 @@ const INNHOLD = {
     { navn: "Figgjo 4", divisjon: "5. divisjon", avdeling: "", lagtype: "3-mannslag", spillere: ["Kjell Roar Bjørnsen (kaptein)", "Alexander Rosnes Jakobsen", "Elias Bøe", "Noah Klev"] },
   ],
 
-  // Seriekamper. Bare kommende kamper vises på siden. Dato: "ÅÅÅÅ-MM-DD"
-  kamper: [
-    { lag: "Figgjo 1", dato: "2026-10-24", kl: "13.00", hjemme: "Rakkestad RK", borte: "Figgjo BTK", sted: "Skien" },
-    { lag: "Figgjo 1", dato: "2026-10-24", kl: "17.00", hjemme: "Fornebu BTK 3", borte: "Figgjo BTK", sted: "Skien" },
-    { lag: "Figgjo 1", dato: "2026-10-25", kl: "10.00", hjemme: "Kobra BTK", borte: "Figgjo BTK", sted: "Skien" },
-    { lag: "Figgjo 1", dato: "2026-10-25", kl: "14.00", hjemme: "Skien BTK", borte: "Figgjo BTK", sted: "Skien" },
-    { lag: "Figgjo 1", dato: "2026-12-05", kl: "13.00", hjemme: "Rosseland BTK", borte: "Figgjo BTK", sted: "Rosseland" },
-    { lag: "Figgjo 1", dato: "2026-12-05", kl: "17.00", hjemme: "Figgjo BTK", borte: "Haugesund BTK", sted: "Rosseland" },
-    { lag: "Figgjo 1", dato: "2026-12-06", kl: "11.00", hjemme: "Figgjo BTK", borte: "Trondheim BTK", sted: "Rosseland" },
-    { lag: "Figgjo 1", dato: "2027-01-28", kl: "18.00", hjemme: "Figgjo BTK", borte: "Rosseland BTK", sted: "Figgjohallen" },
-    { lag: "Figgjo 1", dato: "2027-01-30", kl: "13.00", hjemme: "Trondheim BTK", borte: "Figgjo BTK", sted: "Trondheim" },
-    { lag: "Figgjo 1", dato: "2027-01-30", kl: "17.00", hjemme: "Haugesund BTK", borte: "Figgjo BTK", sted: "Trondheim" },
-    { lag: "Figgjo 1", dato: "2027-04-03", kl: "14.00", hjemme: "Figgjo BTK", borte: "Rakkestad RK", sted: "Figgjohallen" },
-    { lag: "Figgjo 1", dato: "2027-04-03", kl: "18.00", hjemme: "Figgjo BTK", borte: "Fornebu BTK 3", sted: "Figgjohallen" },
-    { lag: "Figgjo 1", dato: "2027-04-04", kl: "10.00", hjemme: "Figgjo BTK", borte: "Kobra BTK", sted: "Figgjohallen" },
-    { lag: "Figgjo 1", dato: "2027-04-04", kl: "14.00", hjemme: "Figgjo BTK", borte: "Skien BTK", sted: "Figgjohallen" },
+  // Seriekamper for Figgjo 1 og 2 hentes automatisk fra bordtennislive.no (serie.js).
+  // Her legges bare kamper for lag som IKKE ligger der (Figgjo 3 og 4). Dato: "ÅÅÅÅ-MM-DD"
+  // Eksempel: { lag: "Figgjo 3", dato: "2026-11-14", kl: "12.00", hjemme: "Figgjo BTK 3", borte: "Sola BTK", sted: "Figgjohallen", resultat: "" }
+  kamper: [],
 
-    { lag: "Figgjo 2", dato: "2026-10-24", kl: "16.00", hjemme: "Rosseland BTK 2", borte: "Figgjo BTK 2", sted: "Rosseland" },
-    { lag: "Figgjo 2", dato: "2026-10-25", kl: "10.00", hjemme: "Figgjo BTK 2", borte: "Stavanger BTK", sted: "Figgjohallen" },
-    { lag: "Figgjo 2", dato: "2026-11-07", kl: "13.00", hjemme: "Stord BTK 3", borte: "Figgjo BTK 2", sted: "Stord" },
-    { lag: "Figgjo 2", dato: "2026-11-07", kl: "17.00", hjemme: "Haugesund BTK 2", borte: "Figgjo BTK 2", sted: "Haugesund" },
-    { lag: "Figgjo 2", dato: "2026-12-05", kl: "13.00", hjemme: "Bergen PIL", borte: "Figgjo BTK 2", sted: "Bergen" },
-    { lag: "Figgjo 2", dato: "2026-12-05", kl: "17.00", hjemme: "Sp.kl Heros", borte: "Figgjo BTK 2", sted: "Bergen" },
-    { lag: "Figgjo 2", dato: "2026-12-06", kl: "10.00", hjemme: "Laksevåg BTK 3", borte: "Figgjo BTK 2", sted: "Bergen" },
-    { lag: "Figgjo 2", dato: "2027-01-30", kl: "17.00", hjemme: "Figgjo BTK 2", borte: "Rosseland BTK 2", sted: "Figgjohallen" },
-    { lag: "Figgjo 2", dato: "2027-01-31", kl: "12.00", hjemme: "Stavanger BTK", borte: "Figgjo BTK 2", sted: "Stavanger" },
-    { lag: "Figgjo 2", dato: "2027-03-07", kl: "13.00", hjemme: "Figgjo BTK 2", borte: "Laksevåg BTK 3", sted: "Figgjohallen" },
-    { lag: "Figgjo 2", dato: "2027-03-07", kl: "17.00", hjemme: "Figgjo BTK 2", borte: "Sp.kl Heros", sted: "Figgjohallen" },
-    { lag: "Figgjo 2", dato: "2027-03-08", kl: "10.00", hjemme: "Figgjo BTK 2", borte: "Bergen PIL", sted: "Figgjohallen" },
-    { lag: "Figgjo 2", dato: "2027-04-03", kl: "17.00", hjemme: "Figgjo BTK 2", borte: "Haugesund BTK 2", sted: "Figgjohallen" },
-    { lag: "Figgjo 2", dato: "2027-04-04", kl: "10.00", hjemme: "Figgjo BTK 2", borte: "Stord BTK 3", sted: "Figgjohallen" },
-  ],
 
   // Fotograf som vises på alle bilder, med mindre bildet har sin egen: { bilde: "...", fotograf: "Navn" }
   fotograf: "Kjell Roar Bjørnsen",
