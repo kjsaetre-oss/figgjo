@@ -199,7 +199,7 @@
     transition: transform .25s, box-shadow .25s;
   }
   .nyhet:hover { transform: translateY(-4px); box-shadow: var(--skygge-hover); }
-  .nyhet .bilde { aspect-ratio: 16 / 10; object-fit: cover; width: 100%; cursor: zoom-in; background: var(--flate); }
+  .nyhet .bilde { aspect-ratio: 16 / 10; object-fit: cover; object-position: center 25%; width: 100%; cursor: zoom-in; background: var(--flate); }
   .nyhet .ingen-bilde {
     height: 8px; background: linear-gradient(90deg, var(--farge), var(--farge-mork));
   }
@@ -212,7 +212,7 @@
   }
   .nyhet h3 { margin: 6px 0 10px; font-size: 22px; line-height: 1.25; }
   .nyhet p { margin: 0; white-space: pre-line; color: #3c4048; }
-  .nyhet p.kort { display: -webkit-box; -webkit-line-clamp: 4; -webkit-box-orient: vertical; overflow: hidden; }
+  .nyhet p.kort { white-space: normal; display: -webkit-box; -webkit-line-clamp: 4; -webkit-box-orient: vertical; overflow: hidden; }
   .les-mer { background: none; border: 0; padding: 0; margin-top: 10px; color: var(--farge); font: inherit; font-weight: 600; cursor: pointer; }
   .flere-nyheter { text-align: center; margin-top: 36px; }
   .flere-nyheter button {
@@ -618,7 +618,7 @@
   <button class="bla neste" onclick="blaBilde(1)" aria-label="Neste bilde">›</button>
 </div>
 
-<script src="innhold.js?v=1791643237"></script>
+<script src="innhold.js?v=1791643332"></script>
 <script>
 const ANTALL_NYHETER_FORST = 6;
 
