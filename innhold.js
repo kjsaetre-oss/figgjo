@@ -1,6 +1,7 @@
 /* Innholdet på nettsiden. Claude oppdaterer denne fila når du ber om endringer. */
 const INNHOLD = {
   klubbnavn: "Figgjo Bordtennisklubb",
+  kortnavn: "Figgjo BTK",   // brukes i menyen og nederst på siden
   slagord: "En klubb for alle",
   farge: "#c8102e",
   logo: "",            // f.eks. "bilder/logo.png"

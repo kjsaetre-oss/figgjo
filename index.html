@@ -408,7 +408,7 @@
     </svg>
   </div>
   <div class="hero-innhold">
-    <div class="eyebrow">Bordtennis</div>
+    <div class="eyebrow">Siden 2021</div>
     <h1 id="klubbnavn">Bordtennisklubb</h1>
     <p id="slagord"></p>
     <div class="knapper">
@@ -516,7 +516,7 @@
   <button class="bla neste" onclick="blaBilde(1)" aria-label="Neste bilde">›</button>
 </div>
 
-<script src="innhold.js?v=1791642798"></script>
+<script src="innhold.js?v=1791642930"></script>
 <script>
 const ANTALL_NYHETER_FORST = 6;
 
@@ -576,11 +576,11 @@ function visKlubbinfo(s) {
   const navn = s.klubbnavn || "Bordtennisklubb";
   document.title = navn;
   $("klubbnavn").textContent = navn;
-  $("klubbnavn-meny").textContent = navn;
+  $("klubbnavn-meny").textContent = s.kortnavn || navn;
   $("slagord").textContent = s.slagord || "";
   $("om-tekst").textContent = s.omKlubben || "";
   $("medlem-tekst").textContent = s.omMedlemskap || "";
-  $("bunn").textContent = "© " + new Date().getFullYear() + " " + navn;
+  $("bunn").textContent = "© " + new Date().getFullYear() + " " + (s.kortnavn || navn);
 
   if (/^#[0-9a-f]{6}$/i.test(s.farge || "")) {
     document.documentElement.style.setProperty("--farge", s.farge);
@@ -694,7 +694,7 @@ function tegnKamper(antall) {
     return `<div class="kamp">
       <div class="dato"><span class="dag">${d.getDate()}</span><span class="mnd">${d.toLocaleDateString("nb-NO", { month: "short" }).replace(".", "")}</span></div>
       <div>
-        <div class="lagene">${lagnavn(k.hjemme)} – ${lagnavn(k.borte)}</div>
+        <div class="lagene">${esc(hjemme ? k.borte : k.hjemme)}</div>
         <div class="info">${esc(k.lag)} · ${ukedag.charAt(0).toUpperCase() + ukedag.slice(1)} kl. ${esc(k.kl)} · ${esc(k.sted)}</div>
       </div>
       <span class="merke-hb ${hjemme ? "hjemme" : ""}">${hjemme ? "Hjemme" : "Borte"}</span>
