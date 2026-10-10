@@ -4,6 +4,13 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Figgjo Bordtennisklubb</title>
+<meta name="description" content="Figgjo Bordtennisklubb – en klubb for alle. Trening, serielag, Bordtennis mot Parkinson og gatebordtennis i Figgjohallen, Sandnes.">
+<meta property="og:title" content="Figgjo Bordtennisklubb">
+<meta property="og:description" content="En klubb for alle – trening, serielag og sosiale tilbud i Figgjohallen.">
+<meta property="og:image" content="https://kjsaetre-oss.github.io/figgjo/bilder/seriemestere-3div-2025-26.jpg">
+<meta property="og:type" content="website">
+<meta name="theme-color" content="#14161b">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 34 34'%3E%3Ccircle cx='17' cy='17' r='14' fill='%23c8102e'/%3E%3Ccircle cx='12.5' cy='12' r='4.5' fill='%23fff' opacity='.4'/%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Outfit:wght@600;700;800&display=swap" rel="stylesheet">
@@ -22,6 +29,7 @@
     --skygge-hover: 0 2px 4px rgba(20,22,27,.06), 0 18px 40px rgba(20,22,27,.12);
   }
   * { box-sizing: border-box; }
+  [hidden] { display: none !important; }
   html { scroll-behavior: smooth; scroll-padding-top: 80px; }
   body {
     margin: 0;
@@ -79,29 +87,32 @@
 
   /* ---------- Toppseksjon ---------- */
   .hero {
-    position: relative; overflow: hidden; color: #fff;
-    padding: 120px 20px 150px;
+    position: relative; color: #fff;
+    padding: 96px 20px 170px;
     background:
-      radial-gradient(1200px 600px at 85% 10%, color-mix(in srgb, var(--farge) 55%, transparent), transparent 60%),
-      linear-gradient(160deg, var(--natt) 0%, #1d2027 45%, var(--farge-mork) 130%);
-    background-size: cover; background-position: center;
+      radial-gradient(1100px 600px at 90% 0%, color-mix(in srgb, var(--farge) 50%, transparent), transparent 60%),
+      radial-gradient(700px 500px at 0% 100%, color-mix(in srgb, var(--farge-mork) 35%, transparent), transparent 70%),
+      linear-gradient(160deg, var(--natt) 0%, #1d2027 55%, #2a1218 100%);
   }
-  .hero.med-bilde::before {
-    content: ""; position: absolute; inset: 0; z-index: 1;
-    background: linear-gradient(160deg, rgba(20,22,27,.85), rgba(20,22,27,.45) 60%, color-mix(in srgb, var(--farge-mork) 70%, transparent));
+  .hero::after {
+    content: ""; position: absolute; inset: 0; pointer-events: none; opacity: .5;
+    background-image: radial-gradient(rgba(255,255,255,.07) 1px, transparent 1px);
+    background-size: 22px 22px;
+    -webkit-mask-image: linear-gradient(180deg, #000, transparent 85%); mask-image: linear-gradient(180deg, #000, transparent 85%);
   }
-  .hero-grafikk { position: absolute; inset: 0; z-index: 1; pointer-events: none; }
-  .hero-grafikk svg { position: absolute; right: -60px; top: 50%; transform: translateY(-50%); width: min(620px, 70vw); height: auto; opacity: .9; }
-  .hero.med-bilde .hero-grafikk { display: none; }
-  .hero-innhold { position: relative; z-index: 2; max-width: 1140px; margin: 0 auto; }
+  .hero-innhold {
+    position: relative; z-index: 2; max-width: 1140px; margin: 0 auto;
+    display: grid; grid-template-columns: 1.05fr .95fr; gap: 64px; align-items: center;
+  }
   .hero .eyebrow {
     display: inline-flex; align-items: center; gap: 8px;
     font-size: 13px; font-weight: 600; letter-spacing: .14em; text-transform: uppercase;
     color: rgba(255,255,255,.75); margin-bottom: 18px;
   }
   .hero .eyebrow::before { content: ""; width: 28px; height: 2px; background: var(--farge); border-radius: 2px; }
-  .hero h1 { font-size: clamp(38px, 7vw, 76px); line-height: 1.02; margin: 0 0 18px; font-weight: 800; max-width: 760px; }
-  .hero p { font-size: clamp(18px, 2.4vw, 22px); margin: 0 0 36px; max-width: 560px; color: rgba(255,255,255,.85); }
+  .hero h1 { font-size: clamp(40px, 6.4vw, 74px); line-height: 1.02; margin: 0 0 18px; font-weight: 800; }
+  .hero h1 .linje2 { display: block; color: transparent; -webkit-text-stroke: 0; background: linear-gradient(90deg, #fff, color-mix(in srgb, var(--farge) 45%, #fff)); -webkit-background-clip: text; background-clip: text; }
+  .hero p { font-size: clamp(18px, 2.2vw, 22px); margin: 0 0 34px; max-width: 520px; color: rgba(255,255,255,.82); }
   .knapper { display: flex; gap: 12px; flex-wrap: wrap; }
   .knapp {
     display: inline-flex; align-items: center; gap: 8px;
@@ -113,11 +124,58 @@
   .knapp:hover { transform: translateY(-2px); box-shadow: 0 12px 30px color-mix(in srgb, var(--farge) 50%, transparent); }
   .knapp.lys { background: rgba(255,255,255,.1); box-shadow: none; border: 1px solid rgba(255,255,255,.25); }
   .knapp.lys:hover { background: rgba(255,255,255,.18); }
-  .hero-kant { position: absolute; left: 0; right: 0; bottom: -1px; z-index: 2; line-height: 0; }
+
+  .hero-visuell { position: relative; }
+  .hero-foto {
+    margin: 0; border-radius: 26px; overflow: hidden; transform: rotate(2.2deg);
+    box-shadow: 0 30px 80px rgba(0,0,0,.5), 0 0 0 1px rgba(255,255,255,.08);
+  }
+  .hero-foto img { width: 100%; aspect-ratio: 4 / 3; object-fit: cover; object-position: center 35%; }
+  .flyt-merke {
+    position: absolute; top: -20px; left: -22px; z-index: 3; transform: rotate(-4deg);
+    display: flex; align-items: center; gap: 12px;
+    background: #fff; color: var(--tekst); border-radius: 16px; padding: 12px 18px 12px 14px;
+    box-shadow: 0 16px 40px rgba(0,0,0,.35); font-size: 14px; line-height: 1.3;
+  }
+  .flyt-merke .pokal { font-size: 28px; line-height: 1; }
+  .flyt-merke b { font-family: "Outfit", sans-serif; font-size: 16px; }
+  .neste-kamp {
+    position: absolute; right: -14px; bottom: -34px; z-index: 3; min-width: 250px;
+    background: rgba(20,22,27,.82); backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px);
+    border: 1px solid rgba(255,255,255,.14); border-radius: 18px; padding: 14px 18px 16px;
+    box-shadow: 0 20px 50px rgba(0,0,0,.45);
+  }
+  .neste-kamp .etikett { display: flex; align-items: center; gap: 8px; font-size: 11px; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; color: color-mix(in srgb, var(--farge) 70%, #fff); }
+  .neste-kamp .etikett::before { content: ""; width: 8px; height: 8px; border-radius: 50%; background: var(--farge); box-shadow: 0 0 0 0 var(--farge); animation: puls 2s infinite; }
+  @keyframes puls { 0% { box-shadow: 0 0 0 0 color-mix(in srgb, var(--farge) 70%, transparent); } 70% { box-shadow: 0 0 0 10px transparent; } 100% { box-shadow: 0 0 0 0 transparent; } }
+  .neste-kamp .mot { font-family: "Outfit", sans-serif; font-size: 20px; font-weight: 700; margin-top: 4px; }
+  .neste-kamp .info { font-size: 13px; color: rgba(255,255,255,.7); margin-top: 2px; }
+  .neste-kamp .hb { display: inline-block; margin-left: 6px; font-size: 11px; font-weight: 700; padding: 2px 8px; border-radius: 999px; background: rgba(255,255,255,.12); vertical-align: 3px; }
+  .neste-kamp .hb.hjemme { background: var(--farge); }
+
+  .hero-kant { position: absolute; left: 0; right: 0; bottom: -1px; z-index: 1; line-height: 0; }
   .hero-kant svg { width: 100%; height: 60px; }
-  @media (max-width: 820px) {
-    .hero { padding: 80px 20px 110px; }
-    .hero-grafikk svg { right: -140px; opacity: .35; }
+
+  /* Nøkkeltall */
+  .nokkeltall-ramme { position: relative; z-index: 4; padding: 0 20px; margin-top: -88px; }
+  .nokkeltall {
+    max-width: 1140px; margin: 0 auto; background: #fff; border-radius: 22px;
+    box-shadow: 0 20px 60px rgba(20,22,27,.14); display: grid; grid-template-columns: repeat(4, 1fr);
+  }
+  .tall { padding: 28px 20px; text-align: center; }
+  .tall + .tall { border-left: 1px solid var(--kant); }
+  .tall .verdi { font-family: "Outfit", sans-serif; font-size: clamp(34px, 4.4vw, 48px); font-weight: 800; line-height: 1; color: var(--farge); }
+  .tall .tekst { margin-top: 8px; font-size: 14px; font-weight: 600; color: var(--dempet); }
+
+  @media (max-width: 900px) {
+    .hero { padding: 72px 20px 150px; }
+    .hero-innhold { grid-template-columns: 1fr; gap: 56px; }
+    .hero-visuell { max-width: 520px; margin: 0 8px; }
+    .flyt-merke { left: -8px; top: -18px; }
+    .neste-kamp { right: -8px; }
+    .nokkeltall { grid-template-columns: repeat(2, 1fr); }
+    .tall:nth-child(3) { border-left: 0; }
+    .tall:nth-child(n+3) { border-top: 1px solid var(--kant); }
   }
 
   /* ---------- Seksjoner ---------- */
@@ -300,6 +358,41 @@
   .forbund { display: flex; align-items: center; gap: 14px; color: rgba(255,255,255,.75); font-size: 14px; }
   .forbund img { height: 54px; width: auto; background: #fff; border-radius: 10px; padding: 6px 10px; }
 
+  /* ---------- Etter nøkkeltall ---------- */
+  section.etter-tall { padding-top: 72px; }
+  .trenings-notat { margin: 16px 4px 0; color: var(--dempet); font-size: 15px; }
+
+  /* ---------- Tilbud (Om oss) ---------- */
+  .tilbud { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 22px; margin-top: 40px; }
+  .tilbud-kort {
+    position: relative; background: #fff; border-radius: var(--radius); padding: 28px 26px;
+    box-shadow: var(--skygge); transition: transform .25s, box-shadow .25s; text-decoration: none; color: inherit; display: block;
+  }
+  .tilbud-kort:hover { transform: translateY(-4px); box-shadow: var(--skygge-hover); }
+  .tilbud-kort .ikon {
+    width: 54px; height: 54px; border-radius: 16px; display: grid; place-items: center; margin-bottom: 18px;
+    background: color-mix(in srgb, var(--farge) 10%, #fff); color: var(--farge);
+  }
+  .tilbud-kort h3 { margin: 0 0 8px; font-size: 20px; }
+  .tilbud-kort p { margin: 0; color: #3c4048; font-size: 15px; }
+  .tilbud-kort .mer { display: inline-block; margin-top: 12px; color: var(--farge); font-weight: 600; font-size: 14px; }
+
+  /* ---------- Bunn ---------- */
+  footer { background: var(--natt); color: rgba(255,255,255,.65); padding: 64px 20px 28px; font-size: 15px; }
+  .bunn-innhold { max-width: 1140px; margin: 0 auto; display: grid; grid-template-columns: 1.4fr 1fr 1fr; gap: 40px; }
+  .bunn-logo { display: flex; align-items: center; gap: 12px; color: #fff; font-family: "Outfit", sans-serif; font-weight: 700; font-size: 20px; }
+  .bunn-merke p { margin: 12px 0 0; max-width: 300px; }
+  footer h4 { margin: 0 0 12px; color: #fff; font-size: 13px; letter-spacing: .12em; text-transform: uppercase; }
+  footer ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 8px; }
+  footer a { color: rgba(255,255,255,.8); text-decoration: none; }
+  footer a:hover { color: #fff; }
+  .bunn-linje { max-width: 1140px; margin: 44px auto 0; padding-top: 22px; border-top: 1px solid rgba(255,255,255,.1); font-size: 13px; color: rgba(255,255,255,.45); }
+  @media (max-width: 760px) { .bunn-innhold { grid-template-columns: 1fr; gap: 28px; } }
+
+  /* ---------- Myke animasjoner ved scrolling ---------- */
+  .avslor { opacity: 0; transform: translateY(22px); transition: opacity .7s ease, transform .7s cubic-bezier(.2,.7,.2,1); }
+  .avslor.synlig { opacity: 1; transform: none; }
+
   /* ---------- Priser ---------- */
   .priser { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 22px; margin-bottom: 32px; }
   .pris {
@@ -323,10 +416,6 @@
   .kontakt dd a { text-decoration: none; }
   .kart { width: 100%; min-height: 320px; height: 100%; border: 0; border-radius: var(--radius); box-shadow: var(--skygge); }
 
-  footer {
-    background: var(--natt); color: rgba(255,255,255,.6);
-    text-align: center; padding: 36px 20px; font-size: 14px;
-  }
 
   /* ---------- Stort bilde ---------- */
   .lysboks {
@@ -350,6 +439,8 @@
 
   @media (prefers-reduced-motion: reduce) {
     html { scroll-behavior: auto; }
+    .avslor { opacity: 1; transform: none; }
+    .neste-kamp .etikett::before { animation: none; }
     * { transition: none !important; }
   }
 </style>
@@ -383,37 +474,20 @@
 </header>
 
 <div class="hero" id="hero">
-  <div class="hero-grafikk" aria-hidden="true">
-    <svg viewBox="0 0 600 500" fill="none">
-      <!-- bordplate i perspektiv -->
-      <path d="M140 300 L560 300 L600 440 L60 440 Z" fill="rgba(255,255,255,.06)" stroke="rgba(255,255,255,.5)" stroke-width="3" stroke-linejoin="round"/>
-      <path d="M350 300 L330 440" stroke="rgba(255,255,255,.35)" stroke-width="2"/>
-      <!-- nett -->
-      <path d="M100 370 L580 370 L580 340 L100 340 Z" fill="rgba(255,255,255,.08)"/>
-      <path d="M100 340 L580 340" stroke="#fff" stroke-width="4" stroke-linecap="round"/>
-      <path d="M100 340 L100 372 M580 340 L580 372" stroke="#fff" stroke-width="4" stroke-linecap="round"/>
-      <path d="M100 352 L580 352 M100 362 L580 362" stroke="rgba(255,255,255,.18)" stroke-width="1.5"/>
-      <!-- ballbane med sprett -->
-      <path d="M60 120 Q 200 40, 250 330 Q 300 150, 470 120" stroke="rgba(255,255,255,.45)" stroke-width="3" stroke-dasharray="2 13" stroke-linecap="round"/>
-      <ellipse cx="250" cy="334" rx="16" ry="4" fill="rgba(255,255,255,.35)"/>
-      <circle cx="478" cy="118" r="34" stroke="rgba(255,255,255,.15)" stroke-width="2"/>
-      <circle cx="478" cy="118" r="17" fill="var(--farge)"/>
-      <circle cx="478" cy="118" r="17" fill="url(#glans)"/>
-      <defs>
-        <radialGradient id="glans" cx="35%" cy="30%" r="75%">
-          <stop offset="0" stop-color="#fff" stop-opacity=".55"/>
-          <stop offset="1" stop-color="#000" stop-opacity=".2"/>
-        </radialGradient>
-      </defs>
-    </svg>
-  </div>
   <div class="hero-innhold">
-    <div class="eyebrow">Siden 2021</div>
-    <h1 id="klubbnavn">Bordtennisklubb</h1>
-    <p id="slagord"></p>
-    <div class="knapper">
-      <a href="#medlem" class="knapp">Bli med på trening →</a>
-      <a href="#trening" class="knapp lys">Se treningstider</a>
+    <div class="hero-tekst">
+      <div class="eyebrow" id="hero-eyebrow">Siden 2021</div>
+      <h1 id="klubbnavn">Bordtennisklubb</h1>
+      <p id="slagord"></p>
+      <div class="knapper">
+        <a href="#medlem" class="knapp">Bli med på trening →</a>
+        <a href="#serielag" class="knapp lys">Se kamper</a>
+      </div>
+    </div>
+    <div class="hero-visuell" id="hero-visuell" hidden>
+      <figure class="hero-foto"><img id="hero-bilde" alt=""></figure>
+      <div class="flyt-merke" id="flyt-merke" hidden><span class="pokal">🏆</span><span id="flyt-tekst"></span></div>
+      <div class="neste-kamp" id="neste-kamp" hidden></div>
     </div>
   </div>
   <div class="hero-kant" aria-hidden="true">
@@ -421,7 +495,9 @@
   </div>
 </div>
 
-<section id="nyheter">
+<div class="nokkeltall-ramme"><div class="nokkeltall" id="nokkeltall"></div></div>
+
+<section id="nyheter" class="etter-tall">
   <div class="innhold">
     <div class="seksjonstopp"><span class="eyebrow">Siste nytt</span><h2>Nyheter</h2></div>
     <div class="nyheter" id="nyhetsliste"></div>
@@ -433,6 +509,7 @@
   <div class="innhold">
     <div class="seksjonstopp"><span class="eyebrow">Når vi spiller</span><h2>Treningstider</h2></div>
     <div class="tabell-boks"><table id="treningstabell"></table></div>
+    <p class="trenings-notat" id="trenings-notat" hidden></p>
   </div>
 </section>
 
@@ -475,6 +552,7 @@
   <div class="innhold">
     <div class="seksjonstopp"><span class="eyebrow">Hvem vi er</span><h2>Om klubben</h2></div>
     <p id="om-tekst" class="om-tekst"></p>
+    <div class="tilbud" id="tilbud"></div>
   </div>
 </section>
 
@@ -507,7 +585,31 @@
   </div>
 </section>
 
-<footer id="bunn"></footer>
+<footer>
+  <div class="bunn-innhold">
+    <div class="bunn-merke">
+      <div class="bunn-logo">
+        <svg width="34" height="34" viewBox="0 0 34 34" aria-hidden="true"><circle cx="17" cy="17" r="13" fill="var(--farge)"/><circle cx="12.5" cy="12" r="4.5" fill="#fff" opacity=".35"/><path d="M6 22 Q 17 15 28 22" stroke="#fff" stroke-width="1.6" fill="none" opacity=".5"/></svg>
+        <span id="bunn-navn"></span>
+      </div>
+      <p id="bunn-slagord"></p>
+    </div>
+    <div>
+      <h4>Kontakt</h4>
+      <ul id="bunn-kontakt"></ul>
+    </div>
+    <div>
+      <h4>Snarveier</h4>
+      <ul>
+        <li><a href="#trening">Treningstider</a></li>
+        <li><a href="#serielag">Serielag og kamper</a></li>
+        <li><a href="#medlem">Bli medlem</a></li>
+        <li><a href="#sponsorer">Sponsorer</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="bunn-linje" id="bunn"></div>
+</footer>
 
 <div class="lysboks" id="lysboks" onclick="if (event.target === this) lukkBilde()">
   <button class="lukk" onclick="lukkBilde()" aria-label="Lukk">✕</button>
@@ -516,7 +618,7 @@
   <button class="bla neste" onclick="blaBilde(1)" aria-label="Neste bilde">›</button>
 </div>
 
-<script src="innhold.js?v=1791642939"></script>
+<script src="innhold.js?v=1791643237"></script>
 <script>
 const ANTALL_NYHETER_FORST = 6;
 
@@ -761,7 +863,90 @@ function visSponsorer(s, forbund, epost) {
   else $("bli-sponsor").hidden = true;
 }
 
+const IKONER = {
+  gate: '<svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 21h18"/><path d="M5 21V8l7-5 7 5v13"/><path d="M9 21v-6h6v6"/></svg>',
+  hjerte: '<svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.7l-1-1.1a5.5 5.5 0 0 0-7.8 7.8l1 1.1L12 21l7.8-7.5 1-1.1a5.5 5.5 0 0 0 0-7.8z"/><path d="M3.5 12h4l2-3 3 6 2-3h6"/></svg>',
+  barn: '<svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="7" r="3"/><path d="M3 21v-2a5 5 0 0 1 5-5h2a5 5 0 0 1 5 5v2"/><circle cx="17.5" cy="9.5" r="2.5"/><path d="M17 14.5a4 4 0 0 1 4 4V21"/></svg>',
+  ball: '<svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M4 15c4-3 12-3 16 0"/></svg>',
+};
+
+function visTopp(s) {
+  const navn = s.klubbnavn || "";
+  const ord = navn.split(" ");
+  if (ord.length > 1) $("klubbnavn").innerHTML = esc(ord[0]) + '<span class="linje2">' + esc(ord.slice(1).join(" ")) + "</span>";
+  if (s.stiftet) $("hero-eyebrow").textContent = "Siden " + s.stiftet;
+  if (s.heltebilde) {
+    $("hero-bilde").src = s.heltebilde; $("hero-bilde").alt = s.heltebildeTekst || "";
+    $("hero-visuell").hidden = false;
+  }
+  if (s.utmerkelse) { $("flyt-tekst").innerHTML = `<b>${esc(s.utmerkelse[0])}</b><br>${esc(s.utmerkelse[1] || "")}`; $("flyt-merke").hidden = false; }
+
+  const idag = new Date(); idag.setHours(0, 0, 0, 0);
+  const neste = (s.kamper || []).map(k => ({ ...k, datoObj: lesDato(k.dato) }))
+    .filter(k => k.datoObj && k.datoObj >= idag)
+    .sort((a, b) => a.datoObj - b.datoObj || a.kl.localeCompare(b.kl))[0];
+  if (neste) {
+    const hjemme = /figgjo/i.test(neste.hjemme);
+    const d = neste.datoObj.toLocaleDateString("nb-NO", { weekday: "short", day: "numeric", month: "short" }).replace(/\./g, "");
+    $("neste-kamp").innerHTML = `<div class="etikett">Neste kamp</div>
+      <div class="mot">${esc(hjemme ? neste.borte : neste.hjemme)}<span class="hb ${hjemme ? "hjemme" : ""}">${hjemme ? "Hjemme" : "Borte"}</span></div>
+      <div class="info">${esc(neste.lag)} · ${d} kl. ${esc(neste.kl)} · ${esc(neste.sted)}</div>`;
+    $("neste-kamp").hidden = false;
+  }
+
+  $("nokkeltall").innerHTML = (s.nokkeltall || []).map(t =>
+    `<div class="tall"><div class="verdi" data-til="${esc(t.tall)}">${esc(t.prefiks || "")}${esc(t.tall)}</div><div class="tekst">${esc(t.tekst)}</div></div>`).join("");
+  if (!(s.nokkeltall || []).length) $("nokkeltall").parentElement.hidden = true;
+
+  $("tilbud").innerHTML = (s.tilbud || []).map(t => {
+    const indre = `<div class="ikon">${IKONER[t.ikon] || IKONER.ball}</div><h3>${esc(t.tittel)}</h3><p>${esc(t.tekst)}</p>${t.lenke ? '<span class="mer">Les mer →</span>' : ""}`;
+    return t.lenke ? `<a class="tilbud-kort" href="${esc(t.lenke)}">${indre}</a>` : `<div class="tilbud-kort">${indre}</div>`;
+  }).join("");
+
+  if (s.treningsnotat) { $("trenings-notat").textContent = s.treningsnotat; $("trenings-notat").hidden = false; }
+
+  $("bunn-navn").textContent = s.kortnavn || navn;
+  $("bunn-slagord").textContent = s.slagord || "";
+  const k = [];
+  if (s.epost) k.push(`<li><a href="mailto:${esc(s.epost)}">${esc(s.epost)}</a></li>`);
+  if (s.telefon) k.push(`<li><a href="tel:${esc(s.telefon.replace(/\s/g, ""))}">${esc(s.telefon)}</a></li>`);
+  if (s.adresse) k.push(`<li>${esc(s.adresse)}</li>`);
+  $("bunn-kontakt").innerHTML = k.join("");
+}
+
+// Tall som teller opp når de vises
+function tellOpp(el) {
+  const tekst = el.dataset.til, mal = parseInt(tekst, 10);
+  if (isNaN(mal) || mal < 10 || mal > 3000 || String(mal) !== tekst) return;
+  const prefiks = el.textContent.replace(tekst, ""), start = performance.now(), varighet = 1200;
+  const fra = mal > 1900 ? mal - 30 : 0;
+  const steg = t => {
+    const p = Math.min(1, (t - start) / varighet), e = 1 - Math.pow(1 - p, 3);
+    el.textContent = prefiks + Math.round(fra + (mal - fra) * e);
+    if (p < 1) requestAnimationFrame(steg);
+  };
+  requestAnimationFrame(steg);
+}
+
+function startAnimasjoner() {
+  if (matchMedia("(prefers-reduced-motion: reduce)").matches || !("IntersectionObserver" in window)) return;
+  const velg = ".seksjonstopp, .nyhet, .lag, .kamp, .person, .pris, .sponsor, .tilbud-kort, .bildenett figure, .tabell-boks, .tall, .kontakt dl, .kart";
+  const obs = new IntersectionObserver(oppf => oppf.forEach(o => {
+    if (!o.isIntersecting) return;
+    o.target.classList.add("synlig"); obs.unobserve(o.target);
+    o.target.querySelectorAll("[data-til]").forEach(tellOpp);
+  }), { rootMargin: "0px 0px -8% 0px" });
+  document.querySelectorAll(velg).forEach(el => {
+    const r = el.getBoundingClientRect();
+    if (r.top < innerHeight) return; // allerede synlig ved last – ikke skjul
+    const søsken = [...el.parentElement.children].indexOf(el);
+    el.style.transitionDelay = Math.min(søsken, 5) * 70 + "ms";
+    el.classList.add("avslor"); obs.observe(el);
+  });
+}
+
 visKlubbinfo(INNHOLD);
+visTopp(INNHOLD);
 visNyheter(INNHOLD.nyheter);
 visTrening(INNHOLD.treningstider);
 visPriser(INNHOLD.priser);
@@ -790,6 +975,7 @@ const observator = new IntersectionObserver(oppf => {
   });
 }, { rootMargin: "-45% 0px -50% 0px" });
 document.querySelectorAll("section[id]").forEach(s => observator.observe(s));
+startAnimasjoner();
 </script>
 </body>
 </html>
