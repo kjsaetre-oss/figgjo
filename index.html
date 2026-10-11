@@ -581,8 +581,12 @@
     .hero h1 { font-size: 40px; }
     .hero p { margin-bottom: 24px; }
     .knapp { padding: 13px 20px; font-size: 15px; }
-    .hero-innhold { gap: 44px; }
+    .hero-innhold { gap: 66px; }
     .hero-visuell { margin: 0 6px; }
+    /* Skiltet ligger over bildekanten, ikke over ansiktene */
+    .flyt-merke { top: -42px; left: -2px; padding: 9px 14px 9px 11px; gap: 9px; font-size: 13px; border-radius: 14px; transform: rotate(-3deg); }
+    .flyt-merke .pokal { font-size: 22px; }
+    .flyt-merke b { font-size: 14px; }
     .neste-kamp { min-width: 0; max-width: 88%; padding: 12px 14px 13px; }
     .neste-kamp .mot { font-size: 18px; }
 
@@ -897,8 +901,8 @@
   <button class="bla neste" onclick="blaBilde(1)" aria-label="Neste bilde">›</button>
 </div>
 
-<script src="innhold.js?v=1791723165"></script>
-<script src="serie.js?v=1791723165"></script>
+<script src="innhold.js?v=1791724729"></script>
+<script src="serie.js?v=1791724729"></script>
 <script>
 const ANTALL_NYHETER_FORST = 6;
 
