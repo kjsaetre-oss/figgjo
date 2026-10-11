@@ -57,8 +57,8 @@ const INNHOLD = {
   ],
 
   treningstider: [
-    { Dag: "Tirsdag", Tid: "12:00–13:00", Gruppe: "Bordtennis mot Parkinson", Sted: "Figgjohallen" },
-    { Dag: "Tirsdag", Tid: "13:00–14:00", Gruppe: "Sosialt samvær (Parkinson-gruppen)", Sted: "Figgjohallen" },
+    { Dag: "Mandag", Tid: "17:00–19:00", Gruppe: "Åpen trening", Trener: "Arian Myrbakk", Sted: "Figgjohallen" },
+    { Dag: "Tirsdag", Tid: "12:00–13:00", Gruppe: "Bordtennis mot Parkinson", Trener: "Christian Ibenfeld", Sted: "Figgjohallen" },
   ],
   treningsnotat: "Treningstider for de andre gruppene kommer snart. Ta kontakt, så hjelper vi deg i gang!",
 
@@ -81,6 +81,7 @@ const INNHOLD = {
 
   // Trenere. bilde er valgfritt (uten bilde vises initialer)
   trenere: [
+    { navn: "Arian Myrbakk", rolle: "Trener – åpen trening (mandager)", bilde: "", tekst: "" },
     {
       navn: "Christian Ibenfeld",
       rolle: "Trener – Bordtennis mot Parkinson",
