@@ -86,19 +86,21 @@
   }
 
   /* ---------- Sponsorstripe under menyen ---------- */
-  .sponsorstripe {
-    background: #fff; border-bottom: 1px solid var(--kant);
-    display: flex; align-items: center; justify-content: center; gap: 28px; padding: 12px 20px;
+  .sponsorkort {
+    max-width: 1140px; margin: 0 auto; background: #fff; border-radius: 22px; padding: 26px 32px;
+    box-shadow: 0 20px 60px rgba(20,22,27,.14);
+    display: flex; align-items: center; justify-content: center; gap: 22px 48px; flex-wrap: wrap;
   }
   .stripe-tekst { font-size: 11px; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; color: var(--dempet); white-space: nowrap; }
-  .stripe-logoer { display: flex; align-items: center; gap: 40px; }
+  .stripe-logoer { display: flex; align-items: center; justify-content: center; gap: 28px 56px; flex-wrap: wrap; }
   .stripe-logoer a { display: block; line-height: 0; transition: transform .2s, opacity .2s; }
-  .stripe-logoer a:hover { transform: translateY(-2px); opacity: .8; }
-  .stripe-logoer img { height: 40px; width: auto; max-width: 170px; object-fit: contain; }
+  .stripe-logoer a:hover { transform: translateY(-3px); opacity: .85; }
+  .stripe-logoer img { width: auto; height: auto; max-height: 66px; max-width: 210px; object-fit: contain; }
+  .nokkeltall.i-seksjon { margin: 36px 0 0; box-shadow: var(--skygge); }
   @media (max-width: 700px) {
-    .sponsorstripe { flex-direction: column; gap: 8px; padding: 10px 12px 12px; }
-    .stripe-logoer { gap: 22px; }
-    .stripe-logoer img { height: 30px; max-width: 28vw; }
+    .sponsorkort { flex-direction: column; gap: 14px; padding: 20px 16px 22px; }
+    .stripe-logoer { gap: 16px 24px; flex-wrap: nowrap; }
+    .stripe-logoer img { max-height: 42px; max-width: 27vw; }
   }
 
   /* ---------- Toppseksjon ---------- */
@@ -576,10 +578,6 @@
   </div>
 </header>
 
-<div class="sponsorstripe" id="sponsorstripe" hidden>
-  <span class="stripe-tekst">Våre sponsorer</span>
-  <div class="stripe-logoer" id="stripe-logoer"></div>
-</div>
 
 <div class="hero" id="hero">
   <div class="hero-innhold">
@@ -603,7 +601,12 @@
   </div>
 </div>
 
-<div class="nokkeltall-ramme"><div class="nokkeltall" id="nokkeltall"></div></div>
+<div class="nokkeltall-ramme" id="sponsorramme" hidden>
+  <div class="sponsorkort">
+    <span class="stripe-tekst">Våre sponsorer</span>
+    <div class="stripe-logoer" id="stripe-logoer"></div>
+  </div>
+</div>
 
 <section id="nyheter" class="etter-tall">
   <div class="innhold">
@@ -681,6 +684,7 @@
   <div class="innhold">
     <div class="seksjonstopp"><span class="eyebrow">Hvem vi er</span><h2>Om klubben</h2></div>
     <p id="om-tekst" class="om-tekst"></p>
+    <div class="nokkeltall i-seksjon" id="nokkeltall"></div>
     <div class="tilbud" id="tilbud"></div>
   </div>
 </section>
@@ -747,8 +751,8 @@
   <button class="bla neste" onclick="blaBilde(1)" aria-label="Neste bilde">›</button>
 </div>
 
-<script src="innhold.js?v=1791646681"></script>
-<script src="serie.js?v=1791646681"></script>
+<script src="innhold.js?v=1791718803"></script>
+<script src="serie.js?v=1791718803"></script>
 <script>
 const ANTALL_NYHETER_FORST = 6;
 
@@ -1056,7 +1060,7 @@ function visSponsorer(s, forbund, epost) {
   if ((s || []).length) {
     $("stripe-logoer").innerHTML = s.map(p =>
       `<a href="${esc(p.lenke || "#sponsorer")}"${p.lenke ? ' target="_blank" rel="noopener"' : ""} title="${esc(p.navn)}"><img src="${esc(p.logo)}" alt="${esc(p.navn)}"></a>`).join("");
-    $("sponsorstripe").hidden = false;
+    $("sponsorramme").hidden = false;
   }
   if (forbund) $("forbund").innerHTML = `<img src="${esc(forbund.logo)}" alt="${esc(forbund.navn)}" loading="lazy"><span>Medlem av<br><strong>${esc(forbund.navn)}</strong></span>`;
   if (epost) $("bli-sponsor").href = "mailto:" + epost + "?subject=" + encodeURIComponent("Sponsor for Figgjo Bordtennisklubb");
@@ -1094,7 +1098,7 @@ function visTopp(s) {
 
   $("nokkeltall").innerHTML = (s.nokkeltall || []).map(t =>
     `<div class="tall"><div class="verdi" data-til="${esc(t.tall)}">${esc(t.prefiks || "")}${esc(t.tall)}</div><div class="tekst">${esc(t.tekst)}</div></div>`).join("");
-  if (!(s.nokkeltall || []).length) $("nokkeltall").parentElement.hidden = true;
+  if (!(s.nokkeltall || []).length) $("nokkeltall").hidden = true;
 
   $("tilbud").innerHTML = (s.tilbud || []).map(t => {
     const indre = `<div class="ikon">${IKONER[t.ikon] || IKONER.ball}</div><h3>${esc(t.tittel)}</h3><p>${esc(t.tekst)}</p>${t.lenke ? '<span class="mer">Les mer →</span>' : ""}`;
