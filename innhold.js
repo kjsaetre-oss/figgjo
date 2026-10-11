@@ -86,7 +86,7 @@ const INNHOLD = {
 
   // Trenere. bilde er valgfritt (uten bilde vises initialer)
   trenere: [
-    { navn: "Arian Myrbakk", rolle: "Trener – åpen trening (mandager)", bilde: "", tekst: "" },
+    { navn: "Arian Myrbakk", rolle: "Trener – åpen trening (mandager)", bilde: "bilder/arian-myrbakk.jpg", tekst: "", foto: "Kjell Roar Bjørnsen" },
     {
       navn: "Christian Ibenfeld",
       rolle: "Trener – Bordtennis mot Parkinson",
@@ -94,14 +94,14 @@ const INNHOLD = {
       tekst: "Fysioterapeut, utdannet i Montpellier i Frankrike i 1999, og har jobbet på Fysio Forum siden 2000. Med sin idrettsbakgrunn har han særlig fokus på funksjonell og individuelt tilpasset trening. Han driver flere treningsgrupper, blant annet en bordtennisgruppe for Parkinson i Stavanger.",
     },
     { navn: "Egil Klungtveit", rolle: "Trener – gatebordtennis med Frelsesarmeen (tirsdager)", bilde: "bilder/egil-klungtveit.jpg", tekst: "" },
-    { navn: "Kenneth Haugland", rolle: "Trener – rekrutter (onsdager)", bilde: "", tekst: "" },
+    { navn: "Kenneth Haugland", rolle: "Trener – rekrutter (onsdager)", bilde: "bilder/kenneth-haugland.jpg", tekst: "" },
     { navn: "Kjetil Lindefjell Sætre", rolle: "Trener – kretstrening ungdom (torsdager)", bilde: "bilder/kjetil-lindefjell-saetre.jpg", tekst: "" },
   ],
 
   // Styret
   styret: [
     { navn: "Kjetil Lindefjell Sætre", rolle: "Leder", bilde: "bilder/kjetil-lindefjell-saetre.jpg", tekst: "", epost: "kjsaetre@gmail.com", telefon: "949 79 992" },
-    { navn: "Henning Pedersen", rolle: "Styremedlem", bilde: "bilder/henning-pedersen.jpg", tekst: "" },
+    { navn: "Henning Pedersen", rolle: "Styremedlem", bilde: "bilder/henning-pedersen.jpg", tekst: "", foto: "Kjell Roar Bjørnsen" },
     { navn: "Egil Klungtveit", rolle: "Styremedlem", bilde: "bilder/egil-klungtveit.jpg", tekst: "" },
   ],
 

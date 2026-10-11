@@ -351,6 +351,7 @@
   .person h3 { margin: 0; font-size: 21px; }
   .person .rolle { color: var(--farge); font-weight: 600; font-size: 14px; margin-top: 2px; }
   .person p { margin: 12px 0 0; color: #3c4048; font-size: 15px; }
+  .person .fotokreditt { margin-top: 8px; font-size: 12px; color: var(--dempet); }
   .person .kontaktlinjer { margin-top: 12px; display: grid; gap: 4px; font-size: 14px; }
   .person .kontaktlinjer a { text-decoration: none; font-weight: 500; overflow-wrap: anywhere; }
   .personer.kompakt .portrett, .personer.kompakt .initialer { aspect-ratio: 1; }
@@ -755,8 +756,8 @@
   <button class="bla neste" onclick="blaBilde(1)" aria-label="Neste bilde">›</button>
 </div>
 
-<script src="innhold.js?v=1791719751"></script>
-<script src="serie.js?v=1791719751"></script>
+<script src="innhold.js?v=1791720016"></script>
+<script src="serie.js?v=1791720016"></script>
 <script>
 const ANTALL_NYHETER_FORST = 6;
 
@@ -1046,6 +1047,7 @@ function visPersoner(id, personer) {
         <h3>${esc(p.navn)}</h3>
         ${p.rolle ? `<div class="rolle">${esc(p.rolle)}</div>` : ""}
         ${p.tekst ? `<p>${esc(p.tekst)}</p>` : ""}
+        ${p.foto ? `<div class="fotokreditt">Foto: ${esc(p.foto)}</div>` : ""}
         ${p.epost || p.telefon ? `<div class="kontaktlinjer">
           ${p.telefon ? `<a href="tel:${esc(p.telefon.replace(/\s/g, ""))}">📞 ${esc(p.telefon)}</a>` : ""}
           ${p.epost ? `<a href="mailto:${esc(p.epost)}">✉️ ${esc(p.epost)}</a>` : ""}
