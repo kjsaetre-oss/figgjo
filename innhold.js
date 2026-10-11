@@ -79,7 +79,23 @@ const INNHOLD = {
   // Seriekamper for Figgjo 1 og 2 hentes automatisk fra bordtennislive.no (serie.js).
   // Her legges bare kamper for lag som IKKE ligger der (Figgjo 3 og 4). Dato: "ÅÅÅÅ-MM-DD"
   // Eksempel: { lag: "Figgjo 3", dato: "2026-11-14", kl: "12.00", hjemme: "Figgjo BTK 3", borte: "Sola BTK", sted: "Figgjohallen", resultat: "" }
-  kamper: [],
+  kamper: [
+    // Figgjo 3, 4. divisjon 2026/27 (fra Fjerde_div_26_27_terminliste-1.csv)
+    { lag: "Figgjo 3", dato: "2026-10-24", kl: "11.00", hjemme: "Stavanger 2", borte: "Figgjo 3", sted: "Stavangerhallen", resultat: "" },
+    { lag: "Figgjo 3", dato: "2026-11-09", kl: "18.00", hjemme: "Figgjo 3", borte: "Lye", sted: "Figgjohallen", resultat: "" },
+    { lag: "Figgjo 3", dato: "2026-11-21", kl: "13.30", hjemme: "Figgjo 3", borte: "Haugesund 3", sted: "Stavangerhallen", resultat: "" },
+    { lag: "Figgjo 3", dato: "2026-11-29", kl: "11.00", hjemme: "Figgjo 3", borte: "Stord 5", sted: "Stavangerhallen", resultat: "" },
+    { lag: "Figgjo 3", dato: "2026-11-29", kl: "13.30", hjemme: "Figgjo 3", borte: "Stord 4", sted: "Stavangerhallen", resultat: "" },
+    { lag: "Figgjo 3", dato: "2026-12-05", kl: "11.00", hjemme: "Figgjo 3", borte: "Stord 6", sted: "Figgjohallen", resultat: "" },
+    { lag: "Figgjo 3", dato: "2027-01-04", kl: "18.00", hjemme: "Figgjo 3", borte: "Stavanger 2", sted: "Figgjohallen", resultat: "" },
+    { lag: "Figgjo 3", dato: "2027-01-16", kl: "13.30", hjemme: "Randaberg", borte: "Figgjo 3", sted: "Randaberghallen", resultat: "" },
+    { lag: "Figgjo 3", dato: "2027-01-30", kl: "11.00", hjemme: "Haugesund 3", borte: "Figgjo 3", sted: "Haugesundhallen", resultat: "" },
+    { lag: "Figgjo 3", dato: "2027-01-30", kl: "16.00", hjemme: "Stord 6", borte: "Figgjo 3", sted: "Haugesundhallen", resultat: "" },
+    { lag: "Figgjo 3", dato: "2027-02-07", kl: "11.00", hjemme: "Stord 4", borte: "Figgjo 3", sted: "Stordhallen", resultat: "" },
+    { lag: "Figgjo 3", dato: "2027-02-07", kl: "13.30", hjemme: "Stord 5", borte: "Figgjo 3", sted: "Stordhallen", resultat: "" },
+    { lag: "Figgjo 3", dato: "2027-02-21", kl: "14.00", hjemme: "Lye", borte: "Figgjo 3", sted: "Lyehallen", resultat: "" },
+    { lag: "Figgjo 3", dato: "2027-03-15", kl: "18.00", hjemme: "Figgjo 3", borte: "Randaberg", sted: "Figgjohallen", resultat: "" },
+  ],
 
 
   // Fotograf som vises på alle bilder, med mindre bildet har sin egen: { bilde: "...", fotograf: "Navn" }

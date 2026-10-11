@@ -904,8 +904,8 @@
   <button class="bla neste" onclick="blaBilde(1)" aria-label="Neste bilde">›</button>
 </div>
 
-<script src="innhold.js?v=1791739341"></script>
-<script src="serie.js?v=1791739341"></script>
+<script src="innhold.js?v=1791739644"></script>
+<script src="serie.js?v=1791739644"></script>
 <script>
 const ANTALL_NYHETER_FORST = 6;
 
@@ -1092,6 +1092,9 @@ function alleKamper() {
   return [...fraSerie, ...forHand].map(k => ({ ...k, datoObj: lesDato(k.dato) })).filter(k => k.datoObj);
 }
 
+// «Hjemme» betyr at kampen spilles i Figgjohallen, uansett hvem som formelt er hjemmelag
+const iEgenHall = k => /figgjo/i.test(k.sted || "");
+
 function kommendeKamper(lag) {
   const idag = new Date(); idag.setHours(0, 0, 0, 0);
   return alleKamper()
@@ -1112,7 +1115,7 @@ function tegnResultater() {
       <div class="dato"><span class="dag">${d.getDate()}</span><span class="mnd">${d.toLocaleDateString("nb-NO", { month: "short" }).replace(".", "")}</span></div>
       <div>
         <div class="lagene">${esc(hjemme ? k.borte : k.hjemme)}</div>
-        <div class="info">${esc(k.lag)} · ${hjemme ? "Hjemme" : "Borte"} · ${esc(k.sted)}</div>
+        <div class="info">${esc(k.lag)} · ${iEgenHall(k) ? "Hjemme" : "Borte"} · ${esc(k.sted)}</div>
       </div>
       <span class="stilling ${vi > de ? "seier" : vi < de ? "tap" : ""}">${vi}–${de}</span>
     </div>`;
@@ -1165,7 +1168,7 @@ function tegnKamper(antall) {
         <div class="lagene">${esc(hjemme ? k.borte : k.hjemme)}</div>
         <div class="info">${esc(k.lag)} · ${ukedag.charAt(0).toUpperCase() + ukedag.slice(1)} kl. ${esc(k.kl)} · ${esc(k.sted)}</div>
       </div>
-      <span class="merke-hb ${hjemme ? "hjemme" : ""}">${hjemme ? "Hjemme" : "Borte"}</span>
+      <span class="merke-hb ${iEgenHall(k) ? "hjemme" : ""}">${iEgenHall(k) ? "Hjemme" : "Borte"}</span>
     </div>`;
   }).join("") : '<p class="tom">Ingen kommende kamper.</p>';
   $("flere-kamper").hidden = kamper.length <= antall;
@@ -1260,7 +1263,7 @@ function visTopp(s) {
     const hjemme = /figgjo/i.test(neste.hjemme);
     const d = neste.datoObj.toLocaleDateString("nb-NO", { weekday: "short", day: "numeric", month: "short" }).replace(/\./g, "");
     $("neste-kamp").innerHTML = `<div class="etikett">Neste kamp</div>
-      <div class="mot">${esc(hjemme ? neste.borte : neste.hjemme)}<span class="hb ${hjemme ? "hjemme" : ""}">${hjemme ? "Hjemme" : "Borte"}</span></div>
+      <div class="mot">${esc(hjemme ? neste.borte : neste.hjemme)}<span class="hb ${iEgenHall(neste) ? "hjemme" : ""}">${iEgenHall(neste) ? "Hjemme" : "Borte"}</span></div>
       <div class="info">${esc(neste.lag)} · ${d} kl. ${esc(neste.kl)} · ${esc(neste.sted)}</div>`;
     $("neste-kamp").hidden = false;
   }
