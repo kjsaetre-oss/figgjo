@@ -111,7 +111,7 @@
     width: 100%; display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
     align-items: center; justify-items: center; gap: 24px 36px;
   }
-  .stripe-logoer a { display: block; line-height: 0; transition: transform .2s, opacity .2s; }
+  .stripe-logoer a, .stripe-logoer span { display: block; line-height: 0; transition: transform .2s, opacity .2s; }
   .stripe-logoer a:hover { transform: translateY(-3px); opacity: .85; }
   .stripe-logoer img { width: auto; height: auto; max-height: 62px; max-width: min(100%, 200px); object-fit: contain; }
   .nokkeltall.i-seksjon { margin: 36px 0 0; box-shadow: var(--skygge); }
@@ -726,7 +726,6 @@
       <a href="#medlem">Bli medlem</a>
       <a href="#om">Om oss</a>
       <a href="#styret">Styret</a>
-      <a href="#sponsorer">Sponsorer</a>
       <a href="#kontakt">Kontakt</a>
     </nav>
   </div>
@@ -853,18 +852,6 @@
   </div>
 </section>
 
-<section id="sponsorer" class="sponsorband">
-  <div class="innhold">
-    <div class="seksjonstopp"><span class="eyebrow">Takk for støtten</span><h2>Våre sponsorer</h2></div>
-    <p class="sponsor-intro">Disse bedriftene gjør det mulig for oss å være en klubb for alle. Tusen takk! 🏓</p>
-    <div class="sponsorer" id="sponsorliste"></div>
-    <div class="sponsor-bunn">
-      <div class="forbund" id="forbund"></div>
-      <a class="knapp" id="bli-sponsor">Vil bedriften din støtte oss? Ta kontakt →</a>
-    </div>
-  </div>
-</section>
-
 <section id="kontakt">
   <div class="innhold">
     <div class="seksjonstopp"><span class="eyebrow">Ta kontakt</span><h2>Kontakt</h2></div>
@@ -894,7 +881,6 @@
         <li><a href="#trening">Treningstider</a></li>
         <li><a href="#serielag">Serielag og kamper</a></li>
         <li><a href="#medlem">Bli medlem</a></li>
-        <li><a href="#sponsorer">Sponsorer</a></li>
       </ul>
     </div>
   </div>
@@ -908,8 +894,8 @@
   <button class="bla neste" onclick="blaBilde(1)" aria-label="Neste bilde">›</button>
 </div>
 
-<script src="innhold.js?v=1791740418"></script>
-<script src="serie.js?v=1791740418"></script>
+<script src="innhold.js?v=1791743811"></script>
+<script src="serie.js?v=1791743811"></script>
 <script>
 const ANTALL_NYHETER_FORST = 6;
 
@@ -1249,21 +1235,13 @@ function visPersoner(id, personer) {
     </div>`).join("") : '<p class="tom">Kommer snart.</p>';
 }
 
-function visSponsorer(s, forbund, epost) {
-  $("sponsorliste").innerHTML = (s || []).map(p => {
-    const indre = `<img src="${esc(p.logo)}" alt="${esc(p.navn)}" title="${esc(p.navn)}" loading="lazy">`;
-    return p.lenke
-      ? `<a class="sponsor" href="${esc(p.lenke)}" target="_blank" rel="noopener">${indre}</a>`
-      : `<div class="sponsor">${indre}</div>`;
+function visSponsorer(s) {
+  if (!(s || []).length) return;
+  $("stripe-logoer").innerHTML = s.map(p => {
+    const bilde = `<img src="${esc(p.logo)}" alt="${esc(p.navn)}" title="${esc(p.navn)}">`;
+    return p.lenke ? `<a href="${esc(p.lenke)}" target="_blank" rel="noopener">${bilde}</a>` : `<span>${bilde}</span>`;
   }).join("");
-  if ((s || []).length) {
-    $("stripe-logoer").innerHTML = s.map(p =>
-      `<a href="${esc(p.lenke || "#sponsorer")}"${p.lenke ? ' target="_blank" rel="noopener"' : ""} title="${esc(p.navn)}"><img src="${esc(p.logo)}" alt="${esc(p.navn)}"></a>`).join("");
-    $("sponsorramme").hidden = false;
-  }
-  if (forbund) $("forbund").innerHTML = `<img src="${esc(forbund.logo)}" alt="${esc(forbund.navn)}" loading="lazy"><span>Medlem av<br><strong>${esc(forbund.navn)}</strong></span>`;
-  if (epost) $("bli-sponsor").href = "mailto:" + epost + "?subject=" + encodeURIComponent("Sponsor for Figgjo Bordtennisklubb");
-  else $("bli-sponsor").hidden = true;
+  $("sponsorramme").hidden = false;
 }
 
 const IKONER = {
@@ -1356,7 +1334,7 @@ visPriser(INNHOLD.priser);
 visSerielag(INNHOLD.serielag);
 visPersoner("trenerliste", INNHOLD.trenere);
 visPersoner("styreliste", INNHOLD.styret);
-visSponsorer(INNHOLD.sponsorer, INNHOLD.forbund, INNHOLD.epost);
+visSponsorer(INNHOLD.sponsorer);
 visGalleri(INNHOLD.galleri);
 visTabell();
 tegnResultater();
