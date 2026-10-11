@@ -282,6 +282,8 @@
   .lag .meta { font-size: 14px; color: rgba(255,255,255,.6); }
   .lag ul { margin: 14px 0 0; padding: 14px 0 0; list-style: none; border-top: 1px solid rgba(255,255,255,.12); font-size: 15px; }
   .lag li { padding: 2px 0; }
+  .lag .lagleder { margin-top: 12px; padding-top: 12px; border-top: 1px solid rgba(255,255,255,.12); font-size: 14px; color: rgba(255,255,255,.7); }
+  .lag .lagleder strong { color: #fff; font-weight: 600; }
   .lag li.merknad { color: rgba(255,255,255,.55); font-style: italic; }
   .lag .kaptein { display: inline-grid; place-items: center; width: 20px; height: 20px; margin-left: 4px; border-radius: 50%; background: var(--farge); font-size: 11px; font-weight: 800; vertical-align: 1px; }
   .forklaring { margin: -20px 0 22px; color: var(--dempet); font-size: 14px; }
@@ -759,8 +761,8 @@
   <button class="bla neste" onclick="blaBilde(1)" aria-label="Neste bilde">›</button>
 </div>
 
-<script src="innhold.js?v=1791722674"></script>
-<script src="serie.js?v=1791722674"></script>
+<script src="innhold.js?v=1791722751"></script>
+<script src="serie.js?v=1791722751"></script>
 <script>
 const ANTALL_NYHETER_FORST = 6;
 
@@ -915,6 +917,7 @@ function visSerielag(lag) {
       <div class="div">${esc(l.divisjon)}${l.avdeling ? " · " + esc(l.avdeling) : ""}</div>
       <div class="meta">${esc(l.lagtype)}</div>
       ${l.spillere && l.spillere.length ? `<ul>${[...l.spillere].sort((a, b) => /\(kaptein\)/.test(b) - /\(kaptein\)/.test(a)).map(s => `<li>${esc(s).replace(" (kaptein)", ' <span class="kaptein">C</span>')}</li>`).join("")}</ul>` : (l.merknad ? `<ul><li class="merknad">${esc(l.merknad)}</li></ul>` : "")}
+      ${l.lagleder ? `<div class="lagleder">Lagleder: <strong>${esc(l.lagleder)}</strong></div>` : ""}
     </div>`).join("");
 }
 
