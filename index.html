@@ -260,6 +260,7 @@
     td { border: 0; padding: 3px 20px; }
     td.dag { padding-bottom: 8px; }
     td[data-navn]:not(.dag)::before { content: attr(data-navn) ": "; color: var(--dempet); }
+    td[data-navn]:empty { display: none; }
   }
 
   /* ---------- Serielagene ---------- */
@@ -751,8 +752,8 @@
   <button class="bla neste" onclick="blaBilde(1)" aria-label="Neste bilde">›</button>
 </div>
 
-<script src="innhold.js?v=1791718888"></script>
-<script src="serie.js?v=1791718888"></script>
+<script src="innhold.js?v=1791719050"></script>
+<script src="serie.js?v=1791719050"></script>
 <script>
 const ANTALL_NYHETER_FORST = 6;
 
