@@ -123,7 +123,7 @@ const INNHOLD = {
       bilder: [
         { bilde: "bilder/spiller-tobias-sunde.jpg", tekst: "Tobias Sunde" },
         { bilde: "bilder/spiller-daniel-mydland.jpg", tekst: "Daniel Mydland" },
-        { bilde: "bilder/spiller-stian-pedersen.jpg", tekst: "Stian Pedersen, Figgjo 2" },
+        { bilde: "bilder/spiller-stian-pedersen.jpg", tekst: "Stian Pedersen" },
       ],
     },
     {
