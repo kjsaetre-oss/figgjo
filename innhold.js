@@ -93,7 +93,7 @@ const INNHOLD = {
       bilde: "bilder/trener-christian-ibenfeld.jpg",
       tekst: "Fysioterapeut, utdannet i Montpellier i Frankrike i 1999, og har jobbet på Fysio Forum siden 2000. Med sin idrettsbakgrunn har han særlig fokus på funksjonell og individuelt tilpasset trening. Han driver flere treningsgrupper, blant annet en bordtennisgruppe for Parkinson i Stavanger.",
     },
-    { navn: "Egil Klungtveit", rolle: "Trener – gatebordtennis med Frelsesarmeen (tirsdager)", bilde: "", tekst: "" },
+    { navn: "Egil Klungtveit", rolle: "Trener – gatebordtennis med Frelsesarmeen (tirsdager)", bilde: "bilder/egil-klungtveit.jpg", tekst: "" },
     { navn: "Kenneth Haugland", rolle: "Trener – rekrutter (onsdager)", bilde: "", tekst: "" },
     { navn: "Kjetil Lindefjell Sætre", rolle: "Trener – kretstrening ungdom (torsdager)", bilde: "bilder/kjetil-lindefjell-saetre.jpg", tekst: "" },
   ],
@@ -102,7 +102,7 @@ const INNHOLD = {
   styret: [
     { navn: "Kjetil Lindefjell Sætre", rolle: "Leder", bilde: "bilder/kjetil-lindefjell-saetre.jpg", tekst: "", epost: "kjsaetre@gmail.com", telefon: "949 79 992" },
     { navn: "Henning Pedersen", rolle: "Styremedlem", bilde: "bilder/henning-pedersen.jpg", tekst: "" },
-    { navn: "Egil Klungtveit", rolle: "Styremedlem", bilde: "", tekst: "" },
+    { navn: "Egil Klungtveit", rolle: "Styremedlem", bilde: "bilder/egil-klungtveit.jpg", tekst: "" },
   ],
 
   // Sponsorer. lenke er valgfri
