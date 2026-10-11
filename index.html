@@ -338,7 +338,7 @@
   }
 
   /* ---------- Trenere / styret ---------- */
-  .personer { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 262px)); gap: 22px; }
+  .personer { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 22px; }
   .person { background: #fff; border-radius: var(--radius); overflow: hidden; box-shadow: var(--skygge); display: flex; flex-direction: column; }
   .person .portrett { aspect-ratio: 4 / 4.4; width: 100%; object-fit: cover; object-position: center 20%; background: var(--flate); }
   .person .initialer {
@@ -351,7 +351,7 @@
   .person h3 { margin: 0; font-size: 21px; }
   .person .rolle { color: var(--farge); font-weight: 600; font-size: 14px; margin-top: 2px; }
   .person p { margin: 12px 0 0; color: #3c4048; font-size: 15px; }
-  .person p.kort { display: -webkit-box; -webkit-line-clamp: 4; -webkit-box-orient: vertical; overflow: hidden; }
+  .person p.kort { display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
   .person .les-mer { font-size: 14px; }
   .person .fotokreditt { margin-top: 8px; font-size: 12px; color: var(--dempet); }
   .person .kontaktlinjer { margin-top: 12px; display: grid; gap: 4px; font-size: 14px; }
@@ -758,8 +758,8 @@
   <button class="bla neste" onclick="blaBilde(1)" aria-label="Neste bilde">›</button>
 </div>
 
-<script src="innhold.js?v=1791720820"></script>
-<script src="serie.js?v=1791720820"></script>
+<script src="innhold.js?v=1791720913"></script>
+<script src="serie.js?v=1791720913"></script>
 <script>
 const ANTALL_NYHETER_FORST = 6;
 

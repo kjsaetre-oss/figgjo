@@ -86,6 +86,7 @@ const INNHOLD = {
 
   // Trenere. bilde er valgfritt (uten bilde vises initialer)
   trenere: [
+    { navn: "Kjetil Lindefjell Sætre", rolle: "Trener – kretstrening ungdom (torsdager)", bilde: "bilder/kjetil-lindefjell-saetre.jpg", tekst: "" },
     { navn: "Arian Myrbakk", rolle: "Trener – åpen trening (mandager)", bilde: "bilder/arian-myrbakk.jpg", tekst: "", foto: "Kjell Roar Bjørnsen" },
     {
       navn: "Christian Ibenfeld",
@@ -95,7 +96,6 @@ const INNHOLD = {
     },
     { navn: "Egil Klungtveit", rolle: "Trener – gatebordtennis med Frelsesarmeen (tirsdager)", bilde: "bilder/egil-klungtveit.jpg", tekst: "" },
     { navn: "Kenneth Haugland", rolle: "Trener – rekrutter (onsdager)", bilde: "bilder/kenneth-haugland.jpg", tekst: "" },
-    { navn: "Kjetil Lindefjell Sætre", rolle: "Trener – kretstrening ungdom (torsdager)", bilde: "bilder/kjetil-lindefjell-saetre.jpg", tekst: "" },
   ],
 
   // Styret
