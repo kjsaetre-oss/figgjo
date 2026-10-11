@@ -72,16 +72,29 @@
   nav a.aktiv { color: #fff; background: var(--farge); }
   .meny-knapp { display: none; }
   @media (max-width: 1180px) {
-    html { scroll-padding-top: 116px; }
-    .meny { height: auto; flex-direction: column; align-items: stretch; gap: 0; padding: 0; }
-    .logo { padding: 12px 16px 6px; font-size: 17px; }
+    html { scroll-padding-top: 72px; }
+    .meny { height: 58px; padding: 0 8px 0 16px; }
+    .logo { font-size: 17px; }
     .logo img { height: 30px; }
     .logo .merke { width: 28px; height: 28px; }
-    nav { gap: 6px; overflow-x: auto; padding: 4px 16px 12px; scrollbar-width: none; }
-    nav::-webkit-scrollbar { display: none; }
+    .meny-knapp {
+      display: grid; place-content: center; gap: 5px; width: 48px; height: 48px;
+      background: none; border: 0; border-radius: 12px; cursor: pointer;
+    }
+    .meny-knapp span { display: block; width: 22px; height: 2px; border-radius: 2px; background: #fff; transition: transform .25s, opacity .2s; }
+    header.apen .meny-knapp span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+    header.apen .meny-knapp span:nth-child(2) { opacity: 0; }
+    header.apen .meny-knapp span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+    nav {
+      display: none; position: absolute; left: 0; right: 0; top: 100%;
+      grid-template-columns: 1fr 1fr; gap: 8px; padding: 12px 16px 20px;
+      background: rgba(20,22,27,.98); border-bottom: 1px solid rgba(255,255,255,.1);
+      box-shadow: 0 24px 40px rgba(0,0,0,.35); max-height: calc(100vh - 58px); overflow-y: auto;
+    }
+    header.apen nav { display: grid; }
     nav a {
-      flex: none; padding: 7px 15px; font-size: 14px; font-weight: 600;
-      background: rgba(255,255,255,.08); color: rgba(255,255,255,.88);
+      padding: 14px 16px; font-size: 16px; font-weight: 600; border-radius: 14px;
+      background: rgba(255,255,255,.07); color: #fff;
     }
   }
 
@@ -552,6 +565,123 @@
   .lysboks.en .bla { display: none; }
   @media (max-width: 600px) { .lysboks .bla { top: auto; bottom: 20px; transform: none; } }
 
+
+  /* ================= Mobil: kompakt visning ================= */
+  .oktliste { display: none; }
+  @media (max-width: 700px) {
+    section { padding: 48px 16px; }
+    section.etter-tall { padding-top: 48px; }
+    .seksjonstopp { margin-bottom: 22px; }
+    h2 { font-size: 30px; }
+    .kamptittel { font-size: 21px; margin-bottom: 12px; }
+    #tabellblokk, #resultatblokk { margin-bottom: 40px; }
+
+    /* Topp */
+    .hero { padding: 48px 16px 140px; }
+    .hero h1 { font-size: 40px; }
+    .hero p { margin-bottom: 24px; }
+    .knapp { padding: 13px 20px; font-size: 15px; }
+    .hero-innhold { gap: 44px; }
+    .hero-visuell { margin: 0 6px; }
+    .neste-kamp { min-width: 0; max-width: 88%; padding: 12px 14px 13px; }
+    .neste-kamp .mot { font-size: 18px; }
+
+    /* Sveipbare rader: nyheter og lagkort */
+    .nyheter, .lagkort {
+      display: flex; gap: 12px; overflow-x: auto; scroll-snap-type: x mandatory;
+      margin: 0 -16px; padding: 4px 16px 14px; scroll-padding-left: 16px;
+      scrollbar-width: none; -webkit-overflow-scrolling: touch;
+    }
+    .nyheter::-webkit-scrollbar, .lagkort::-webkit-scrollbar { display: none; }
+    .nyhet { flex: 0 0 84%; scroll-snap-align: start; }
+    .nyhet:hover { transform: none; }
+    .nyhet .tekstdel { padding: 16px 18px 18px; }
+    .nyhet h3 { font-size: 19px; }
+    .nyhet p { font-size: 15px; }
+    .lagkort { margin-bottom: 32px; }
+    .lag { flex: 0 0 74%; scroll-snap-align: start; padding: 22px 20px 20px; }
+    .lag .nr { font-size: 26px; }
+
+    /* Treningstider som kompakt liste */
+    #treningsboks { display: none; }
+    .oktliste { display: grid; gap: 12px; }
+    .oktdag { background: #fff; border-radius: 16px; box-shadow: var(--skygge); overflow: hidden; }
+    .oktdag-navn {
+      padding: 9px 16px; font-size: 13px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase;
+      color: var(--farge-mork); background: color-mix(in srgb, var(--farge) 8%, #fff);
+    }
+    .okt { display: grid; grid-template-columns: 96px 1fr; gap: 12px; padding: 12px 16px; align-items: start; }
+    .okt + .okt { border-top: 1px solid var(--kant); }
+    .okt-tid { font-family: "Outfit", sans-serif; font-weight: 700; font-size: 15px; white-space: nowrap; padding-top: 1px; }
+    .okt-info strong { display: block; font-size: 15px; line-height: 1.35; }
+    .okt-info span { display: block; font-size: 13px; color: var(--dempet); margin-top: 2px; }
+    .okt-info span:empty { display: none; }
+
+    /* Trenere og styret: bilde til venstre, tekst til høyre */
+    .personer { grid-template-columns: 1fr; gap: 10px; }
+    .person { flex-direction: row; align-items: center; border-radius: 16px; }
+    .person .portrett, .person .initialer {
+      flex: none; width: 84px; height: 84px; aspect-ratio: 1; margin: 12px 0 12px 12px; border-radius: 14px;
+    }
+    .person .initialer { font-size: 26px; }
+    .person .initialer span { width: 60px; height: 60px; }
+    .person .tekstdel { padding: 12px 14px; min-width: 0; }
+    .person h3 { font-size: 17px; line-height: 1.25; }
+    .person .rolle { font-size: 13px; line-height: 1.35; }
+    .person p { font-size: 14px; margin-top: 6px; }
+    .person p.kort { -webkit-line-clamp: 2; }
+    .person .fotokreditt { font-size: 11px; margin-top: 4px; }
+    .person .kontaktlinjer { margin-top: 6px; font-size: 13px; gap: 2px; }
+
+    /* Kamper */
+    .kamper { gap: 8px; }
+    .kamp, .kamp.spilt { grid-template-columns: 46px 1fr auto; gap: 12px; padding: 11px 14px; border-radius: 12px; }
+    .kamp .dato { padding-right: 10px; }
+    .kamp .dag { font-size: 22px; }
+    .kamp .mnd { font-size: 10px; }
+    .kamp .lagene { font-size: 15px; }
+    .kamp .info { font-size: 12.5px; }
+    .kamp .merke-hb { grid-column: auto; justify-self: end; font-size: 11px; padding: 4px 9px; }
+
+    /* Priser som rader */
+    .priser { grid-template-columns: 1fr; gap: 10px; margin-bottom: 22px; }
+    .pris { display: grid; grid-template-columns: 1fr auto; column-gap: 12px; align-items: center; padding: 16px 18px 14px; border-radius: 16px; }
+    .pris::before { height: 4px; }
+    .pris h3 { grid-column: 1; margin: 0; font-size: 16px; color: var(--tekst); }
+    .pris .belop { grid-column: 2; grid-row: 1 / span 2; font-size: 24px; }
+    .pris p { grid-column: 1; margin: 2px 0 0; font-size: 13px; }
+
+    /* Om klubben */
+    .om-tekst { font-size: 16.5px; }
+    .nokkeltall.i-seksjon { margin-top: 24px; border-radius: 16px; }
+    .tall { padding: 18px 10px; }
+    .tall .verdi { font-size: 30px; }
+    .tall .tekst { font-size: 13px; margin-top: 4px; }
+    .tilbud { grid-template-columns: 1fr; gap: 10px; margin-top: 24px; }
+    .tilbud-kort { display: grid; grid-template-columns: 44px 1fr; column-gap: 14px; padding: 16px; border-radius: 16px; }
+    .tilbud-kort .ikon { grid-row: 1 / span 3; width: 44px; height: 44px; border-radius: 12px; margin: 0; }
+    .tilbud-kort h3, .tilbud-kort p, .tilbud-kort .mer { grid-column: 2; }
+    .tilbud-kort h3 { font-size: 17px; margin-bottom: 4px; }
+    .tilbud-kort p { font-size: 14px; }
+    .tilbud-kort .mer { margin-top: 6px; }
+
+    /* Sponsorer: to og to */
+    .sponsor-intro { font-size: 16px; margin: -8px 0 20px; }
+    .sponsorer { grid-template-columns: 1fr 1fr; gap: 10px; }
+    .sponsor { min-height: 108px; padding: 16px; border-radius: 16px; }
+    .sponsor img { max-height: 62px; max-width: 92%; }
+    .sponsor-bunn { margin-top: 22px; }
+    .sponsor-bunn .knapp { width: 100%; justify-content: center; }
+
+    /* Kontakt og bunn */
+    .kontakt dl { padding: 20px; }
+    .kart { min-height: 240px; }
+    footer { padding: 44px 16px 24px; }
+    .bunn-linje { margin-top: 28px; }
+  }
+  .sveip-hint { display: none; margin: -12px 0 12px; font-size: 13px; color: var(--dempet); }
+  @media (max-width: 700px) { .sveip-hint { display: block; } }
+
   @media (prefers-reduced-motion: reduce) {
     html { scroll-behavior: auto; }
     .avslor { opacity: 1; transform: none; }
@@ -573,7 +703,10 @@
       </svg>
       <span id="klubbnavn-meny">Bordtennisklubb</span>
     </a>
-    <nav>
+    <button class="meny-knapp" id="meny-knapp" aria-label="Åpne menyen" aria-expanded="false" aria-controls="hovedmeny">
+      <span></span><span></span><span></span>
+    </button>
+    <nav id="hovedmeny">
       <a href="#nyheter">Nyheter</a>
       <a href="#trening">Trening</a>
       <a href="#trenere">Trenere</a>
@@ -621,6 +754,7 @@
 <section id="nyheter" class="etter-tall">
   <div class="innhold">
     <div class="seksjonstopp"><span class="eyebrow">Siste nytt</span><h2>Nyheter</h2></div>
+    <p class="sveip-hint">Sveip for å se flere →</p>
     <div class="nyheter" id="nyhetsliste"></div>
     <div class="flere-nyheter" id="flere" hidden><button onclick="visAlleNyheter()">Vis flere nyheter</button></div>
   </div>
@@ -629,7 +763,8 @@
 <section id="trening" class="gra">
   <div class="innhold">
     <div class="seksjonstopp"><span class="eyebrow">Når vi spiller</span><h2>Treningstider</h2></div>
-    <div class="tabell-boks"><table id="treningstabell"></table></div>
+    <div class="tabell-boks" id="treningsboks"><table id="treningstabell"></table></div>
+    <div class="oktliste" id="oktliste"></div>
     <p class="trenings-notat" id="trenings-notat" hidden></p>
   </div>
 </section>
@@ -645,6 +780,7 @@
   <div class="innhold">
     <div class="seksjonstopp"><span class="eyebrow">Sesongen 2026/27</span><h2>Serielagene</h2></div>
     <p class="forklaring"><span class="kaptein-tegn">C</span> = kaptein</p>
+    <p class="sveip-hint" style="margin-top:-8px">Sveip for å se alle lagene →</p>
     <div class="lagkort" id="lagkort"></div>
     <div id="tabellblokk" hidden>
       <div class="lagfilter" id="tabellfaner"></div>
@@ -761,8 +897,8 @@
   <button class="bla neste" onclick="blaBilde(1)" aria-label="Neste bilde">›</button>
 </div>
 
-<script src="innhold.js?v=1791722751"></script>
-<script src="serie.js?v=1791722751"></script>
+<script src="innhold.js?v=1791723165"></script>
+<script src="serie.js?v=1791723165"></script>
 <script>
 const ANTALL_NYHETER_FORST = 6;
 
@@ -899,6 +1035,24 @@ function visTrening(rader) {
     rader.map(r => "<tr>" + kolonner.map((k, i) =>
       (i === 0 ? `<td class="dag"><span>${esc(r[k])}</span></td>` : `<td data-navn="${esc(k)}">${esc(r[k])}</td>`)).join("") + "</tr>").join("") +
     "</tbody>";
+
+  // Kompakt liste for mobil: én overskrift per dag, så tid til venstre og gruppe til høyre
+  const [dagK, tidK, gruppeK, ...resten] = kolonner;
+  const dager = [];
+  rader.forEach(r => {
+    let d = dager.find(x => x.dag === r[dagK]);
+    if (!d) dager.push(d = { dag: r[dagK], okter: [] });
+    d.okter.push(r);
+  });
+  $("oktliste").innerHTML = dager.map(d => `
+    <div class="oktdag">
+      <div class="oktdag-navn">${esc(d.dag)}</div>
+      ${d.okter.map(r => `<div class="okt">
+        <div class="okt-tid">${esc(r[tidK] || "")}</div>
+        <div class="okt-info"><strong>${esc(r[gruppeK] || "")}</strong>
+          <span>${resten.map(k => r[k]).filter(Boolean).map(esc).join(" · ")}</span></div>
+      </div>`).join("")}
+    </div>`).join("");
 }
 
 function visPriser(priser) {
@@ -1188,6 +1342,18 @@ const observator = new IntersectionObserver(oppf => {
 }, { rootMargin: "-45% 0px -50% 0px" });
 document.querySelectorAll("section[id]").forEach(s => observator.observe(s));
 startAnimasjoner();
+
+// Menyknapp på mobil og nettbrett
+const hode = document.querySelector("header"), menyknapp = $("meny-knapp");
+const settMeny = apen => {
+  hode.classList.toggle("apen", apen);
+  menyknapp.setAttribute("aria-expanded", apen);
+  menyknapp.setAttribute("aria-label", apen ? "Lukk menyen" : "Åpne menyen");
+};
+menyknapp.addEventListener("click", () => settMeny(!hode.classList.contains("apen")));
+$("hovedmeny").addEventListener("click", e => { if (e.target.closest("a")) settMeny(false); });
+document.addEventListener("click", e => { if (!e.target.closest("header")) settMeny(false); });
+document.addEventListener("keydown", e => { if (e.key === "Escape") settMeny(false); });
 </script>
 </body>
 </html>
