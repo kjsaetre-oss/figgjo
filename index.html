@@ -597,6 +597,7 @@
       display: flex; gap: 12px; overflow-x: auto; scroll-snap-type: x mandatory;
       margin: 0 -16px; padding: 4px 16px 14px; scroll-padding-left: 16px;
       scrollbar-width: none; -webkit-overflow-scrolling: touch;
+      overscroll-behavior-x: contain; align-items: stretch;
     }
     .nyheter::-webkit-scrollbar, .lagkort::-webkit-scrollbar { display: none; }
     .nyhet { flex: 0 0 84%; scroll-snap-align: start; }
@@ -903,8 +904,8 @@
   <button class="bla neste" onclick="blaBilde(1)" aria-label="Neste bilde">›</button>
 </div>
 
-<script src="innhold.js?v=1791739129"></script>
-<script src="serie.js?v=1791739129"></script>
+<script src="innhold.js?v=1791739341"></script>
+<script src="serie.js?v=1791739341"></script>
 <script>
 const ANTALL_NYHETER_FORST = 6;
 
@@ -1309,6 +1310,9 @@ function startAnimasjoner() {
   document.querySelectorAll(velg).forEach(el => {
     const r = el.getBoundingClientRect();
     if (r.top < innerHeight) return; // allerede synlig ved last – ikke skjul
+    // Kort i en sveipbar rad skal ikke gli opp når de sveipes inn fra siden
+    const rad = el.parentElement;
+    if (rad.scrollWidth > rad.clientWidth + 4) return;
     const søsken = [...el.parentElement.children].indexOf(el);
     el.style.transitionDelay = Math.min(søsken, 5) * 70 + "ms";
     el.classList.add("avslor"); obs.observe(el);
