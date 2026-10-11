@@ -110,6 +110,7 @@ const INNHOLD = {
     { navn: "Kongeparken Camping", logo: "bilder/sponsorer/kongeparken.png", lenke: "" },
     { navn: "Metabolsktesting.no", logo: "bilder/sponsorer/metabolsktesting.png", lenke: "https://metabolsktesting.no" },
     { navn: "HEAD Energy", logo: "bilder/sponsorer/head-energy.png", lenke: "" },
+    { navn: "Grude & Klingsheim Eiendom", logo: "bilder/sponsorer/grude-klingsheim.png", lenke: "" },
   ],
   forbund: { navn: "Norges Bordtennisforbund", logo: "bilder/sponsorer/nbtf.png", lenke: "" },
 
