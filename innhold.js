@@ -60,8 +60,11 @@ const INNHOLD = {
     { Dag: "Mandag", Tid: "17:00–19:00", Gruppe: "Åpen trening", Trener: "Arian Myrbakk", Sted: "Figgjohallen" },
     { Dag: "Tirsdag", Tid: "12:00–13:00", Gruppe: "Bordtennis mot Parkinson", Trener: "Christian Ibenfeld", Sted: "Figgjohallen" },
     { Dag: "Tirsdag", Tid: "17:00–19:00", Gruppe: "Gatebordtennis med Frelsesarmeen", Trener: "Egil Klungtveit", Sted: "" },
+    { Dag: "Tirsdag", Tid: "19:00–21:00", Gruppe: "Trening for voksne", Trener: "", Sted: "Figgjohallen" },
+    { Dag: "Onsdag", Tid: "17:00–19:00", Gruppe: "Trening for rekrutter", Trener: "Kenneth Haugland", Sted: "Figgjohallen" },
+    { Dag: "Torsdag", Tid: "17:00–19:00", Gruppe: "Kretstrening ungdom", Trener: "Kjetil Lindefjell Sætre", Sted: "Figgjohallen" },
   ],
-  treningsnotat: "Treningstider for de andre gruppene kommer snart. Ta kontakt, så hjelper vi deg i gang!",
+  treningsnotat: "",
 
   // Serielagene. Legg til spillere: spillere: ["Navn 1", "Navn 2"]
   serielag: [
@@ -83,13 +86,15 @@ const INNHOLD = {
   // Trenere. bilde er valgfritt (uten bilde vises initialer)
   trenere: [
     { navn: "Arian Myrbakk", rolle: "Trener – åpen trening (mandager)", bilde: "", tekst: "" },
-    { navn: "Egil Klungtveit", rolle: "Trener – gatebordtennis med Frelsesarmeen (tirsdager)", bilde: "", tekst: "" },
     {
       navn: "Christian Ibenfeld",
       rolle: "Trener – Bordtennis mot Parkinson",
       bilde: "bilder/trener-christian-ibenfeld.jpg",
       tekst: "Fysioterapeut, utdannet i Montpellier i Frankrike i 1999, og har jobbet på Fysio Forum siden 2000. Med sin idrettsbakgrunn har han særlig fokus på funksjonell og individuelt tilpasset trening. Han driver flere treningsgrupper, blant annet en bordtennisgruppe for Parkinson i Stavanger.",
     },
+    { navn: "Egil Klungtveit", rolle: "Trener – gatebordtennis med Frelsesarmeen (tirsdager)", bilde: "", tekst: "" },
+    { navn: "Kenneth Haugland", rolle: "Trener – rekrutter (onsdager)", bilde: "", tekst: "" },
+    { navn: "Kjetil Lindefjell Sætre", rolle: "Trener – kretstrening ungdom (torsdager)", bilde: "", tekst: "" },
   ],
 
   // Styret
