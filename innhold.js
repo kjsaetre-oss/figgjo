@@ -40,7 +40,7 @@ const INNHOLD = {
       dato: "2026-10-10",
       tittel: "Seriestart 24. oktober",
       tekst: "Helgen 24.–25. oktober starter seriesesongen 2026/27. Figgjo 1 spiller i 2. divisjon og møter Rakkestad, Fornebu 3, Kobra og Skien i Skien.\n\nFiggjo 2 åpner i 3. divisjon borte mot Rosseland 2 lørdag, og spiller første hjemmekamp søndag kl. 10.00 i Figgjohallen mot Stavanger BTK. Kom gjerne og hei!",
-      bilder: [],
+      bilder: ["bilder/serielag-2026-27-tre-spillere.jpg"],
     },
     {
       dato: "2026-10-10",
@@ -130,6 +130,7 @@ const INNHOLD = {
       dato: "",
       bilder: [
         { bilde: "bilder/seriemestere-3div-2025-26.jpg", tekst: "Serielaget som vant 3. divisjon 2025/26" },
+        { bilde: "bilder/serielag-2026-27-tre-spillere.jpg", tekst: "" },
       ],
     },
   ],
