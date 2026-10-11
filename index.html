@@ -87,20 +87,23 @@
 
   /* ---------- Sponsorstripe under menyen ---------- */
   .sponsorkort {
-    max-width: 1140px; margin: 0 auto; background: #fff; border-radius: 22px; padding: 26px 32px;
+    max-width: 1140px; margin: 0 auto; background: #fff; border-radius: 22px; padding: 22px 32px 28px;
     box-shadow: 0 20px 60px rgba(20,22,27,.14);
-    display: flex; align-items: center; justify-content: center; gap: 22px 48px; flex-wrap: wrap;
+    display: flex; flex-direction: column; align-items: center; gap: 18px;
   }
   .stripe-tekst { font-size: 11px; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; color: var(--dempet); white-space: nowrap; }
-  .stripe-logoer { display: flex; align-items: center; justify-content: center; gap: 28px 56px; flex-wrap: wrap; }
+  .stripe-logoer {
+    width: 100%; display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    align-items: center; justify-items: center; gap: 24px 36px;
+  }
   .stripe-logoer a { display: block; line-height: 0; transition: transform .2s, opacity .2s; }
   .stripe-logoer a:hover { transform: translateY(-3px); opacity: .85; }
-  .stripe-logoer img { width: auto; height: auto; max-height: 66px; max-width: 210px; object-fit: contain; }
+  .stripe-logoer img { width: auto; height: auto; max-height: 62px; max-width: min(100%, 200px); object-fit: contain; }
   .nokkeltall.i-seksjon { margin: 36px 0 0; box-shadow: var(--skygge); }
   @media (max-width: 700px) {
-    .sponsorkort { flex-direction: column; gap: 14px; padding: 20px 16px 22px; }
-    .stripe-logoer { gap: 18px 28px; }
-    .stripe-logoer img { max-height: 40px; max-width: 34vw; }
+    .sponsorkort { gap: 14px; padding: 18px 16px 22px; }
+    .stripe-logoer { grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); gap: 20px 16px; }
+    .stripe-logoer img { max-height: 42px; max-width: min(100%, 150px); }
   }
 
   /* ---------- Toppseksjon ---------- */
@@ -752,8 +755,8 @@
   <button class="bla neste" onclick="blaBilde(1)" aria-label="Neste bilde">›</button>
 </div>
 
-<script src="innhold.js?v=1791719299"></script>
-<script src="serie.js?v=1791719299"></script>
+<script src="innhold.js?v=1791719385"></script>
+<script src="serie.js?v=1791719385"></script>
 <script>
 const ANTALL_NYHETER_FORST = 6;
 
