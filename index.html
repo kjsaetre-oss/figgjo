@@ -322,6 +322,8 @@
   .kamp .mnd { display: block; font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: .08em; color: var(--farge); margin-top: 4px; }
   .kamp .lagene { font-weight: 600; line-height: 1.35; }
   .kamp .lagene b { color: var(--farge-mork); font-weight: 800; }
+  .kamp .divisjon { font-size: 11px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--dempet); margin-bottom: 1px; }
+  .kamp .divisjon:empty { display: none; }
   .kamp .info { font-size: 14px; color: var(--dempet); margin-top: 2px; }
   .kamp .merke-hb {
     font-size: 12px; font-weight: 700; padding: 5px 12px; border-radius: 999px; white-space: nowrap;
@@ -649,6 +651,7 @@
     .kamp .mnd { font-size: 10px; }
     .kamp .lagene { font-size: 15px; }
     .kamp .info { font-size: 12.5px; }
+    .kamp .divisjon { font-size: 10px; }
     .kamp .merke-hb { grid-column: auto; justify-self: end; font-size: 11px; padding: 4px 9px; }
 
     /* Priser som rader */
@@ -905,8 +908,8 @@
   <button class="bla neste" onclick="blaBilde(1)" aria-label="Neste bilde">›</button>
 </div>
 
-<script src="innhold.js?v=1791740132"></script>
-<script src="serie.js?v=1791740132"></script>
+<script src="innhold.js?v=1791740418"></script>
+<script src="serie.js?v=1791740418"></script>
 <script>
 const ANTALL_NYHETER_FORST = 6;
 
@@ -1104,6 +1107,8 @@ const kamptittel = k => {
   const navn = n => figgjoNr(n) === null ? esc(n) : `<b>${esc(intern ? n : k.lag)}</b>`;
   return navn(k.hjemme) + " – " + navn(k.borte);
 };
+// Divisjonen laget i kampen spiller i, hentet fra serielagene i innhold.js
+const divisjonFor = k => ((INNHOLD.serielag || []).find(l => l.navn === k.lag) || {}).divisjon || "";
 // Internkamper ligger inne én gang per lag. I felleslista vises de bare én gang.
 const utenDobbeltforing = kamper => {
   const sett = new Set();
@@ -1134,6 +1139,7 @@ function tegnResultater() {
     return `<div class="kamp spilt">
       <div class="dato"><span class="dag">${d.getDate()}</span><span class="mnd">${d.toLocaleDateString("nb-NO", { month: "short" }).replace(".", "")}</span></div>
       <div>
+        <div class="divisjon">${esc(divisjonFor(k))}</div>
         <div class="lagene">${kamptittel(k)}</div>
         <div class="info">${iEgenHall(k) ? "Hjemme" : "Borte"} · ${esc(k.sted)}</div>
       </div>
@@ -1185,8 +1191,9 @@ function tegnKamper(antall) {
     return `<div class="kamp">
       <div class="dato"><span class="dag">${d.getDate()}</span><span class="mnd">${d.toLocaleDateString("nb-NO", { month: "short" }).replace(".", "")}</span></div>
       <div>
+        <div class="divisjon">${[divisjonFor(k), intern ? "Internkamp" : ""].filter(Boolean).map(esc).join(" · ")}</div>
         <div class="lagene">${kamptittel(k)}</div>
-        <div class="info">${intern ? "Internkamp · " : ""}${ukedag.charAt(0).toUpperCase() + ukedag.slice(1)} kl. ${esc(k.kl)} · ${esc(k.sted)}</div>
+        <div class="info">${ukedag.charAt(0).toUpperCase() + ukedag.slice(1)} kl. ${esc(k.kl)} · ${esc(k.sted)}</div>
       </div>
       <span class="merke-hb ${iEgenHall(k) ? "hjemme" : ""}">${iEgenHall(k) ? "Hjemme" : "Borte"}</span>
     </div>`;
@@ -1281,7 +1288,7 @@ function visTopp(s) {
   const neste = kommendeKamper()[0];
   if (neste) {
     const d = neste.datoObj.toLocaleDateString("nb-NO", { weekday: "short", day: "numeric", month: "short" }).replace(/\./g, "");
-    $("neste-kamp").innerHTML = `<div class="etikett">Neste kamp</div>
+    $("neste-kamp").innerHTML = `<div class="etikett">Neste kamp${divisjonFor(neste) ? " · " + esc(divisjonFor(neste)) : ""}</div>
       <div class="mot">${kamptittel(neste)}<span class="hb ${iEgenHall(neste) ? "hjemme" : ""}">${iEgenHall(neste) ? "Hjemme" : "Borte"}</span></div>
       <div class="info">${d} kl. ${esc(neste.kl)} · ${esc(neste.sted)}</div>`;
     $("neste-kamp").hidden = false;
