@@ -758,8 +758,8 @@
   <button class="bla neste" onclick="blaBilde(1)" aria-label="Neste bilde">›</button>
 </div>
 
-<script src="innhold.js?v=1791720913"></script>
-<script src="serie.js?v=1791720913"></script>
+<script src="innhold.js?v=1791720999"></script>
+<script src="serie.js?v=1791720999"></script>
 <script>
 const ANTALL_NYHETER_FORST = 6;
 
@@ -973,17 +973,13 @@ function visTabell() {
     : "Serien har ikke startet";
   $("tabellstatus").hidden = !$("tabellstatus").textContent;
 
-  // Fast farge per lag ut fra navnet, så merkene er like hver gang
-  const farger = ["#3b6fd4", "#0f8a7e", "#7a52c7", "#c2681b", "#2f7d3b", "#b8457a", "#4a5568", "#1f7fa8"];
-  const farge = navn => farger[[...navn].reduce((s, t) => s + t.charCodeAt(0), 0) % farger.length];
-
   $("serietabell").innerHTML = `<thead><tr><th>#</th><th>LAG</th><th title="Kamper spilt">K</th><th title="Vunnet">V</th><th title="Uavgjort">U</th><th title="Tapt">T</th><th class="bred" title="Enkeltkamper vunnet–tapt">KAMPER</th><th class="bred" title="Sett vunnet–tapt">SETT</th><th title="Poeng">P</th></tr></thead><tbody>` +
     d.tabell.map((r, i) => {
       const oss = /figgjo/i.test(r.lag);
       const plass = /^\d+$/.test(r.plass) ? r.plass : (startet ? i + 1 : "–");
       return `<tr class="${oss ? "oss" : ""}${startet && String(plass) === "1" ? " topp" : ""}">
         <td><span class="plass">${plass}</span></td>
-        <td><span class="lagnavn"><span class="lagmerke"${oss ? "" : ` style="background:${farge(r.lag)}"`}>${esc(r.lag[0])}</span>${esc(r.lag)}</span></td>
+        <td><span class="lagnavn">${esc(r.lag)}</span></td>
         <td>${esc(r.k)}</td><td>${esc(r.v)}</td><td>${esc(r.u)}</td><td>${esc(r.t)}</td>
         <td class="bred dempet">${esc(r.kamper)}</td><td class="bred dempet">${esc(r.sett)}</td>
         <td><span class="poeng">${esc(r.p)}</span></td></tr>`;
