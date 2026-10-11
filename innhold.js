@@ -123,6 +123,7 @@ const INNHOLD = {
       bilder: [
         { bilde: "bilder/spiller-tobias-sunde.jpg", tekst: "Tobias Sunde" },
         { bilde: "bilder/spiller-daniel-mydland.jpg", tekst: "Daniel Mydland" },
+        { bilde: "bilder/spiller-stian-pedersen.jpg", tekst: "Stian Pedersen, Figgjo 2" },
       ],
     },
     {
@@ -130,7 +131,7 @@ const INNHOLD = {
       dato: "",
       bilder: [
         { bilde: "bilder/seriemestere-3div-2025-26.jpg", tekst: "Serielaget som vant 3. divisjon 2025/26" },
-        { bilde: "bilder/serielag-2026-27-tre-spillere.jpg", tekst: "" },
+        { bilde: "bilder/serielag-2026-27-tre-spillere.jpg", tekst: "Figgjo 2 – fra venstre: Arian Myrbakk, Kenneth Haugland og Kurt Rusnak" },
       ],
     },
   ],
