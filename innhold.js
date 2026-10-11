@@ -63,6 +63,7 @@ const INNHOLD = {
     { Dag: "Tirsdag", Tid: "19:00–21:00", Gruppe: "Trening for voksne", Trener: "", Sted: "Figgjohallen" },
     { Dag: "Onsdag", Tid: "17:00–19:00", Gruppe: "Trening for rekrutter", Trener: "Kenneth Haugland", Sted: "Figgjohallen" },
     { Dag: "Torsdag", Tid: "17:00–19:00", Gruppe: "Kretstrening ungdom", Trener: "Kjetil Lindefjell Sætre", Sted: "Figgjohallen" },
+    { Dag: "Søndag", Tid: "17:00–19:00", Gruppe: "Åpen hall for alle", Trener: "", Sted: "Figgjohallen" },
   ],
   treningsnotat: "",
 
