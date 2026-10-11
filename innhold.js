@@ -95,12 +95,12 @@ const INNHOLD = {
     },
     { navn: "Egil Klungtveit", rolle: "Trener – gatebordtennis med Frelsesarmeen (tirsdager)", bilde: "", tekst: "" },
     { navn: "Kenneth Haugland", rolle: "Trener – rekrutter (onsdager)", bilde: "", tekst: "" },
-    { navn: "Kjetil Lindefjell Sætre", rolle: "Trener – kretstrening ungdom (torsdager)", bilde: "", tekst: "" },
+    { navn: "Kjetil Lindefjell Sætre", rolle: "Trener – kretstrening ungdom (torsdager)", bilde: "bilder/kjetil-lindefjell-saetre.jpg", tekst: "" },
   ],
 
   // Styret
   styret: [
-    { navn: "Kjetil Lindefjell Sætre", rolle: "Leder", bilde: "", tekst: "", epost: "kjsaetre@gmail.com", telefon: "949 79 992" },
+    { navn: "Kjetil Lindefjell Sætre", rolle: "Leder", bilde: "bilder/kjetil-lindefjell-saetre.jpg", tekst: "", epost: "kjsaetre@gmail.com", telefon: "949 79 992" },
     { navn: "Henning Pedersen", rolle: "Styremedlem", bilde: "", tekst: "" },
     { navn: "Egil Klungtveit", rolle: "Styremedlem", bilde: "", tekst: "" },
   ],
