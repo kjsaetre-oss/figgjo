@@ -185,6 +185,7 @@
   .neste-kamp .etikett::before { content: ""; width: 8px; height: 8px; border-radius: 50%; background: var(--farge); box-shadow: 0 0 0 0 var(--farge); animation: puls 2s infinite; }
   @keyframes puls { 0% { box-shadow: 0 0 0 0 color-mix(in srgb, var(--farge) 70%, transparent); } 70% { box-shadow: 0 0 0 10px transparent; } 100% { box-shadow: 0 0 0 0 transparent; } }
   .neste-kamp .mot { font-family: "Outfit", sans-serif; font-size: 20px; font-weight: 700; margin-top: 4px; }
+  .neste-kamp .mot b { color: color-mix(in srgb, var(--farge) 55%, #fff); font-weight: 800; }
   .neste-kamp .info { font-size: 13px; color: rgba(255,255,255,.7); margin-top: 2px; }
   .neste-kamp .hb { display: inline-block; margin-left: 6px; font-size: 11px; font-weight: 700; padding: 2px 8px; border-radius: 999px; background: rgba(255,255,255,.12); vertical-align: 3px; }
   .neste-kamp .hb.hjemme { background: var(--farge); }
@@ -320,7 +321,7 @@
   .kamp .dag { display: block; font-family: "Outfit", sans-serif; font-size: 28px; font-weight: 800; line-height: 1; }
   .kamp .mnd { display: block; font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: .08em; color: var(--farge); margin-top: 4px; }
   .kamp .lagene { font-weight: 600; line-height: 1.35; }
-  .kamp .lagene b { color: var(--farge-mork); }
+  .kamp .lagene b { color: var(--farge-mork); font-weight: 800; }
   .kamp .info { font-size: 14px; color: var(--dempet); margin-top: 2px; }
   .kamp .merke-hb {
     font-size: 12px; font-weight: 700; padding: 5px 12px; border-radius: 999px; white-space: nowrap;
@@ -904,8 +905,8 @@
   <button class="bla neste" onclick="blaBilde(1)" aria-label="Neste bilde">›</button>
 </div>
 
-<script src="innhold.js?v=1791739836"></script>
-<script src="serie.js?v=1791739836"></script>
+<script src="innhold.js?v=1791740132"></script>
+<script src="serie.js?v=1791740132"></script>
 <script>
 const ANTALL_NYHETER_FORST = 6;
 
@@ -1097,6 +1098,12 @@ const figgjoNr = n => /figgjo/i.test(n || "") ? ((n.match(/(\d+)\s*$/) || [])[1]
 const viErHjemmelag = k => figgjoNr(k.hjemme) === figgjoNr(k.lag);
 const erInternkamp = k => figgjoNr(k.hjemme) !== null && figgjoNr(k.borte) !== null;
 const motstander = k => viErHjemmelag(k) ? k.borte : k.hjemme;
+// Begge lagene i en kamp, med Figgjo-laget uthevet: «Figgjo 3 – Lye» eller «Rakkestad BTK – Figgjo 1»
+const kamptittel = k => {
+  const intern = erInternkamp(k);
+  const navn = n => figgjoNr(n) === null ? esc(n) : `<b>${esc(intern ? n : k.lag)}</b>`;
+  return navn(k.hjemme) + " – " + navn(k.borte);
+};
 // Internkamper ligger inne én gang per lag. I felleslista vises de bare én gang.
 const utenDobbeltforing = kamper => {
   const sett = new Set();
@@ -1127,8 +1134,8 @@ function tegnResultater() {
     return `<div class="kamp spilt">
       <div class="dato"><span class="dag">${d.getDate()}</span><span class="mnd">${d.toLocaleDateString("nb-NO", { month: "short" }).replace(".", "")}</span></div>
       <div>
-        <div class="lagene">${esc(motstander(k))}</div>
-        <div class="info">${esc(k.lag)} · ${iEgenHall(k) ? "Hjemme" : "Borte"} · ${esc(k.sted)}</div>
+        <div class="lagene">${kamptittel(k)}</div>
+        <div class="info">${iEgenHall(k) ? "Hjemme" : "Borte"} · ${esc(k.sted)}</div>
       </div>
       <span class="stilling ${vi > de ? "seier" : vi < de ? "tap" : ""}">${vi}–${de}</span>
     </div>`;
@@ -1178,8 +1185,8 @@ function tegnKamper(antall) {
     return `<div class="kamp">
       <div class="dato"><span class="dag">${d.getDate()}</span><span class="mnd">${d.toLocaleDateString("nb-NO", { month: "short" }).replace(".", "")}</span></div>
       <div>
-        <div class="lagene">${intern ? esc(k.hjemme) + " – " + esc(k.borte) : esc(motstander(k))}</div>
-        <div class="info">${intern ? "Internkamp" : esc(k.lag)} · ${ukedag.charAt(0).toUpperCase() + ukedag.slice(1)} kl. ${esc(k.kl)} · ${esc(k.sted)}</div>
+        <div class="lagene">${kamptittel(k)}</div>
+        <div class="info">${intern ? "Internkamp · " : ""}${ukedag.charAt(0).toUpperCase() + ukedag.slice(1)} kl. ${esc(k.kl)} · ${esc(k.sted)}</div>
       </div>
       <span class="merke-hb ${iEgenHall(k) ? "hjemme" : ""}">${iEgenHall(k) ? "Hjemme" : "Borte"}</span>
     </div>`;
@@ -1275,8 +1282,8 @@ function visTopp(s) {
   if (neste) {
     const d = neste.datoObj.toLocaleDateString("nb-NO", { weekday: "short", day: "numeric", month: "short" }).replace(/\./g, "");
     $("neste-kamp").innerHTML = `<div class="etikett">Neste kamp</div>
-      <div class="mot">${erInternkamp(neste) ? esc(neste.hjemme) + " – " + esc(neste.borte) : esc(motstander(neste))}<span class="hb ${iEgenHall(neste) ? "hjemme" : ""}">${iEgenHall(neste) ? "Hjemme" : "Borte"}</span></div>
-      <div class="info">${erInternkamp(neste) ? "Internkamp" : esc(neste.lag)} · ${d} kl. ${esc(neste.kl)} · ${esc(neste.sted)}</div>`;
+      <div class="mot">${kamptittel(neste)}<span class="hb ${iEgenHall(neste) ? "hjemme" : ""}">${iEgenHall(neste) ? "Hjemme" : "Borte"}</span></div>
+      <div class="info">${d} kl. ${esc(neste.kl)} · ${esc(neste.sted)}</div>`;
     $("neste-kamp").hidden = false;
   }
 
