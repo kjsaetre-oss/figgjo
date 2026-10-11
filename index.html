@@ -904,8 +904,8 @@
   <button class="bla neste" onclick="blaBilde(1)" aria-label="Neste bilde">›</button>
 </div>
 
-<script src="innhold.js?v=1791739644"></script>
-<script src="serie.js?v=1791739644"></script>
+<script src="innhold.js?v=1791739836"></script>
+<script src="serie.js?v=1791739836"></script>
 <script>
 const ANTALL_NYHETER_FORST = 6;
 
@@ -1092,29 +1092,42 @@ function alleKamper() {
   return [...fraSerie, ...forHand].map(k => ({ ...k, datoObj: lesDato(k.dato) })).filter(k => k.datoObj);
 }
 
+// Lagnummeret i et navn: «Figgjo BTK» og «Figgjo 1» er lag 1, «Figgjo BTK 2» er lag 2. Andre klubber gir null.
+const figgjoNr = n => /figgjo/i.test(n || "") ? ((n.match(/(\d+)\s*$/) || [])[1] || "1") : null;
+const viErHjemmelag = k => figgjoNr(k.hjemme) === figgjoNr(k.lag);
+const erInternkamp = k => figgjoNr(k.hjemme) !== null && figgjoNr(k.borte) !== null;
+const motstander = k => viErHjemmelag(k) ? k.borte : k.hjemme;
+// Internkamper ligger inne én gang per lag. I felleslista vises de bare én gang.
+const utenDobbeltforing = kamper => {
+  const sett = new Set();
+  return kamper.filter(k => { const n = [k.dato, k.kl, k.hjemme, k.borte].join("|"); return sett.has(n) ? false : sett.add(n); });
+};
+
 // «Hjemme» betyr at kampen spilles i Figgjohallen, uansett hvem som formelt er hjemmelag
 const iEgenHall = k => /figgjo/i.test(k.sted || "");
 
 function kommendeKamper(lag) {
   const idag = new Date(); idag.setHours(0, 0, 0, 0);
-  return alleKamper()
-    .filter(k => !k.resultat && k.datoObj >= idag && (!lag || lag === "Alle" || k.lag === lag))
+  const felles = !lag || lag === "Alle";
+  const kamper = alleKamper()
+    .filter(k => !k.resultat && k.datoObj >= idag && (felles || k.lag === lag))
     .sort((a, b) => a.datoObj - b.datoObj || a.kl.localeCompare(b.kl));
+  return felles ? utenDobbeltforing(kamper) : kamper;
 }
 
 function tegnResultater() {
-  const spilt = alleKamper().filter(k => k.resultat)
-    .sort((a, b) => b.datoObj - a.datoObj || b.kl.localeCompare(a.kl)).slice(0, 6);
+  const spilt = utenDobbeltforing(alleKamper().filter(k => k.resultat)
+    .sort((a, b) => b.datoObj - a.datoObj || b.kl.localeCompare(a.kl))).slice(0, 6);
   $("resultatblokk").hidden = !spilt.length;
   $("resultater").innerHTML = spilt.map(k => {
-    const hjemme = /figgjo/i.test(k.hjemme);
+    const hjemme = viErHjemmelag(k);
     const [h, b] = k.resultat.split("-").map(Number);
     const vi = hjemme ? h : b, de = hjemme ? b : h;
     const d = k.datoObj;
     return `<div class="kamp spilt">
       <div class="dato"><span class="dag">${d.getDate()}</span><span class="mnd">${d.toLocaleDateString("nb-NO", { month: "short" }).replace(".", "")}</span></div>
       <div>
-        <div class="lagene">${esc(hjemme ? k.borte : k.hjemme)}</div>
+        <div class="lagene">${esc(motstander(k))}</div>
         <div class="info">${esc(k.lag)} · ${iEgenHall(k) ? "Hjemme" : "Borte"} · ${esc(k.sted)}</div>
       </div>
       <span class="stilling ${vi > de ? "seier" : vi < de ? "tap" : ""}">${vi}–${de}</span>
@@ -1157,16 +1170,16 @@ function visTabell() {
 
 function tegnKamper(antall) {
   const kamper = kommendeKamper(valgtLag);
-  const erFiggjo = navn => /figgjo/i.test(navn);
+  const felles = !valgtLag || valgtLag === "Alle";
   $("kamper").innerHTML = kamper.length ? kamper.slice(0, antall).map(k => {
-    const hjemme = erFiggjo(k.hjemme);
+    const intern = felles && erInternkamp(k);
     const d = k.datoObj;
     const ukedag = d.toLocaleDateString("nb-NO", { weekday: "long" });
     return `<div class="kamp">
       <div class="dato"><span class="dag">${d.getDate()}</span><span class="mnd">${d.toLocaleDateString("nb-NO", { month: "short" }).replace(".", "")}</span></div>
       <div>
-        <div class="lagene">${esc(hjemme ? k.borte : k.hjemme)}</div>
-        <div class="info">${esc(k.lag)} · ${ukedag.charAt(0).toUpperCase() + ukedag.slice(1)} kl. ${esc(k.kl)} · ${esc(k.sted)}</div>
+        <div class="lagene">${intern ? esc(k.hjemme) + " – " + esc(k.borte) : esc(motstander(k))}</div>
+        <div class="info">${intern ? "Internkamp" : esc(k.lag)} · ${ukedag.charAt(0).toUpperCase() + ukedag.slice(1)} kl. ${esc(k.kl)} · ${esc(k.sted)}</div>
       </div>
       <span class="merke-hb ${iEgenHall(k) ? "hjemme" : ""}">${iEgenHall(k) ? "Hjemme" : "Borte"}</span>
     </div>`;
@@ -1260,11 +1273,10 @@ function visTopp(s) {
   const idag = new Date(); idag.setHours(0, 0, 0, 0);
   const neste = kommendeKamper()[0];
   if (neste) {
-    const hjemme = /figgjo/i.test(neste.hjemme);
     const d = neste.datoObj.toLocaleDateString("nb-NO", { weekday: "short", day: "numeric", month: "short" }).replace(/\./g, "");
     $("neste-kamp").innerHTML = `<div class="etikett">Neste kamp</div>
-      <div class="mot">${esc(hjemme ? neste.borte : neste.hjemme)}<span class="hb ${iEgenHall(neste) ? "hjemme" : ""}">${iEgenHall(neste) ? "Hjemme" : "Borte"}</span></div>
-      <div class="info">${esc(neste.lag)} · ${d} kl. ${esc(neste.kl)} · ${esc(neste.sted)}</div>`;
+      <div class="mot">${erInternkamp(neste) ? esc(neste.hjemme) + " – " + esc(neste.borte) : esc(motstander(neste))}<span class="hb ${iEgenHall(neste) ? "hjemme" : ""}">${iEgenHall(neste) ? "Hjemme" : "Borte"}</span></div>
+      <div class="info">${erInternkamp(neste) ? "Internkamp" : esc(neste.lag)} · ${d} kl. ${esc(neste.kl)} · ${esc(neste.sted)}</div>`;
     $("neste-kamp").hidden = false;
   }
 
