@@ -45,7 +45,7 @@ const INNHOLD = {
     {
       dato: "2026-10-10",
       tittel: "Ny gruppe: Bordtennis mot Parkinson",
-      tekst: "Fra høsten 2026 starter vi en ny gruppe i Figgjohallen. Tirsdager kl. 12–13 er det trening ledet av fysioterapeut Christian Ibenfeld, og kl. 13–14 er det sosialt samvær.\n\nDu trenger ikke ha spilt bordtennis før – treningen tilpasses hver enkelt. Egenandel 150 kr per gang, som går på frikortet.",
+      tekst: "Fra høsten 2026 starter vi en ny gruppe i Figgjohallen. Tirsdager kl. 12–13 er det trening ledet av fysioterapeut Christian Ibenfeld.\n\nDu trenger ikke ha spilt bordtennis før – treningen tilpasses hver enkelt. Egenandel 150 kr per gang, som går på frikortet.",
       bilder: ["bilder/trener-christian-ibenfeld.jpg"],
     },
     {
