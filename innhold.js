@@ -12,7 +12,7 @@ const INNHOLD = {
   nokkeltall: [
     { tall: "2021", tekst: "Stiftet" },
     { tall: "60", prefiks: "≈", tekst: "Medlemmer" },
-    { tall: "4", tekst: "Serielag" },
+    { tall: "5", tekst: "Serielag" },
     { tall: "3", tekst: "Tilbud for alle" },
   ],
 
@@ -73,6 +73,7 @@ const INNHOLD = {
     { navn: "Figgjo 2", divisjon: "3. divisjon", avdeling: "Avd. E", lagtype: "4-mannslag", spillere: ["Jay Impuesto", "Stian Pedersen", "Kurt Rusnak (kaptein)", "Arian Myrbakk", "Kenneth Haugland"] },
     { navn: "Figgjo 3", divisjon: "4. divisjon", avdeling: "", lagtype: "3-mannslag", spillere: ["Max Millian Gjerme", "Felix Bøe", "Tommy Landro (kaptein)", "Tobias Sunde"] },
     { navn: "Figgjo 4", divisjon: "5. divisjon", avdeling: "", lagtype: "3-mannslag", spillere: ["Kjell Roar Bjørnsen (kaptein)", "Alexander Rosnes Jakobsen", "Elias Bøe", "Noah Klev"] },
+    { navn: "Figgjo 5", divisjon: "", avdeling: "", lagtype: "", spillere: [] },
   ],
 
   // Seriekamper for Figgjo 1 og 2 hentes automatisk fra bordtennislive.no (serie.js).
