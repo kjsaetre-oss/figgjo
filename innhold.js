@@ -42,6 +42,7 @@ const INNHOLD = {
       tekst: "Lye IL arrangerer sin første rankingturnering lørdag 31. oktober i Lyehallen, og det er fortsatt 8 ledige plasser. Vi oppfordrer klubbens medlemmer til å bli med – en fin sjanse til å få mange kamper i nærområdet!\n\nDe 40 deltakerne deles i fem grupper à åtte der alle møter alle, så du er garantert 7 kamper. Det blir premie til 1. og 2. plass i hver gruppe.\n\nHallen åpner kl. 10.00, og første kamp starter kl. 11.00. Startkontingenten er 210 kr og faktureres klubben etter turneringen. Du må ha gyldig spillerlisens.\n\nPåmeldingsfrist er 27. oktober, men førstemann til mølla gjelder – så meld deg på så snart som mulig. Du kan også melde deg på via e-post til markus@zeeh.no.",
       lenke: "https://bordtennislive.no/events/152/0/0/1/1",
       lenketekst: "Meld deg på",
+      bilder: ["bilder/spiller-stian-pedersen.jpg"],
     },
     {
       dato: "2026-10-10",
