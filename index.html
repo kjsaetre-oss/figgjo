@@ -250,6 +250,8 @@
   .nyhet h3 { margin: 6px 0 10px; font-size: 22px; line-height: 1.25; }
   .nyhet p { margin: 0; white-space: pre-line; color: #3c4048; }
   .nyhet p.kort { white-space: normal; display: -webkit-box; -webkit-line-clamp: 4; -webkit-box-orient: vertical; overflow: hidden; }
+  .nyhet-lenke { display: inline-block; margin-top: 12px; padding: 9px 16px; border-radius: 999px; background: var(--farge); color: #fff; font-weight: 700; text-decoration: none; }
+  .nyhet-lenke:hover { filter: brightness(1.08); }
   .les-mer { background: none; border: 0; padding: 0; margin-top: 10px; color: var(--farge); font: inherit; font-weight: 600; cursor: pointer; }
   .flere-nyheter { text-align: center; margin-top: 36px; }
   .flere-nyheter button {
@@ -894,8 +896,8 @@
   <button class="bla neste" onclick="blaBilde(1)" aria-label="Neste bilde">›</button>
 </div>
 
-<script src="innhold.js?v=1791743811"></script>
-<script src="serie.js?v=1791743811"></script>
+<script src="innhold.js?v=1792065856"></script>
+<script src="serie.js?v=1792065856"></script>
 <script>
 const ANTALL_NYHETER_FORST = 6;
 
@@ -1016,6 +1018,7 @@ function tegnNyheter(antall) {
         <h3>${esc(n.tittel)}</h3>
         <p class="${lang ? "kort" : ""}" id="nyhet-${i}">${esc(n.tekst)}</p>
         ${lang ? `<button class="les-mer" onclick="$('nyhet-${i}').classList.remove('kort'); this.remove()">Les mer</button>` : ""}
+        ${/^https?:\/\//.test(n.lenke || "") ? `<a class="nyhet-lenke" href="${esc(n.lenke)}" target="_blank" rel="noopener">${esc(n.lenketekst || "Les mer")} →</a>` : ""}
       </div>
     </article>`;
   }).join("");

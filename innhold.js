@@ -37,6 +37,13 @@ const INNHOLD = {
   // Nyeste vises først uansett rekkefølge her. Dato: "ÅÅÅÅ-MM-DD"
   nyheter: [
     {
+      dato: "2026-10-15",
+      tittel: "Lye Ranking 31. oktober – 8 ledige plasser",
+      tekst: "Lye IL arrangerer sin første rankingturnering lørdag 31. oktober i Lyehallen, og det er fortsatt 8 ledige plasser. Vi oppfordrer klubbens medlemmer til å bli med – en fin sjanse til å få mange kamper i nærområdet!\n\nDe 40 deltakerne deles i fem grupper à åtte der alle møter alle, så du er garantert 7 kamper. Det blir premie til 1. og 2. plass i hver gruppe.\n\nHallen åpner kl. 10.00, og første kamp starter kl. 11.00. Startkontingenten er 210 kr og faktureres klubben etter turneringen. Du må ha gyldig spillerlisens.\n\nPåmeldingsfrist er 27. oktober, men førstemann til mølla gjelder – så meld deg på så snart som mulig. Du kan også melde deg på via e-post til markus@zeeh.no.",
+      lenke: "https://bordtennislive.no/events/152/0/0/1/1",
+      lenketekst: "Meld deg på",
+    },
+    {
       dato: "2026-10-10",
       tittel: "Seriestart 24. oktober",
       tekst: "Helgen 24.–25. oktober starter seriesesongen 2026/27. Figgjo 1 spiller i 2. divisjon og møter Rakkestad, Fornebu 3, Kobra og Skien i Skien.\n\nFiggjo 2 åpner i 3. divisjon borte mot Rosseland 2 lørdag, og spiller første hjemmekamp søndag kl. 10.00 i Figgjohallen mot Stavanger BTK. Kom gjerne og hei!",
