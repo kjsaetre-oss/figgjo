@@ -900,8 +900,8 @@
   <button class="bla neste" onclick="blaBilde(1)" aria-label="Neste bilde">›</button>
 </div>
 
-<script src="innhold.js?v=1792066453"></script>
-<script src="serie.js?v=1792066453"></script>
+<script src="innhold.js?v=1792066610"></script>
+<script src="serie.js?v=1792066610"></script>
 <script>
 const ANTALL_NYHETER_FORST = 6;
 
@@ -1011,7 +1011,7 @@ function nyhetSlug(tittel) {
 }
 
 function kopierLenke(url, knapp) {
-  const ferdig = () => { knapp.textContent = "Lenke kopiert ✓"; setTimeout(() => { knapp.textContent = "Kopier lenke"; }, 2500); };
+  const ferdig = () => { knapp.textContent = "Lenke kopiert ✓"; setTimeout(() => { knapp.textContent = "🔗 Del lenke"; }, 2500); };
   if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(url).then(ferdig, () => prompt("Kopier lenken:", url));
   else prompt("Kopier lenken:", url);
 }
@@ -1050,8 +1050,7 @@ function tegnNyheter(antall) {
         ${lang ? `<button class="les-mer" onclick="$('nyhet-${i}').classList.remove('kort'); this.remove()">Les mer</button>` : ""}
         ${/^https?:\/\//.test(n.lenke || "") ? `<a class="nyhet-lenke" href="${esc(n.lenke)}" target="_blank" rel="noopener">${esc(n.lenketekst || "Les mer")} →</a>` : ""}
         <div class="del-rad">
-          <a class="del-knapp" href="https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(delUrl)}" target="_blank" rel="noopener">Del på Facebook</a>
-          <button class="del-knapp" onclick="kopierLenke('${delUrl}', this)">Kopier lenke</button>
+          <button class="del-knapp" onclick="kopierLenke('${delUrl}', this)">🔗 Del lenke</button>
         </div>
       </div>
     </article>`;
