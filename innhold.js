@@ -39,7 +39,7 @@ const INNHOLD = {
     {
       dato: "2026-10-16",
       tittel: "Husk å betale spillerlisens",
-      tekst: "Seriesesongen starter 24. oktober, og alle som skal spille kamp må ha betalt spillerlisens for 2026/27 før første kamp.\n\nLisens kreves for alle som spiller seriekamper og turneringer, fra og med 12 år. Den gir deg også forsikring: uten lisens er du ikke forsikret om du skader deg i kamp.\n\nSpiller noen uten lisens, får klubben bot fra Norges Bordtennisforbund i tillegg til lisensen – 500 kr for turneringer og 1 000–1 500 kr i 3. og 2. divisjon. Det er penger vi heller vil bruke på trening, utstyr og turneringer.\n\nDet tar bare noen minutter å betale på MinIdrett. Under «Spillerlisens» her på siden står det steg for steg hvordan du gjør det. Står du fast, ta kontakt med oss, så hjelper vi deg.",
+      tekst: "Seriesesongen starter 24. oktober, og alle som skal spille kamp må ha betalt spillerlisens for 2026/27 før første kamp.\n\nLisens kreves for alle som spiller seriekamper og turneringer, fra og med 12 år. Den gir deg også forsikring: uten lisens er du ikke forsikret om du skader deg i kamp.\n\nSpiller noen uten lisens, får klubben bot fra Norges Bordtennisforbund i tillegg til lisensen – 500 kr for turneringer og 1 000–1 500 kr i 3. og 2. divisjon. Det er penger vi heller vil bruke på trening, utstyr og turneringer.\n\nLisensen koster 600 kr for barn og 700 kr for voksne, og det tar bare noen minutter å betale på MinIdrett. Under «Spillerlisens» her på siden står det steg for steg hvordan du gjør det. Står du fast, ta kontakt med oss, så hjelper vi deg.",
       bilder: ["bilder/spiller-daniel-mydland.jpg"],
     },
     {
@@ -193,7 +193,7 @@ const INNHOLD = {
 
   // Spillerlisens: egen seksjon på forsiden (#lisens)
   lisens: {
-    tekst: "Alle som spiller seriekamper eller turneringer må ha spillerlisens fra Norges Bordtennisforbund. Lisensen gjelder for én sesong og gir deg forsikring om du skader deg. Er du 11 år eller yngre, trenger du ikke lisens.",
+    tekst: "Alle som spiller seriekamper eller turneringer må ha spillerlisens fra Norges Bordtennisforbund. Lisensen koster 600 kr for barn og 700 kr for voksne, gjelder for én sesong og gir deg forsikring om du skader deg. Er du 11 år eller yngre, trenger du ikke lisens.",
     steg: [
       { tittel: "Gå til MinIdrett", tekst: "Åpne lisenssiden på MinIdrett og logg inn." },
       { tittel: "Velg bordtennislisens", tekst: "Velg lisens for sesongen 2026/27. Foresatte kjøper lisens for barna sine." },
