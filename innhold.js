@@ -198,7 +198,7 @@ const INNHOLD = {
       { tittel: "Gå til MinIdrett", tekst: "Åpne lisenssiden på MinIdrett og logg inn." },
       { tittel: "Velg bordtennislisens", tekst: "Velg lisens for sesongen 2026/27. Foresatte kjøper lisens for barna sine." },
       { tittel: "Betal", tekst: "Når lisensen er betalt, er du klar til å spille kamp." },
-      { tittel: "Får du det ikke til?", tekst: "Ta kontakt med klubben, så hjelper vi deg. Klubben kan også kjøpe lisensen for deg." },
+      { tittel: "Får du det ikke til?", tekst: "Ta kontakt med klubben, så hjelper vi deg." },
     ],
     merknad: "Betal lisensen før første kamp eller turnering. Spiller du uten lisens, får klubben bot.",
     lenke: "https://www.minidrett.no/lisens?sports=201",
