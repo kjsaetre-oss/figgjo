@@ -534,6 +534,14 @@
 
   /* ---------- Priser ---------- */
   .priser { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 22px; margin-bottom: 32px; }
+  .lisens-steg { list-style: none; counter-reset: steg; padding: 0; margin: 28px 0 22px; display: grid; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); gap: 18px; }
+  .lisens-steg li { counter-increment: steg; position: relative; background: var(--flate); border-radius: var(--radius); padding: 22px 22px 22px 70px; }
+  .lisens-steg li::before { content: counter(steg); position: absolute; left: 20px; top: 20px; width: 36px; height: 36px; border-radius: 50%; background: var(--farge); color: #fff; font-family: "Outfit", sans-serif; font-weight: 800; display: grid; place-items: center; }
+  .lisens-steg h3 { margin: 4px 0 6px; font-size: 17px; }
+  .lisens-steg p { margin: 0; color: var(--dempet); font-size: 15px; }
+  .lisens-merknad { font-weight: 600; margin: 0 0 22px; }
+  .lisens-knapper { display: flex; flex-wrap: wrap; align-items: center; gap: 14px 22px; }
+  .lisens-mer { color: var(--farge); font-weight: 600; }
   .pris {
     position: relative; background: #fff; border-radius: var(--radius); padding: 28px 26px;
     box-shadow: var(--skygge); overflow: hidden;
@@ -730,6 +738,7 @@
       <a href="#serielag">Serielagene</a>
       <a href="#bilder">Bilder</a>
       <a href="#medlem">Bli medlem</a>
+      <a href="#lisens">Lisens</a>
       <a href="#om">Om oss</a>
       <a href="#styret">Styret</a>
       <a href="#kontakt">Kontakt</a>
@@ -842,7 +851,20 @@
   </div>
 </section>
 
-<section id="om">
+<section id="lisens">
+  <div class="innhold">
+    <div class="seksjonstopp"><span class="eyebrow">For deg som spiller kamp</span><h2>Spillerlisens</h2></div>
+    <p id="lisens-tekst" class="om-tekst"></p>
+    <ol class="lisens-steg" id="lisens-steg"></ol>
+    <p class="lisens-merknad" id="lisens-merknad" hidden></p>
+    <div class="lisens-knapper">
+      <a id="lisens-lenke" class="knapp" hidden target="_blank" rel="noopener">Kjøp lisens på MinIdrett →</a>
+      <a id="lisens-mer" class="lisens-mer" hidden target="_blank" rel="noopener">Mer om spillerlisens hos forbundet</a>
+    </div>
+  </div>
+</section>
+
+<section id="om" class="gra">
   <div class="innhold">
     <div class="seksjonstopp"><span class="eyebrow">Hvem vi er</span><h2>Om klubben</h2></div>
     <p id="om-tekst" class="om-tekst"></p>
@@ -851,14 +873,14 @@
   </div>
 </section>
 
-<section id="styret" class="gra">
+<section id="styret">
   <div class="innhold">
     <div class="seksjonstopp"><span class="eyebrow">Hvem som leder klubben</span><h2>Styret</h2></div>
     <div class="personer" id="styreliste"></div>
   </div>
 </section>
 
-<section id="kontakt">
+<section id="kontakt" class="gra">
   <div class="innhold">
     <div class="seksjonstopp"><span class="eyebrow">Ta kontakt</span><h2>Kontakt</h2></div>
     <div class="kontakt">
@@ -887,6 +909,7 @@
         <li><a href="#trening">Treningstider</a></li>
         <li><a href="#serielag">Serielag og kamper</a></li>
         <li><a href="#medlem">Bli medlem</a></li>
+        <li><a href="#lisens">Spillerlisens</a></li>
       </ul>
     </div>
   </div>
@@ -900,8 +923,8 @@
   <button class="bla neste" onclick="blaBilde(1)" aria-label="Neste bilde">›</button>
 </div>
 
-<script src="innhold.js?v=1792066610"></script>
-<script src="serie.js?v=1792066610"></script>
+<script src="innhold.js?v=1792145318"></script>
+<script src="serie.js?v=1792145318"></script>
 <script>
 const ANTALL_NYHETER_FORST = 6;
 
@@ -1095,6 +1118,16 @@ function visPriser(priser) {
       <div class="belop">${esc(p.pris)}</div>
       ${p.beskrivelse ? `<p>${esc(p.beskrivelse)}</p>` : ""}
     </div>`).join("");
+}
+
+function visLisens(l) {
+  if (!l) { $("lisens").hidden = true; document.querySelector('a[href="#lisens"]').hidden = true; return; }
+  $("lisens-tekst").textContent = l.tekst || "";
+  $("lisens-steg").innerHTML = (l.steg || []).map(s => `
+    <li><h3>${esc(s.tittel)}</h3>${s.tekst ? `<p>${esc(s.tekst)}</p>` : ""}</li>`).join("");
+  if (l.merknad) { $("lisens-merknad").textContent = l.merknad; $("lisens-merknad").hidden = false; }
+  if (l.lenke) { $("lisens-lenke").href = l.lenke; $("lisens-lenke").hidden = false; }
+  if (l.merInfo) { $("lisens-mer").href = l.merInfo; $("lisens-mer").hidden = false; }
 }
 
 function visSerielag(lag) {
@@ -1369,6 +1402,7 @@ visDeltNyhet();
 window.addEventListener("hashchange", visDeltNyhet);
 visTrening(INNHOLD.treningstider);
 visPriser(INNHOLD.priser);
+visLisens(INNHOLD.lisens);
 visSerielag(INNHOLD.serielag);
 visPersoner("trenerliste", INNHOLD.trenere);
 visPersoner("styreliste", INNHOLD.styret);

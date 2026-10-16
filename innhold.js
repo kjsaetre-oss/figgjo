@@ -37,6 +37,12 @@ const INNHOLD = {
   // Nyeste vises først uansett rekkefølge her. Dato: "ÅÅÅÅ-MM-DD"
   nyheter: [
     {
+      dato: "2026-10-16",
+      tittel: "Husk å betale spillerlisens",
+      tekst: "Seriesesongen starter 24. oktober, og alle som skal spille kamp må ha betalt spillerlisens for 2026/27 før første kamp.\n\nLisens kreves for alle som spiller seriekamper og turneringer, fra og med 12 år. Den gir deg også forsikring: uten lisens er du ikke forsikret om du skader deg i kamp.\n\nSpiller noen uten lisens, får klubben bot fra Norges Bordtennisforbund i tillegg til lisensen – 500 kr for turneringer og 1 000–1 500 kr i 3. og 2. divisjon. Det er penger vi heller vil bruke på trening, utstyr og turneringer.\n\nDet tar bare noen minutter å betale på MinIdrett. Under «Spillerlisens» her på siden står det steg for steg hvordan du gjør det. Står du fast, ta kontakt med oss, så hjelper vi deg.",
+      bilder: ["bilder/spiller-daniel-mydland.jpg"],
+    },
+    {
       dato: "2026-10-15",
       tittel: "Lye Ranking 31. oktober – 8 ledige plasser",
       tekst: "Lye IL arrangerer sin første rankingturnering lørdag 31. oktober i Lyehallen, og det er fortsatt 8 ledige plasser. Vi oppfordrer klubbens medlemmer til å bli med – en fin sjanse til å få mange kamper i nærområdet!\n\nDe 40 deltakerne deles i fem grupper à åtte der alle møter alle, så du er garantert 7 kamper. Det blir premie til 1. og 2. plass i hver gruppe.\n\nHallen åpner kl. 10.00, og første kamp starter kl. 11.00. Startkontingenten er 210 kr og faktureres klubben etter turneringen. Du må ha gyldig spillerlisens.\n\nPåmeldingsfrist er 27. oktober, men førstemann til mølla gjelder – så meld deg på så snart som mulig. Påmelding skjer på bordtennislive.no eller på e-post til markus@zeeh.no.",
@@ -184,6 +190,20 @@ const INNHOLD = {
       ],
     },
   ],
+
+  // Spillerlisens: egen seksjon på forsiden (#lisens)
+  lisens: {
+    tekst: "Alle som spiller seriekamper eller turneringer må ha spillerlisens fra Norges Bordtennisforbund. Lisensen gjelder for én sesong og gir deg forsikring om du skader deg. Er du 11 år eller yngre, trenger du ikke lisens.",
+    steg: [
+      { tittel: "Gå til MinIdrett", tekst: "Åpne lisenssiden på MinIdrett og logg inn." },
+      { tittel: "Velg bordtennislisens", tekst: "Velg lisens for sesongen 2026/27. Foresatte kjøper lisens for barna sine." },
+      { tittel: "Betal", tekst: "Når lisensen er betalt, er du klar til å spille kamp." },
+      { tittel: "Får du det ikke til?", tekst: "Ta kontakt med klubben, så hjelper vi deg. Klubben kan også kjøpe lisensen for deg." },
+    ],
+    merknad: "Betal lisensen før første kamp eller turnering. Spiller du uten lisens, får klubben bot.",
+    lenke: "https://www.minidrett.no/lisens?sports=201",
+    merInfo: "https://bordtennis.no/spillerlisens/",
+  },
 
   priser: [
     { navn: "Medlemsavgift barn", pris: "500 kr", beskrivelse: "Per år – faktura sendes ut i januar" },
