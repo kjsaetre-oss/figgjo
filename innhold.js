@@ -37,6 +37,12 @@ const INNHOLD = {
   // Nyeste vises først uansett rekkefølge her. Dato: "ÅÅÅÅ-MM-DD"
   nyheter: [
     {
+      dato: "2026-10-18",
+      tittel: "Seier til Samuel og storspill av Max i Fjell Cup",
+      tekst: "Lørdag var vi i Fyllingsdalen på Fjell Cup, og for en dag det ble!\n\nSamuel Lindefjell Sætre vant Herrer D. Han tapte ikke en eneste kamp, og finalen mot Håkon Vollan ble avgjort 3–2 i en skikkelig nervepirrende avslutning. I klassen 1400–1999 tok han i tillegg andreplassen.\n\nMax Millian Gjerme storspilte hele dagen. I Herrer D vant han alle tre gruppekampene og slo Bjørn Mathias Dahle 3–2 i åttendedelsfinalen, før han røk ut 2–3 i en jevn kvartfinale mot Amund Vollan. I 1400–1999 slo han Håkon Vollan – finalisten i Herrer D – 3–0, og han vant også sin rankingpulje etter 3–2 mot Stig Erik Elliott. Det var gøy å se!\n\nHenning Pedersen gikk gjennom gruppespillet i Herrer D uten å avgi et eneste sett. Kurt Rusnak vant også gruppen sin og tok seg helt til kvartfinalen, der det ble et knepent 2–3-tap mot Stig Erik Elliott.\n\nAlle våre spillere vant gruppene sine i Herrer D. Takk til Fjell for et godt arrangement, og takk til alle som var med – dette gir mersmak!",
+      bilder: ["bilder/spiller-max-millian-gjerme.jpg"],
+    },
+    {
       dato: "2026-10-16",
       tittel: "Husk å betale spillerlisens",
       tekst: "Seriesesongen starter 24. oktober, og alle som skal spille kamp må ha betalt spillerlisens for 2026/27 før første kamp.\n\nLisens kreves for alle som spiller seriekamper og turneringer, fra og med 12 år. Den gir deg også forsikring: uten lisens er du ikke forsikret om du skader deg i kamp.\n\nSpiller noen uten lisens, får klubben bot fra Norges Bordtennisforbund. Det er penger vi heller vil bruke på trening, utstyr og turneringer.\n\nLisensen koster 600 kr for barn og 700 kr for voksne, og det tar bare noen minutter å betale på MinIdrett. Under «Spillerlisens» her på siden står det steg for steg hvordan du gjør det. Står du fast, ta kontakt med oss, så hjelper vi deg.",
@@ -179,6 +185,7 @@ const INNHOLD = {
         { bilde: "bilder/spiller-tobias-sunde.jpg", tekst: "Tobias Sunde" },
         { bilde: "bilder/spiller-daniel-mydland.jpg", tekst: "Daniel Mydland" },
         { bilde: "bilder/spiller-stian-pedersen.jpg", tekst: "Stian Pedersen" },
+        { bilde: "bilder/spiller-max-millian-gjerme.jpg", tekst: "Max Millian Gjerme" },
       ],
     },
     {
