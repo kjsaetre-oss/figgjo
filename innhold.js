@@ -148,7 +148,7 @@ const INNHOLD = {
   // Trenere. bilde er valgfritt (uten bilde vises initialer)
   trenere: [
     { navn: "Kjetil Lindefjell Sætre", rolle: "Hovedtrener – kretstrening ungdom (torsdager)", bilde: "bilder/kjetil-lindefjell-saetre.jpg", tekst: "Kjetil er hovedtrener i klubben. Han har fem års idrettsutdanning fra universitetet og er utdannet personlig trener. Han har også Trener 2-utdanning gjennom Norges Bordtennisforbund. Tidligere jobbet han som bordtennistrener på fulltid i Bergen." },
-    { navn: "Arian Myrbakk", rolle: "Trener – åpen trening (mandager)", bilde: "bilder/arian-myrbakk.jpg", tekst: "", foto: "Kjell Roar Bjørnsen" },
+    { navn: "Arian Myrbakk", rolle: "Trener – åpen trening (mandager)", bilde: "bilder/arian-myrbakk.jpg", tekst: "Arian er en ung og lovende trener som har vært trener i Stavanger i flere år. Nå er han trener i Figgjo, og snart starter han på Trener 1-utdanningen gjennom Norges Bordtennisforbund. Han kan mye bordtennis, er flink med ungdommer og har et godt øye for hva hver enkelt spiller trenger for å utvikle seg.", foto: "Kjell Roar Bjørnsen" },
     {
       navn: "Christian Ibenfeld",
       rolle: "Trener – Bordtennis mot Parkinson",
