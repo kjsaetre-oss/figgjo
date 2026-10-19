@@ -156,7 +156,7 @@ const INNHOLD = {
       tekst: "Fysioterapeut, utdannet i Montpellier i Frankrike i 1999, og har jobbet på Fysio Forum siden 2000. Med sin idrettsbakgrunn har han særlig fokus på funksjonell og individuelt tilpasset trening. Han driver flere treningsgrupper, blant annet en bordtennisgruppe for Parkinson i Stavanger.",
     },
     { navn: "Egil Klungtveit", rolle: "Trener – gatebordtennis med Frelsesarmeen (tirsdager)", bilde: "bilder/egil-klungtveit.jpg", tekst: "" },
-    { navn: "Kenneth Haugland", rolle: "Trener – rekrutter (onsdager)", bilde: "bilder/kenneth-haugland.jpg", tekst: "" },
+    { navn: "Kenneth Haugland", rolle: "Trener – rekrutter (onsdager)", bilde: "bilder/kenneth-haugland.jpg", tekst: "Kenneth er utdannet lærer, har idrettsutdanning fra Universitetet i Stavanger og er en ekte kjernekar i klubben. Han er engasjert og kunnskapsrik innen bordtennis, og med sin pedagogiske tilnærming gjør han en fantastisk jobb med rekruttene. Hos Kenneth blir de yngste møtt med både tålmodighet og glede for spillet." },
   ],
 
   // Styret
