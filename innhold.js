@@ -88,8 +88,8 @@ const INNHOLD = {
   // Serielagene. Legg til spillere: spillere: ["Navn 1", "Navn 2"]
   serielag: [
     { navn: "Figgjo 1", divisjon: "2. divisjon", avdeling: "Avd. A", lagtype: "4-mannslag", spillere: ["Kjetil Lindefjell Sætre (kaptein)", "Adam Kornizki", "Kasper Lundel Pedersen", "Henning Pedersen", "Samuel Lindefjell Sætre"] },
-    { navn: "Figgjo 2", divisjon: "3. divisjon", avdeling: "Avd. E", lagtype: "4-mannslag", spillere: ["Jay Impuesto", "Stian Pedersen", "Kurt Rusnak (kaptein)", "Arian Myrbakk", "Kenneth Haugland"] },
-    { navn: "Figgjo 3", divisjon: "4. divisjon", avdeling: "", lagtype: "3-mannslag", spillere: ["Max Millian Gjerme", "Felix Bøe", "Tommy Landro (kaptein)", "Tobias Sunde"] },
+    { navn: "Figgjo 2", divisjon: "3. divisjon", avdeling: "Avd. E", lagtype: "4-mannslag", spillere: ["Jay Impuesto", "Stian Pedersen", "Kurt Rusnak (kaptein)", "Arian Myrbakk", "Max Millian Gjerme"] },
+    { navn: "Figgjo 3", divisjon: "4. divisjon", avdeling: "", lagtype: "3-mannslag", spillere: ["Felix Bøe", "Tommy Landro (kaptein)", "Tobias Sunde", "Kenneth Haugland"] },
     { navn: "Figgjo 4", divisjon: "5. divisjon", avdeling: "", lagtype: "3-mannslag", spillere: ["Kjell Roar Bjørnsen (kaptein)", "Alexander Rosnes Jakobsen", "Elias Bøe", "Noah Klev"] },
     { navn: "Figgjo 5", divisjon: "5. divisjon", avdeling: "", lagtype: "3-mannslag", spillere: ["Nikolai Theis Haugland", "Gabriel Helgeland", "Jetmund Vorren", "Lukas Moskvil", "Elias Strømme"], lagleder: "Kenneth Haugland" },
   ],
