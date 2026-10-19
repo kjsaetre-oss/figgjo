@@ -147,7 +147,7 @@ const INNHOLD = {
 
   // Trenere. bilde er valgfritt (uten bilde vises initialer)
   trenere: [
-    { navn: "Kjetil Lindefjell Sætre", rolle: "Trener – kretstrening ungdom (torsdager)", bilde: "bilder/kjetil-lindefjell-saetre.jpg", tekst: "" },
+    { navn: "Kjetil Lindefjell Sætre", rolle: "Hovedtrener – kretstrening ungdom (torsdager)", bilde: "bilder/kjetil-lindefjell-saetre.jpg", tekst: "Kjetil er hovedtrener i klubben. Han har fem års idrettsutdanning fra universitetet og er utdannet personlig trener. Han har også Trener 2-utdanning gjennom Norges Bordtennisforbund. Tidligere jobbet han som bordtennistrener på fulltid i Bergen." },
     { navn: "Arian Myrbakk", rolle: "Trener – åpen trening (mandager)", bilde: "bilder/arian-myrbakk.jpg", tekst: "", foto: "Kjell Roar Bjørnsen" },
     {
       navn: "Christian Ibenfeld",
