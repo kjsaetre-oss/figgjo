@@ -417,6 +417,576 @@ const SERIE = {
      "resultat": ""
     }
    ]
+  },
+  "Figgjo 3": {
+   "divisjon": "4. divisjon",
+   "kilde": "https://bordtennislive.no/events/99/106/2/7/7",
+   "tabell": [
+    {
+     "plass": "1",
+     "lag": "Figgjo 3",
+     "k": "1",
+     "v": "1",
+     "u": "0",
+     "t": "0",
+     "kamper": "8-2",
+     "sett": "27-15",
+     "p": "2"
+    },
+    {
+     "plass": "2",
+     "lag": "Stord 5",
+     "k": "0",
+     "v": "0",
+     "u": "0",
+     "t": "0",
+     "kamper": "0-0",
+     "sett": "0-0",
+     "p": "0"
+    },
+    {
+     "plass": "3",
+     "lag": "Randaberg",
+     "k": "0",
+     "v": "0",
+     "u": "0",
+     "t": "0",
+     "kamper": "0-0",
+     "sett": "0-0",
+     "p": "0"
+    },
+    {
+     "plass": "4",
+     "lag": "Haugesund 3",
+     "k": "0",
+     "v": "0",
+     "u": "0",
+     "t": "0",
+     "kamper": "0-0",
+     "sett": "0-0",
+     "p": "0"
+    },
+    {
+     "plass": "5",
+     "lag": "Stord 6",
+     "k": "0",
+     "v": "0",
+     "u": "0",
+     "t": "0",
+     "kamper": "0-0",
+     "sett": "0-0",
+     "p": "0"
+    },
+    {
+     "plass": "6",
+     "lag": "Lye",
+     "k": "0",
+     "v": "0",
+     "u": "0",
+     "t": "0",
+     "kamper": "0-0",
+     "sett": "0-0",
+     "p": "0"
+    },
+    {
+     "plass": "7",
+     "lag": "Stord 4",
+     "k": "0",
+     "v": "0",
+     "u": "0",
+     "t": "0",
+     "kamper": "0-0",
+     "sett": "0-0",
+     "p": "0"
+    },
+    {
+     "plass": "8",
+     "lag": "Stavanger 2",
+     "k": "1",
+     "v": "0",
+     "u": "0",
+     "t": "1",
+     "kamper": "2-8",
+     "sett": "15-27",
+     "p": "0"
+    }
+   ],
+   "kamper": [
+    {
+     "dato": "2026-10-24",
+     "kl": "11.00",
+     "hjemme": "Stavanger 2",
+     "borte": "Figgjo 3",
+     "sted": "Stavangerhallen",
+     "resultat": "2-8"
+    },
+    {
+     "dato": "2026-11-09",
+     "kl": "18.00",
+     "hjemme": "Figgjo 3",
+     "borte": "Lye",
+     "sted": "Figgjohallen",
+     "resultat": ""
+    },
+    {
+     "dato": "2026-11-21",
+     "kl": "13.30",
+     "hjemme": "Figgjo 3",
+     "borte": "Haugesund 3",
+     "sted": "Stavangerhallen",
+     "resultat": ""
+    },
+    {
+     "dato": "2026-11-29",
+     "kl": "11.00",
+     "hjemme": "Figgjo 3",
+     "borte": "Stord 5",
+     "sted": "Stavangerhallen",
+     "resultat": ""
+    },
+    {
+     "dato": "2026-11-29",
+     "kl": "13.30",
+     "hjemme": "Figgjo 3",
+     "borte": "Stord 4",
+     "sted": "Stavangerhallen",
+     "resultat": ""
+    },
+    {
+     "dato": "2026-12-05",
+     "kl": "11.00",
+     "hjemme": "Figgjo 3",
+     "borte": "Stord 6",
+     "sted": "Figgjohallen",
+     "resultat": ""
+    },
+    {
+     "dato": "2027-01-04",
+     "kl": "18.00",
+     "hjemme": "Figgjo 3",
+     "borte": "Stavanger 2",
+     "sted": "Figgjohallen",
+     "resultat": ""
+    },
+    {
+     "dato": "2027-01-16",
+     "kl": "13.30",
+     "hjemme": "Randaberg",
+     "borte": "Figgjo 3",
+     "sted": "Randaberghallen",
+     "resultat": ""
+    },
+    {
+     "dato": "2027-01-30",
+     "kl": "11.00",
+     "hjemme": "Haugesund 3",
+     "borte": "Figgjo 3",
+     "sted": "Haugesundhallen",
+     "resultat": ""
+    },
+    {
+     "dato": "2027-01-30",
+     "kl": "16.00",
+     "hjemme": "Stord 6",
+     "borte": "Figgjo 3",
+     "sted": "Haugesundhallen",
+     "resultat": ""
+    },
+    {
+     "dato": "2027-02-07",
+     "kl": "11.00",
+     "hjemme": "Stord 4",
+     "borte": "Figgjo 3",
+     "sted": "Stavangerhallen",
+     "resultat": ""
+    },
+    {
+     "dato": "2027-02-07",
+     "kl": "13.30",
+     "hjemme": "Stord 5",
+     "borte": "Figgjo 3",
+     "sted": "Stordhallen",
+     "resultat": ""
+    },
+    {
+     "dato": "2027-02-21",
+     "kl": "14.00",
+     "hjemme": "Lye",
+     "borte": "Figgjo 3",
+     "sted": "Lyehallen",
+     "resultat": ""
+    },
+    {
+     "dato": "2027-03-15",
+     "kl": "18.00",
+     "hjemme": "Figgjo 3",
+     "borte": "Randaberg",
+     "sted": "Figgjohallen",
+     "resultat": ""
+    }
+   ]
+  },
+  "Figgjo 4": {
+   "divisjon": "5. divisjon",
+   "kilde": "https://bordtennislive.no/events/99/107/2/7/7",
+   "tabell": [
+    {
+     "plass": "-",
+     "lag": "Dalane",
+     "k": "0",
+     "v": "0",
+     "u": "0",
+     "t": "0",
+     "kamper": "0-0",
+     "sett": "0-0",
+     "p": "0"
+    },
+    {
+     "plass": "-",
+     "lag": "Figgjo 4",
+     "k": "0",
+     "v": "0",
+     "u": "0",
+     "t": "0",
+     "kamper": "0-0",
+     "sett": "0-0",
+     "p": "0"
+    },
+    {
+     "plass": "-",
+     "lag": "Figgjo 5",
+     "k": "0",
+     "v": "0",
+     "u": "0",
+     "t": "0",
+     "kamper": "0-0",
+     "sett": "0-0",
+     "p": "0"
+    },
+    {
+     "plass": "-",
+     "lag": "Haugesund 4",
+     "k": "0",
+     "v": "0",
+     "u": "0",
+     "t": "0",
+     "kamper": "0-0",
+     "sett": "0-0",
+     "p": "0"
+    },
+    {
+     "plass": "-",
+     "lag": "Lye 2",
+     "k": "0",
+     "v": "0",
+     "u": "0",
+     "t": "0",
+     "kamper": "0-0",
+     "sett": "0-0",
+     "p": "0"
+    },
+    {
+     "plass": "-",
+     "lag": "Skjoldar",
+     "k": "0",
+     "v": "0",
+     "u": "0",
+     "t": "0",
+     "kamper": "0-0",
+     "sett": "0-0",
+     "p": "0"
+    },
+    {
+     "plass": "-",
+     "lag": "Varhaug",
+     "k": "0",
+     "v": "0",
+     "u": "0",
+     "t": "0",
+     "kamper": "0-0",
+     "sett": "0-0",
+     "p": "0"
+    }
+   ],
+   "kamper": [
+    {
+     "dato": "2026-10-24",
+     "kl": "14.00",
+     "hjemme": "Figgjo 4",
+     "borte": "Haugesund 4",
+     "sted": "Figgjohallen",
+     "resultat": ""
+    },
+    {
+     "dato": "2026-11-01",
+     "kl": "11.00",
+     "hjemme": "Figgjo 4",
+     "borte": "Skjoldar",
+     "sted": "Figgjohallen",
+     "resultat": ""
+    },
+    {
+     "dato": "2026-11-14",
+     "kl": "11.00",
+     "hjemme": "Lye 2",
+     "borte": "Figgjo 4",
+     "sted": "Lyehallen",
+     "resultat": ""
+    },
+    {
+     "dato": "2026-11-29",
+     "kl": "11.00",
+     "hjemme": "Figgjo 4",
+     "borte": "Dalane",
+     "sted": "Figgjohallen",
+     "resultat": ""
+    },
+    {
+     "dato": "2026-12-16",
+     "kl": "18.00",
+     "hjemme": "Figgjo 5",
+     "borte": "Figgjo 4",
+     "sted": "Figgjohallen",
+     "resultat": ""
+    },
+    {
+     "dato": "2027-01-04",
+     "kl": "18.00",
+     "hjemme": "Figgjo 4",
+     "borte": "Lye 2",
+     "sted": "Figgjohallen",
+     "resultat": ""
+    },
+    {
+     "dato": "2027-01-20",
+     "kl": "18.00",
+     "hjemme": "Figgjo 4",
+     "borte": "Varhaug",
+     "sted": "Figgjohallen",
+     "resultat": ""
+    },
+    {
+     "dato": "2027-01-31",
+     "kl": "11.00",
+     "hjemme": "Haugesund 4",
+     "borte": "Figgjo 4",
+     "sted": "Haugesundhallen",
+     "resultat": ""
+    },
+    {
+     "dato": "2027-01-31",
+     "kl": "13.30",
+     "hjemme": "Skjoldar",
+     "borte": "Figgjo 4",
+     "sted": "Haugesundhallen",
+     "resultat": ""
+    },
+    {
+     "dato": "2027-02-20",
+     "kl": "11.00",
+     "hjemme": "Figgjo 4",
+     "borte": "Figgjo 5",
+     "sted": "Figgjohallen",
+     "resultat": ""
+    },
+    {
+     "dato": "2027-03-02",
+     "kl": "18.00",
+     "hjemme": "Dalane",
+     "borte": "Figgjo 4",
+     "sted": "Dalanehallen",
+     "resultat": ""
+    },
+    {
+     "dato": "2027-03-16",
+     "kl": "18.00",
+     "hjemme": "Varhaug",
+     "borte": "Figgjo 4",
+     "sted": "Varhaughallen",
+     "resultat": ""
+    }
+   ]
+  },
+  "Figgjo 5": {
+   "divisjon": "5. divisjon",
+   "kilde": "https://bordtennislive.no/events/99/107/2/7/7",
+   "tabell": [
+    {
+     "plass": "-",
+     "lag": "Dalane",
+     "k": "0",
+     "v": "0",
+     "u": "0",
+     "t": "0",
+     "kamper": "0-0",
+     "sett": "0-0",
+     "p": "0"
+    },
+    {
+     "plass": "-",
+     "lag": "Figgjo 4",
+     "k": "0",
+     "v": "0",
+     "u": "0",
+     "t": "0",
+     "kamper": "0-0",
+     "sett": "0-0",
+     "p": "0"
+    },
+    {
+     "plass": "-",
+     "lag": "Figgjo 5",
+     "k": "0",
+     "v": "0",
+     "u": "0",
+     "t": "0",
+     "kamper": "0-0",
+     "sett": "0-0",
+     "p": "0"
+    },
+    {
+     "plass": "-",
+     "lag": "Haugesund 4",
+     "k": "0",
+     "v": "0",
+     "u": "0",
+     "t": "0",
+     "kamper": "0-0",
+     "sett": "0-0",
+     "p": "0"
+    },
+    {
+     "plass": "-",
+     "lag": "Lye 2",
+     "k": "0",
+     "v": "0",
+     "u": "0",
+     "t": "0",
+     "kamper": "0-0",
+     "sett": "0-0",
+     "p": "0"
+    },
+    {
+     "plass": "-",
+     "lag": "Skjoldar",
+     "k": "0",
+     "v": "0",
+     "u": "0",
+     "t": "0",
+     "kamper": "0-0",
+     "sett": "0-0",
+     "p": "0"
+    },
+    {
+     "plass": "-",
+     "lag": "Varhaug",
+     "k": "0",
+     "v": "0",
+     "u": "0",
+     "t": "0",
+     "kamper": "0-0",
+     "sett": "0-0",
+     "p": "0"
+    }
+   ],
+   "kamper": [
+    {
+     "dato": "2026-10-27",
+     "kl": "18.00",
+     "hjemme": "Varhaug",
+     "borte": "Figgjo 5",
+     "sted": "Varhaughallen",
+     "resultat": ""
+    },
+    {
+     "dato": "2026-11-08",
+     "kl": "13.30",
+     "hjemme": "Figgjo 5",
+     "borte": "Haugesund 4",
+     "sted": "Varhaughallen",
+     "resultat": ""
+    },
+    {
+     "dato": "2026-11-21",
+     "kl": "11.00",
+     "hjemme": "Figgjo 5",
+     "borte": "Dalane",
+     "sted": "Figgjohallen",
+     "resultat": ""
+    },
+    {
+     "dato": "2026-11-21",
+     "kl": "13.30",
+     "hjemme": "Figgjo 5",
+     "borte": "Skjoldar",
+     "sted": "Figgjohallen",
+     "resultat": ""
+    },
+    {
+     "dato": "2026-11-28",
+     "kl": "11.00",
+     "hjemme": "Lye 2",
+     "borte": "Figgjo 5",
+     "sted": "Lyehallen",
+     "resultat": ""
+    },
+    {
+     "dato": "2026-12-16",
+     "kl": "18.00",
+     "hjemme": "Figgjo 5",
+     "borte": "Figgjo 4",
+     "sted": "Figgjohallen",
+     "resultat": ""
+    },
+    {
+     "dato": "2027-01-04",
+     "kl": "18.00",
+     "hjemme": "Figgjo 5",
+     "borte": "Varhaug",
+     "sted": "Figgjohallen",
+     "resultat": ""
+    },
+    {
+     "dato": "2027-01-14",
+     "kl": "18.00",
+     "hjemme": "Dalane",
+     "borte": "Figgjo 5",
+     "sted": "Dalanehallen",
+     "resultat": ""
+    },
+    {
+     "dato": "2027-02-01",
+     "kl": "18.00",
+     "hjemme": "Figgjo 5",
+     "borte": "Lye 2",
+     "sted": "Figgjohallen",
+     "resultat": ""
+    },
+    {
+     "dato": "2027-02-20",
+     "kl": "11.00",
+     "hjemme": "Figgjo 4",
+     "borte": "Figgjo 5",
+     "sted": "Figgjohallen",
+     "resultat": ""
+    },
+    {
+     "dato": "2027-03-07",
+     "kl": "11.00",
+     "hjemme": "Skjoldar",
+     "borte": "Figgjo 5",
+     "sted": "Skjoldar",
+     "resultat": ""
+    },
+    {
+     "dato": "2027-03-07",
+     "kl": "13.30",
+     "hjemme": "Haugesund 4",
+     "borte": "Figgjo 5",
+     "sted": "Skjoldar",
+     "resultat": ""
+    }
+   ]
   }
  }
 };
