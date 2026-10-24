@@ -923,8 +923,8 @@
   <button class="bla neste" onclick="blaBilde(1)" aria-label="Neste bilde">›</button>
 </div>
 
-<script src="innhold.js?v=1792401993"></script>
-<script src="serie.js?v=1792401993"></script>
+<script src="innhold.js?v=1792870850"></script>
+<script src="serie.js?v=1792870850"></script>
 <script>
 const ANTALL_NYHETER_FORST = 6;
 
@@ -1071,7 +1071,7 @@ function tegnNyheter(antall) {
         <h3>${esc(n.tittel)}</h3>
         <p class="${lang ? "kort" : ""}" id="nyhet-${i}">${esc(n.tekst)}</p>
         ${lang ? `<button class="les-mer" onclick="$('nyhet-${i}').classList.remove('kort'); this.remove()">Les mer</button>` : ""}
-        ${/^https?:\/\//.test(n.lenke || "") ? `<a class="nyhet-lenke" href="${esc(n.lenke)}" target="_blank" rel="noopener">${esc(n.lenketekst || "Les mer")} →</a>` : ""}
+        ${/^(https?:\/\/|dokumenter\/)/.test(n.lenke || "") ? `<a class="nyhet-lenke" href="${esc(n.lenke)}" target="_blank" rel="noopener">${esc(n.lenketekst || "Les mer")} →</a>` : ""}
         <div class="del-rad">
           <button class="del-knapp" onclick="kopierLenke('${delUrl}', this)">🔗 Del lenke</button>
         </div>

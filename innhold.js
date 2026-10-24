@@ -37,6 +37,14 @@ const INNHOLD = {
   // Nyeste vises først uansett rekkefølge her. Dato: "ÅÅÅÅ-MM-DD"
   nyheter: [
     {
+      vis: false,   // KLADD – ikke godkjent for publisering ennå
+      dato: "2026-10-19",
+      tittel: "Bli med på Heros Høstcup 14. november",
+      tekst: "Lørdag 14. november arrangerer Sportsklubben Heros Høstcup i Haukelandshallen i Bergen, og vi håper mange fra Figgjo vil være med!\n\nDet er klasser for alle nivåer: rekrutter, gutter og piker 11 og 15 år, damer og herrer åpen, herrer B–F og para åpen. Alle spiller i puljer med 3–4 spillere, så du får flere kamper. Du kan delta i én klasse i hver av de to bolkene – første bolk starter kl. 11.00 og andre ca. kl. 14.30.\n\nStartkontingenten er 110–230 kr avhengig av klasse, og faktureres klubben etter stevnet. Alle født i 2014 eller tidligere må ha betalt spillerlisens.\n\nPåmeldingen sendes samlet fra klubben, så gi beskjed til Kjetil hvilken klasse du vil spille. Fristen er torsdag 5. november. Hele innbydelsen finner du i PDF-en under.",
+      lenke: "dokumenter/heros-hostcup-2026-innbydelse.pdf",
+      lenketekst: "Les innbydelsen (PDF)",
+    },
+    {
       dato: "2026-10-18",
       tittel: "Seier til Samuel og storspill av Max i Fjell Cup",
       tekst: "Lørdag var vi i Fyllingsdalen på Fjell Cup, og for en dag det ble!\n\nSamuel vant Herrer D. Han tapte ikke en eneste kamp, og finalen mot Håkon Vollan ble avgjort 3–2 i en skikkelig nervepirrende avslutning. I klassen 1400–1999 tok han i tillegg andreplassen.\n\nMax storspilte hele dagen. I Herrer D vant han alle tre gruppekampene og slo Bjørn Mathias Dahle 3–2 i åttendedelsfinalen, før han røk ut 2–3 i en jevn kvartfinale mot Amund Vollan. I 1400–1999 slo han Håkon Vollan – finalisten i Herrer D – 3–0, og han vant også sin rankingpulje etter 3–2 mot Stig Erik Elliott. Det var gøy å se!\n\nHenning gikk gjennom gruppespillet i Herrer D uten å avgi et eneste sett. Kurt vant også gruppen sin og tok seg helt til kvartfinalen, der det ble et knepent 2–3-tap mot Stig Erik Elliott.\n\nAlle våre spillere vant gruppene sine i Herrer D. Takk til Fjell for et godt arrangement, og takk til alle som var med – dette gir mersmak!",
