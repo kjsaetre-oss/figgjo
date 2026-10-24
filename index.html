@@ -923,8 +923,9 @@
   <button class="bla neste" onclick="blaBilde(1)" aria-label="Neste bilde">›</button>
 </div>
 
-<script src="innhold.js?v=1792870850"></script>
-<script src="serie.js?v=1792870850"></script>
+<script src="innhold.js?v=1792871287"></script>
+<script src="serie.js?v=1792871287"></script>
+<script src="region.js?v=1792871287"></script>
 <script>
 const ANTALL_NYHETER_FORST = 6;
 
@@ -1144,6 +1145,36 @@ function visSerielag(lag) {
 let valgtLag = "Alle";
 const SERIEDATA = (typeof SERIE !== "undefined" && SERIE.lag) ? SERIE : { oppdatert: "", lag: {} };
 
+// Regionsseriene (4. og 5. div) ligger ikke på bordtennislive. Kampene står i region.js,
+// og tabellen regnes ut her fra resultatene som er lagt inn (2 poeng for seier, 1 for uavgjort).
+function regionTabell(serie) {
+  const rader = Object.fromEntries(serie.lag.map(l => [l, { lag: l, k: 0, v: 0, u: 0, t: 0, kv: 0, kt: 0, p: 0 }]));
+  serie.kamper.forEach(k => {
+    const m = String(k.resultat || "").match(/^(\d+)-(\d+)$/);
+    const h = rader[k.hjemme], b = rader[k.borte];
+    if (!m || !h || !b) return;
+    const hs = +m[1], bs = +m[2];
+    h.k++; b.k++; h.kv += hs; h.kt += bs; b.kv += bs; b.kt += hs;
+    if (hs > bs) { h.v++; b.t++; h.p += 2; } else if (bs > hs) { b.v++; h.t++; b.p += 2; } else { h.u++; b.u++; h.p++; b.p++; }
+  });
+  const startet = Object.values(rader).some(r => r.k > 0);
+  return Object.values(rader)
+    .sort((a, b) => b.p - a.p || (b.kv - b.kt) - (a.kv - a.kt) || b.kv - a.kv || a.lag.localeCompare(b.lag, "no"))
+    .map((r, i) => ({ plass: startet ? String(i + 1) : "", lag: r.lag, k: String(r.k), v: String(r.v), u: String(r.u), t: String(r.t),
+      kamper: r.kv + "-" + r.kt, sett: "–", p: String(r.p) }));
+}
+if (typeof REGION !== "undefined" && REGION.serier) {
+  Object.values(REGION.serier).forEach(serie => {
+    const tabell = regionTabell(serie);
+    (serie.figgjolag || []).forEach(lag => {
+      SERIEDATA.lag[lag] = {
+        divisjon: serie.divisjon, region: true, oppdatert: REGION.oppdatert || "", tabell,
+        kamper: serie.kamper.filter(k => k.hjemme === lag || k.borte === lag).map(k => ({ ...k }))
+      };
+    });
+  });
+}
+
 // Kamper fra bordtennislive (serie.js) + kamper lagt inn for hånd i innhold.js for lag som ikke ligger der
 function alleKamper() {
   const fraSerie = Object.entries(SERIEDATA.lag).flatMap(([lag, d]) => (d.kamper || []).map(k => ({ ...k, lag })));
@@ -1215,7 +1246,7 @@ function visTabell() {
   $("tabellfaner").onclick = e => { const b = e.target.closest("button"); if (b) { valgtTabell = b.dataset.lag; visTabell(); } };
 
   const startet = d.tabell.some(r => +r.k > 0);
-  const dato = lesDato(SERIEDATA.oppdatert);
+  const dato = lesDato(d.region ? d.oppdatert : SERIEDATA.oppdatert);
   $("tabelltittel").textContent = d.divisjon;
   $("tabellstatus").textContent = startet
     ? (dato ? "Oppdatert " + dato.toLocaleDateString("nb-NO", { day: "numeric", month: "short" }).replace(/\./g, "") : "")
@@ -1233,7 +1264,9 @@ function visTabell() {
         <td class="bred dempet">${esc(r.kamper)}</td><td class="bred dempet">${esc(r.sett)}</td>
         <td><span class="poeng">${esc(r.p)}</span></td></tr>`;
     }).join("") + "</tbody>";
-  $("tabellkilde").innerHTML = `Kilde: <a href="${esc(d.kilde)}" target="_blank" rel="noopener">bordtennislive.no ↗</a>`;
+  $("tabellkilde").innerHTML = d.region
+    ? "Regionsserien ligger ikke på bordtennislive – tabellen regnes ut fra resultatene klubben legger inn."
+    : `Kilde: <a href="${esc(d.kilde)}" target="_blank" rel="noopener">bordtennislive.no ↗</a>`;
 }
 
 function tegnKamper(antall) {
