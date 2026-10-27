@@ -1,6 +1,6 @@
 /* Tabell og kamper hentet fra bordtennislive.no. Lages av oppdater-serie.py – ikke rediger for hånd. */
 const SERIE = {
- "oppdatert": "2026-10-24",
+ "oppdatert": "2026-10-27",
  "lag": {
   "Figgjo 2": {
    "divisjon": "3. divisjon avd. E",
@@ -30,6 +30,17 @@ const SERIE = {
     },
     {
      "plass": "3",
+     "lag": "Bergen PIL",
+     "k": "2",
+     "v": "2",
+     "u": "0",
+     "t": "0",
+     "kamper": "14-6",
+     "sett": "45-31",
+     "p": "4"
+    },
+    {
+     "plass": "4",
      "lag": "Laksevåg BTK 3",
      "k": "3",
      "v": "2",
@@ -40,58 +51,47 @@ const SERIE = {
      "p": "4"
     },
     {
-     "plass": "4",
+     "plass": "5",
      "lag": "Stord BTK 3",
-     "k": "3",
+     "k": "4",
      "v": "2",
      "u": "0",
-     "t": "1",
-     "kamper": "16-14",
-     "sett": "53-51",
+     "t": "2",
+     "kamper": "18-22",
+     "sett": "68-76",
      "p": "4"
-    },
-    {
-     "plass": "5",
-     "lag": "Bergen PIL",
-     "k": "0",
-     "v": "0",
-     "u": "0",
-     "t": "0",
-     "kamper": "0-0",
-     "sett": "0-0",
-     "p": "0"
     },
     {
      "plass": "6",
      "lag": "Stavanger BTK",
-     "k": "1",
+     "k": "2",
      "v": "0",
-     "u": "0",
+     "u": "1",
      "t": "1",
-     "kamper": "3-7",
-     "sett": "18-22",
-     "p": "0"
+     "kamper": "8-12",
+     "sett": "38-40",
+     "p": "1"
     },
     {
      "plass": "7",
      "lag": "Figgjo BTK 2",
-     "k": "1",
+     "k": "2",
      "v": "0",
-     "u": "0",
+     "u": "1",
      "t": "1",
-     "kamper": "2-8",
-     "sett": "14-26",
-     "p": "0"
+     "kamper": "7-13",
+     "sett": "32-46",
+     "p": "1"
     },
     {
      "plass": "8",
      "lag": "Haugesund BTK 2",
-     "k": "3",
+     "k": "4",
      "v": "0",
      "u": "0",
-     "t": "3",
-     "kamper": "6-24",
-     "sett": "28-76",
+     "t": "4",
+     "kamper": "10-30",
+     "sett": "44-96",
      "p": "0"
     }
    ],
@@ -110,7 +110,7 @@ const SERIE = {
      "hjemme": "Figgjo BTK 2",
      "borte": "Stavanger BTK",
      "sted": "Figgjohallen",
-     "resultat": ""
+     "resultat": "5-5"
     },
     {
      "dato": "2026-11-07",
@@ -216,90 +216,90 @@ const SERIE = {
    "tabell": [
     {
      "plass": "1",
-     "lag": "Rosseland BTK",
-     "k": "2",
-     "v": "2",
+     "lag": "Rakkestad BTK",
+     "k": "4",
+     "v": "4",
      "u": "0",
      "t": "0",
-     "kamper": "19-1",
-     "sett": "59-16",
-     "p": "4"
+     "kamper": "30-10",
+     "sett": "104-46",
+     "p": "8"
     },
     {
      "plass": "2",
-     "lag": "Rakkestad BTK",
-     "k": "2",
-     "v": "2",
+     "lag": "Rosseland BTK",
+     "k": "4",
+     "v": "3",
      "u": "0",
-     "t": "0",
-     "kamper": "16-4",
-     "sett": "53-16",
-     "p": "4"
+     "t": "1",
+     "kamper": "29-11",
+     "sett": "99-56",
+     "p": "6"
     },
     {
      "plass": "3",
      "lag": "Fornebu BTK 3",
-     "k": "2",
-     "v": "2",
+     "k": "4",
+     "v": "3",
      "u": "0",
-     "t": "0",
-     "kamper": "13-7",
-     "sett": "42-38",
-     "p": "4"
+     "t": "1",
+     "kamper": "25-15",
+     "sett": "86-73",
+     "p": "6"
     },
     {
      "plass": "4",
      "lag": "Kobra BTK",
-     "k": "2",
-     "v": "1",
-     "u": "0",
+     "k": "4",
+     "v": "2",
+     "u": "1",
      "t": "1",
-     "kamper": "11-9",
-     "sett": "37-36",
-     "p": "2"
+     "kamper": "24-16",
+     "sett": "83-68",
+     "p": "5"
     },
     {
      "plass": "5",
      "lag": "Skien BTK",
-     "k": "2",
-     "v": "1",
+     "k": "4",
+     "v": "2",
      "u": "0",
-     "t": "1",
-     "kamper": "6-14",
-     "sett": "33-50",
-     "p": "2"
+     "t": "2",
+     "kamper": "18-22",
+     "sett": "75-86",
+     "p": "4"
     },
     {
      "plass": "6",
      "lag": "Trondheim BTK",
-     "k": "2",
-     "v": "0",
-     "u": "0",
+     "k": "4",
+     "v": "1",
+     "u": "1",
      "t": "2",
-     "kamper": "7-13",
-     "sett": "32-43",
-     "p": "0"
+     "kamper": "18-22",
+     "sett": "70-79",
+     "p": "3"
     },
     {
      "plass": "7",
-     "lag": "Haugesund BTK",
-     "k": "2",
+     "lag": "Figgjo BTK",
+     "k": "4",
      "v": "0",
      "u": "0",
-     "t": "2",
-     "kamper": "4-16",
-     "sett": "27-54",
+     "t": "4",
+     "kamper": "8-32",
+     "sett": "52-104",
      "p": "0"
     },
     {
      "plass": "8",
-     "lag": "Figgjo BTK",
-     "k": "2",
+     "lag": "Haugesund BTK",
+     "k": "4",
      "v": "0",
      "u": "0",
-     "t": "2",
-     "kamper": "4-16",
-     "sett": "22-52",
+     "t": "4",
+     "kamper": "8-32",
+     "sett": "52-109",
      "p": "0"
     }
    ],
@@ -326,7 +326,7 @@ const SERIE = {
      "hjemme": "Kobra BTK",
      "borte": "Figgjo BTK",
      "sted": "Skien",
-     "resultat": ""
+     "resultat": "8-2"
     },
     {
      "dato": "2026-10-25",
@@ -334,7 +334,7 @@ const SERIE = {
      "hjemme": "Skien BTK",
      "borte": "Figgjo BTK",
      "sted": "Skien",
-     "resultat": ""
+     "resultat": "8-2"
     },
     {
      "dato": "2026-12-05",
