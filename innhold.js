@@ -39,7 +39,7 @@ const INNHOLD = {
     {
       dato: "2026-10-31",
       tittel: "Fin dag for Figgjo på Lye Ranking",
-      tekst: "Lørdag arrangerte Lye sin første turnering, og det var kjekt å være med! Det var en bra turnering, godt organisert og med mange gode kamper. Vi håper det blir flere turneringer på Lye fremover.\n\nSamuel, som spiller for Laksevåg og Figgjo, vant Ranking 1 og dermed hele turneringen.\n\nMax vant Ranking 2 og fortsetter den gode formen fra Fjell Cup. Noah vant Ranking 4 etter en dag med mye godt spill og god innsats.\n\nI Ranking 5 vant Nikolai, og Lukas ble nummer to. Tobias tok også en flott andreplass i Ranking 3. Det var kjekt å se hvor mye våre spillere har utviklet seg.\n\nGodt jobbet alle sammen!\n\nPå bildet: Josef Berg fra Lye (til venstre), som vant Ranking 3, og Tobias Sunde fra Figgjo. Foto: Markus Zeeh",
+      tekst: "Lørdag arrangerte Lye sin første turnering, og det var kjekt å være med! Det var en bra turnering, godt organisert og med mange gode kamper. Vi håper det blir flere turneringer på Lye fremover.\n\nSamuel, som spiller for Laksevåg og Figgjo, vant Ranking 1 og dermed hele turneringen.\n\nMax vant Ranking 2 og fortsetter den gode formen fra Fjell Cup. Noah vant Ranking 4 etter en dag med mye godt spill og god innsats.\n\nI Ranking 5 vant Nikolai, og Lukas ble nummer to. Tobias tok også en flott andreplass i Ranking 3. Det var kjekt å se hvor mye våre spillere har utviklet seg.\n\nGodt jobbet alle sammen!\n\nPå bildet: Josef Berg fra Lye (til venstre), som vant Ranking 3, og Tobias Sunde fra Figgjo. Foto: Markus",
       bilder: ["bilder/lye-ranking-2026.jpg"],
     },
     {
