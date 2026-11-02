@@ -1,6 +1,6 @@
 /* Tabell og kamper hentet fra bordtennislive.no. Lages av oppdater-serie.py – ikke rediger for hånd. */
 const SERIE = {
- "oppdatert": "2026-10-27",
+ "oppdatert": "2026-11-02",
  "lag": {
   "Figgjo 2": {
    "divisjon": "3. divisjon avd. E",
@@ -424,6 +424,28 @@ const SERIE = {
    "tabell": [
     {
      "plass": "1",
+     "lag": "Stord 6",
+     "k": "2",
+     "v": "1",
+     "u": "1",
+     "t": "0",
+     "kamper": "11-9",
+     "sett": "39-37",
+     "p": "3"
+    },
+    {
+     "plass": "2",
+     "lag": "Stord 4",
+     "k": "1",
+     "v": "1",
+     "u": "0",
+     "t": "0",
+     "kamper": "8-2",
+     "sett": "26-14",
+     "p": "2"
+    },
+    {
+     "plass": "3",
      "lag": "Figgjo 3",
      "k": "1",
      "v": "1",
@@ -434,29 +456,29 @@ const SERIE = {
      "p": "2"
     },
     {
-     "plass": "2",
-     "lag": "Stord 5",
-     "k": "0",
-     "v": "0",
-     "u": "0",
-     "t": "0",
-     "kamper": "0-0",
-     "sett": "0-0",
-     "p": "0"
-    },
-    {
-     "plass": "3",
-     "lag": "Randaberg",
-     "k": "0",
-     "v": "0",
-     "u": "0",
-     "t": "0",
-     "kamper": "0-0",
-     "sett": "0-0",
-     "p": "0"
-    },
-    {
      "plass": "4",
+     "lag": "Lye",
+     "k": "1",
+     "v": "1",
+     "u": "0",
+     "t": "0",
+     "kamper": "7-3",
+     "sett": "25-11",
+     "p": "2"
+    },
+    {
+     "plass": "5",
+     "lag": "Stavanger 2",
+     "k": "2",
+     "v": "0",
+     "u": "1",
+     "t": "1",
+     "kamper": "7-13",
+     "sett": "36-45",
+     "p": "1"
+    },
+    {
+     "plass": "6",
      "lag": "Haugesund 3",
      "k": "0",
      "v": "0",
@@ -467,47 +489,25 @@ const SERIE = {
      "p": "0"
     },
     {
-     "plass": "5",
-     "lag": "Stord 6",
-     "k": "0",
-     "v": "0",
-     "u": "0",
-     "t": "0",
-     "kamper": "0-0",
-     "sett": "0-0",
-     "p": "0"
-    },
-    {
-     "plass": "6",
-     "lag": "Lye",
-     "k": "0",
-     "v": "0",
-     "u": "0",
-     "t": "0",
-     "kamper": "0-0",
-     "sett": "0-0",
-     "p": "0"
-    },
-    {
      "plass": "7",
-     "lag": "Stord 4",
-     "k": "0",
-     "v": "0",
-     "u": "0",
-     "t": "0",
-     "kamper": "0-0",
-     "sett": "0-0",
-     "p": "0"
-    },
-    {
-     "plass": "8",
-     "lag": "Stavanger 2",
+     "lag": "Stord 5",
      "k": "1",
      "v": "0",
      "u": "0",
      "t": "1",
      "kamper": "2-8",
-     "sett": "15-27",
+     "sett": "14-26",
+     "p": "0"
+    },
+    {
+     "plass": "8",
+     "lag": "Randaberg",
+     "k": "2",
+     "v": "0",
+     "u": "0",
+     "t": "2",
+     "kamper": "7-13",
+     "sett": "27-46",
      "p": "0"
     }
    ],
@@ -631,80 +631,80 @@ const SERIE = {
    "kilde": "https://bordtennislive.no/events/99/107/2/7/7",
    "tabell": [
     {
-     "plass": "-",
-     "lag": "Dalane",
-     "k": "0",
-     "v": "0",
-     "u": "0",
-     "t": "0",
-     "kamper": "0-0",
-     "sett": "0-0",
-     "p": "0"
-    },
-    {
-     "plass": "-",
-     "lag": "Figgjo 4",
-     "k": "0",
-     "v": "0",
-     "u": "0",
-     "t": "0",
-     "kamper": "0-0",
-     "sett": "0-0",
-     "p": "0"
-    },
-    {
-     "plass": "-",
-     "lag": "Figgjo 5",
-     "k": "0",
-     "v": "0",
-     "u": "0",
-     "t": "0",
-     "kamper": "0-0",
-     "sett": "0-0",
-     "p": "0"
-    },
-    {
-     "plass": "-",
-     "lag": "Haugesund 4",
-     "k": "0",
-     "v": "0",
-     "u": "0",
-     "t": "0",
-     "kamper": "0-0",
-     "sett": "0-0",
-     "p": "0"
-    },
-    {
-     "plass": "-",
-     "lag": "Lye 2",
-     "k": "0",
-     "v": "0",
-     "u": "0",
-     "t": "0",
-     "kamper": "0-0",
-     "sett": "0-0",
-     "p": "0"
-    },
-    {
-     "plass": "-",
+     "plass": "1",
      "lag": "Skjoldar",
-     "k": "0",
-     "v": "0",
+     "k": "3",
+     "v": "2",
+     "u": "0",
+     "t": "1",
+     "kamper": "24-6",
+     "sett": "81-31",
+     "p": "4"
+    },
+    {
+     "plass": "2",
+     "lag": "Figgjo 4",
+     "k": "2",
+     "v": "2",
      "u": "0",
      "t": "0",
-     "kamper": "0-0",
-     "sett": "0-0",
+     "kamper": "16-4",
+     "sett": "52-26",
+     "p": "4"
+    },
+    {
+     "plass": "3",
+     "lag": "Haugesund 4",
+     "k": "3",
+     "v": "1",
+     "u": "1",
+     "t": "1",
+     "kamper": "11-19",
+     "sett": "44-67",
+     "p": "3"
+    },
+    {
+     "plass": "4",
+     "lag": "Varhaug",
+     "k": "1",
+     "v": "1",
+     "u": "0",
+     "t": "0",
+     "kamper": "8-2",
+     "sett": "27-9",
+     "p": "2"
+    },
+    {
+     "plass": "5",
+     "lag": "Lye 2",
+     "k": "2",
+     "v": "0",
+     "u": "1",
+     "t": "1",
+     "kamper": "5-15",
+     "sett": "23-49",
+     "p": "1"
+    },
+    {
+     "plass": "6",
+     "lag": "Figgjo 5",
+     "k": "1",
+     "v": "0",
+     "u": "0",
+     "t": "1",
+     "kamper": "2-8",
+     "sett": "9-27",
      "p": "0"
     },
     {
-     "plass": "-",
-     "lag": "Varhaug",
-     "k": "0",
+     "plass": "7",
+     "lag": "Dalane",
+     "k": "2",
      "v": "0",
      "u": "0",
-     "t": "0",
-     "kamper": "0-0",
-     "sett": "0-0",
+     "t": "2",
+     "kamper": "4-16",
+     "sett": "23-50",
      "p": "0"
     }
    ],
@@ -715,7 +715,7 @@ const SERIE = {
      "hjemme": "Figgjo 4",
      "borte": "Haugesund 4",
      "sted": "Figgjohallen",
-     "resultat": ""
+     "resultat": "10-0"
     },
     {
      "dato": "2026-11-01",
@@ -723,7 +723,7 @@ const SERIE = {
      "hjemme": "Figgjo 4",
      "borte": "Skjoldar",
      "sted": "Figgjohallen",
-     "resultat": ""
+     "resultat": "6-4"
     },
     {
      "dato": "2026-11-14",
@@ -812,80 +812,80 @@ const SERIE = {
    "kilde": "https://bordtennislive.no/events/99/107/2/7/7",
    "tabell": [
     {
-     "plass": "-",
-     "lag": "Dalane",
-     "k": "0",
-     "v": "0",
-     "u": "0",
-     "t": "0",
-     "kamper": "0-0",
-     "sett": "0-0",
-     "p": "0"
-    },
-    {
-     "plass": "-",
-     "lag": "Figgjo 4",
-     "k": "0",
-     "v": "0",
-     "u": "0",
-     "t": "0",
-     "kamper": "0-0",
-     "sett": "0-0",
-     "p": "0"
-    },
-    {
-     "plass": "-",
-     "lag": "Figgjo 5",
-     "k": "0",
-     "v": "0",
-     "u": "0",
-     "t": "0",
-     "kamper": "0-0",
-     "sett": "0-0",
-     "p": "0"
-    },
-    {
-     "plass": "-",
-     "lag": "Haugesund 4",
-     "k": "0",
-     "v": "0",
-     "u": "0",
-     "t": "0",
-     "kamper": "0-0",
-     "sett": "0-0",
-     "p": "0"
-    },
-    {
-     "plass": "-",
-     "lag": "Lye 2",
-     "k": "0",
-     "v": "0",
-     "u": "0",
-     "t": "0",
-     "kamper": "0-0",
-     "sett": "0-0",
-     "p": "0"
-    },
-    {
-     "plass": "-",
+     "plass": "1",
      "lag": "Skjoldar",
-     "k": "0",
-     "v": "0",
+     "k": "3",
+     "v": "2",
+     "u": "0",
+     "t": "1",
+     "kamper": "24-6",
+     "sett": "81-31",
+     "p": "4"
+    },
+    {
+     "plass": "2",
+     "lag": "Figgjo 4",
+     "k": "2",
+     "v": "2",
      "u": "0",
      "t": "0",
-     "kamper": "0-0",
-     "sett": "0-0",
+     "kamper": "16-4",
+     "sett": "52-26",
+     "p": "4"
+    },
+    {
+     "plass": "3",
+     "lag": "Haugesund 4",
+     "k": "3",
+     "v": "1",
+     "u": "1",
+     "t": "1",
+     "kamper": "11-19",
+     "sett": "44-67",
+     "p": "3"
+    },
+    {
+     "plass": "4",
+     "lag": "Varhaug",
+     "k": "1",
+     "v": "1",
+     "u": "0",
+     "t": "0",
+     "kamper": "8-2",
+     "sett": "27-9",
+     "p": "2"
+    },
+    {
+     "plass": "5",
+     "lag": "Lye 2",
+     "k": "2",
+     "v": "0",
+     "u": "1",
+     "t": "1",
+     "kamper": "5-15",
+     "sett": "23-49",
+     "p": "1"
+    },
+    {
+     "plass": "6",
+     "lag": "Figgjo 5",
+     "k": "1",
+     "v": "0",
+     "u": "0",
+     "t": "1",
+     "kamper": "2-8",
+     "sett": "9-27",
      "p": "0"
     },
     {
-     "plass": "-",
-     "lag": "Varhaug",
-     "k": "0",
+     "plass": "7",
+     "lag": "Dalane",
+     "k": "2",
      "v": "0",
      "u": "0",
-     "t": "0",
-     "kamper": "0-0",
-     "sett": "0-0",
+     "t": "2",
+     "kamper": "4-16",
+     "sett": "23-50",
      "p": "0"
     }
    ],
@@ -896,7 +896,7 @@ const SERIE = {
      "hjemme": "Varhaug",
      "borte": "Figgjo 5",
      "sted": "Varhaughallen",
-     "resultat": ""
+     "resultat": "8-2"
     },
     {
      "dato": "2026-11-08",
