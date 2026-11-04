@@ -37,6 +37,14 @@ const INNHOLD = {
   // Nyeste vises først uansett rekkefølge her. Dato: "ÅÅÅÅ-MM-DD"
   nyheter: [
     {
+      dato: "2026-11-04",
+      tittel: "Høstranking for rekrutter og nye spillere i Figgjohallen 15. november",
+      tekst: "Søndag 15. november inviterer vi til rankingstevne i Figgjohallen for rekrutter og nye spillere. Dette er et lavterskelstevne der spilleglede, mestring og gode opplevelser ved bordet står i fokus.\n\nHallen åpner kl. 10.00, og stevnet starter kl. 11.00. Det koster 150 kr å delta, og da er stevnetier til 10 kr inkludert.\n\nRankinggrensen er maksimalt 1050 poeng. Stevnet følger rankingreglementet til Norges Bordtennisforbund, og alle deltakere må ha gyldig lisens.\n\nPåmeldingsfristen er 8. november. Du kan melde deg på i bordtennislive.no under «Figgjorekrutten», eller på e-post til Kenneth Haugland: ff34@hotmail.com.\n\nVelkommen til en kjekk og sosial bordtennisdag i Figgjohallen!",
+      bilder: ["bilder/bordtennis-racketer-bla-bord.jpg"],
+      lenke: "dokumenter/figgjorekrutten-2026-invitasjon.pdf",
+      lenketekst: "Les invitasjonen (PDF)",
+    },
+    {
       dato: "2026-10-31",
       tittel: "Fin dag for Figgjo på Lye Ranking",
       tekst: "Lørdag arrangerte Lye sin første turnering, og det var kjekt å være med! Det var en bra turnering, godt organisert og med mange gode kamper. Vi håper det blir flere turneringer på Lye fremover.\n\nSamuel, som spiller for Laksevåg og Figgjo, vant Ranking 1 og dermed hele turneringen.\n\nMax vant Ranking 2 og fortsetter den gode formen fra Fjell Cup. Noah vant Ranking 4 etter en dag med mye godt spill og god innsats.\n\nI Ranking 5 vant Nikolai, og Lukas ble nummer to. Tobias tok også en flott andreplass i Ranking 3. Det var kjekt å se hvor mye våre spillere har utviklet seg.\n\nGodt jobbet alle sammen!\n\nPå bildet: Josef Berg fra Lye (til venstre), som vant Ranking 3, og Tobias Sunde fra Figgjo. Foto: Markus Zeeh",
