@@ -117,6 +117,20 @@
   .tp-table tr.us td { background: #fdeef0; font-weight: 800; }
   .tp-team-pick { padding: 0 12px 12px; display: flex; flex-wrap: wrap; gap: 6px; }
   .tp-team-pick button { border: 1px solid #e6e7eb; background: #f4f5f7; border-radius: 999px; padding: 7px 12px; font: 700 13px -apple-system, sans-serif; color: #1b1d22; }
+  /* Turneringer */
+  .tp-turn .tp-tf { display: flex; gap: 6px; padding: 0 12px 8px; }
+  .tp-turn .tp-tf button { border: 1px solid #e6e7eb; background: #f4f5f7; border-radius: 999px; padding: 5px 11px; font: 700 12px -apple-system, sans-serif; color: #1b1d22; }
+  .tp-turn .tp-tf button.on { background: #14161b; border-color: #14161b; color: #fff; }
+  .tp-tr { display: flex; gap: 10px; align-items: center; padding: 9px 12px; border-top: 1px solid #f0f1f3; }
+  .tp-tr .d { flex: none; width: 44px; text-align: center; border-radius: 10px; background: #f4f5f7; padding: 4px 0; }
+  .tp-tr .d b { display: block; font: 800 17px/1.1 "Outfit", sans-serif; } .tp-tr .d span { font: 700 10px -apple-system, sans-serif; text-transform: uppercase; color: #646973; }
+  .tp-tr.home .d { background: #fdeef0; } .tp-tr.home .d b { color: #c8102e; }
+  .tp-tr .x { flex: 1; min-width: 0; } .tp-tr .x b { display: block; font: 700 14px/1.25 -apple-system, sans-serif; }
+  .tp-tr .x small { color: #646973; font-size: 12px; } .tp-tr .x a { color: #a00d25; font-weight: 700; text-decoration: none; }
+  .tp-tr .add { flex: none; border: 0; border-radius: 12px; padding: 8px 10px; font: 800 12.5px -apple-system, sans-serif; background: #c8102e; color: #fff; min-width: 92px; }
+  .tp-tr .add.on { background: #e7f3ec; color: #2e7d52; }
+  .tp-more { display: block; width: calc(100% - 24px); margin: 6px 12px 12px; border: 0; background: #f4f5f7; border-radius: 12px; padding: 9px; font: 700 13px -apple-system, sans-serif; color: #1b1d22; }
+  .tp-turn-note { padding: 0 12px 10px; color: #646973; font-size: 11.5px; line-height: 1.4; }
   /* Treningsmodus: ingen matdel */
   .tl-standalone .vk-sec[data-sec="Mat"] { display: none !important; }
 </style>
@@ -128,7 +142,6 @@
 <div class="tp-app">
 <div id="tpA2hs"></div>
 <section class="tp-hero" aria-label="Hilsen"><span class="tp-ball2" aria-hidden="true"></span><div><h1 id="tpHello">Hei!</h1><p id="tpHelloSub">Klar for trening? Her er alt du skal gjøre denne uka.</p><span class="tp-chip">FIGGJO BTK · BORDTENNIS</span></div><div class="tp-coach"><img src="/bilder/kjetil-lindefjell-saetre.jpg" alt="" fetchpriority="high"><span><small>Treneren din</small><b>Kjetil</b></span></div></section>
-<section class="tp-team" id="tpTeam" hidden></section>
 <script>
 // Sikkerhetsadapter (sikkerhet-2a-planer-funksjoner.sql): lesing og lagring av
   // movement_plans går via funksjoner som bare gir ut/lagrer ÉN kundes plan.
@@ -9068,13 +9081,13 @@ var DPP_IMG = [
     const when = item.time ? formatClock(item.time) + (item.endTime ? "–" + formatClock(item.endTime) : "") : "";
     const meta = [when, item.place].filter(Boolean).map(escapeHtmlText).join(" · ");
     card.innerHTML = `<div class="vk-w-top">
-        <div class="vk-wring" style="--p:${isDone ? 100 : 0}"><span>${isDone ? "✓" : (VK_ACTIVITY_EMOJI[item.activityPhoto] || "⭐")}</span></div>
+        <div class="vk-wring" style="--p:${isDone ? 100 : 0}"><span>${isDone ? "✓" : item.isTournament ? "🏆" : (VK_ACTIVITY_EMOJI[item.activityPhoto] || "⭐")}</span></div>
         <div class="vk-w-title"><h3>${escapeHtmlText(vkStrip(item.title))}</h3>
           <div class="vk-w-meta">${meta}</div></div>
         <div class="vk-w-btns"><button type="button" class="vk-dots" aria-label="Hopp over denne dagen">${VK_DOTS_SVG}</button></div>
       </div>
       ${item.coachNote ? `<div class="vk-act-note"></div>` : ""}
-      <button type="button" class="vk-cta">${isDone ? "✓ Gjennomført" : "Marker som gjennomført"}</button>`;
+      <button type="button" class="vk-cta">${item.isTournament ? (isDone ? "✓ Jeg var med" : "Jeg var med") : (isDone ? "✓ Gjennomført" : "Marker som gjennomført")}</button>`;
     const noteEl = card.querySelector(".vk-act-note");
     if (noteEl) noteEl.textContent = item.coachNote;
     card.addEventListener("click", async (e) => {
@@ -17894,6 +17907,7 @@ var DPP_IMG = [
     const actEnd = actTime && /^\d{1,2}:\d{2}$/.test(String(task.endTime || "")) ? String(task.endTime).padStart(5, "0") : "";
     return dates.map((dateValue, i) => ({
       activityPhoto: task.kind === "habit" ? String(task.photo || "") : "",
+      isTournament: !!task.tournament,
       place: task.kind === "habit" ? String(task.place || "").slice(0, 60) : "",
       ...(actTime ? { actTime, actEnd } : {}),
       id: task.id + "-" + dateValue,
@@ -18049,6 +18063,42 @@ var DPP_IMG = [
     });
     renderCoachLine();
   }
+
+  // ── Turneringer fra terminlisten (treningssiden): spilleren velger selv, og turneringen
+  //    legges i kalenderen som en fast aktivitet (én dag, bordtennisbilde). Lagres atomisk
+  //    på det ene punktet, så coachen ser påmeldingene i dashbordet.
+  window.vkTournamentIds = function () {
+    return (data.assignedTasks || []).filter(t => t && t.tournament && !t.removedAt).map(t => String(t.tournament.id || ""));
+  };
+  window.vkTournamentToggle = async function (t, on) {
+    const m = getMovementMember();
+    if (!m.id || !t || !t.id || !/^\d{4}-\d{2}-\d{2}$/.test(String(t.dato || ""))) return false;
+    const id = "turn-" + String(t.id).slice(0, 70);
+    const list = data.assignedTasks = data.assignedTasks || [];
+    const prev = deepClone(list);
+    let task = list.find(x => x.id === id);
+    if (!task) {
+      task = { id, fromCoach: true, selfAdded: true, kind: "habit", title: "🏆 " + String(t.tittel || "Turnering").slice(0, 70),
+        note: "Du har lagt denne turneringen i kalenderen. Husk påmelding!", startDate: t.dato,
+        days: [getWeekdayKeyFromDate(parseDateValue(t.dato))], weeks: 1, place: String(t.sted || "").slice(0, 60), photo: "bordtennis",
+        tournament: { id: String(t.id), lenke: String(t.lenke || "") }, doneDates: [], skipDates: [], createdAt: new Date().toISOString() };
+      list.push(task);
+    }
+    if (on) delete task.removedAt; else task.removedAt = new Date().toISOString();
+    rebuildVirtualTaskItemsFromState();
+    renderWeekBar(); renderList();
+    try {
+      const client = await getSupabaseClient();
+      const { error } = await client.rpc("upsert_movement_plan_list_item", { p_member_id: m.id, p_member_name: m.name || "", p_field: "assignedTasks", p_item: task });
+      if (error) throw error;
+      return true;
+    } catch (e) {
+      data.assignedTasks = prev;
+      rebuildVirtualTaskItemsFromState();
+      renderWeekBar(); renderList();
+      return false;
+    }
+  };
 
   async function injectAssignedTasks(preloaded) {
     const fresh = preloaded || await loadAssignedTasksFromCloud();
@@ -24607,6 +24657,9 @@ function getExercisePR(exerciseName) {
 <div id="dppSaveErrorToast" class="dpp-save-error-toast" aria-live="assertive"></div>
 <div id="dppProgressToast" class="dpp-progress-toast" aria-live="polite"></div>
 
+<section class="tp-team" id="tpTeam" hidden></section>
+<section class="tp-team tp-turn" id="tpTurn" hidden></section>
+<div style="height:24px"></div>
 </div>
 <script>
 // Navnet til spilleren (brukes når planen lagres, og vises øverst)
@@ -24635,6 +24688,54 @@ function getExercisePR(exerciseName) {
 })();
 </script>
 <script src="/serie.js" defer></script>
+<script src="/terminliste.js" defer></script>
+<script>
+// ── Turneringer fra hovedterminlisten (bordtennis.no): spilleren legger dem i kalenderen sin
+(function () {
+  var box = document.getElementById("tpTurn"); var m = window.MVT_memberData;
+  if (!box || !m || !m.id) return;
+  var VEST = /figgjo|sandnes|stavanger|bryne|klepp|sola|randaberg|lye|egersund|haugesund|stord|bergen|norheimsund|kopervik|karmøy|time|hå|nærbø|vest/i;
+  var esc = function (v) { return String(v == null ? "" : v).replace(/[&<>"']/g, function (c) { return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]; }); };
+  var all = false, many = false, busy = false;
+  function list() { try { return (typeof TERMINLISTE !== "undefined" && TERMINLISTE && TERMINLISTE.turneringer) ? TERMINLISTE.turneringer : []; } catch (e) { return []; } }
+  function chosen() { try { return window.vkTournamentIds ? window.vkTournamentIds() : []; } catch (e) { return []; } }
+  function render() {
+    var idag = new Date(); idag.setHours(0, 0, 0, 0);
+    var mine = chosen();
+    var rows = list().filter(function (t) { var d = new Date(t.dato + "T12:00:00"); return d >= idag && (all || VEST.test(t.sted || "") || mine.indexOf(t.id) >= 0); });
+    if (!list().length) { box.hidden = true; return; }
+    var shown = many ? rows : rows.slice(0, 6);
+    box.hidden = false;
+    box.innerHTML = '<div class="tp-team-head"><h2>Turneringer</h2><small>' + (mine.length ? mine.length + " i kalenderen din" : "fra terminlisten") + '</small></div>' +
+      '<div class="tp-tf"><button type="button" data-f="vest" class="' + (all ? "" : "on") + '">Nær oss</button><button type="button" data-f="alle" class="' + (all ? "on" : "") + '">Hele landet</button></div>' +
+      (shown.length ? shown.map(function (t) {
+        var d = new Date(t.dato + "T12:00:00"), on = mine.indexOf(t.id) >= 0;
+        return '<div class="tp-tr' + (/figgjo/i.test(t.sted || "") ? " home" : "") + '"><div class="d"><b>' + d.getDate() + '</b><span>' + esc(d.toLocaleDateString("nb-NO", { month: "short" }).replace(".", "")) + '</span></div>' +
+          '<div class="x"><b>' + esc(t.tittel) + '</b><small>' + esc(t.sted || "") + (t.lenke ? ' · <a href="' + esc(t.lenke) + '" target="_blank" rel="noopener">Info og påmelding ↗</a>' : "") + '</small></div>' +
+          '<button type="button" class="add' + (on ? " on" : "") + '" data-id="' + esc(t.id) + '">' + (on ? "✓ I kalenderen" : "+ Kalender") + '</button></div>';
+      }).join("") : '<div class="tp-turn-note">Ingen turneringer her akkurat nå. Trykk «Hele landet» for å se alle.</div>') +
+      (rows.length > 6 ? '<button type="button" class="tp-more" data-more>' + (many ? "Vis færre" : "Vis alle " + rows.length) + '</button>' : "") +
+      '<div class="tp-turn-note">«+ Kalender» legger turneringen i kalenderen din, og treneren ser at du vil være med. Selve påmeldingen gjør du via «Info og påmelding».</div>';
+  }
+  box.addEventListener("click", async function (e) {
+    var f = e.target.closest("[data-f]"); if (f) { all = f.dataset.f === "alle"; render(); return; }
+    if (e.target.closest("[data-more]")) { many = !many; render(); return; }
+    var b = e.target.closest("button[data-id]"); if (!b || busy || !window.vkTournamentToggle) return;
+    var t = list().find(function (x) { return x.id === b.dataset.id; }); if (!t) return;
+    var on = !b.classList.contains("on");
+    busy = true; b.disabled = true; b.textContent = on ? "Legger inn …" : "Fjerner …";
+    var ok = await window.vkTournamentToggle(t, on);
+    busy = false;
+    render();
+    var nb = box.querySelector('button[data-id="' + t.id + '"]');
+    if (nb && ok) { var d = new Date(t.dato + "T12:00:00"); var note = document.createElement("div"); note.className = "tp-turn-note"; note.style.color = on ? "#2e7d52" : "#646973"; note.style.fontWeight = "700";
+      note.textContent = on ? "✓ Lagt inn " + d.toLocaleDateString("nb-NO", { weekday: "long", day: "numeric", month: "long" }) + ". Husk påmelding!" : "Fjernet fra kalenderen.";
+      nb.closest(".tp-tr").after(note); setTimeout(function () { note.remove(); }, 4000); }
+    if (!ok) { b.disabled = false; b.textContent = "Prøv igjen"; }
+  });
+  window.addEventListener("load", function () { render(); setTimeout(render, 2500); setTimeout(render, 7000); });
+})();
+</script>
 <script>
 // ── Hjemskjerm: vis et lite tips første gangene (ikke når siden allerede er åpnet fra hjemskjermen)
 (function () {
