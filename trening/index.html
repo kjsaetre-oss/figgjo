@@ -15,9 +15,13 @@
 // Personlig lenke: figgjobtk.no/trening/#<kunde-ID>. Koden står etter # og sendes aldri til nettstedet.
 (function () {
   var ok = function (v) { return /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(String(v || "")); };
-  var id = String(location.hash || "").replace(/^#\/?/, "").trim();
+  // Lenken er #<kunde-ID> eller #<kunde-ID>/<Fornavn>
+  var raw = String(location.hash || "").replace(/^#\/?/, "").trim();
+  var parts = raw.split("/");
+  var id = parts[0], hashName = "";
+  try { hashName = decodeURIComponent(parts.slice(1).join("/") || "").trim().slice(0, 40); } catch (e) {}
   try {
-    if (ok(id)) localStorage.setItem("tl_tp_member", id);
+    if (ok(id)) { localStorage.setItem("tl_tp_member", id); if (hashName) localStorage.setItem("tl_tp_name:" + id, hashName); }
     else id = localStorage.getItem("tl_tp_member") || "";
   } catch (e) {}
   window.TL_STANDALONE = { brand: "figgjo", emptyPhoto: "/bilder/bordtennis-racketer-bla-bord.jpg",
@@ -25,10 +29,11 @@
   if (ok(id) && !(window.MVT_memberData && window.MVT_memberData.id)) {
     var name = "";
     try { name = localStorage.getItem("tl_tp_name:" + id) || ""; } catch (e) {}
+    if (!name && hashName) name = hashName;
     window.MVT_memberData = { id: id, name: name };
   }
   window.TL_TP_OK = ok(id) || !!(window.MVT_memberData && window.MVT_memberData.id);
-  if (ok(id) && location.hash) history.replaceState(null, "", location.pathname + "#" + id);
+  if (ok(id) && location.hash) history.replaceState(null, "", location.pathname + "#" + id + (hashName ? "/" + encodeURIComponent(hashName) : ""));
 })();
 </script>
 <style>
@@ -75,6 +80,7 @@
   .tp-coach small { display: block; font: 700 10px -apple-system, sans-serif; color: #646973; text-transform: uppercase; letter-spacing: .05em; }
   .tp-coach b { display: block; font: 800 14px "Outfit", -apple-system, sans-serif; }
   .tp-hero > div:first-of-type { padding-bottom: 66px; }
+  .tp-hero > .tp-coach { position: absolute; }
   .tp-hero .tp-ball2 { position: absolute; right: 18px; top: 16px; width: 34px; height: 34px; border-radius: 50%;
     background: radial-gradient(circle at 35% 30%, #fff, #f1f1f1 45%, #d9d9d9); box-shadow: 0 6px 14px rgba(0,0,0,.35); }
   /* Treningsmodus: ingen matdel */
@@ -24586,7 +24592,7 @@ function getExercisePR(exerciseName) {
     .then(function (r) { return r.ok ? r.json() : null; })
     .then(function (row) {
       var n = row && row.member_name ? String(row.member_name) : "";
-      if (!n) return;
+      if (!n || /^Kunde [0-9a-f]{8}$/i.test(n)) return;
       m.name = n; show(n);
       try { localStorage.setItem("tl_tp_name:" + m.id, n); } catch (e) {}
     }).catch(function () {});
