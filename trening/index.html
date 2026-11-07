@@ -131,6 +131,16 @@
   .tp-tr .add.on { background: #e7f3ec; color: #2e7d52; }
   .tp-more { display: block; width: calc(100% - 24px); margin: 6px 12px 12px; border: 0; background: #f4f5f7; border-radius: 12px; padding: 9px; font: 700 13px -apple-system, sans-serif; color: #1b1d22; }
   .tp-turn-note { padding: 0 12px 10px; color: #646973; font-size: 11.5px; line-height: 1.4; }
+  /* Meny nederst */
+  body.tl-standalone { padding-bottom: calc(76px + env(safe-area-inset-bottom)) !important; }
+  .tp-nav { position: fixed; left: 0; right: 0; bottom: 0; z-index: 40; display: grid; grid-auto-flow: column; grid-auto-columns: 1fr;
+    background: rgba(255,255,255,.97); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); border-top: 1px solid #e6e7eb;
+    padding: 6px 4px calc(6px + env(safe-area-inset-bottom)); box-shadow: 0 -8px 24px -16px rgba(20,22,27,.35); }
+  .tp-nav button { border: 0; background: none; display: grid; justify-items: center; gap: 2px; padding: 4px 2px; font: 700 10.5px -apple-system, sans-serif; color: #646973; }
+  .tp-nav button i { font-style: normal; font-size: 20px; line-height: 1.1; filter: grayscale(1); opacity: .7; }
+  .tp-nav button.on { color: #c8102e; } .tp-nav button.on i { filter: none; opacity: 1; }
+  .tp-nav button[hidden] { display: none; }
+  .tp-anchor { scroll-margin-top: 64px; }
   /* Fokus nå (fra treneren) */
   .tp-focus { margin: 10px 14px 0; border-radius: 20px; background: #14161b; color: #fff; padding: 14px; font-family: -apple-system, sans-serif;
     box-shadow: 0 14px 30px -18px rgba(20,22,27,.7); }
@@ -24755,6 +24765,38 @@ function getExercisePR(exerciseName) {
       m.name = n; show(n);
       try { localStorage.setItem("tl_tp_name:" + m.id, n); } catch (e) {}
     }).catch(function () {});
+})();
+</script>
+<nav class="tp-nav" id="tpNav" aria-label="Meny">
+  <button type="button" data-go="tpTop" class="on"><i>📅</i>Kalender</button>
+  <button type="button" data-go="tpGoals" hidden><i>⭐</i>Mål</button>
+  <button type="button" data-go="tpTeam" hidden><i>🏓</i>Laget</button>
+  <button type="button" data-go="tpTurn" hidden><i>🏆</i>Turneringer</button>
+</nav>
+<script>
+// ── Meny nederst: hopper til delene på siden og viser hvor du er
+(function () {
+  var nav = document.getElementById("tpNav"); if (!nav) return;
+  if (!window.TL_TP_OK) { nav.remove(); return; }
+  var ids = ["tpTop", "tpGoals", "tpTeam", "tpTurn"];
+  var el = function (id) { return id === "tpTop" ? document.getElementById("dppApp") : document.getElementById(id); };
+  function sync() {
+    ids.forEach(function (id) { var b = nav.querySelector('[data-go="' + id + '"]'), e = el(id); var h = id !== "tpTop" && (!e || e.hidden); if (b && b.hidden !== h) b.hidden = h; });
+    var cur = "tpTop", y = window.scrollY + window.innerHeight * 0.35;
+    ids.forEach(function (id) { var e = el(id); if (e && !e.hidden && e.getBoundingClientRect().top + window.scrollY <= y) cur = id; });
+    if (window.scrollY < 40) cur = "tpTop";
+    nav.querySelectorAll("button").forEach(function (b) { var on = b.dataset.go === cur; if (b.classList.contains("on") !== on) b.classList.toggle("on", on); });
+  }
+  nav.addEventListener("click", function (e) {
+    var b = e.target.closest("[data-go]"); if (!b) return;
+    var t = b.dataset.go === "tpTop" ? 0 : (el(b.dataset.go).getBoundingClientRect().top + window.scrollY - 64);
+    window.scrollTo({ top: Math.max(0, t), behavior: "smooth" });
+  });
+  window.addEventListener("scroll", function () { window.requestAnimationFrame(sync); }, { passive: true });
+  window.addEventListener("load", function () { sync(); setTimeout(sync, 2600); setTimeout(sync, 7200); });
+  // Følg bare med på når delene blir synlige (ikke på menyen selv)
+  var mo = new MutationObserver(function () { sync(); });
+  ["tpGoals", "tpTeam", "tpTurn"].forEach(function (id) { var e = document.getElementById(id); if (e) mo.observe(e, { attributes: true, attributeFilter: ["hidden"] }); });
 })();
 </script>
 <script src="/serie.js" defer></script>
