@@ -6889,11 +6889,57 @@ var DPP_IMG = [
     }, 2200);
   }
 
+  // ── Lyd: én felles AudioContext. iPhone spiller bare lyd fra en side som er «låst opp»
+  //    av et trykk, så vi låser opp ved første berøring – da kan tidtakeren pipe senere.
+  let vkAudio = null;
+  function vkAudioCtx() {
+    try {
+      const AC = window.AudioContext || window.webkitAudioContext;
+      if (!AC) return null;
+      // Bland med musikk kunden hører på (ikke stopp Spotify o.l.) der nettleseren støtter det
+      try { if (navigator.audioSession && navigator.audioSession.type !== "ambient") navigator.audioSession.type = "ambient"; } catch (e) {}
+      if (!vkAudio || vkAudio.state === "closed") vkAudio = new AC();
+      if (vkAudio.state === "suspended") vkAudio.resume().catch(() => {});
+      return vkAudio;
+    } catch (e) { return null; }
+  }
+  function vkAudioUnlock() {
+    const ctx = vkAudioCtx();
+    if (!ctx || ctx.__unlocked) return;
+    try {
+      // Et lydløst, kort lydklipp i selve trykket «låser opp» lyden på iOS
+      const b = ctx.createBuffer(1, 1, 22050), src = ctx.createBufferSource();
+      src.buffer = b; src.connect(ctx.destination); src.start(0);
+      ctx.__unlocked = true;
+    } catch (e) {}
+  }
+  const VK_SOUND_KEY = "tl_sound_v1";
+  function vkSoundOn() { try { return localStorage.getItem(VK_SOUND_KEY) !== "off"; } catch (e) { return true; } }
+  function vkBeep(freq, at, dur, vol) {
+    const ctx = vkAudioCtx();
+    if (!ctx) return;
+    const t = ctx.currentTime + (at || 0);
+    const o = ctx.createOscillator(), g = ctx.createGain();
+    o.type = "sine"; o.frequency.setValueAtTime(freq, t);
+    g.gain.setValueAtTime(0.0001, t);
+    g.gain.exponentialRampToValueAtTime(vol || 0.3, t + 0.012);
+    g.gain.exponentialRampToValueAtTime(0.0001, t + (dur || 0.15));
+    o.connect(g); g.connect(ctx.destination);
+    o.start(t); o.stop(t + (dur || 0.15) + 0.02);
+  }
+  // Korte tikk de siste sekundene, og tre tydelige pip + vibrasjon når tiden er ute
+  function vkTick() { if (!vkSoundOn()) return; try { vkBeep(660, 0, 0.09, 0.22); } catch (e) {} }
+  function vkDoneSignal() {
+    try { if (navigator.vibrate) navigator.vibrate([200, 90, 200, 90, 350]); } catch (e) {}
+    if (!vkSoundOn()) return;
+    try { vkBeep(880, 0, 0.16, 0.45); vkBeep(880, 0.22, 0.16, 0.45); vkBeep(1320, 0.44, 0.42, 0.5); } catch (e) {}
+  }
+
   function playPling() {
     try {
-      const AudioCtx = window.AudioContext || window.webkitAudioContext;
-      if (!AudioCtx) return;
-      const ctx = new AudioCtx();
+      if (!vkSoundOn()) return;
+      const ctx = vkAudioCtx();
+      if (!ctx) return;
       const now = ctx.currentTime;
 
       const osc1 = ctx.createOscillator();
@@ -6919,8 +6965,6 @@ var DPP_IMG = [
       gain2.connect(ctx.destination);
       osc2.start(now + 0.05);
       osc2.stop(now + 0.22);
-
-      setTimeout(() => ctx.close && ctx.close(), 500);
     } catch (e) {}
   }
 
@@ -20311,16 +20355,7 @@ function getExercisePR(exerciseName) {
 
   function playRestDoneSound() {
     try {
-      const ctx = new (window.AudioContext || window.webkitAudioContext)();
-      const osc = ctx.createOscillator();
-      const gain = ctx.createGain();
-      osc.type = "sine";
-      osc.frequency.value = 880;
-      gain.gain.value = 0.15;
-      osc.connect(gain);
-      gain.connect(ctx.destination);
-      osc.start();
-      setTimeout(() => { osc.stop(); ctx.close(); }, 350);
+      vkDoneSignal();
     } catch (e) {
       // Lyd er "nice to have" \u2014 skal aldri knekke noe om nettleseren blokkerer den.
     }
@@ -20339,8 +20374,10 @@ function getExercisePR(exerciseName) {
     btn.classList.remove("done");
     btn.textContent = `\u23f1 ${formatTimerSeconds(remaining)}`;
 
+    vkAudioUnlock();
     activeRestTimers[timerId] = setInterval(() => {
       remaining -= 1;
+      if (remaining > 0 && remaining <= 3) vkTick();
       if (remaining <= 0) {
         clearInterval(activeRestTimers[timerId]);
         delete activeRestTimers[timerId];
@@ -22355,6 +22392,7 @@ function getExercisePR(exerciseName) {
     if (sibling && sibling.parentNode) sibling.parentNode.insertBefore(el, sibling.nextSibling);
     else document.body.appendChild(el);
     el.addEventListener("click", vkfOnClick);
+    el.addEventListener("pointerdown", vkAudioUnlock, { passive: true }); // låser opp lyd for tidtaker/pause (iPhone)
     el.addEventListener("change", vkfOnNum);
     el.addEventListener("focusin", (e) => { if (e.target.matches && e.target.matches(".vkf-num")) setTimeout(() => { try { e.target.select(); } catch (er) {} }, 0); });
     el.addEventListener("keydown", (e) => { if (e.key === "Enter" && e.target.matches && e.target.matches(".vkf-num")) e.target.blur(); });
@@ -22826,7 +22864,7 @@ function getExercisePR(exerciseName) {
       <div class="vkf-top">
         <button class="vkf-icon" type="button" data-act="close" aria-label="Lukk"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M6 6l12 12M18 6 6 18"/></svg></button>
         <div class="vkf-top-mid"><b>${escapeHtmlText(title)}${session ? " · " + escapeHtmlText(session) : ""}</b><span id="vkfClock">00:00</span></div>
-        <span class="vkf-icon" style="visibility:hidden" aria-hidden="true"></span>
+        <button class="vkf-icon vkf-sound" type="button" data-act="sound" aria-label="${vkSoundOn() ? "Skru av lyd" : "Skru på lyd"}" title="${vkSoundOn() ? "Lyd på – trykk for å skru av" : "Lyd av – trykk for å skru på"}">${vkSoundOn() ? "🔔" : "🔕"}</button>
       </div>
       <div class="vkf-bars">${bars}</div>
       <div class="vk-viewswitch" role="group" aria-label="Velg visning" style="margin:0;"><button type="button" class="on" aria-pressed="true">▶ Én og én øvelse</button><button type="button" data-act="list">☰ Alle øvelser</button></div>
@@ -22931,11 +22969,11 @@ function getExercisePR(exerciseName) {
     const b = document.getElementById("vkfTimerBar");
     if (t) t.textContent = vkfFmt(left);
     if (b) b.style.width = (100 * (1 - left / tm.total)) + "%";
+    if (left > 0 && left <= 3 && tm.lastTick !== left) { tm.lastTick = left; vkTick(); }
     if (left > 0) return;
     const set = tm.set;
     vkfTimerStop();
-    try { if (navigator.vibrate) navigator.vibrate([120, 60, 120]); } catch (e) {}
-    try { playPling(); } catch (e) {}
+    vkDoneSignal();
     if (vkfSetsDone(vkf.cur).has(set)) vkfRenderWorkout(); else vkfCompleteSet(set);
   }
   async function vkfKeepAwake(on) {
@@ -22948,6 +22986,7 @@ function getExercisePR(exerciseName) {
     const v = vkf.vals[vkf.cur][vkf.active];
     const total = Number(v && v.reps) || 0;
     if (!total) return;
+    vkAudioUnlock();
     vkf.timer = { ex: vkf.cur, set: vkf.active, total, endAt: Date.now() + total * 1000, pausedLeft: null, t: setInterval(vkfTimerTick, 250) };
     vkfKeepAwake(true);
     vkfRenderWorkout();
@@ -22967,9 +23006,9 @@ function getExercisePR(exerciseName) {
     vkf.restT = setInterval(() => {
       if (!vkf) return;
       vkf.restLeft--;
+      if (vkf.restLeft > 0 && vkf.restLeft <= 3) vkTick();
       if (vkf.restLeft <= 0) {
-        try { if (navigator.vibrate) navigator.vibrate([120, 60, 120]); } catch (e) {}
-        try { playPling(); } catch (e) {}
+        vkDoneSignal();
         vkfEndRest();
         return;
       }
@@ -23251,6 +23290,15 @@ function getExercisePR(exerciseName) {
     const a = act.dataset.act;
     if (a === "close") { closeFocusWorkout(); return; }
     if (a === "begin") { vkf.start = Date.now(); vkfRenderWorkout(); vkfRoot().scrollTop = 0; return; }
+    if (a === "sound") {
+      const on = !vkSoundOn();
+      try { localStorage.setItem(VK_SOUND_KEY, on ? "on" : "off"); } catch (e) {}
+      if (on) { vkAudioUnlock(); vkBeep(880, 0, 0.12, 0.35); }
+      act.textContent = on ? "🔔" : "🔕";
+      act.setAttribute("aria-label", on ? "Skru av lyd" : "Skru på lyd");
+      act.title = on ? "Lyd på – trykk for å skru av" : "Lyd av – trykk for å skru på";
+      return;
+    }
     if (a === "timer-start") { vkfTimerStart(); return; }
     if (a === "timer-stop") { vkfTimerStop(); vkfRenderWorkout(); return; }
     if (a === "timer-pause") {
