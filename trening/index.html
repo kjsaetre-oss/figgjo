@@ -131,6 +131,18 @@
   .tp-tr .add.on { background: #e7f3ec; color: #2e7d52; }
   .tp-more { display: block; width: calc(100% - 24px); margin: 6px 12px 12px; border: 0; background: #f4f5f7; border-radius: 12px; padding: 9px; font: 700 13px -apple-system, sans-serif; color: #1b1d22; }
   .tp-turn-note { padding: 0 12px 10px; color: #646973; font-size: 11.5px; line-height: 1.4; }
+  /* Fokus nå (fra treneren) */
+  .tp-focus { margin: 10px 14px 0; border-radius: 20px; background: #14161b; color: #fff; padding: 14px; font-family: -apple-system, sans-serif;
+    box-shadow: 0 14px 30px -18px rgba(20,22,27,.7); }
+  .tp-focus-head { display: flex; gap: 10px; align-items: center; margin-bottom: 8px; }
+  .tp-focus-head img { width: 38px; height: 38px; border-radius: 50%; object-fit: cover; border: 2px solid #c8102e; flex: none; }
+  .tp-focus-head b { display: block; font: 800 17px "Outfit", -apple-system, sans-serif; } .tp-focus-head small { color: rgba(255,255,255,.65); font-size: 12px; }
+  .tp-fi { display: flex; gap: 10px; align-items: center; padding: 9px 0; border-top: 1px solid rgba(255,255,255,.1); }
+  .tp-fi .n { flex: none; width: 26px; height: 26px; border-radius: 50%; background: #c8102e; display: grid; place-items: center; font: 800 13px sans-serif; }
+  .tp-fi .t { flex: 1; font: 600 14.5px/1.35 -apple-system, sans-serif; overflow-wrap: anywhere; }
+  .tp-fi .t small { display: block; color: rgba(255,255,255,.6); font-size: 12px; font-weight: 500; }
+  .tp-fi button { flex: none; border: 1px solid rgba(255,255,255,.25); background: transparent; color: #fff; border-radius: 10px; padding: 6px 9px; font: 700 12px -apple-system, sans-serif; }
+  .tp-fi button.on { background: #2e7d52; border-color: #2e7d52; }
   /* Mål */
   .tp-goal { display: flex; gap: 10px; align-items: flex-start; padding: 10px 12px; border-top: 1px solid #f0f1f3; }
   .tp-goal .ck { flex: none; width: 28px; height: 28px; border-radius: 9px; border: 2px solid #d5d7dd; background: #fff; font: 800 15px sans-serif; color: #fff; display: grid; place-items: center; }
@@ -161,6 +173,7 @@
 <div class="tp-app">
 <div id="tpA2hs"></div>
 <section class="tp-hero" aria-label="Hilsen"><span class="tp-ball2" aria-hidden="true"></span><div><h1 id="tpHello">Hei!</h1><p id="tpHelloSub">Klar for trening? Her er alt du skal gjøre denne uka.</p><span class="tp-chip">FIGGJO BTK · BORDTENNIS</span></div><div class="tp-coach"><img src="/bilder/kjetil-lindefjell-saetre.jpg" alt="" fetchpriority="high"><span><small>Treneren din</small><b>Kjetil</b></span></div></section>
+<section class="tp-focus" id="tpFocus" hidden></section>
 <script>
 // Sikkerhetsadapter (sikkerhet-2a-planer-funksjoner.sql): lesing og lagring av
   // movement_plans går via funksjoner som bare gir ut/lagrer ÉN kundes plan.
@@ -5559,6 +5572,8 @@ var DPP_IMG = [
     normalized.favoriteWorkouts = Array.isArray(raw.favoriteWorkouts) ? raw.favoriteWorkouts : [];
     // Spillerens egne mål (treningssiden) – lagres atomisk via upsert_movement_plan_list_item
     normalized.playerGoals = Array.isArray(raw.playerGoals) ? raw.playerGoals : [];
+    // Fokusområder fra coachen (treningssiden) – lagres atomisk
+    normalized.coachFocus = Array.isArray(raw.coachFocus) ? raw.coachFocus : [];
     normalized.exerciseDoneMap = (raw.exerciseDoneMap && typeof raw.exerciseDoneMap === "object" && !Array.isArray(raw.exerciseDoneMap)) ? raw.exerciseDoneMap : {};
     normalized.exerciseSetDoneMap = (raw.exerciseSetDoneMap && typeof raw.exerciseSetDoneMap === "object" && !Array.isArray(raw.exerciseSetDoneMap)) ? raw.exerciseSetDoneMap : {};
 
@@ -5806,6 +5821,7 @@ var DPP_IMG = [
       // Kundens favorittøkter (lagres atomisk via upsert_movement_plan_list_item).
       favoriteWorkouts: data.favoriteWorkouts || [],
       playerGoals: data.playerGoals || [],
+      coachFocus: data.coachFocus || [],
       // Samme beskyttelse for avkrysning av enkelt\u00f8velser i en \u00f8kt.
       exerciseDoneMap: data.exerciseDoneMap || {},
       // Samme beskyttelse for avkrysning av enkeltserier inni en \u00f8velse.
@@ -5989,6 +6005,7 @@ var DPP_IMG = [
           if (Array.isArray(raw.favoriteWorkouts)) data.favoriteWorkouts = raw.favoriteWorkouts;
           // Mål skrives bare atomisk (spilleren og coachen) – ta alltid skyens versjon.
           if (Array.isArray(raw.playerGoals)) data.playerGoals = raw.playerGoals;
+          if (Array.isArray(raw.coachFocus)) data.coachFocus = raw.coachFocus;
           if (!opts.mutatingTodoNotes) {
             data.todoNotes = (raw.todoNotes && typeof raw.todoNotes === "object" && !Array.isArray(raw.todoNotes)) ? raw.todoNotes : {};
           }
@@ -18105,6 +18122,23 @@ var DPP_IMG = [
       return true;
     } catch (e) { data.playerGoals = prev; return false; }
   };
+  // ── Fokusområder fra coachen: spilleren huker av når de har jobbet med dem
+  window.vkFocusList = function () { return (data.coachFocus || []).filter(f => f && !f.removedAt && f.text).sort((a, b) => (Number(a.order) || 0) - (Number(b.order) || 0)); };
+  window.vkFocusToggle = async function (id) {
+    const m = getMovementMember();
+    const f = (data.coachFocus || []).find(x => x.id === id);
+    if (!m.id || !f) return false;
+    const prev = deepClone(data.coachFocus || []);
+    const today = toDateValue(new Date());
+    const dates = Array.isArray(f.doneDates) ? f.doneDates : [];
+    f.doneDates = dates.includes(today) ? dates.filter(d => d !== today) : dates.concat(today);
+    try {
+      const client = await getSupabaseClient();
+      const { error } = await client.rpc("upsert_movement_plan_list_item", { p_member_id: m.id, p_member_name: m.name || "", p_field: "coachFocus", p_item: f });
+      if (error) throw error;
+      return true;
+    } catch (e) { data.coachFocus = prev; return false; }
+  };
   window.vkTournamentIds = function () {
     return (data.assignedTasks || []).filter(t => t && t.tournament && !t.removedAt).map(t => String(t.tournament.id || ""));
   };
@@ -24728,6 +24762,35 @@ function getExercisePR(exerciseName) {
 </script>
 <script src="/serie.js" defer></script>
 <script src="/terminliste.js" defer></script>
+<script>
+// ── Fokus nå: fokusområdene treneren har satt
+(function () {
+  var box = document.getElementById("tpFocus"); var m = window.MVT_memberData;
+  if (!box || !m || !m.id) return;
+  var esc = function (v) { return String(v == null ? "" : v).replace(/[&<>"']/g, function (c) { return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]; }); };
+  var busy = false;
+  function today() { var d = new Date(); return d.getFullYear() + "-" + String(d.getMonth() + 1).padStart(2, "0") + "-" + String(d.getDate()).padStart(2, "0"); }
+  function render() {
+    var list = []; try { list = window.vkFocusList ? window.vkFocusList() : []; } catch (e) {}
+    if (!list.length) { box.hidden = true; return; }
+    var t = today();
+    box.hidden = false;
+    box.innerHTML = '<div class="tp-focus-head"><img src="/bilder/kjetil-lindefjell-saetre.jpg" alt=""><span><b>Fokus nå</b><small>Fra treneren din – dette jobber vi med</small></span></div>' +
+      list.map(function (f, i) {
+        var n = (f.doneDates || []).length, on = (f.doneDates || []).indexOf(t) >= 0;
+        return '<div class="tp-fi"><span class="n">' + (i + 1) + '</span><span class="t">' + esc(f.text) + (f.note ? '<small>' + esc(f.note) + '</small>' : n ? '<small>Øvd ' + n + ' gang' + (n === 1 ? "" : "er") + '</small>' : "") + '</span>' +
+          '<button type="button" data-f="' + esc(f.id) + '" class="' + (on ? "on" : "") + '">' + (on ? "✓ Øvd i dag" : "Øvd i dag?") + '</button></div>';
+      }).join("");
+  }
+  box.addEventListener("click", async function (e) {
+    var b = e.target.closest("[data-f]"); if (!b || busy || !window.vkFocusToggle) return;
+    busy = true; b.disabled = true;
+    await window.vkFocusToggle(b.dataset.f);
+    busy = false; render();
+  });
+  window.addEventListener("load", function () { render(); setTimeout(function () { if (!busy) render(); }, 2500); setTimeout(function () { if (!busy) render(); }, 7000); });
+})();
+</script>
 <script>
 // ── Mine mål: spilleren lager egne mål, treneren ser dem og kan kommentere
 (function () {
