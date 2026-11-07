@@ -1,6 +1,6 @@
 /* Tabell og kamper hentet fra bordtennislive.no. Lages av oppdater-serie.py – ikke rediger for hånd. */
 const SERIE = {
- "oppdatert": "2026-11-02",
+ "oppdatert": "2026-11-07",
  "lag": {
   "Figgjo 2": {
    "divisjon": "3. divisjon avd. E",
@@ -8,6 +8,17 @@ const SERIE = {
    "tabell": [
     {
      "plass": "1",
+     "lag": "Stord BTK 3",
+     "k": "5",
+     "v": "3",
+     "u": "0",
+     "t": "2",
+     "kamper": "26-24",
+     "sett": "93-87",
+     "p": "6"
+    },
+    {
+     "plass": "2",
      "lag": "Sportsklubben Heros",
      "k": "3",
      "v": "2",
@@ -15,17 +26,6 @@ const SERIE = {
      "t": "1",
      "kamper": "20-10",
      "sett": "69-42",
-     "p": "4"
-    },
-    {
-     "plass": "2",
-     "lag": "Rosseland BTK 2",
-     "k": "2",
-     "v": "2",
-     "u": "0",
-     "t": "0",
-     "kamper": "15-5",
-     "sett": "48-32",
      "p": "4"
     },
     {
@@ -52,17 +52,39 @@ const SERIE = {
     },
     {
      "plass": "5",
-     "lag": "Stord BTK 3",
-     "k": "4",
+     "lag": "Rosseland BTK 2",
+     "k": "3",
      "v": "2",
      "u": "0",
-     "t": "2",
-     "kamper": "18-22",
-     "sett": "68-76",
+     "t": "1",
+     "kamper": "17-13",
+     "sett": "60-58",
      "p": "4"
     },
     {
      "plass": "6",
+     "lag": "Haugesund BTK 2",
+     "k": "6",
+     "v": "1",
+     "u": "1",
+     "t": "4",
+     "kamper": "23-37",
+     "sett": "88-128",
+     "p": "3"
+    },
+    {
+     "plass": "7",
+     "lag": "Figgjo BTK 2",
+     "k": "4",
+     "v": "0",
+     "u": "2",
+     "t": "2",
+     "kamper": "14-26",
+     "sett": "63-89",
+     "p": "2"
+    },
+    {
+     "plass": "8",
      "lag": "Stavanger BTK",
      "k": "2",
      "v": "0",
@@ -71,28 +93,6 @@ const SERIE = {
      "kamper": "8-12",
      "sett": "38-40",
      "p": "1"
-    },
-    {
-     "plass": "7",
-     "lag": "Figgjo BTK 2",
-     "k": "2",
-     "v": "0",
-     "u": "1",
-     "t": "1",
-     "kamper": "7-13",
-     "sett": "32-46",
-     "p": "1"
-    },
-    {
-     "plass": "8",
-     "lag": "Haugesund BTK 2",
-     "k": "4",
-     "v": "0",
-     "u": "0",
-     "t": "4",
-     "kamper": "10-30",
-     "sett": "44-96",
-     "p": "0"
     }
    ],
    "kamper": [
@@ -118,7 +118,7 @@ const SERIE = {
      "hjemme": "Stord BTK 3",
      "borte": "Figgjo BTK 2",
      "sted": "Stord",
-     "resultat": ""
+     "resultat": "8-2"
     },
     {
      "dato": "2026-11-07",
@@ -126,7 +126,7 @@ const SERIE = {
      "hjemme": "Haugesund BTK 2",
      "borte": "Figgjo BTK 2",
      "sted": "Haugesund",
-     "resultat": ""
+     "resultat": "5-5"
     },
     {
      "dato": "2026-12-05",
