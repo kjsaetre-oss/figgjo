@@ -135,6 +135,39 @@
   .tp-tr .add.on { background: #e7f3ec; color: #2e7d52; }
   .tp-more { display: block; width: calc(100% - 24px); margin: 6px 12px 12px; border: 0; background: #f4f5f7; border-radius: 12px; padding: 9px; font: 700 13px -apple-system, sans-serif; color: #1b1d22; }
   .tp-turn-note { padding: 0 12px 10px; color: #646973; font-size: 11.5px; line-height: 1.4; }
+  /* Timer og utstyr */
+  .hr-big { display: flex; align-items: baseline; gap: 8px; padding: 0 14px; }
+  .hr-big b { font: 800 40px/1 "Outfit", -apple-system, sans-serif; letter-spacing: -.02em; } .hr-big span { color: #646973; font: 700 13px -apple-system, sans-serif; }
+  .hr-tiles { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; padding: 10px 14px 4px; }
+  .hr-tiles div { background: #f4f5f7; border-radius: 14px; padding: 9px 6px; text-align: center; } .hr-tiles b { display: block; font: 800 18px/1.1 "Outfit", sans-serif; } .hr-tiles small { display: block; font-size: 10.5px; color: #646973; margin-top: 2px; }
+  .hr-bars { display: flex; align-items: flex-end; gap: 6px; height: 92px; padding: 10px 14px 0; }
+  .hr-bars div { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: flex-end; height: 100%; gap: 3px; }
+  .hr-bars i { display: block; width: 100%; border-radius: 6px 6px 3px 3px; background: linear-gradient(180deg, #e0445a, #c8102e); min-height: 3px; }
+  .hr-bars div.now i { background: linear-gradient(180deg, #2a2d36, #14161b); }
+  .hr-bars small { font: 700 9.5px -apple-system, sans-serif; color: #8a8f99; } .hr-bars em { font: 800 9.5px -apple-system, sans-serif; font-style: normal; color: #1b1d22; }
+  .hr-split { margin: 10px 14px 0; height: 10px; border-radius: 999px; overflow: hidden; display: flex; background: #f0f1f3; }
+  .hr-split span { display: block; height: 100%; }
+  .hr-legend { display: flex; gap: 10px; flex-wrap: wrap; padding: 6px 14px 0; font-size: 11px; color: #646973; } .hr-legend i { display: inline-block; width: 9px; height: 9px; border-radius: 3px; margin-right: 4px; vertical-align: -1px; }
+  .hr-actions { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; padding: 12px 14px; }
+  .hr-actions button { border: 0; border-radius: 12px; padding: 11px 8px; font: 800 13.5px -apple-system, sans-serif; background: #c8102e; color: #fff; } .hr-actions button.alt { background: #14161b; }
+  .hr-form { display: grid; gap: 8px; padding: 0 14px 14px; }
+  .hr-form .row { display: flex; gap: 6px; flex-wrap: wrap; } .hr-form .row button { border: 1px solid #e6e7eb; background: #f4f5f7; border-radius: 999px; padding: 7px 11px; font: 700 12.5px -apple-system, sans-serif; color: #1b1d22; }
+  .hr-form .row button.on { background: #14161b; border-color: #14161b; color: #fff; }
+  .hr-form label { font: 700 12px -apple-system, sans-serif; color: #646973; display: grid; gap: 4px; }
+  .hr-form input, .hr-form select { border: 1px solid #d5d7dd; border-radius: 10px; padding: 9px 10px; font: 15px -apple-system, sans-serif; background: #fff; color: #1b1d22; width: 100%; box-sizing: border-box; }
+  .hr-form .two { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+  .hr-form .save { border: 0; border-radius: 12px; padding: 11px; font: 800 14px -apple-system, sans-serif; background: #c8102e; color: #fff; }
+  .hr-sub { padding: 12px 14px 4px; font: 800 12px -apple-system, sans-serif; letter-spacing: .1em; text-transform: uppercase; color: #646973; border-top: 1px solid #f0f1f3; margin-top: 4px; }
+  .hr-row { display: flex; gap: 10px; align-items: center; padding: 8px 14px; border-top: 1px solid #f4f5f7; font-size: 13px; }
+  .hr-row .x { flex: 1; min-width: 0; } .hr-row .x b { display: block; font: 700 13.5px/1.3 -apple-system, sans-serif; } .hr-row .x small { color: #646973; font-size: 11.5px; }
+  .hr-row .t { flex: none; font: 800 14px "Outfit", sans-serif; } .hr-row .del { flex: none; border: 0; background: none; color: #a3a7b0; font-size: 14px; padding: 4px; }
+  .gr-card { margin: 0 14px 10px; border-radius: 16px; background: #14161b; color: #fff; padding: 12px; }
+  .gr-card .h { display: flex; justify-content: space-between; align-items: baseline; gap: 8px; }
+  .gr-card .h small { font: 800 10.5px -apple-system, sans-serif; letter-spacing: .12em; text-transform: uppercase; color: rgba(255,255,255,.6); }
+  .gr-card .h b { font: 800 22px "Outfit", sans-serif; } .gr-card .n { font: 700 15px -apple-system, sans-serif; margin-top: 2px; } .gr-card .d { font-size: 12px; color: rgba(255,255,255,.65); margin-top: 2px; }
+  .gr-bar { height: 8px; border-radius: 999px; background: rgba(255,255,255,.12); margin-top: 9px; overflow: hidden; } .gr-bar i { display: block; height: 100%; border-radius: 999px; }
+  .gr-card .tip { font-size: 11.5px; margin-top: 6px; color: rgba(255,255,255,.75); }
+  .gr-card .act { display: flex; gap: 6px; margin-top: 9px; } .gr-card .act button { border: 1px solid rgba(255,255,255,.25); background: transparent; color: #fff; border-radius: 10px; padding: 6px 10px; font: 700 12px -apple-system, sans-serif; }
   /* Ranking – inspirert av WTT */
   .tp-rank { margin: 10px 14px 0; border-radius: 22px; overflow: hidden; background: #fff; border: 1px solid #e6e7eb; color: #1b1d22; font-family: -apple-system, sans-serif;
     box-shadow: 0 1px 2px rgba(20,22,27,.04), 0 14px 34px -18px rgba(20,22,27,.25); }
@@ -178,7 +211,7 @@
   .tp-nav { position: fixed; left: 0; right: 0; bottom: 0; z-index: 40; display: grid; grid-auto-flow: column; grid-auto-columns: 1fr;
     background: rgba(255,255,255,.97); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); border-top: 1px solid #e6e7eb;
     padding: 6px 4px calc(6px + env(safe-area-inset-bottom)); box-shadow: 0 -8px 24px -16px rgba(20,22,27,.35); }
-  .tp-nav button { border: 0; background: none; display: grid; justify-items: center; gap: 2px; padding: 4px 2px; font: 700 10.5px -apple-system, sans-serif; color: #646973; }
+  .tp-nav button { min-width: 0; border: 0; background: none; display: grid; justify-items: center; gap: 2px; padding: 4px 2px; font: 700 10.5px -apple-system, sans-serif; color: #646973; }
   .tp-nav button i { font-style: normal; font-size: 20px; line-height: 1.1; filter: grayscale(1); opacity: .7; }
   .tp-nav button.on { color: #c8102e; } .tp-nav button.on i { filter: none; opacity: 1; }
   .tp-nav button[hidden] { display: none; }
@@ -5626,6 +5659,9 @@ var DPP_IMG = [
     normalized.playerGoals = Array.isArray(raw.playerGoals) ? raw.playerGoals : [];
     // Fokusområder fra coachen (treningssiden) – lagres atomisk
     normalized.coachFocus = Array.isArray(raw.coachFocus) ? raw.coachFocus : [];
+    // Spillerens egne treninger og utstyr (treningssiden) – lagres atomisk
+    normalized.playerLog = Array.isArray(raw.playerLog) ? raw.playerLog : [];
+    normalized.playerGear = Array.isArray(raw.playerGear) ? raw.playerGear : [];
     normalized.exerciseDoneMap = (raw.exerciseDoneMap && typeof raw.exerciseDoneMap === "object" && !Array.isArray(raw.exerciseDoneMap)) ? raw.exerciseDoneMap : {};
     normalized.exerciseSetDoneMap = (raw.exerciseSetDoneMap && typeof raw.exerciseSetDoneMap === "object" && !Array.isArray(raw.exerciseSetDoneMap)) ? raw.exerciseSetDoneMap : {};
 
@@ -5874,6 +5910,8 @@ var DPP_IMG = [
       favoriteWorkouts: data.favoriteWorkouts || [],
       playerGoals: data.playerGoals || [],
       coachFocus: data.coachFocus || [],
+      playerLog: data.playerLog || [],
+      playerGear: data.playerGear || [],
       // Samme beskyttelse for avkrysning av enkelt\u00f8velser i en \u00f8kt.
       exerciseDoneMap: data.exerciseDoneMap || {},
       // Samme beskyttelse for avkrysning av enkeltserier inni en \u00f8velse.
@@ -6058,6 +6096,8 @@ var DPP_IMG = [
           // Mål skrives bare atomisk (spilleren og coachen) – ta alltid skyens versjon.
           if (Array.isArray(raw.playerGoals)) data.playerGoals = raw.playerGoals;
           if (Array.isArray(raw.coachFocus)) data.coachFocus = raw.coachFocus;
+          if (Array.isArray(raw.playerLog)) data.playerLog = raw.playerLog;
+          if (Array.isArray(raw.playerGear)) data.playerGear = raw.playerGear;
           if (!opts.mutatingTodoNotes) {
             data.todoNotes = (raw.todoNotes && typeof raw.todoNotes === "object" && !Array.isArray(raw.todoNotes)) ? raw.todoNotes : {};
           }
@@ -18191,6 +18231,29 @@ var DPP_IMG = [
       return true;
     } catch (e) { data.coachFocus = prev; return false; }
   };
+  // ── Egne treninger og utstyr (treningssiden). vkPlayerData gir også avkryssede aktiviteter fra kalenderen.
+  window.vkPlayerData = function () {
+    return {
+      log: (data.playerLog || []).filter(x => x && !x.removedAt),
+      gear: (data.playerGear || []).filter(x => x && !x.removedAt),
+      tasks: (data.assignedTasks || []).filter(t => t && !t.removedAt && t.kind === "habit" && Array.isArray(t.doneDates) && t.doneDates.length),
+      programs: (data.assignedPrograms || []).filter(p => p && Array.isArray(p.completedDates) && p.completedDates.length)
+        .map(p => ({ title: p.title, completedDates: p.completedDates, sessionLog: p.sessionLog || {} }))
+    };
+  };
+  window.vkListSave = async function (field, item) {
+    if (!["playerLog", "playerGear"].includes(field) || !item || !item.id) return false;
+    const m = getMovementMember();
+    if (!m.id) return false;
+    const prev = deepClone(data[field] || []);
+    data[field] = (data[field] || []).filter(x => x.id !== item.id).concat(item);
+    try {
+      const client = await getSupabaseClient();
+      const { error } = await client.rpc("upsert_movement_plan_list_item", { p_member_id: m.id, p_member_name: m.name || "", p_field: field, p_item: item });
+      if (error) throw error;
+      return true;
+    } catch (e) { data[field] = prev; return false; }
+  };
   window.vkTournamentIds = function () {
     return (data.assignedTasks || []).filter(t => t && t.tournament && !t.removedAt).map(t => String(t.tournament.id || ""));
   };
@@ -24781,6 +24844,7 @@ function getExercisePR(exerciseName) {
 <div id="dppSaveErrorToast" class="dpp-save-error-toast" aria-live="assertive"></div>
 <div id="dppProgressToast" class="dpp-progress-toast" aria-live="polite"></div>
 
+<section class="tp-team tp-hours" id="tpHours" hidden></section>
 <section class="tp-rank" id="tpRank" hidden></section>
 <section class="tp-team tp-goals" id="tpGoals" hidden></section>
 <section class="tp-team" id="tpTeam" hidden></section>
@@ -24812,6 +24876,7 @@ function getExercisePR(exerciseName) {
 </script>
 <nav class="tp-nav" id="tpNav" aria-label="Meny">
   <button type="button" data-go="tpTop" class="on"><i>📅</i>Kalender</button>
+  <button type="button" data-go="tpHours" hidden><i>⏱️</i>Timer</button>
   <button type="button" data-go="tpRank" hidden><i>📈</i>Ranking</button>
   <button type="button" data-go="tpGoals" hidden><i>⭐</i>Mål</button>
   <button type="button" data-go="tpTeam" hidden><i>🏓</i>Laget</button>
@@ -24822,7 +24887,7 @@ function getExercisePR(exerciseName) {
 (function () {
   var nav = document.getElementById("tpNav"); if (!nav) return;
   if (!window.TL_TP_OK) { nav.remove(); return; }
-  var ids = ["tpTop", "tpRank", "tpGoals", "tpTeam", "tpTurn"];
+  var ids = ["tpTop", "tpHours", "tpRank", "tpGoals", "tpTeam", "tpTurn"];
   var el = function (id) { return id === "tpTop" ? document.getElementById("dppApp") : document.getElementById(id); };
   function sync() {
     ids.forEach(function (id) { var b = nav.querySelector('[data-go="' + id + '"]'), e = el(id); var h = id !== "tpTop" && (!e || e.hidden); if (b && b.hidden !== h) b.hidden = h; });
@@ -24840,7 +24905,7 @@ function getExercisePR(exerciseName) {
   window.addEventListener("load", function () { sync(); setTimeout(sync, 2600); setTimeout(sync, 7200); });
   // Følg bare med på når delene blir synlige (ikke på menyen selv)
   var mo = new MutationObserver(function () { sync(); });
-  ["tpRank", "tpGoals", "tpTeam", "tpTurn"].forEach(function (id) { var e = document.getElementById(id); if (e) mo.observe(e, { attributes: true, attributeFilter: ["hidden"] }); });
+  ["tpHours", "tpRank", "tpGoals", "tpTeam", "tpTurn"].forEach(function (id) { var e = document.getElementById(id); if (e) mo.observe(e, { attributes: true, attributeFilter: ["hidden"] }); });
 })();
 </script>
 <script>
@@ -24863,6 +24928,125 @@ function getExercisePR(exerciseName) {
     if (document.hidden) hiddenAt = Date.now();
     else if (hiddenAt && Date.now() - hiddenAt > 15 * 60 * 1000 && !document.querySelector(".vkf.open, .vkf[aria-hidden='false']")) refresh();
   });
+})();
+</script>
+<script>
+// ── Timer og utstyr: egne treninger, avkryssede treninger fra kalenderen og belegg
+(function () {
+  var box = document.getElementById("tpHours"); var m = window.MVT_memberData;
+  if (!box || !m || !m.id) return;
+  var esc = function (v) { return String(v == null ? "" : v).replace(/[&<>"']/g, function (c) { return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]; }); };
+  var TYPES = [["bordtennis", "🏓 Bordtennis", "#c8102e"], ["kamp", "🏆 Kamp/turnering", "#14161b"], ["styrke", "💪 Styrke", "#2f6fb0"], ["kondisjon", "🏃 Kondisjon", "#2e7d52"], ["annet", "✨ Annet", "#8a8f99"]];
+  var TT = { bordtennis: 1, kamp: 1 };   // teller som spilletid på belegget
+  var SIDES = [["forhand", "Forhånd"], ["baklengs", "Baklengs"], ["blad", "Blad"]];
+  var LIFE = 60;                          // veiledende antall spilletimer før belegget bør byttes
+  var mode = "", type = "bordtennis", side = "forhand", busy = false;
+  function dv(d) { return d.getFullYear() + "-" + String(d.getMonth() + 1).padStart(2, "0") + "-" + String(d.getDate()).padStart(2, "0"); }
+  function pd(v) { return new Date(v + "T12:00:00"); }
+  function mins(a, b) { var x = String(a || "").split(":").map(Number), y = String(b || "").split(":").map(Number); if (x.length < 2 || y.length < 2 || isNaN(x[0]) || isNaN(y[0])) return 0; var d = (y[0] * 60 + y[1]) - (x[0] * 60 + x[1]); return d > 0 ? d : 0; }
+  function hm(min) { min = Math.round(min); var h = Math.floor(min / 60), r = min % 60; return h ? h + " t" + (r ? " " + r + " min" : "") : r + " min"; }
+  function hdec(min) { return (Math.round(min / 6) / 10).toString().replace(".", ","); }
+  function sessions() {
+    var P = window.vkPlayerData ? window.vkPlayerData() : null; if (!P) return null;
+    var out = P.log.map(function (l) { return { date: l.date, min: Number(l.min) || 0, type: l.type || "annet", title: l.title || "", own: true, id: l.id, note: l.note || "" }; });
+    P.tasks.forEach(function (t) {
+      var min = t.tournament ? 300 : mins(t.time, t.endTime);   // en turnering teller som 5 timer bordtennis
+      if (!min) return;
+      var ty = t.tournament ? "kamp" : t.photo === "bordtennis" ? "bordtennis" : t.photo === "styrke" ? "styrke" : t.photo === "utholdenhet" ? "kondisjon" : "annet";
+      t.doneDates.forEach(function (d) { out.push({ date: d, min: min, type: ty, title: String(t.title || "").replace(/^\S+\s/, function (w) { return /\p{Extended_Pictographic}/u.test(w) ? "" : w; }), own: false }); });
+    });
+    P.programs.forEach(function (p) { p.completedDates.forEach(function (d) { var sl = p.sessionLog && p.sessionLog[d]; out.push({ date: d, min: sl && sl.min ? Number(sl.min) : 30, type: "styrke", title: String(p.title || "Styrkeøkt").replace(/^\S+\s/, function (w) { return /\p{Extended_Pictographic}/u.test(w) ? "" : w; }), own: false }); }); });
+    return { list: out.filter(function (x) { return x.date && x.min > 0; }), gear: P.gear };
+  }
+  function render() {
+    var S = sessions(); if (!S) return;
+    box.hidden = false;
+    var now = new Date(); now.setHours(12, 0, 0, 0);
+    var mon = new Date(now); mon.setDate(now.getDate() - ((now.getDay() + 6) % 7));
+    var month0 = new Date(now.getFullYear(), now.getMonth(), 1, 12);
+    var season0 = new Date(now.getMonth() >= 7 ? now.getFullYear() : now.getFullYear() - 1, 7, 1, 12);
+    var sum = function (from, f) { return S.list.filter(function (x) { var d = pd(x.date); return d >= from && d <= now && (!f || f(x)); }).reduce(function (a, x) { return a + x.min; }, 0); };
+    var week = sum(mon), month = sum(month0), season = sum(season0);
+    // Snitt regnes fra uka med første registrerte trening denne sesongen (ikke fra 1. august)
+    var firstS = S.list.map(function (x) { return pd(x.date); }).filter(function (d) { return d >= season0 && d <= now; }).sort(function (a, b) { return a - b; })[0] || now;
+    var firstMon = new Date(firstS); firstMon.setDate(firstS.getDate() - ((firstS.getDay() + 6) % 7));
+    var weeks = Math.max(1, Math.round((mon - firstMon) / (7 * 864e5)) + 1);
+    // siste 8 uker
+    var bars = []; for (var i = 7; i >= 0; i--) { var a = new Date(mon); a.setDate(mon.getDate() - i * 7); var b = new Date(a); b.setDate(a.getDate() + 6); var v = S.list.filter(function (x) { var d = pd(x.date); return d >= a && d <= b; }).reduce(function (q, x) { return q + x.min; }, 0); bars.push({ v: v, lbl: "u" + isoWeek(a), now: i === 0 }); }
+    var maxb = Math.max(60, Math.max.apply(null, bars.map(function (b) { return b.v; })));
+    var byType = TYPES.map(function (t) { return [t, sum(season0, function (x) { return x.type === t[0]; })]; }).filter(function (x) { return x[1] > 0; });
+    var html = '<div class="tp-team-head"><h2>⏱️ Treningstimer</h2><small>denne uka</small></div>' +
+      '<div class="hr-big"><b>' + hdec(week) + '</b><span>timer denne uka</span></div>' +
+      '<div class="hr-tiles"><div><b>' + hdec(month) + ' t</b><small>denne måneden</small></div><div><b>' + hdec(season) + ' t</b><small>denne sesongen</small></div><div><b>' + hdec(season / weeks) + ' t</b><small>snitt per uke</small></div></div>' +
+      '<div class="hr-bars">' + bars.map(function (b) { return '<div class="' + (b.now ? "now" : "") + '"><em>' + (b.v ? hdec(b.v) : "") + '</em><i style="height:' + Math.round(b.v / maxb * 64) + 'px"></i><small>' + b.lbl + '</small></div>'; }).join("") + '</div>';
+    if (byType.length) {
+      var tot = byType.reduce(function (a, x) { return a + x[1]; }, 0);
+      html += '<div class="hr-split">' + byType.map(function (x) { return '<span style="width:' + (x[1] / tot * 100) + '%;background:' + x[0][2] + '"></span>'; }).join("") + '</div>' +
+        '<div class="hr-legend">' + byType.map(function (x) { return '<span><i style="background:' + x[0][2] + '"></i>' + x[0][1].split(" ").slice(1).join(" ") + ' ' + hdec(x[1]) + ' t</span>'; }).join("") + '</div>';
+    }
+    html += '<div class="hr-actions"><button type="button" data-mode="log">+ Logg trening</button><button type="button" class="alt" data-mode="gear">+ Nytt belegg</button></div>';
+    if (mode === "log") {
+      html += '<div class="hr-form"><div class="row">' + TYPES.map(function (t) { return '<button type="button" data-type="' + t[0] + '" class="' + (type === t[0] ? "on" : "") + '">' + t[1] + '</button>'; }).join("") + '</div>' +
+        '<div class="two"><label>Dato<input type="date" id="hrDate" value="' + dv(new Date()) + '"></label><label>Hvor lenge<select id="hrMin">' + [30, 45, 60, 75, 90, 105, 120, 150, 180, 240, 300].map(function (n) { return '<option value="' + n + '"' + (n === 90 ? " selected" : "") + '>' + hm(n) + '</option>'; }).join("") + '</select></label></div>' +
+        '<label>Hva gjorde du? (valgfritt)<input type="text" id="hrNote" maxlength="80" placeholder="F.eks. «Trening med pappa» eller «Serve og mottak»"></label>' +
+        '<button type="button" class="save" data-save-log>Lagre treningen</button></div>';
+    }
+    if (mode === "gear") {
+      html += '<div class="hr-form"><div class="row">' + SIDES.map(function (x) { return '<button type="button" data-side="' + x[0] + '" class="' + (side === x[0] ? "on" : "") + '">' + x[1] + '</button>'; }).join("") + '</div>' +
+        '<label>' + (side === "blad" ? "Blad" : "Belegg") + '<input type="text" id="grName" maxlength="60" placeholder="' + (side === "blad" ? "F.eks. «Butterfly Viscaria»" : "F.eks. «Butterfly Tenergy 05, 2,1 mm»") + '"></label>' +
+        '<label>Tatt i bruk<input type="date" id="grDate" value="' + dv(new Date()) + '"></label>' +
+        '<button type="button" class="save" data-save-gear>Lagre</button></div>';
+    }
+    // Utstyr: siste for hver side
+    var gear = S.gear.slice().sort(function (a, b) { return String(b.date).localeCompare(String(a.date)); });
+    var cur = SIDES.map(function (x) { return [x, gear.find(function (g) { return g.side === x[0]; })]; }).filter(function (x) { return x[1]; });
+    if (cur.length) {
+      html += '<div class="hr-sub">🏓 Utstyret ditt</div>';
+      html += cur.map(function (x) {
+        var g = x[1], played = S.list.filter(function (s) { return TT[s.type] && s.date >= g.date; }).reduce(function (a, s) { return a + s.min; }, 0);
+        var h = played / 60, pct = Math.min(100, h / LIFE * 100), col = x[0][0] === "blad" ? "#8a8f99" : h < LIFE * 0.66 ? "#2ecc71" : h < LIFE ? "#f1c40f" : "#ff5a5a";
+        var days = Math.round((new Date() - pd(g.date)) / 864e5);
+        return '<div class="gr-card"><div class="h"><small>' + x[0][1] + '</small><b>' + hdec(played) + ' t</b></div><div class="n">' + esc(g.name) + '</div>' +
+          '<div class="d">Tatt i bruk ' + esc(pd(g.date).toLocaleDateString("nb-NO", { day: "numeric", month: "short", year: "numeric" })) + ' · ' + days + ' dager siden</div>' +
+          (x[0][0] !== "blad" ? '<div class="gr-bar"><i style="width:' + pct + '%;background:' + col + '"></i></div><div class="tip">' + (h < LIFE * 0.66 ? "Belegget er i god stand." : h < LIFE ? "Begynner å bli brukt – følg med på grepet." : "Over " + LIFE + " timer – vurder å bytte belegg.") + '</div>' : "") +
+          '<div class="act"><button type="button" data-swap="' + x[0][0] + '">Byttet nå</button><button type="button" data-delgear="' + esc(g.id) + '">Slett</button></div></div>';
+      }).join("");
+    }
+    // Siste egne treninger
+    var own = S.list.filter(function (x) { return x.own; }).sort(function (a, b) { return String(b.date).localeCompare(String(a.date)); }).slice(0, 6);
+    if (own.length) {
+      html += '<div class="hr-sub">Dine loggede treninger</div>' + own.map(function (x) { var t = TYPES.find(function (y) { return y[0] === x.type; }) || TYPES[4]; return '<div class="hr-row"><div class="x"><b>' + t[1] + '</b><small>' + esc(pd(x.date).toLocaleDateString("nb-NO", { weekday: "short", day: "numeric", month: "short" })) + (x.note ? " · " + esc(x.note) : "") + '</small></div><span class="t">' + hm(x.min) + '</span><button type="button" class="del" data-dellog="' + esc(x.id) + '" aria-label="Slett">✕</button></div>'; }).join("");
+    }
+    html += '<div class="tp-turn-note">Timene teller treningene du logger her, og bordtennistreningene du har krysset av i kalenderen.</div>';
+    box.innerHTML = html;
+  }
+  function isoWeek(d) { var t = new Date(Date.UTC(d.getFullYear(), d.getMonth(), d.getDate())); var n = t.getUTCDay() || 7; t.setUTCDate(t.getUTCDate() + 4 - n); var y = new Date(Date.UTC(t.getUTCFullYear(), 0, 1)); return Math.ceil(((t - y) / 864e5 + 1) / 7); }
+  async function save(field, item) { busy = true; var ok = await window.vkListSave(field, item); busy = false; if (!ok) alert("Fikk ikke lagret – sjekk nettet og prøv igjen."); return ok; }
+  box.addEventListener("click", async function (e) {
+    if (busy) return;
+    var md = e.target.closest("[data-mode]"); if (md) { mode = mode === md.dataset.mode ? "" : md.dataset.mode; render(); return; }
+    var ty = e.target.closest("[data-type]"); if (ty) { type = ty.dataset.type; box.querySelectorAll("[data-type]").forEach(function (b) { b.classList.toggle("on", b === ty); }); var sel = document.getElementById("hrMin"); if (sel) sel.value = type === "kamp" ? "300" : "90"; return; }
+    var sd = e.target.closest("[data-side]"); if (sd) { side = sd.dataset.side; var keep = (document.getElementById("grName") || {}).value; render(); return; }
+    if (e.target.closest("[data-save-log]")) {
+      var item = { id: "log-" + Date.now().toString(36), date: document.getElementById("hrDate").value || dv(new Date()), min: Number(document.getElementById("hrMin").value) || 60, type: type, note: String(document.getElementById("hrNote").value || "").trim().slice(0, 80), createdAt: new Date().toISOString() };
+      if (await save("playerLog", item)) { mode = ""; render(); }
+      return;
+    }
+    if (e.target.closest("[data-save-gear]")) {
+      var name = String(document.getElementById("grName").value || "").trim();
+      if (!name) { document.getElementById("grName").focus(); return; }
+      var g = { id: "gear-" + Date.now().toString(36), side: side, name: name.slice(0, 60), date: document.getElementById("grDate").value || dv(new Date()), createdAt: new Date().toISOString() };
+      if (await save("playerGear", g)) { mode = ""; render(); }
+      return;
+    }
+    var sw = e.target.closest("[data-swap]"); if (sw) { mode = "gear"; side = sw.dataset.swap; render(); var i = document.getElementById("grName"); if (i) { i.focus(); i.scrollIntoView({ block: "center" }); } return; }
+    var dl = e.target.closest("[data-dellog]"); if (dl) { var P = window.vkPlayerData(); var x = P.log.find(function (l) { return l.id === dl.dataset.dellog; }); if (x && confirm("Slette denne treningen?")) { await save("playerLog", Object.assign({}, x, { removedAt: new Date().toISOString() })); render(); } return; }
+    var dg = e.target.closest("[data-delgear]"); if (dg) { var P2 = window.vkPlayerData(); var y = P2.gear.find(function (l) { return l.id === dg.dataset.delgear; }); if (y && confirm("Slette «" + y.name + "»?")) { await save("playerGear", Object.assign({}, y, { removedAt: new Date().toISOString() })); render(); } }
+  });
+  var soft = function () { if (!mode && !busy) render(); };
+  window.addEventListener("load", function () { render(); setTimeout(soft, 2500); setTimeout(soft, 7000); });
+  // Når spilleren krysser av en trening i kalenderen, oppdateres timene
+  document.addEventListener("click", function (e) { if (e.target.closest(".vk-cta, .dpp-check")) setTimeout(soft, 1200); }, true);
 })();
 </script>
 <script>
