@@ -23767,7 +23767,9 @@ function getExercisePR(exerciseName) {
       b.addEventListener("click", () => showCoachInbox(true));
       el.appendChild(b);
       el.hidden = false;
-    } else if (coachLink.can_write) {
+    } else if (coachLink.can_write && false) {
+      // «Skriv til …»-knappen er fjernet etter ønske (2026-11-07). Notater på øvelser
+      // og svar i popuper går fortsatt til coachen. Fjern «&& false» for å få den tilbake.
       const b = document.createElement("button");
       b.type = "button";
       b.className = "dpp-coach-line-btn";
