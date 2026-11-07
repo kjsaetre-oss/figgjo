@@ -24939,7 +24939,7 @@ function getExercisePR(exerciseName) {
   var TYPES = [["bordtennis", "🏓 Bordtennis", "#c8102e"], ["kamp", "🏆 Kamp/turnering", "#14161b"], ["fysisk", "💪 Fysisk trening", "#2f6fb0"], ["annet", "✨ Annet", "#8a8f99"]];
   var FYS = { fysisk: 1, styrke: 1, kondisjon: 1 };   // eldre «styrke»/«kondisjon» regnes som fysisk trening
   var TT = { bordtennis: 1, kamp: 1 };   // teller som spilletid på belegget
-  var SIDES = [["forhand", "Forhånd"], ["baklengs", "Baklengs"], ["blad", "Blad"]];
+  var SIDES = [["forhand", "Forhand"], ["baklengs", "Backhand"], ["blad", "Blad"]];
   var LIFE = 60;                          // veiledende antall spilletimer før belegget bør byttes
   var mode = "", type = "bordtennis", side = "forhand", busy = false;
   function dv(d) { return d.getFullYear() + "-" + String(d.getMonth() + 1).padStart(2, "0") + "-" + String(d.getDate()).padStart(2, "0"); }
@@ -25172,7 +25172,7 @@ function getExercisePR(exerciseName) {
   if (!box || !m || !m.id) return;
   var esc = function (v) { return String(v == null ? "" : v).replace(/[&<>"']/g, function (c) { return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]; }); };
   var TYPES = [["teknikk", "🏓 Teknikk"], ["kamp", "🏆 Kamp"], ["fysisk", "💪 Fysisk"], ["annet", "✨ Annet"]];
-  var SUG = { teknikk: ["20 forhånd topspin på rad", "Lære en ny serve", "Bedre baklengs-flick"], kamp: ["Vinne en kamp i serien", "Komme til semifinalen i en turnering", "Rykke opp en ranking-klasse"], fysisk: ["Planke i 1 minutt", "Trene styrke 3 ganger i uka", "Raskere fotarbeid"], annet: ["Være med på 3 turneringer", "Møte på alle treningene i en måned"] };
+  var SUG = { teknikk: ["20 forhand topspin på rad", "Lære en ny serve", "Bedre backhand-flick"], kamp: ["Vinne en kamp i serien", "Komme til semifinalen i en turnering", "Rykke opp en ranking-klasse"], fysisk: ["Planke i 1 minutt", "Trene styrke 3 ganger i uka", "Raskere fotarbeid"], annet: ["Være med på 3 turneringer", "Møte på alle treningene i en måned"] };
   var open = false, type = "teknikk", busy = false;
   function goals() { try { return window.vkGoalsList ? window.vkGoalsList() : []; } catch (e) { return []; } }
   function fmt(d) { return d ? new Date(d + "T12:00:00").toLocaleDateString("nb-NO", { day: "numeric", month: "short", year: "numeric" }).replace(".", "") : ""; }
