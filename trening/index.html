@@ -8,6 +8,10 @@
 <meta name="theme-color" content="#c8102e">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-title" content="Trening">
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
+<meta name="mobile-web-app-capable" content="yes">
+<link rel="apple-touch-icon" href="ikon-180.png">
+<link rel="icon" type="image/png" sizes="192x192" href="ikon-192.png">
 <title>Trening – Figgjo BTK</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@600;700;800&display=swap" rel="stylesheet">
@@ -18,10 +22,11 @@
   // Lenken er #<kunde-ID> eller #<kunde-ID>/<Fornavn>
   var raw = String(location.hash || "").replace(/^#\/?/, "").trim();
   var parts = raw.split("/");
-  var id = parts[0], hashName = "";
-  try { hashName = decodeURIComponent(parts.slice(1).join("/") || "").trim().slice(0, 40); } catch (e) {}
+  var id = parts[0], hashName = "", hashTeam = "";
+  try { hashName = decodeURIComponent(parts[1] || "").trim().slice(0, 40); } catch (e) {}
+  if (/^[1-9]$/.test(parts[2] || "")) hashTeam = parts[2];
   try {
-    if (ok(id)) { localStorage.setItem("tl_tp_member", id); if (hashName) localStorage.setItem("tl_tp_name:" + id, hashName); }
+    if (ok(id)) { localStorage.setItem("tl_tp_member", id); if (hashName) localStorage.setItem("tl_tp_name:" + id, hashName); if (hashTeam) localStorage.setItem("tl_tp_team:" + id, hashTeam); }
     else id = localStorage.getItem("tl_tp_member") || "";
   } catch (e) {}
   window.TL_STANDALONE = { brand: "figgjo", emptyPhoto: "/bilder/bordtennis-racketer-bla-bord.jpg",
@@ -33,7 +38,7 @@
     window.MVT_memberData = { id: id, name: name };
   }
   window.TL_TP_OK = ok(id) || !!(window.MVT_memberData && window.MVT_memberData.id);
-  if (ok(id) && location.hash) history.replaceState(null, "", location.pathname + "#" + id + (hashName ? "/" + encodeURIComponent(hashName) : ""));
+  if (ok(id) && location.hash) history.replaceState(null, "", location.pathname + "#" + id + (hashName ? "/" + encodeURIComponent(hashName) + (hashTeam ? "/" + hashTeam : "") : ""));
 })();
 </script>
 <style>
@@ -79,10 +84,39 @@
   .tp-coach img { width: 40px; height: 40px; border-radius: 50%; object-fit: cover; border: 2px solid #c8102e; }
   .tp-coach small { display: block; font: 700 10px -apple-system, sans-serif; color: #646973; text-transform: uppercase; letter-spacing: .05em; }
   .tp-coach b { display: block; font: 800 14px "Outfit", -apple-system, sans-serif; }
-  .tp-hero > div:first-of-type { padding-bottom: 66px; }
-  .tp-hero > .tp-coach { position: absolute; }
+  .tp-hero { flex-direction: column; align-items: stretch; justify-content: flex-end; }
+  .tp-hero > div:first-of-type { padding-bottom: 10px; }
+  .tp-hero > .tp-coach { position: relative; right: auto; bottom: auto; align-self: flex-start; margin: 0 18px 16px; }
   .tp-hero .tp-ball2 { position: absolute; right: 18px; top: 16px; width: 34px; height: 34px; border-radius: 50%;
     background: radial-gradient(circle at 35% 30%, #fff, #f1f1f1 45%, #d9d9d9); box-shadow: 0 6px 14px rgba(0,0,0,.35); }
+  /* Legg på hjemskjermen */
+  .tp-a2hs { margin: 10px 14px 0; display: flex; gap: 10px; align-items: center; padding: 10px 12px; border-radius: 16px; background: #fff;
+    border: 1px solid #e6e7eb; font: 13px/1.4 -apple-system, sans-serif; color: #1b1d22; }
+  .tp-a2hs img { width: 40px; height: 40px; border-radius: 10px; flex: none; }
+  .tp-a2hs b { display: block; font-size: 13.5px; }
+  .tp-a2hs button { margin-left: auto; flex: none; border: 0; background: #f4f5f7; border-radius: 999px; width: 30px; height: 30px; font-size: 15px; color: #646973; }
+  /* Laget ditt */
+  .tp-team { margin: 10px 14px 0; border-radius: 20px; background: #fff; border: 1px solid #e6e7eb; overflow: hidden; font-family: -apple-system, sans-serif; color: #1b1d22;
+    box-shadow: 0 1px 2px rgba(20,22,27,.04), 0 14px 34px -18px rgba(20,22,27,.25); }
+  .tp-team-head { display: flex; align-items: center; gap: 8px; padding: 12px 14px 8px; }
+  .tp-team-head h2 { margin: 0; font: 800 17px "Outfit", -apple-system, sans-serif; display: flex; align-items: center; gap: 8px; }
+  .tp-team-head h2::before { content: ""; width: 4px; height: 18px; border-radius: 4px; background: #c8102e; }
+  .tp-team-head small { color: #646973; font-size: 12px; }
+  .tp-team-head select { margin-left: auto; border: 1px solid #e6e7eb; border-radius: 10px; padding: 5px 8px; font: 600 12.5px -apple-system, sans-serif; background: #f4f5f7; color: #1b1d22; }
+  .tp-match { display: flex; gap: 12px; align-items: center; margin: 0 12px 10px; padding: 12px; border-radius: 16px; background: #14161b; color: #fff; }
+  .tp-match .d { flex: none; width: 50px; text-align: center; border-radius: 12px; background: #c8102e; padding: 6px 0; }
+  .tp-match .d b { display: block; font: 800 20px/1 "Outfit", sans-serif; } .tp-match .d span { font-size: 11px; font-weight: 700; text-transform: uppercase; }
+  .tp-match small { display: block; color: rgba(255,255,255,.65); font-size: 11.5px; font-weight: 700; text-transform: uppercase; letter-spacing: .04em; }
+  .tp-match .t { font: 700 15px/1.3 "Outfit", -apple-system, sans-serif; } .tp-match .i { color: rgba(255,255,255,.75); font-size: 12.5px; margin-top: 2px; }
+  .tp-last { margin: 0 12px 10px; display: flex; gap: 8px; align-items: center; font-size: 13px; }
+  .tp-last .r { flex: none; font: 800 12px -apple-system, sans-serif; padding: 3px 8px; border-radius: 8px; color: #fff; }
+  .tp-last .r.w { background: #2e7d52; } .tp-last .r.l { background: #b0413e; } .tp-last .r.u { background: #8a8f99; }
+  .tp-table { width: calc(100% - 24px); margin: 0 12px 12px; border-collapse: collapse; font-size: 12.5px; }
+  .tp-table th { text-align: left; color: #646973; font-weight: 700; font-size: 11px; padding: 4px 4px; border-bottom: 1px solid #e6e7eb; }
+  .tp-table td { padding: 6px 4px; border-bottom: 1px solid #f0f1f3; } .tp-table td.n, .tp-table th.n { text-align: right; width: 34px; }
+  .tp-table tr.us td { background: #fdeef0; font-weight: 800; }
+  .tp-team-pick { padding: 0 12px 12px; display: flex; flex-wrap: wrap; gap: 6px; }
+  .tp-team-pick button { border: 1px solid #e6e7eb; background: #f4f5f7; border-radius: 999px; padding: 7px 12px; font: 700 13px -apple-system, sans-serif; color: #1b1d22; }
   /* Treningsmodus: ingen matdel */
   .tl-standalone .vk-sec[data-sec="Mat"] { display: none !important; }
 </style>
@@ -92,7 +126,9 @@
 <div class="tp-nolink"><h1>🏓 Treningen din</h1><p>Denne siden åpnes med den personlige lenken du har fått fra treneren din.<br>Spør treneren om å få lenken på nytt.</p></div>
 <script>if (!window.TL_TP_OK) document.body.classList.add("tp-missing");</script>
 <div class="tp-app">
+<div id="tpA2hs"></div>
 <section class="tp-hero" aria-label="Hilsen"><span class="tp-ball2" aria-hidden="true"></span><div><h1 id="tpHello">Hei!</h1><p id="tpHelloSub">Klar for trening? Her er alt du skal gjøre denne uka.</p><span class="tp-chip">FIGGJO BTK · BORDTENNIS</span></div><div class="tp-coach"><img src="/bilder/kjetil-lindefjell-saetre.jpg" alt="" loading="lazy"><span><small>Treneren din</small><b>Kjetil</b></span></div></section>
+<section class="tp-team" id="tpTeam" hidden></section>
 <script>
 // Sikkerhetsadapter (sikkerhet-2a-planer-funksjoner.sql): lesing og lagring av
   // movement_plans går via funksjoner som bare gir ut/lagrer ÉN kundes plan.
@@ -24596,6 +24632,76 @@ function getExercisePR(exerciseName) {
       m.name = n; show(n);
       try { localStorage.setItem("tl_tp_name:" + m.id, n); } catch (e) {}
     }).catch(function () {});
+})();
+</script>
+<script src="/serie.js" defer></script>
+<script>
+// ── Hjemskjerm: vis et lite tips første gangene (ikke når siden allerede er åpnet fra hjemskjermen)
+(function () {
+  var host = document.getElementById("tpA2hs"); if (!host || !window.TL_TP_OK) return;
+  var standalone = window.navigator.standalone || (window.matchMedia && matchMedia("(display-mode: standalone)").matches);
+  var seen = 0; try { seen = Number(localStorage.getItem("tl_tp_a2hs") || 0); } catch (e) {}
+  if (standalone || seen >= 3) return;
+  try { localStorage.setItem("tl_tp_a2hs", String(seen + 1)); } catch (e) {}
+  var ios = /iphone|ipad|ipod/i.test(navigator.userAgent);
+  host.innerHTML = '<div class="tp-a2hs"><img src="ikon-180.png" alt=""><div><b>Legg treningen på hjemskjermen</b>' +
+    (ios ? 'Trykk på Del-knappen <span aria-hidden="true">⬆︎</span> nederst og velg «Legg til på Hjem-skjerm».' : 'Trykk på menyen ⋮ øverst og velg «Legg til på startsiden».') +
+    '</div><button type="button" aria-label="Lukk">✕</button></div>';
+  host.querySelector("button").addEventListener("click", function () { host.innerHTML = ""; try { localStorage.setItem("tl_tp_a2hs", "9"); } catch (e) {} });
+})();
+// ── Laget ditt: neste kamp, siste resultat og tabell (fra serie.js på figgjobtk.no)
+(function () {
+  var box = document.getElementById("tpTeam"); var m = window.MVT_memberData;
+  if (!box || !m || !m.id) return;
+  var KEY = "tl_tp_team:" + m.id;
+  var esc = function (v) { return String(v == null ? "" : v).replace(/[&<>"']/g, function (c) { return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]; }); };
+  var nr = function (n) { return /figgjo/i.test(n || "") ? ((String(n).match(/(\d+)\s*$/) || [])[1] || "1") : null; };
+  var dato = function (d) { var p = String(d || "").split("-"); return p.length === 3 ? new Date(+p[0], +p[1] - 1, +p[2]) : null; };
+  function team() { try { return localStorage.getItem(KEY) || ""; } catch (e) { return ""; } }
+  function setTeam(t) { try { if (t) localStorage.setItem(KEY, t); else localStorage.setItem(KEY, "0"); } catch (e) {} render(); }
+  function render() {
+    var S = null; try { S = (typeof SERIE !== "undefined" && SERIE && SERIE.lag) ? SERIE : null; } catch (e) {}
+    if (!S) return;
+    var t = team();
+    var names = Object.keys(S.lag).sort();
+    if (t === "0") { box.hidden = true; return; }
+    if (!t || !S.lag["Figgjo " + t]) {
+      box.hidden = false;
+      box.innerHTML = '<div class="tp-team-head"><h2>Hvilket lag spiller du på?</h2></div><div class="tp-team-pick">' +
+        names.map(function (n) { return '<button type="button" data-t="' + esc(nr(n)) + '">' + esc(n) + '</button>'; }).join("") +
+        '<button type="button" data-t="0">Ingen lag</button></div>';
+      return;
+    }
+    var name = "Figgjo " + t, L = S.lag[name];
+    var idag = new Date(); idag.setHours(0, 0, 0, 0);
+    var kamper = (L.kamper || []).map(function (k) { return Object.assign({}, k, { d: dato(k.dato) }); }).filter(function (k) { return k.d; });
+    var neste = kamper.filter(function (k) { return !k.resultat && k.d >= idag; }).sort(function (a, b) { return a.d - b.d || String(a.kl).localeCompare(String(b.kl)); })[0];
+    var sist = kamper.filter(function (k) { return k.resultat; }).sort(function (a, b) { return b.d - a.d; })[0];
+    var vi = function (k) { return nr(k.hjemme) === t; };
+    var html = '<div class="tp-team-head"><h2>' + esc(name) + '</h2><small>' + esc(L.divisjon || "") + '</small>' +
+      '<select aria-label="Bytt lag">' + names.map(function (n) { return '<option value="' + esc(nr(n)) + '"' + (n === name ? " selected" : "") + '>' + esc(n) + '</option>'; }).join("") + '<option value="0">Skjul</option></select></div>';
+    if (neste) {
+      var mot = vi(neste) ? neste.borte : neste.hjemme, hjemme = /figgjo/i.test(neste.sted || "");
+      html += '<div class="tp-match"><div class="d"><b>' + neste.d.getDate() + '</b><span>' + neste.d.toLocaleDateString("nb-NO", { month: "short" }).replace(".", "") + '</span></div><div>' +
+        '<small>Neste kamp · ' + esc(neste.d.toLocaleDateString("nb-NO", { weekday: "long" })) + ' kl. ' + esc(neste.kl || "") + '</small>' +
+        '<div class="t">' + esc(neste.hjemme) + ' – ' + esc(neste.borte) + '</div>' +
+        '<div class="i">' + (hjemme ? "🏠 Hjemme" : "🚐 Borte") + ' · ' + esc(neste.sted || "") + '</div></div></div>';
+    }
+    if (sist) {
+      var r = String(sist.resultat).split("-").map(Number), oss = vi(sist) ? r[0] : r[1], dem = vi(sist) ? r[1] : r[0];
+      var cls = oss > dem ? "w" : oss < dem ? "l" : "u";
+      html += '<div class="tp-last"><span class="r ' + cls + '">' + (cls === "w" ? "Seier" : cls === "l" ? "Tap" : "Uavgjort") + ' ' + oss + '–' + dem + '</span><span>mot ' + esc(vi(sist) ? sist.borte : sist.hjemme) + ' · ' + sist.d.getDate() + '. ' + esc(sist.d.toLocaleDateString("nb-NO", { month: "short" }).replace(".", "")) + '</span></div>';
+    }
+    if ((L.tabell || []).length) {
+      html += '<table class="tp-table"><thead><tr><th>#</th><th>Lag</th><th class="n">K</th><th class="n">P</th></tr></thead><tbody>' +
+        L.tabell.map(function (r) { return '<tr' + (nr(r.lag) === t ? ' class="us"' : '') + '><td>' + esc(r.plass) + '</td><td>' + esc(r.lag) + '</td><td class="n">' + esc(r.k) + '</td><td class="n">' + esc(r.p) + '</td></tr>'; }).join("") +
+        '</tbody></table>';
+    }
+    box.innerHTML = html; box.hidden = false;
+  }
+  box.addEventListener("click", function (e) { var b = e.target.closest("[data-t]"); if (b) setTeam(b.dataset.t); });
+  box.addEventListener("change", function (e) { if (e.target.matches("select")) setTeam(e.target.value); });
+  window.addEventListener("load", render);
 })();
 </script>
 </body>
