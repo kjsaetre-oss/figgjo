@@ -51,6 +51,10 @@
   .tp-head .tp-ball::after { content: ""; position: absolute; left: 6px; top: 6px; width: 8px; height: 8px; border-radius: 50%; background: rgba(255,255,255,.35); }
   .tp-head b { font-size: 17px; font-weight: 800; letter-spacing: -.01em; }
   .tp-head small { margin-left: auto; color: rgba(255,255,255,.7); font: 600 13px -apple-system, sans-serif; }
+  .tp-refresh { flex: none; width: 34px; height: 34px; border-radius: 50%; border: 1px solid rgba(255,255,255,.22); background: rgba(255,255,255,.08); color: #fff; font: 700 18px/1 -apple-system, sans-serif; display: grid; place-items: center; padding: 0; }
+  .tp-refresh:active { background: rgba(255,255,255,.2); }
+  .tp-refresh.spin { animation: tpSpin .8s linear infinite; }
+  @keyframes tpSpin { to { transform: rotate(360deg); } }
   .tp-nolink { display: none; max-width: 420px; margin: 60px auto; padding: 0 24px; text-align: center; font: 16px/1.5 -apple-system, sans-serif; color: #3b3640; }
   .tp-nolink h1 { font-family: "Outfit", sans-serif; font-size: 24px; }
   body.tp-missing .tp-nolink { display: block; }
@@ -215,7 +219,7 @@
 </style>
 </head>
 <body class="tl-standalone tl-brand-figgjo">
-<header class="tp-head"><span class="tp-ball"></span><b>Figgjo BTK</b><small id="tpWho">Trening</small></header>
+<header class="tp-head"><span class="tp-ball"></span><b>Figgjo BTK</b><small id="tpWho">Trening</small><button type="button" class="tp-refresh" id="tpRefresh" aria-label="Oppdater" title="Hent det nyeste">↻</button></header>
 <div class="tp-nolink"><h1>🏓 Treningen din</h1><p>Denne siden åpnes med den personlige lenken du har fått fra treneren din.<br>Spør treneren om å få lenken på nytt.</p></div>
 <script>if (!window.TL_TP_OK) document.body.classList.add("tp-missing");</script>
 <div class="tp-app">
@@ -24839,9 +24843,28 @@ function getExercisePR(exerciseName) {
   ["tpRank", "tpGoals", "tpTeam", "tpTurn"].forEach(function (id) { var e = document.getElementById(id); if (e) mo.observe(e, { attributes: true, attributeFilter: ["hidden"] }); });
 })();
 </script>
-<script src="/serie.js" defer></script>
-<script src="/terminliste.js" defer></script>
-<script src="/ranking.js" defer></script>
+<script>
+// Lag, terminliste og ranking hentes ferskt (nytt versjonsnummer hvert 10. minutt, eller ved «↻ Oppdater»)
+(function () {
+  var r = new URLSearchParams(location.search).get("r");
+  var v = r || String(Math.floor(Date.now() / 600000));
+  ["/serie.js", "/terminliste.js", "/ranking.js"].forEach(function (u) { var s = document.createElement("script"); s.src = u + "?v=" + v; s.async = false; document.head.appendChild(s); });
+})();
+// ↻ Oppdater: henter alt på nytt (også når siden ligger på hjemskjermen og ikke har vanlig oppdatering)
+(function () {
+  function refresh() {
+    var b = document.getElementById("tpRefresh"); if (b) b.classList.add("spin");
+    location.replace(location.pathname + "?r=" + Date.now() + location.hash);
+  }
+  var b = document.getElementById("tpRefresh"); if (b) b.addEventListener("click", refresh);
+  // Har appen ligget i bakgrunnen i over 15 minutter, oppdateres den av seg selv når den åpnes igjen
+  var hiddenAt = 0;
+  document.addEventListener("visibilitychange", function () {
+    if (document.hidden) hiddenAt = Date.now();
+    else if (hiddenAt && Date.now() - hiddenAt > 15 * 60 * 1000 && !document.querySelector(".vkf.open, .vkf[aria-hidden='false']")) refresh();
+  });
+})();
+</script>
 <script>
 // ── Ranking (Norgesrankingen fra bordtennis.no) – statistikk inspirert av WTT
 (function () {
