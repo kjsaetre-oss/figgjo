@@ -172,7 +172,7 @@
 <script>if (!window.TL_TP_OK) document.body.classList.add("tp-missing");</script>
 <div class="tp-app">
 <div id="tpA2hs"></div>
-<section class="tp-hero" aria-label="Hilsen"><span class="tp-ball2" aria-hidden="true"></span><div><h1 id="tpHello">Hei!</h1><p id="tpHelloSub">Klar for trening? Her er alt du skal gjøre denne uka.</p><span class="tp-chip">FIGGJO BTK · BORDTENNIS</span></div><div class="tp-coach"><img src="/bilder/kjetil-lindefjell-saetre.jpg" alt="" fetchpriority="high"><span><small>Treneren din</small><b>Kjetil</b></span></div></section>
+<section class="tp-hero" aria-label="Hilsen"><span class="tp-ball2" aria-hidden="true"></span><div><h1 id="tpHello">Hei!</h1></div><div class="tp-coach"><img src="/bilder/kjetil-lindefjell-saetre.jpg" alt="" fetchpriority="high"><span><small>Treneren din</small><b>Kjetil</b></span></div></section>
 <section class="tp-focus" id="tpFocus" hidden></section>
 <script>
 // Sikkerhetsadapter (sikkerhet-2a-planer-funksjoner.sql): lesing og lagring av
@@ -24743,9 +24743,6 @@ function getExercisePR(exerciseName) {
     var first = String(n).trim().split(/\s+/)[0];
     var el = document.getElementById("tpWho"); if (el) el.textContent = "Trening · " + first;
     var h = document.getElementById("tpHello"); if (h) h.textContent = "Hei, " + first + "!";
-    var hr = new Date().getHours();
-    var sub = document.getElementById("tpHelloSub");
-    if (sub) sub.textContent = hr < 10 ? "God morgen! Her er treningen din i dag." : hr < 17 ? "Klar for trening? Her er alt du skal gjøre." : "God kveld! Se hva som står på planen.";
   };
   show(m.name);
   fetch("https://cpqbdorxilssxylkqdkt.supabase.co/rest/v1/rpc/tl_plan_get", { method: "POST",
