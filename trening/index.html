@@ -2925,7 +2925,7 @@
       </div>
     </div>
     <p class="dpp-ex-sub" id="dppExSub">&#xd8;velser</p>
-    <div class="vk-viewswitch" id="dppExViewSwitch" role="group" aria-label="Velg visning"><button type="button" id="dppExViewFocus">Én og én øvelse</button><button type="button" class="on" aria-pressed="true">Alle øvelser</button></div>
+    <div class="vk-viewswitch" id="dppExViewSwitch" role="group" aria-label="Velg visning"><button type="button" id="dppExViewFocus">▶ Én og én øvelse</button><button type="button" class="on" aria-pressed="true">☰ Alle øvelser</button></div>
     <button class="dpp-ex-plan-btn" type="button" id="dppExPlanBtn">&#x1f4c5; Flytt eller hopp over &#xf8;kta</button>
     <div class="dpp-streak" id="dppExStreakBadge" style="display:none;"></div>
     <div class="dpp-ex-progress" id="dppExProgress"></div>
@@ -3855,7 +3855,7 @@
   .vkf.show{ display:block; }
   .vkf button{ font:inherit; cursor:pointer; -webkit-tap-highlight-color:transparent; }
   /* Startskjerm for økta */
-  .vkf-intro{ gap:16px; padding-bottom:calc(110px + env(safe-area-inset-bottom)); }
+  .vkf-intro{ gap:16px; padding-bottom:calc(160px + env(safe-area-inset-bottom)); }
   .vkf-intro-hero{ position:relative; min-height:250px; border-radius:26px; overflow:hidden; display:flex; flex-direction:column; justify-content:flex-end; padding:18px; color:#fff; background:#241a33 center/cover no-repeat; box-shadow:0 18px 40px -20px rgba(29,24,34,.6); }
   .vkf-intro-hero .vkf-icon{ position:absolute; top:12px; left:12px; background:rgba(20,12,32,.45); color:#fff; box-shadow:none; }
   .vkf-intro-hero small{ font-size:12px; font-weight:700; letter-spacing:.06em; text-transform:uppercase; opacity:.85; }
@@ -3902,14 +3902,14 @@
   .vkf-k{ display:inline-flex; align-items:center; gap:6px; font-size:12px; font-weight:700; color:#6438ad; }
   .vkf-k i{ width:6px; height:6px; border-radius:50%; background:#6438ad; box-shadow:0 0 0 3px rgba(100,56,173,.15); }
   .vkf-body h2{ margin:2px 0 0; font-size:22px; font-weight:800; letter-spacing:-.025em; line-height:1.15; }
-  .vk-coachtip{ display:flex; align-items:center; gap:10px; padding:10px 12px; border-radius:16px; background:#f7f3ee; }
-  .vk-coachtip .dpp-coach-avatar{ width:40px; height:40px; min-width:40px; }
+  .vk-coachtip{ display:flex; align-items:flex-start; gap:9px; padding:8px 10px; border-radius:14px; background:#f7f3ee; }
+  .vk-coachtip .dpp-coach-avatar{ width:28px; height:28px; min-width:28px; }
   .vk-coachtip-txt{ min-width:0; }
   .dpp-ex-tipwrap{ padding:0 12px 10px; }
   .dpp-ex-tipwrap .vk-coachtip{ padding:8px 10px; border-radius:14px; }
-  .dpp-ex-tipwrap .dpp-coach-avatar{ width:32px; height:32px; min-width:32px; }
-  .dpp-ex-tipwrap .vk-coachtip-txt p{ font-size:13px; line-height:1.4; }
-  .vk-coachtip-txt p{ margin:0; font-size:13.5px; line-height:1.45; color:#3f3650; white-space:pre-line; }
+  .dpp-ex-tipwrap .dpp-coach-avatar{ width:26px; height:26px; min-width:26px; }
+  .dpp-ex-tipwrap .vk-coachtip-txt p{ font-size:12.5px; line-height:1.4; }
+  .vk-coachtip-txt p{ margin:0; padding-top:4px; font-size:12.5px; line-height:1.4; color:#4a4158; white-space:pre-line; overflow-wrap:anywhere; }
   .vkf-head, .vkf-set{ display:grid; grid-template-columns:28px minmax(0,78px) 1fr 1fr 44px; gap:8px; align-items:center; }
   .vkf-head{ font-size:11.5px; font-weight:700; color:#8a8090; padding:0 6px; }
   .vkf-head span:nth-child(n+3){ text-align:center; }
@@ -4053,6 +4053,8 @@
   .vkf-next b{ display:block; font-size:14px; } .vkf-next span{ font-size:12.5px; color:#8a8090; }
   .vkf-foot{ position:fixed; left:0; right:0; bottom:0; padding:12px 16px calc(16px + env(safe-area-inset-bottom)); background:linear-gradient(180deg, rgba(244,239,232,0), #f4efe8 35%); display:flex; justify-content:center; }
   .vkf-foot .vkf-btn{ max-width:408px; width:100%; flex:none; }
+  .vkf-foot-intro{ flex-direction:column; align-items:center; gap:6px; }
+  .vkf-listlink{ border:none; background:#fff; color:#4b3a66; font:inherit; font-size:14px; font-weight:800; min-height:42px; width:100%; max-width:408px; border-radius:14px; cursor:pointer; box-shadow:0 1px 2px rgba(40,28,20,.06); }
   .vkf-confetti{ position:fixed; inset:0; pointer-events:none; overflow:hidden; z-index:3; }
   .vkf-confetti i{ position:absolute; top:-12px; width:8px; height:12px; border-radius:2px; animation:vkfFall linear forwards; }
   .vkf-confetti i.c{ border-radius:50%; width:9px; height:9px; }
@@ -21045,10 +21047,11 @@ function getExercisePR(exerciseName) {
         const prLine = document.createElement("div");
         prLine.className = "dpp-ex-pr-line" + (pr && pr.isPr ? " is-pr" : "");
         const prText = document.createElement("span");
-        prText.textContent = pr
+        const prDate = pr && pr.date ? ` (${pr.date})` : "";
+        prText.textContent = pr && Number(pr.reps) > 0
           ? (ex.tracksWeight
-              ? `Personlig rekord: ${pr.kg} kg \u00d7 ${pr.reps} ${unitLabel.toLowerCase()} (${pr.date})`
-              : (ex.isHold ? `Personlig rekord: ${formatHoldTime(pr.reps)} (${pr.date})` : `Personlig rekord: ${pr.reps} ${unitLabel.toLowerCase()} (${pr.date})`))
+              ? `Personlig rekord: ${pr.kg} kg \u00d7 ${pr.reps} ${unitLabel.toLowerCase()}${prDate}`
+              : (ex.isHold ? `Personlig rekord: ${formatHoldTime(pr.reps)}${prDate}` : `Personlig rekord: ${pr.reps} ${unitLabel.toLowerCase()}${prDate}`))
           : "Ingen rekord registrert enn\u00e5.";
         prLine.appendChild(prText);
 
@@ -22401,7 +22404,7 @@ function getExercisePR(exerciseName) {
       </div>
       ${note ? `<div class="vkf-intro-coach"><span class="dpp-coach-avatar"></span><div>${escapeHtmlText(note)}</div></div>` : ""}
       <ul class="vkf-intro-list">${rows}</ul>
-      <div class="vkf-foot"><button class="vkf-btn primary" type="button" data-act="begin">Start økta</button></div>
+      <div class="vkf-foot vkf-foot-intro"><button class="vkf-btn primary" type="button" data-act="begin">▶ Start økta – én øvelse om gangen</button><button class="vkf-listlink" type="button" data-act="list">☰ Heller se alle øvelsene i en liste</button></div>
     </div>`;
     root.querySelectorAll(".vkf-intro-coach .dpp-coach-avatar").forEach(fillCoachAvatar);
     loadCoachProfile();
@@ -22749,7 +22752,7 @@ function getExercisePR(exerciseName) {
         <span class="vkf-icon" style="visibility:hidden" aria-hidden="true"></span>
       </div>
       <div class="vkf-bars">${bars}</div>
-      <div class="vk-viewswitch" role="group" aria-label="Velg visning" style="margin:0;"><button type="button" class="on" aria-pressed="true">Én og én øvelse</button><button type="button" data-act="list">Alle øvelser</button></div>
+      <div class="vk-viewswitch" role="group" aria-label="Velg visning" style="margin:0;"><button type="button" class="on" aria-pressed="true">▶ Én og én øvelse</button><button type="button" data-act="list">☰ Alle øvelser</button></div>
       <div class="vkf-ex">
         ${yt ? `<div class="vkf-video" data-act="video" data-yt="${yt}" style="background-image:url('https://img.youtube.com/vi/${yt}/hqdefault.jpg')"><div class="vkf-play"><svg width="22" height="22" viewBox="0 0 24 24" fill="#6438ad"><path d="M7 4.8v14.4a1 1 0 0 0 1.5.86l11.6-7.2a1 1 0 0 0 0-1.72L8.5 3.94A1 1 0 0 0 7 4.8z"/></svg></div></div>` : `<div class="vkf-ex-photo" aria-hidden="true" style="background-image:url('${vkPhoto(VK_WORKOUT_PHOTOS[/tredemølle|mølle|gåing|gange|løp|jogg|ellipse|sykkel|spinning|ergometer|romaskin|kondisjon|intervall/i.test(ex.name || "") && vkWorkoutPhotoKey(item) !== "utholdenhet" ? "utholdenhet" : ""] || vkWorkoutPhotoId(item), 800)}')"></div>`}
         <div class="vkf-body">
