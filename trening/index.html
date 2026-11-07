@@ -168,6 +168,20 @@
   .gr-bar { height: 8px; border-radius: 999px; background: rgba(255,255,255,.12); margin-top: 9px; overflow: hidden; } .gr-bar i { display: block; height: 100%; border-radius: 999px; }
   .gr-card .tip { font-size: 11.5px; margin-top: 6px; color: rgba(255,255,255,.75); }
   .gr-card .act { display: flex; gap: 6px; margin-top: 9px; } .gr-card .act button { border: 1px solid rgba(255,255,255,.25); background: transparent; color: #fff; border-radius: 10px; padding: 6px 10px; font: 700 12px -apple-system, sans-serif; }
+  /* Kampnotater */
+  .mn-nudge { margin: 0 12px 10px; padding: 10px 12px; border-radius: 14px; background: #fdeef0; display: flex; gap: 10px; align-items: center; font: 13px/1.35 -apple-system, sans-serif; }
+  .mn-nudge b { display: block; } .mn-nudge button { margin-left: auto; flex: none; border: 0; border-radius: 10px; background: #c8102e; color: #fff; padding: 8px 10px; font: 800 12.5px -apple-system, sans-serif; }
+  .mn-stats { display: flex; gap: 8px; padding: 0 12px 10px; } .mn-stats div { flex: 1; background: #f4f5f7; border-radius: 12px; padding: 8px; text-align: center; }
+  .mn-stats b { display: block; font: 800 18px "Outfit", sans-serif; } .mn-stats small { font-size: 10.5px; color: #646973; }
+  .mn-ev { padding: 6px 12px 2px; font: 800 11.5px -apple-system, sans-serif; letter-spacing: .08em; text-transform: uppercase; color: #646973; border-top: 1px solid #f0f1f3; }
+  .mn-m { padding: 8px 12px; border-top: 1px solid #f7f7f9; }
+  .mn-m .top { display: flex; gap: 8px; align-items: center; } .mn-m .r { flex: none; font: 800 11.5px -apple-system, sans-serif; color: #fff; border-radius: 8px; padding: 3px 8px; }
+  .mn-m .r.w { background: #2e7d52; } .mn-m .r.l { background: #b0413e; }
+  .mn-m .o { flex: 1; font: 700 14px -apple-system, sans-serif; } .mn-m .del { border: 0; background: none; color: #a3a7b0; font-size: 14px; }
+  .mn-m p { margin: 5px 0 0; font-size: 12.5px; line-height: 1.4; color: #3b3f47; overflow-wrap: anywhere; } .mn-m p b { color: #1b1d22; }
+  .mn-m .cc { margin-top: 6px; display: flex; gap: 7px; align-items: flex-start; background: #f4f5f7; border-radius: 10px; padding: 6px 8px; font-size: 12.5px; }
+  .mn-m .cc img { width: 22px; height: 22px; border-radius: 50%; object-fit: cover; flex: none; }
+  .mn-form textarea { border: 1px solid #d5d7dd; border-radius: 10px; padding: 9px 10px; font: 15px/1.35 -apple-system, sans-serif; width: 100%; box-sizing: border-box; min-height: 64px; resize: vertical; }
   /* Ranking – inspirert av WTT */
   .tp-rank { margin: 10px 14px 0; border-radius: 22px; overflow: hidden; background: #fff; border: 1px solid #e6e7eb; color: #1b1d22; font-family: -apple-system, sans-serif;
     box-shadow: 0 1px 2px rgba(20,22,27,.04), 0 14px 34px -18px rgba(20,22,27,.25); }
@@ -5662,6 +5676,7 @@ var DPP_IMG = [
     // Spillerens egne treninger og utstyr (treningssiden) – lagres atomisk
     normalized.playerLog = Array.isArray(raw.playerLog) ? raw.playerLog : [];
     normalized.playerGear = Array.isArray(raw.playerGear) ? raw.playerGear : [];
+    normalized.playerMatchNotes = Array.isArray(raw.playerMatchNotes) ? raw.playerMatchNotes : [];
     normalized.exerciseDoneMap = (raw.exerciseDoneMap && typeof raw.exerciseDoneMap === "object" && !Array.isArray(raw.exerciseDoneMap)) ? raw.exerciseDoneMap : {};
     normalized.exerciseSetDoneMap = (raw.exerciseSetDoneMap && typeof raw.exerciseSetDoneMap === "object" && !Array.isArray(raw.exerciseSetDoneMap)) ? raw.exerciseSetDoneMap : {};
 
@@ -5912,6 +5927,7 @@ var DPP_IMG = [
       coachFocus: data.coachFocus || [],
       playerLog: data.playerLog || [],
       playerGear: data.playerGear || [],
+      playerMatchNotes: data.playerMatchNotes || [],
       // Samme beskyttelse for avkrysning av enkelt\u00f8velser i en \u00f8kt.
       exerciseDoneMap: data.exerciseDoneMap || {},
       // Samme beskyttelse for avkrysning av enkeltserier inni en \u00f8velse.
@@ -6098,6 +6114,7 @@ var DPP_IMG = [
           if (Array.isArray(raw.coachFocus)) data.coachFocus = raw.coachFocus;
           if (Array.isArray(raw.playerLog)) data.playerLog = raw.playerLog;
           if (Array.isArray(raw.playerGear)) data.playerGear = raw.playerGear;
+          if (Array.isArray(raw.playerMatchNotes)) data.playerMatchNotes = raw.playerMatchNotes;
           if (!opts.mutatingTodoNotes) {
             data.todoNotes = (raw.todoNotes && typeof raw.todoNotes === "object" && !Array.isArray(raw.todoNotes)) ? raw.todoNotes : {};
           }
@@ -18236,13 +18253,14 @@ var DPP_IMG = [
     return {
       log: (data.playerLog || []).filter(x => x && !x.removedAt),
       gear: (data.playerGear || []).filter(x => x && !x.removedAt),
+      notes: (data.playerMatchNotes || []).filter(x => x && !x.removedAt),
       tasks: (data.assignedTasks || []).filter(t => t && !t.removedAt && t.kind === "habit" && Array.isArray(t.doneDates) && t.doneDates.length),
       programs: (data.assignedPrograms || []).filter(p => p && Array.isArray(p.completedDates) && p.completedDates.length)
         .map(p => ({ title: p.title, completedDates: p.completedDates, sessionLog: p.sessionLog || {} }))
     };
   };
   window.vkListSave = async function (field, item) {
-    if (!["playerLog", "playerGear"].includes(field) || !item || !item.id) return false;
+    if (!["playerLog", "playerGear", "playerMatchNotes"].includes(field) || !item || !item.id) return false;
     const m = getMovementMember();
     if (!m.id) return false;
     const prev = deepClone(data[field] || []);
@@ -24933,6 +24951,7 @@ function getExercisePR(exerciseName) {
 <section class="tp-rank" id="tpRank" hidden></section>
 <section class="tp-team tp-goals" id="tpGoals" hidden></section>
 <section class="tp-team" id="tpTeam" hidden></section>
+<section class="tp-team tp-notes" id="tpNotes" hidden></section>
 <section class="tp-team tp-turn" id="tpTurn" hidden></section>
 <div style="height:24px"></div>
 </div>
@@ -24973,7 +24992,11 @@ function getExercisePR(exerciseName) {
   var nav = document.getElementById("tpNav"); if (!nav) return;
   if (!window.TL_TP_OK) { nav.remove(); return; }
   var ids = ["tpTop", "tpHours", "tpRank", "tpGoals", "tpTeam", "tpTurn"];
-  var el = function (id) { return id === "tpTop" ? document.getElementById("dppApp") : document.getElementById(id); };
+  var el = function (id) {
+    if (id === "tpTop") return document.getElementById("dppApp");
+    if (id === "tpTurn") { var n = document.getElementById("tpNotes"); if (n && !n.hidden) return n; }
+    return document.getElementById(id);
+  };
   function sync() {
     ids.forEach(function (id) { var b = nav.querySelector('[data-go="' + id + '"]'), e = el(id); var h = id !== "tpTop" && (!e || e.hidden); if (b && b.hidden !== h) b.hidden = h; });
     var cur = "tpTop", y = window.scrollY + window.innerHeight * 0.35;
@@ -24990,7 +25013,7 @@ function getExercisePR(exerciseName) {
   window.addEventListener("load", function () { sync(); setTimeout(sync, 2600); setTimeout(sync, 7200); });
   // Følg bare med på når delene blir synlige (ikke på menyen selv)
   var mo = new MutationObserver(function () { sync(); });
-  ["tpHours", "tpRank", "tpGoals", "tpTeam", "tpTurn"].forEach(function (id) { var e = document.getElementById(id); if (e) mo.observe(e, { attributes: true, attributeFilter: ["hidden"] }); });
+  ["tpHours", "tpRank", "tpGoals", "tpTeam", "tpNotes", "tpTurn"].forEach(function (id) { var e = document.getElementById(id); if (e) mo.observe(e, { attributes: true, attributeFilter: ["hidden"] }); });
 })();
 </script>
 <script>
@@ -25135,6 +25158,80 @@ function getExercisePR(exerciseName) {
   window.addEventListener("load", function () { render(); setTimeout(soft, 2500); setTimeout(soft, 7000); });
   // Når spilleren krysser av en trening i kalenderen, oppdateres timene
   document.addEventListener("click", function (e) { if (e.target.closest(".vk-cta, .dpp-check")) setTimeout(soft, 1200); }, true);
+})();
+</script>
+<script>
+// ── Kampnotater: hvem spilte du mot, resultat, hva fungerte og hva må øves på – treneren ser dem
+(function () {
+  var box = document.getElementById("tpNotes"); var m = window.MVT_memberData;
+  if (!box || !m || !m.id) return;
+  var esc = function (v) { return String(v == null ? "" : v).replace(/[&<>"']/g, function (c) { return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]; }); };
+  var open = false, res = "seier", ev = "", busy = false;
+  function dv(d) { return d.getFullYear() + "-" + String(d.getMonth() + 1).padStart(2, "0") + "-" + String(d.getDate()).padStart(2, "0"); }
+  function pd(v) { return new Date(v + "T12:00:00"); }
+  function fmt(v) { return pd(v).toLocaleDateString("nb-NO", { day: "numeric", month: "short" }).replace(".", ""); }
+  function strip(t) { return String(t || "").replace(/^\p{Extended_Pictographic}\uFE0F?\s*/u, ""); }
+  function recentTournaments(P) {
+    var cut = dv(new Date(Date.now() - 21 * 864e5)), today = dv(new Date());
+    return P.tasks.filter(function (t) { return t.tournament || t.sportType === "turnering"; }).flatMap(function (t) { return t.doneDates.filter(function (d) { return d >= cut && d <= today; }).map(function (d) { return { date: d, name: strip(t.title) }; }); });
+  }
+  function render() {
+    var P = window.vkPlayerData ? window.vkPlayerData() : null; if (!P) return;
+    var notes = P.notes.slice().sort(function (a, b) { return String(b.date).localeCompare(String(a.date)) || String(b.createdAt).localeCompare(String(a.createdAt)); });
+    var recent = recentTournaments(P);
+    var missing = recent.filter(function (r) { return !notes.some(function (n) { return n.date === r.date; }); });
+    box.hidden = false;
+    var w = notes.filter(function (n) { return n.result === "seier"; }).length, l = notes.filter(function (n) { return n.result === "tap"; }).length;
+    var html = '<div class="tp-team-head"><h2>📝 Kampnotater</h2><small>Treneren ser notatene dine</small></div>';
+    if (missing.length && !open) html += '<div class="mn-nudge"><span><b>Du var med på ' + esc(missing[0].name) + '</b>' + fmt(missing[0].date) + ' – hvordan gikk kampene?</span><button type="button" data-start="' + esc(missing[0].date) + '" data-ev="' + esc(missing[0].name) + '">Skriv</button></div>';
+    if (notes.length) html += '<div class="mn-stats"><div><b>' + notes.length + '</b><small>kamper notert</small></div><div><b style="color:#2e7d52">' + w + '</b><small>seire</small></div><div><b style="color:#b0413e">' + l + '</b><small>tap</small></div></div>';
+    if (open) {
+      var focus = []; try { focus = window.vkFocusList ? window.vkFocusList() : []; } catch (e) {}
+      html += '<div class="hr-form mn-form">' +
+        '<div class="two"><label>Turnering / kamp<input type="text" id="mnEv" maxlength="60" value="' + esc(ev) + '" placeholder="F.eks. Figgjorekrutten"></label><label>Dato<input type="date" id="mnDate" value="' + esc(open === true ? dv(new Date()) : open) + '"></label></div>' +
+        '<label>Motstander<input type="text" id="mnOpp" maxlength="50" placeholder="Navn og klubb"></label>' +
+        '<div class="row"><button type="button" data-res="seier" class="' + (res === "seier" ? "on" : "") + '">🟢 Seier</button><button type="button" data-res="tap" class="' + (res === "tap" ? "on" : "") + '">🔴 Tap</button>' +
+        '<input type="text" id="mnScore" maxlength="12" placeholder="Sett, f.eks. 3–1" style="flex:1;min-width:90px;border:1px solid #d5d7dd;border-radius:10px;padding:7px 10px;font:15px -apple-system,sans-serif;"></div>' +
+        '<label>Hva fungerte?<textarea id="mnGood" maxlength="300" placeholder="F.eks. «Kort serve til forhand ga meg mange enkle poeng»"></textarea></label>' +
+        '<label>Hva må jeg øve på?<textarea id="mnImprove" maxlength="300" placeholder="F.eks. «Mottak av lange server til backhand»"></textarea></label>' +
+        (focus.length ? '<label>Passer det med fokuset ditt? (valgfritt)<select id="mnFocus"><option value="">–</option>' + focus.map(function (f) { return '<option value="' + esc(f.id) + '">' + esc(f.text) + '</option>'; }).join("") + '</select></label>' : "") +
+        '<button type="button" class="save" data-save>Lagre kampnotat</button><button type="button" class="tp-more" data-cancel style="margin:0;width:100%;">Avbryt</button></div>';
+    } else {
+      html += '<div class="hr-actions" style="grid-template-columns:1fr;"><button type="button" data-start="">+ Nytt kampnotat</button></div>';
+    }
+    var groups = {}; notes.slice(0, 30).forEach(function (n) { var k = n.date + "|" + (n.event || ""); (groups[k] = groups[k] || []).push(n); });
+    Object.keys(groups).slice(0, 6).forEach(function (k) {
+      var g = groups[k]; html += '<div class="mn-ev">' + esc(g[0].event || "Kamp") + ' · ' + fmt(g[0].date) + '</div>';
+      html += g.map(function (n) {
+        return '<div class="mn-m"><div class="top"><span class="r ' + (n.result === "seier" ? "w" : "l") + '">' + (n.result === "seier" ? "Seier" : "Tap") + (n.score ? " " + esc(n.score) : "") + '</span><span class="o">' + esc(n.opponent || "Motstander") + '</span><button type="button" class="del" data-del="' + esc(n.id) + '" aria-label="Slett">✕</button></div>' +
+          (n.good ? '<p><b>Fungerte:</b> ' + esc(n.good) + '</p>' : "") + (n.improve ? '<p><b>Øve på:</b> ' + esc(n.improve) + '</p>' : "") +
+          (n.coachComment ? '<div class="cc"><img src="/bilder/kjetil-lindefjell-saetre.jpg" alt=""><span><b>Kjetil:</b> ' + esc(n.coachComment) + '</span></div>' : "") + '</div>';
+      }).join("");
+    });
+    box.innerHTML = html;
+  }
+  async function save(item) { busy = true; var ok = await window.vkListSave("playerMatchNotes", item); busy = false; if (!ok) alert("Fikk ikke lagret – sjekk nettet og prøv igjen."); return ok; }
+  box.addEventListener("click", async function (e) {
+    if (busy) return;
+    var st = e.target.closest("[data-start]"); if (st) { open = st.dataset.start || true; ev = st.dataset.ev || ""; res = "seier"; render(); var o = document.getElementById(ev ? "mnOpp" : "mnEv"); if (o) o.focus(); return; }
+    if (e.target.closest("[data-cancel]")) { open = false; render(); return; }
+    var r = e.target.closest("[data-res]"); if (r) { res = r.dataset.res; box.querySelectorAll("[data-res]").forEach(function (b) { b.classList.toggle("on", b === r); }); return; }
+    if (e.target.closest("[data-save]")) {
+      var g = function (id) { var x = document.getElementById(id); return x ? String(x.value || "").trim() : ""; };
+      var item = { id: "kamp-" + Date.now().toString(36), date: g("mnDate") || dv(new Date()), event: g("mnEv").slice(0, 60), opponent: g("mnOpp").slice(0, 50), result: res, score: g("mnScore").slice(0, 12), good: g("mnGood").slice(0, 300), improve: g("mnImprove").slice(0, 300), focusId: g("mnFocus"), createdAt: new Date().toISOString() };
+      if (!item.opponent && !item.good && !item.improve) { document.getElementById("mnOpp").focus(); return; }
+      if (await save(item)) {
+        ev = item.event;
+        if (confirm("Lagret! Vil du skrive en kamp til fra samme turnering?")) { open = item.date; render(); var o = document.getElementById("mnOpp"); if (o) o.focus(); }
+        else { open = false; render(); }
+      }
+      return;
+    }
+    var d = e.target.closest("[data-del]"); if (d) { var P = window.vkPlayerData(); var n = P.notes.find(function (x) { return x.id === d.dataset.del; }); if (n && confirm("Slette notatet om kampen mot " + (n.opponent || "motstanderen") + "?")) { await save(Object.assign({}, n, { removedAt: new Date().toISOString() })); render(); } }
+  });
+  var soft = function () { if (!open && !busy) render(); };
+  window.addEventListener("load", function () { render(); setTimeout(soft, 2500); setTimeout(soft, 7000); });
+  document.addEventListener("click", function (e) { if (e.target.closest(".vk-cta")) setTimeout(soft, 1200); }, true);
 })();
 </script>
 <script>
