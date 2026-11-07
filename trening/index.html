@@ -22094,7 +22094,92 @@ function getExercisePR(exerciseName) {
     showProgressToast(msg);
     await save();
   }
+  // Treningssiden (bordtennis): + gir bare Bordtennis, Fysisk trening, Annen trening og Turnering
+  const VK_SPORT = [
+    ["bordtennis", "🏓", "Bordtennis", "bordtennis", "Bordtennistrening"],
+    ["fysisk", "💪", "Fysisk trening", "styrke", "Fysisk trening"],
+    ["annen", "✨", "Annen trening", "utholdenhet", "Annen trening"],
+    ["turnering", "🏆", "Turnering", "bordtennis", "Turnering"]
+  ];
+  function openQuickSport(kind) {
+    const k = VK_SPORT.find(x => x[0] === kind) || VK_SPORT[0];
+    const sheet = favSheet(k[1] + " " + k[2]);
+    const wrap = document.createElement("div");
+    wrap.className = "dpp-own";
+    const tour = kind === "turnering";
+    wrap.innerHTML = `
+      <input class="dpp-own-input" id="dppSportName" type="text" maxlength="80" value="${escapeExHtml(k[4])}" autocomplete="off" />
+      <div class="dpp-own-label">Dato</div>
+      <input class="dpp-own-input" id="dppSportDate" type="date" value="${quickDayValue()}" />
+      ${tour ? `<div class="dpp-own-label">Teller som 5 timer bordtennis per turneringsdag.</div>` : `
+      <div class="dpp-own-label">Hvor lenge?</div>
+      <div class="dpp-quick-chips" data-q="min">${[[60, "1 t"], [90, "1,5 t"], [120, "2 t"], [180, "3 t"]].map(([v, l]) => `<button type="button" class="dpp-quick-chip${v === (kind === "bordtennis" ? 120 : 60) ? " on" : ""}" data-v="${v}">${l}</button>`).join("")}</div>
+      <input type="hidden" id="dppSportMin" value="${kind === "bordtennis" ? 120 : 60}" />
+      <div class="dpp-own-label">Klokkeslett</div>
+      <input class="dpp-own-input" id="dppSportTime" type="time" value="17:00" />`}
+      <div class="dpp-own-label">Sted (valgfritt)</div>
+      <input class="dpp-own-input" id="dppSportPlace" type="text" maxlength="60" placeholder="F.eks. Figgjohallen" />
+      <button class="dpp-own-save" type="button" id="dppSportSave">Legg i kalenderen</button>
+      <div class="dpp-own-msg" aria-live="polite"></div>`;
+    sheet.appendChild(wrap);
+    quickBack(sheet);
+    wrap.querySelectorAll('[data-q="min"] [data-v]').forEach(b => b.addEventListener("click", () => {
+      wrap.querySelectorAll('[data-q="min"] [data-v]').forEach(x => x.classList.toggle("on", x === b));
+      wrap.querySelector("#dppSportMin").value = b.dataset.v;
+    }));
+    wrap.querySelector("#dppSportSave").addEventListener("click", async (e) => {
+      const btn = e.currentTarget;
+      const m = getMovementMember();
+      const date = wrap.querySelector("#dppSportDate").value || quickDayValue();
+      const title = (wrap.querySelector("#dppSportName").value || k[4]).trim().slice(0, 80);
+      let time = "", endTime = "";
+      if (!tour) {
+        time = wrap.querySelector("#dppSportTime").value || "";
+        const min = Number(wrap.querySelector("#dppSportMin").value) || 60;
+        if (time) { const [h, mm] = time.split(":").map(Number); const t2 = h * 60 + mm + min; endTime = String(Math.floor(t2 / 60) % 24).padStart(2, "0") + ":" + String(t2 % 60).padStart(2, "0"); }
+        else { time = "12:00"; endTime = String(12 + Math.floor(min / 60)).padStart(2, "0") + ":" + String(min % 60).padStart(2, "0"); }
+      }
+      const id = "egen-" + Date.now().toString(36);
+      const task = { id, fromCoach: true, selfAdded: true, kind: "habit", sportType: kind, title: k[1] + " " + title, note: "",
+        startDate: date, days: [getWeekdayKeyFromDate(parseDateValue(date))], weeks: 1, time, endTime,
+        place: (wrap.querySelector("#dppSportPlace").value || "").trim().slice(0, 60), photo: k[3],
+        ...(tour ? { tournament: { id, lenke: "" } } : {}),
+        doneDates: date <= toDateValue(new Date()) ? [date] : [], skipDates: [], createdAt: new Date().toISOString() };
+      btn.disabled = true; btn.textContent = "Lagrer …";
+      data.assignedTasks = (data.assignedTasks || []).concat(task);
+      rebuildVirtualTaskItemsFromState(); renderWeekBar(); renderList();
+      try {
+        const client = await getSupabaseClient();
+        const { error } = await client.rpc("upsert_movement_plan_list_item", { p_member_id: m.id, p_member_name: m.name || "", p_field: "assignedTasks", p_item: task });
+        if (error) throw error;
+        closeFavoriteWorkoutsModal();
+      } catch (err) {
+        data.assignedTasks = (data.assignedTasks || []).filter(t => t.id !== id);
+        rebuildVirtualTaskItemsFromState(); renderWeekBar(); renderList();
+        btn.disabled = false; btn.textContent = "Prøv igjen";
+      }
+    });
+  }
   function openQuickAdd() {
+    if (window.TL_STANDALONE) {
+      const sheet = favSheet("Legg til " + quickDayText());
+      const grid = document.createElement("div");
+      grid.className = "dpp-quick-grid";
+      grid.style.gridTemplateColumns = "1fr 1fr";
+      VK_SPORT.forEach(([k, icon, label, photo], i) => {
+        const b = document.createElement("button");
+        b.type = "button";
+        b.className = "dpp-quick-tile has-photo";
+        const url = vkActivityPhotoUrl(photo);
+        b.style.setProperty("background", `linear-gradient(180deg, rgba(0,0,0,.12), rgba(0,0,0,.72)), url("${url}") center/cover no-repeat`, "important");
+        b.innerHTML = `<b>${icon} ${label}</b>`;
+        if (i === 0) { b.style.gridColumn = "1 / -1"; b.style.minHeight = "120px"; }
+        b.addEventListener("click", () => openQuickSport(k));
+        grid.appendChild(b);
+      });
+      sheet.appendChild(grid);
+      return;
+    }
     const sheet = favSheet("Legg til " + quickDayText());
     const grid = document.createElement("div");
     grid.className = "dpp-quick-grid";
@@ -24936,7 +25021,7 @@ function getExercisePR(exerciseName) {
   var box = document.getElementById("tpHours"); var m = window.MVT_memberData;
   if (!box || !m || !m.id) return;
   var esc = function (v) { return String(v == null ? "" : v).replace(/[&<>"']/g, function (c) { return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]; }); };
-  var TYPES = [["bordtennis", "🏓 Bordtennis", "#c8102e"], ["kamp", "🏆 Kamp/turnering", "#14161b"], ["fysisk", "💪 Fysisk trening", "#2f6fb0"], ["annet", "✨ Annet", "#8a8f99"]];
+  var TYPES = [["bordtennis", "🏓 Bordtennis", "#c8102e"], ["fysisk", "💪 Fysisk trening", "#2f6fb0"], ["annet", "✨ Annen trening", "#8a8f99"], ["kamp", "🏆 Turnering", "#14161b"]];
   var FYS = { fysisk: 1, styrke: 1, kondisjon: 1 };   // eldre «styrke»/«kondisjon» regnes som fysisk trening
   var TT = { bordtennis: 1, kamp: 1 };   // teller som spilletid på belegget
   var SIDES = [["forhand", "Forhand"], ["baklengs", "Backhand"], ["blad", "Blad"]];
@@ -24953,7 +25038,8 @@ function getExercisePR(exerciseName) {
     P.tasks.forEach(function (t) {
       var min = t.tournament ? 300 : mins(t.time, t.endTime);   // en turnering teller som 5 timer bordtennis
       if (!min) return;
-      var ty = t.tournament ? "kamp" : t.photo === "bordtennis" ? "bordtennis" : (t.photo === "styrke" || t.photo === "utholdenhet" || t.photo === "toying") ? "fysisk" : "annet";
+      var ST = { bordtennis: "bordtennis", fysisk: "fysisk", annen: "annet", turnering: "kamp" };
+      var ty = t.tournament ? "kamp" : ST[t.sportType] || (t.photo === "bordtennis" ? "bordtennis" : (t.photo === "styrke" || t.photo === "utholdenhet" || t.photo === "toying") ? "fysisk" : "annet");
       t.doneDates.forEach(function (d) { out.push({ date: d, min: min, type: ty, title: String(t.title || "").replace(/^\S+\s/, function (w) { return /\p{Extended_Pictographic}/u.test(w) ? "" : w; }), own: false }); });
     });
     P.programs.forEach(function (p) { p.completedDates.forEach(function (d) { var sl = p.sessionLog && p.sessionLog[d]; out.push({ date: d, min: sl && sl.min ? Number(sl.min) : 30, type: "fysisk", title: String(p.title || "Styrkeøkt").replace(/^\S+\s/, function (w) { return /\p{Extended_Pictographic}/u.test(w) ? "" : w; }), own: false }); }); });
@@ -25017,7 +25103,7 @@ function getExercisePR(exerciseName) {
     // Siste egne treninger
     var own = S.list.filter(function (x) { return x.own; }).sort(function (a, b) { return String(b.date).localeCompare(String(a.date)); }).slice(0, 6);
     if (own.length) {
-      html += '<div class="hr-sub">Dine loggede treninger</div>' + own.map(function (x) { var t = TYPES.find(function (y) { return y[0] === x.type; }) || TYPES[4]; return '<div class="hr-row"><div class="x"><b>' + t[1] + '</b><small>' + esc(pd(x.date).toLocaleDateString("nb-NO", { weekday: "short", day: "numeric", month: "short" })) + (x.note ? " · " + esc(x.note) : "") + '</small></div><span class="t">' + hm(x.min) + '</span><button type="button" class="del" data-dellog="' + esc(x.id) + '" aria-label="Slett">✕</button></div>'; }).join("");
+      html += '<div class="hr-sub">Dine loggede treninger</div>' + own.map(function (x) { var t = TYPES.find(function (y) { return y[0] === x.type; }) || TYPES[2]; return '<div class="hr-row"><div class="x"><b>' + t[1] + '</b><small>' + esc(pd(x.date).toLocaleDateString("nb-NO", { weekday: "short", day: "numeric", month: "short" })) + (x.note ? " · " + esc(x.note) : "") + '</small></div><span class="t">' + hm(x.min) + '</span><button type="button" class="del" data-dellog="' + esc(x.id) + '" aria-label="Slett">✕</button></div>'; }).join("");
     }
     html += '<div class="tp-turn-note">Timene teller treningene du logger her, og bordtennistreningene du har krysset av i kalenderen.</div>';
     box.innerHTML = html;
