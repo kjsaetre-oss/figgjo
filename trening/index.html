@@ -10,8 +10,8 @@
 <meta name="apple-mobile-web-app-title" content="Trening">
 <meta name="apple-mobile-web-app-status-bar-style" content="black">
 <meta name="mobile-web-app-capable" content="yes">
-<link rel="apple-touch-icon" href="ikon-180.png">
-<link rel="icon" type="image/png" sizes="192x192" href="ikon-192.png">
+<link rel="apple-touch-icon" href="ikon-180.png?v=2">
+<link rel="icon" type="image/png" sizes="192x192" href="ikon-192.png?v=2">
 <title>Trening – Figgjo BTK</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@600;700;800&display=swap" rel="stylesheet">
@@ -24644,7 +24644,7 @@ function getExercisePR(exerciseName) {
   if (standalone || seen >= 3) return;
   try { localStorage.setItem("tl_tp_a2hs", String(seen + 1)); } catch (e) {}
   var ios = /iphone|ipad|ipod/i.test(navigator.userAgent);
-  host.innerHTML = '<div class="tp-a2hs"><img src="ikon-180.png" alt=""><div><b>Legg treningen på hjemskjermen</b>' +
+  host.innerHTML = '<div class="tp-a2hs"><img src="ikon-180.png?v=2" alt=""><div><b>Legg treningen på hjemskjermen</b>' +
     (ios ? 'Trykk på Del-knappen <span aria-hidden="true">⬆︎</span> nederst og velg «Legg til på Hjem-skjerm».' : 'Trykk på menyen ⋮ øverst og velg «Legg til på startsiden».') +
     '</div><button type="button" aria-label="Lukk">✕</button></div>';
   host.querySelector("button").addEventListener("click", function () { host.innerHTML = ""; try { localStorage.setItem("tl_tp_a2hs", "9"); } catch (e) {} });
