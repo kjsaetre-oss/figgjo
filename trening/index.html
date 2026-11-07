@@ -131,6 +131,38 @@
   .tp-tr .add.on { background: #e7f3ec; color: #2e7d52; }
   .tp-more { display: block; width: calc(100% - 24px); margin: 6px 12px 12px; border: 0; background: #f4f5f7; border-radius: 12px; padding: 9px; font: 700 13px -apple-system, sans-serif; color: #1b1d22; }
   .tp-turn-note { padding: 0 12px 10px; color: #646973; font-size: 11.5px; line-height: 1.4; }
+  /* Ranking – inspirert av WTT */
+  .tp-rank { margin: 10px 14px 0; border-radius: 22px; overflow: hidden; background: #fff; border: 1px solid #e6e7eb; color: #1b1d22; font-family: -apple-system, sans-serif;
+    box-shadow: 0 1px 2px rgba(20,22,27,.04), 0 14px 34px -18px rgba(20,22,27,.25); }
+  .rk-hero { position: relative; padding: 16px 16px 14px; color: #fff; background: radial-gradient(120% 120% at 100% 0%, rgba(200,16,46,.55), rgba(200,16,46,0) 55%), linear-gradient(160deg, #1d2030, #0d0f16); }
+  .rk-top { display: flex; justify-content: space-between; align-items: center; gap: 8px; }
+  .rk-top small { font: 800 10.5px -apple-system, sans-serif; letter-spacing: .14em; text-transform: uppercase; color: rgba(255,255,255,.6); }
+  .rk-top button { border: 0; background: rgba(255,255,255,.12); color: rgba(255,255,255,.8); border-radius: 999px; padding: 4px 10px; font: 700 11px -apple-system, sans-serif; }
+  .rk-name { font: 800 22px/1.15 "Outfit", -apple-system, sans-serif; margin-top: 6px; } .rk-club { font-size: 12.5px; color: rgba(255,255,255,.65); }
+  .rk-pts { display: flex; align-items: baseline; gap: 10px; margin-top: 10px; }
+  .rk-pts b { font: 800 46px/1 "Outfit", -apple-system, sans-serif; letter-spacing: -.02em; } .rk-pts span { font: 700 12px -apple-system, sans-serif; color: rgba(255,255,255,.7); text-transform: uppercase; letter-spacing: .08em; }
+  .rk-chg { font: 800 13px -apple-system, sans-serif; padding: 3px 8px; border-radius: 999px; } .rk-chg.up { background: rgba(46,204,113,.18); color: #5be39a; } .rk-chg.down { background: rgba(255,90,90,.18); color: #ff8a8a; } .rk-chg.eq { background: rgba(255,255,255,.12); color: rgba(255,255,255,.75); }
+  .rk-ranks { display: grid; grid-template-columns: repeat(3, 1fr); gap: 6px; margin-top: 14px; }
+  .rk-ranks div { background: rgba(255,255,255,.08); border: 1px solid rgba(255,255,255,.08); border-radius: 14px; padding: 8px 6px; text-align: center; }
+  .rk-ranks b { display: block; font: 800 20px/1.1 "Outfit", -apple-system, sans-serif; } .rk-ranks small { display: block; font-size: 10.5px; color: rgba(255,255,255,.65); margin-top: 2px; line-height: 1.25; }
+  .rk-chart { padding: 12px 14px 6px; } .rk-chart h4, .rk-sec h4 { margin: 0 0 6px; font: 800 12px -apple-system, sans-serif; letter-spacing: .1em; text-transform: uppercase; color: #646973; }
+  .rk-chart svg { display: block; width: 100%; height: 130px; }
+  .rk-tiles { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; padding: 6px 14px 4px; }
+  .rk-tile { background: #f4f5f7; border-radius: 14px; padding: 10px 8px; text-align: center; }
+  .rk-tile b { display: block; font: 800 21px/1.1 "Outfit", -apple-system, sans-serif; } .rk-tile small { display: block; font-size: 10.5px; color: #646973; margin-top: 3px; line-height: 1.25; }
+  .rk-ring { width: 54px; height: 54px; margin: 0 auto 2px; border-radius: 50%; display: grid; place-items: center; background: conic-gradient(#c8102e calc(var(--p) * 1%), #e3e5ea 0); }
+  .rk-ring span { width: 42px; height: 42px; border-radius: 50%; background: #f4f5f7; display: grid; place-items: center; font: 800 14px "Outfit", sans-serif; }
+  .rk-sec { padding: 12px 14px 4px; }
+  .rk-form { display: flex; gap: 6px; }
+  .rk-form span { flex: 1; text-align: center; border-radius: 10px; padding: 6px 2px; font: 800 12px -apple-system, sans-serif; color: #fff; }
+  .rk-form .w { background: #2e7d52; } .rk-form .l { background: #b0413e; } .rk-form .e { background: #8a8f99; }
+  .rk-form span small { display: block; font-weight: 600; font-size: 9.5px; opacity: .85; }
+  .rk-ev { display: flex; gap: 10px; align-items: center; padding: 9px 0; border-top: 1px solid #f0f1f3; }
+  .rk-ev .x { flex: 1; min-width: 0; } .rk-ev .x b { display: block; font: 700 13.5px/1.3 -apple-system, sans-serif; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .rk-ev .x small { color: #646973; font-size: 11.5px; } .rk-ev .wl { font: 800 12.5px -apple-system, sans-serif; color: #1b1d22; }
+  .rk-ev .pt { flex: none; min-width: 52px; text-align: right; font: 800 14px "Outfit", sans-serif; } .rk-ev .pt.up { color: #2e7d52; } .rk-ev .pt.down { color: #b0413e; } .rk-ev .pt.eq { color: #8a8f99; }
+  .rk-foot { padding: 10px 14px 14px; font-size: 11px; color: #8a8f99; display: flex; justify-content: space-between; gap: 8px; } .rk-foot a { color: #a00d25; font-weight: 700; text-decoration: none; }
+  .rk-pick { padding: 4px 14px 14px; display: flex; flex-wrap: wrap; gap: 6px; } .rk-pick button { border: 1px solid #e6e7eb; background: #f4f5f7; border-radius: 999px; padding: 7px 11px; font: 700 13px -apple-system, sans-serif; color: #1b1d22; }
   /* Meny nederst */
   body.tl-standalone { padding-bottom: calc(76px + env(safe-area-inset-bottom)) !important; }
   .tp-nav { position: fixed; left: 0; right: 0; bottom: 0; z-index: 40; display: grid; grid-auto-flow: column; grid-auto-columns: 1fr;
@@ -24739,6 +24771,7 @@ function getExercisePR(exerciseName) {
 <div id="dppSaveErrorToast" class="dpp-save-error-toast" aria-live="assertive"></div>
 <div id="dppProgressToast" class="dpp-progress-toast" aria-live="polite"></div>
 
+<section class="tp-rank" id="tpRank" hidden></section>
 <section class="tp-team tp-goals" id="tpGoals" hidden></section>
 <section class="tp-team" id="tpTeam" hidden></section>
 <section class="tp-team tp-turn" id="tpTurn" hidden></section>
@@ -24769,6 +24802,7 @@ function getExercisePR(exerciseName) {
 </script>
 <nav class="tp-nav" id="tpNav" aria-label="Meny">
   <button type="button" data-go="tpTop" class="on"><i>📅</i>Kalender</button>
+  <button type="button" data-go="tpRank" hidden><i>📈</i>Ranking</button>
   <button type="button" data-go="tpGoals" hidden><i>⭐</i>Mål</button>
   <button type="button" data-go="tpTeam" hidden><i>🏓</i>Laget</button>
   <button type="button" data-go="tpTurn" hidden><i>🏆</i>Turneringer</button>
@@ -24778,7 +24812,7 @@ function getExercisePR(exerciseName) {
 (function () {
   var nav = document.getElementById("tpNav"); if (!nav) return;
   if (!window.TL_TP_OK) { nav.remove(); return; }
-  var ids = ["tpTop", "tpGoals", "tpTeam", "tpTurn"];
+  var ids = ["tpTop", "tpRank", "tpGoals", "tpTeam", "tpTurn"];
   var el = function (id) { return id === "tpTop" ? document.getElementById("dppApp") : document.getElementById(id); };
   function sync() {
     ids.forEach(function (id) { var b = nav.querySelector('[data-go="' + id + '"]'), e = el(id); var h = id !== "tpTop" && (!e || e.hidden); if (b && b.hidden !== h) b.hidden = h; });
@@ -24796,11 +24830,94 @@ function getExercisePR(exerciseName) {
   window.addEventListener("load", function () { sync(); setTimeout(sync, 2600); setTimeout(sync, 7200); });
   // Følg bare med på når delene blir synlige (ikke på menyen selv)
   var mo = new MutationObserver(function () { sync(); });
-  ["tpGoals", "tpTeam", "tpTurn"].forEach(function (id) { var e = document.getElementById(id); if (e) mo.observe(e, { attributes: true, attributeFilter: ["hidden"] }); });
+  ["tpRank", "tpGoals", "tpTeam", "tpTurn"].forEach(function (id) { var e = document.getElementById(id); if (e) mo.observe(e, { attributes: true, attributeFilter: ["hidden"] }); });
 })();
 </script>
 <script src="/serie.js" defer></script>
 <script src="/terminliste.js" defer></script>
+<script src="/ranking.js" defer></script>
+<script>
+// ── Ranking (Norgesrankingen fra bordtennis.no) – statistikk inspirert av WTT
+(function () {
+  var box = document.getElementById("tpRank"); var m = window.MVT_memberData;
+  if (!box || !m || !m.id) return;
+  var KEY = "tl_tp_nbtf:" + m.id;
+  var esc = function (v) { return String(v == null ? "" : v).replace(/[&<>"']/g, function (c) { return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]; }); };
+  var fmtN = function (n) { return Math.round(Number(n) || 0).toLocaleString("nb-NO"); };
+  var picking = false;
+  function data() { try { return (typeof RANKING !== "undefined" && RANKING && RANKING.spillere) ? RANKING : null; } catch (e) { return null; } }
+  function me(R) {
+    var id = ""; try { id = localStorage.getItem(KEY) || ""; } catch (e) {}
+    if (id === "0") return "none";
+    var hit = R.spillere.find(function (p) { return p.id === id; }); if (hit) return hit;
+    var first = String(m.name || "").trim().split(/\s+/)[0].toLowerCase();
+    var c = first ? R.spillere.filter(function (p) { return p.fornavn.toLowerCase() === first; }) : [];
+    return c.length === 1 ? c[0] : null;
+  }
+  function chart(h) {
+    var pts = h.slice().reverse().filter(function (x) { return x.poeng > 0; });
+    if (pts.length < 2) return "";
+    var W = 320, H = 130, P = 8, min = Math.min.apply(null, pts.map(function (x) { return x.poeng; })), max = Math.max.apply(null, pts.map(function (x) { return x.poeng; }));
+    var span = Math.max(20, max - min), lo = min - span * 0.12, hi = max + span * 0.12;
+    var X = function (i) { return P + i * (W - 2 * P) / (pts.length - 1); }, Y = function (v) { return H - 18 - (v - lo) / (hi - lo) * (H - 30); };
+    var line = pts.map(function (x, i) { return (i ? "L" : "M") + X(i).toFixed(1) + " " + Y(x.poeng).toFixed(1); }).join(" ");
+    var area = line + " L" + X(pts.length - 1).toFixed(1) + " " + (H - 18) + " L" + X(0).toFixed(1) + " " + (H - 18) + " Z";
+    var pk = pts.reduce(function (b, x, i) { return x.poeng > pts[b].poeng ? i : b; }, 0), last = pts.length - 1;
+    var mth = function (d) { return new Date(d + "T12:00:00").toLocaleDateString("nb-NO", { month: "short" }).replace(".", ""); };
+    return '<svg viewBox="0 0 ' + W + ' ' + H + '" preserveAspectRatio="none" role="img" aria-label="Poengutvikling">' +
+      '<defs><linearGradient id="rkG" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#c8102e" stop-opacity=".28"/><stop offset="1" stop-color="#c8102e" stop-opacity="0"/></linearGradient></defs>' +
+      '<path d="' + area + '" fill="url(#rkG)"/><path d="' + line + '" fill="none" stroke="#c8102e" stroke-width="2.6" stroke-linejoin="round" stroke-linecap="round" vector-effect="non-scaling-stroke"/>' +
+      '<circle cx="' + X(last) + '" cy="' + Y(pts[last].poeng) + '" r="4.5" fill="#c8102e" stroke="#fff" stroke-width="2"/>' +
+      (pk !== last ? '<circle cx="' + X(pk) + '" cy="' + Y(pts[pk].poeng) + '" r="3.5" fill="#fff" stroke="#14161b" stroke-width="2"/><text x="' + Math.min(W - 40, Math.max(4, X(pk) - 18)) + '" y="' + (Y(pts[pk].poeng) - 8) + '" font-size="10" font-weight="700" fill="#14161b">Topp ' + fmtN(pts[pk].poeng) + '</text>' : "") +
+      '<text x="' + P + '" y="' + (H - 3) + '" font-size="10" fill="#8a8f99">' + mth(pts[0].dato) + '</text><text x="' + (W - P) + '" y="' + (H - 3) + '" font-size="10" fill="#8a8f99" text-anchor="end">' + mth(pts[last].dato) + '</text></svg>';
+  }
+  function render() {
+    var R = data(); if (!R) return;
+    var p = me(R);
+    if (p === "none") { box.hidden = true; return; }
+    box.hidden = false;
+    if (!p || picking) {
+      box.innerHTML = '<div class="rk-hero"><div class="rk-top"><small>Norgesranking</small></div><div class="rk-name">Hvem er du?</div><div class="rk-club">Velg deg selv, så viser vi rankingen og statistikken din.</div></div>' +
+        '<div class="rk-pick">' + R.spillere.slice().sort(function (a, b) { return a.navn.localeCompare(b.navn, "nb"); }).map(function (x) { return '<button type="button" data-pick="' + esc(x.id) + '">' + esc(x.navn) + '</button>'; }).join("") + '<button type="button" data-pick="0">Jeg står ikke her</button></div>';
+      return;
+    }
+    // Sesongen starter 1. august
+    var now = new Date(), sStart = new Date(now.getMonth() >= 7 ? now.getFullYear() : now.getFullYear() - 1, 7, 1);
+    var ev = p.turneringer || [], sev = ev.filter(function (e) { return new Date(e.dato + "T12:00:00") >= sStart; });
+    var W = sev.reduce(function (a, e) { return a + (e.s || 0); }, 0), L = sev.reduce(function (a, e) { return a + (e.t || 0); }, 0);
+    var winp = W + L ? Math.round(W / (W + L) * 100) : 0;
+    var seasonPts = sev.reduce(function (a, e) { return a + (Number(e.poeng) || 0); }, 0);
+    var peak = Math.max.apply(null, (p.historikk || []).map(function (h) { return h.poeng; }).concat([p.poeng]));
+    var best = ev.slice().sort(function (a, b) { return (b.poeng || 0) - (a.poeng || 0); })[0];
+    var chg = Number(p.endring) || 0, cls = chg > 0 ? "up" : chg < 0 ? "down" : "eq";
+    var kl = (p.klasser || [])[0];
+    var ranks = [[p.plass ? "#" + fmtN(p.plass) : "–", "i Norge"], [p.plassVest ? "#" + p.plassVest : "–", "Region Vest"]];
+    ranks.push(kl ? ["#" + kl.plass, esc(kl.klasse) + "<br>av " + kl.av] : [p.plassKlubb ? "#" + p.plassKlubb : "–", "i klubben"]);
+    var form = ev.slice(0, 5).reverse();
+    box.innerHTML = '<div class="rk-hero"><div class="rk-top"><small>Norgesranking · ' + esc(new Date(R.periode + "T12:00:00").toLocaleDateString("nb-NO", { month: "long", year: "numeric" })) + '</small><button type="button" data-change>Bytt</button></div>' +
+      '<div class="rk-name">' + esc(p.navn) + '</div><div class="rk-club">' + esc(p.klubb) + '</div>' +
+      '<div class="rk-pts"><b>' + fmtN(p.poeng) + '</b><span>poeng</span><em class="rk-chg ' + cls + '">' + (chg > 0 ? "▲ +" : chg < 0 ? "▼ " : "") + fmtN(chg) + '</em></div>' +
+      '<div class="rk-ranks">' + ranks.map(function (r) { return '<div><b>' + r[0] + '</b><small>' + r[1] + '</small></div>'; }).join("") + '</div></div>' +
+      '<div class="rk-chart"><h4>Poengutvikling – 2 år</h4>' + chart(p.historikk || []) + '</div>' +
+      '<div class="rk-tiles">' +
+        '<div class="rk-tile"><div class="rk-ring" style="--p:' + winp + '"><span>' + winp + '%</span></div><small>Seiersprosent<br>denne sesongen</small></div>' +
+        '<div class="rk-tile"><b>' + W + '–' + L + '</b><small>Kamper vunnet–tapt<br>denne sesongen</small></div>' +
+        '<div class="rk-tile"><b>' + (seasonPts > 0 ? "+" : "") + fmtN(seasonPts) + '</b><small>Poeng tjent<br>denne sesongen</small></div>' +
+        '<div class="rk-tile"><b>' + sev.length + '</b><small>Turneringer<br>denne sesongen</small></div>' +
+        '<div class="rk-tile"><b>' + fmtN(peak) + '</b><small>Høyeste<br>poengsum</small></div>' +
+        '<div class="rk-tile"><b>' + (best ? "+" + fmtN(best.poeng) : "–") + '</b><small>Beste turnering' + (best ? "<br>" + esc(best.navn).slice(0, 22) : "") + '</small></div>' +
+      '</div>' +
+      (form.length ? '<div class="rk-sec"><h4>Form – siste turneringer</h4><div class="rk-form">' + form.map(function (e) { var c = e.s > e.t ? "w" : e.s < e.t ? "l" : "e"; return '<span class="' + c + '">' + e.s + '–' + e.t + '<small>' + esc(new Date(e.dato + "T12:00:00").toLocaleDateString("nb-NO", { day: "numeric", month: "short" }).replace(".", "")) + '</small></span>'; }).join("") + '</div></div>' : "") +
+      '<div class="rk-sec"><h4>Siste turneringer</h4>' + ev.slice(0, 6).map(function (e) { var c = e.poeng > 0 ? "up" : e.poeng < 0 ? "down" : "eq"; return '<div class="rk-ev"><div class="x"><b>' + esc(e.navn) + '</b><small>' + esc(new Date(e.dato + "T12:00:00").toLocaleDateString("nb-NO", { day: "numeric", month: "short", year: "numeric" })) + ' · <span class="wl">' + e.s + ' seire, ' + e.t + ' tap</span></small></div><div class="pt ' + c + '">' + (e.poeng > 0 ? "+" : "") + fmtN(e.poeng) + '</div></div>'; }).join("") + '</div>' +
+      '<div class="rk-foot"><span>Kilde: Norges Bordtennisforbund</span><a href="https://resultater.bordtennis.no/ranking/spiller/' + esc(p.id) + '" target="_blank" rel="noopener">Full profil ↗</a></div>';
+  }
+  box.addEventListener("click", function (e) {
+    var pk = e.target.closest("[data-pick]"); if (pk) { try { localStorage.setItem(KEY, pk.dataset.pick); } catch (er) {} picking = false; render(); return; }
+    if (e.target.closest("[data-change]")) { picking = true; render(); }
+  });
+  window.addEventListener("load", function () { render(); setTimeout(function () { if (!picking) render(); }, 2500); });
+})();
+</script>
 <script>
 // ── Fokus nå: fokusområdene treneren har satt
 (function () {
