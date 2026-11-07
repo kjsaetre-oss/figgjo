@@ -68,6 +68,13 @@
   .tl-standalone .vk-workout h3, .tl-standalone .dpp-name { font-family: "Outfit", -apple-system, sans-serif; letter-spacing: -.005em; }
   .tp-head { background: #14161b; border-bottom: 3px solid #c8102e; }
   .tp-hero { min-height: 150px; box-shadow: 0 16px 36px -20px rgba(20,22,27,.6); }
+  .tp-hero { flex-wrap: wrap; }
+  .tp-coach { position: absolute; right: 14px; bottom: 14px; display: flex; align-items: center; gap: 8px; padding: 4px 12px 4px 4px;
+    border-radius: 999px; background: rgba(255,255,255,.95); color: #14161b; box-shadow: 0 6px 16px rgba(0,0,0,.3); }
+  .tp-coach img { width: 40px; height: 40px; border-radius: 50%; object-fit: cover; border: 2px solid #c8102e; }
+  .tp-coach small { display: block; font: 700 10px -apple-system, sans-serif; color: #646973; text-transform: uppercase; letter-spacing: .05em; }
+  .tp-coach b { display: block; font: 800 14px "Outfit", -apple-system, sans-serif; }
+  .tp-hero > div:first-of-type { padding-bottom: 66px; }
   .tp-hero .tp-ball2 { position: absolute; right: 18px; top: 16px; width: 34px; height: 34px; border-radius: 50%;
     background: radial-gradient(circle at 35% 30%, #fff, #f1f1f1 45%, #d9d9d9); box-shadow: 0 6px 14px rgba(0,0,0,.35); }
   /* Treningsmodus: ingen matdel */
@@ -79,7 +86,7 @@
 <div class="tp-nolink"><h1>🏓 Treningen din</h1><p>Denne siden åpnes med den personlige lenken du har fått fra treneren din.<br>Spør treneren om å få lenken på nytt.</p></div>
 <script>if (!window.TL_TP_OK) document.body.classList.add("tp-missing");</script>
 <div class="tp-app">
-<section class="tp-hero" aria-label="Hilsen"><span class="tp-ball2" aria-hidden="true"></span><div><h1 id="tpHello">Hei!</h1><p id="tpHelloSub">Klar for trening? Her er alt du skal gjøre denne uka.</p><span class="tp-chip">FIGGJO BTK · BORDTENNIS</span></div></section>
+<section class="tp-hero" aria-label="Hilsen"><span class="tp-ball2" aria-hidden="true"></span><div><h1 id="tpHello">Hei!</h1><p id="tpHelloSub">Klar for trening? Her er alt du skal gjøre denne uka.</p><span class="tp-chip">FIGGJO BTK · BORDTENNIS</span></div><div class="tp-coach"><img src="/bilder/kjetil-lindefjell-saetre.jpg" alt="" loading="lazy"><span><small>Treneren din</small><b>Kjetil</b></span></div></section>
 <script>
 // Sikkerhetsadapter (sikkerhet-2a-planer-funksjoner.sql): lesing og lagring av
   // movement_plans går via funksjoner som bare gir ut/lagrer ÉN kundes plan.
