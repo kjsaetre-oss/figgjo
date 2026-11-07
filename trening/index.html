@@ -20,7 +20,8 @@
     if (ok(id)) localStorage.setItem("tl_tp_member", id);
     else id = localStorage.getItem("tl_tp_member") || "";
   } catch (e) {}
-  window.TL_STANDALONE = { brand: "figgjo" };
+  window.TL_STANDALONE = { brand: "figgjo", emptyPhoto: "/bilder/bordtennis-racketer-bla-bord.jpg",
+    emptyTitle: "Ingen trening lagt inn ennå", emptySub: "Treneren din legger inn økter og treningstider her. Du kan også trykke + selv." };
   if (ok(id) && !(window.MVT_memberData && window.MVT_memberData.id)) {
     var name = "";
     try { name = localStorage.getItem("tl_tp_name:" + id) || ""; } catch (e) {}
@@ -8937,7 +8938,12 @@ var DPP_IMG = [
   function vkEmptyDay(title, sub) {
     const el = document.createElement("div");
     el.className = "vk-empty-photo";
-    el.style.backgroundImage = vkShade(VK_EMPTY_PHOTO, 700, .05, .68);
+    const sa = window.TL_STANDALONE;
+    // Treningssiden (figgjobtk.no/trening): eget bilde og tekst
+    if (sa && sa.emptyPhoto) {
+      el.style.backgroundImage = `linear-gradient(180deg, rgba(0,0,0,.05), rgba(0,0,0,.7)), url("${sa.emptyPhoto}")`;
+      if (/noen ting enda/.test(title)) { title = sa.emptyTitle || title; sub = sa.emptySub || sub; }
+    } else el.style.backgroundImage = vkShade(VK_EMPTY_PHOTO, 700, .05, .68);
     el.innerHTML = `<b>${escapeExHtml(title)}</b><span>${escapeExHtml(sub)}</span>`;
     return el;
   }
