@@ -2560,6 +2560,25 @@
 
   /* Kundenotat */
   .dpp-ex-note-wrap{ display:flex; flex-direction:column; gap:5px; }
+  .vk-notebox{ display:grid; gap:6px; margin-top:4px; }
+  .vk-notebox .vk-note-saved{ display:block; width:100%; text-align:left; border:none; border-radius:12px; padding:7px 10px; background:#f4efe8; color:#3f3650; font:inherit; font-size:12.5px; line-height:1.4; cursor:pointer; overflow-wrap:anywhere; }
+  .vk-note-saved b{ display:block; font-size:11px; color:#7a6f86; font-weight:800; margin-bottom:1px; }
+  .vk-note-saved.to-coach{ background:#f1ebf9; }
+  .vk-note-reply{ display:flex; gap:8px; align-items:flex-start; border-radius:12px; padding:7px 10px; background:rgba(111,53,181,.08); color:#4b2f7a; font-size:12.5px; line-height:1.4; overflow-wrap:anywhere; }
+  .vk-note-reply b{ display:block; font-size:11px; font-weight:800; }
+  .vk-note-reply .dpp-coach-avatar{ width:24px; height:24px; min-width:24px; }
+  .vk-note-to{ display:grid; grid-template-columns:repeat(3,1fr); gap:3px; padding:3px; border-radius:12px; background:#ece6dd; }
+  .vk-notebox .vk-note-to button{ min-height:32px; border:none; border-radius:9px; background:transparent; color:#6e6474; font:inherit; font-size:12.5px; font-weight:700; cursor:pointer; padding:0 2px; }
+  .vk-notebox .vk-note-to button.on{ background:#fff; color:#3a2a55; box-shadow:0 1px 3px rgba(40,28,20,.14); }
+  .vk-note-input{ width:100%; box-sizing:border-box; border:1px solid #ddd3e8; border-radius:12px; padding:8px 10px; font:inherit; font-size:14px; line-height:1.4; resize:vertical; background:#fff; color:#2b2235; }
+  .vk-note-input:focus{ outline:none; border-color:#7f56c6; }
+  .vk-note-foot{ display:flex; align-items:center; gap:8px; }
+  .vk-note-hint{ flex:1; color:#7a6f86; font-size:11.5px; }
+  .vk-notebox .vk-note-save{ border:none; border-radius:10px; min-height:34px; padding:0 16px; background:linear-gradient(90deg,#6f35b5,#8c57cb); color:#fff; font:inherit; font-size:13px; font-weight:800; cursor:pointer; }
+  .vk-note-ok{ color:#2e7d52; font-size:12px; font-weight:800; }
+  .vk-note-det summary{ list-style:none; cursor:pointer; color:#5a3d8a; font-size:13px; font-weight:800; padding:6px 2px; }
+  .vk-note-det summary::-webkit-details-marker{ display:none; }
+  .vk-note-det[open] summary{ margin-bottom:6px; }
   .dpp-ex-note-input{
     width:100%; border:1px solid rgba(100,56,173,.18); border-radius:10px;
     padding:7px 10px; font-size:16px; font-family:inherit; resize:none;
@@ -20083,6 +20102,7 @@ function getExercisePR(exerciseName) {
     }
 
     data.exercisePRs[exerciseName] = {
+      ...(existing || {}),
       kg: isPr ? bestThisTime.kg : (existing ? existing.kg : bestThisTime.kg),
       reps: isPr ? bestThisTime.reps : (existing ? existing.reps : bestThisTime.reps),
       date: isPr ? today : (existing ? existing.date : today),
@@ -21231,37 +21251,10 @@ function getExercisePR(exerciseName) {
         body.appendChild(historyBox);
       }
 
-      // Notat-felt per \u00f8velse
-      const existingNote = (data.exercisePRs?.[ex.name]?.note) || "";
-      const coachReply = (data.exercisePRs?.[ex.name]?.coachReply) || "";
-      const coachReplyDate = (data.exercisePRs?.[ex.name]?.coachReplyDate) || "";
+      // Notat per øvelse: til meg selv, til coachen eller begge (felles med øktmodus)
       const noteWrap = document.createElement("div");
-      noteWrap.className = "dpp-ex-note-wrap";
-      noteWrap.innerHTML =
-        (coachReply
-          ? `<div class="dpp-ex-coach-reply" style="margin-bottom:6px;padding:8px 10px;border-radius:10px;background:rgba(111,53,181,.08);color:#6f35b5;font-size:.82rem;font-weight:700;"><span class="dpp-coach-avatar-slot"></span>Svar fra <span data-coach-name>${escapeExHtml((coachProfile && coachProfile.name) || "coach")}</span>: ${escapeExHtml(coachReply)}${coachReplyDate ? ` <span style="font-weight:500;opacity:.75;">(${escapeExHtml(coachReplyDate)})</span>` : ""}</div>`
-          : "") +
-        `<textarea class="dpp-ex-note-input" placeholder="Notat til coachen (f.eks. kne litt vondt, \u00f8kte vekten)..." rows="2">${escapeExHtml(existingNote)}</textarea>` +
-        `<button type="button" class="dpp-ex-note-save">Lagre notat</button>`;
-      const coachSlot = noteWrap.querySelector(".dpp-coach-avatar-slot");
-      if (coachSlot) coachSlot.replaceWith(createCoachAvatar());
-      const noteInput = noteWrap.querySelector("textarea");
-      const noteSaveBtn = noteWrap.querySelector("button");
-      noteSaveBtn.addEventListener("click", async () => {
-        const txt = noteInput.value.trim();
-        noteSaveBtn.disabled = true;
-        noteSaveBtn.textContent = "Lagrer...";
-        if (!data.exercisePRs) data.exercisePRs = {};
-        if (!data.exercisePRs[ex.name]) data.exercisePRs[ex.name] = {};
-        const noteBefore = String(data.exercisePRs[ex.name].note || "").trim();
-        data.exercisePRs[ex.name].note = txt;
-        data.exercisePRs[ex.name].noteDate = toDateValue(new Date());
-        const ok = await save({ mutatingExercisePRs: true });
-        if (ok && txt && txt !== noteBefore) sendToCoach("note", "notat om " + ex.name, txt, ex.name);
-        noteSaveBtn.disabled = false;
-        noteSaveBtn.textContent = ok ? "\u2713 Lagret" : "Pr\u00f8v igjen";
-        setTimeout(() => { noteSaveBtn.textContent = "Lagre notat"; }, 2000);
-      });
+      noteWrap.innerHTML = vkNoteBoxHtml(ex.name, false);
+      wireNoteBox(noteWrap.firstElementChild, ex.name);
       body.appendChild(noteWrap);
 
       exModalRefs.list.appendChild(card);
@@ -22579,6 +22572,90 @@ function getExercisePR(exerciseName) {
     [/tredemølle|gåing|gå\b|jogg|løp|elliptisk|sone 2|kondisjon|intervall/i, { m: ["heart", "quads", "calves"], s: ["glutes", "hamstrings"], steps: ["Start rolig de første minuttene.", "Finn et tempo som passer økta (rolig = du kan prate).", "Hold god holdning med avslappede skuldre.", "Rolig nedtrapping helt til slutt."], tip: "Stigning på mølla gir mer effekt uten å løpe fortere." }]
   ];
   // Personlig tips under coachbildet: coachens egen tekst på øvelsen, ellers tipset fra øvelsesguiden
+  // ── Notat på øvelsen: 🔒 bare meg (myNote – vises ikke i dashbordet), 💬 coachen (note – coachen
+  //    ser det og får beskjed) eller 👥 begge. Kladd og valg huskes mens økta pågår.
+  const vkNoteDrafts = {};
+  const VK_NOTE_TO_KEY = "tl_note_to_v1";
+  function vkNoteTo() { try { const v = localStorage.getItem(VK_NOTE_TO_KEY); return ["me", "coach", "both"].includes(v) ? v : "both"; } catch (e) { return "both"; } }
+  function vkFmtD(v) { return v ? String(v).split("-").reverse().slice(0, 2).join(".") : ""; }
+  function vkNoteBoxHtml(name, compact) {
+    const pr = (data.exercisePRs && data.exercisePRs[name]) || {};
+    const d = vkNoteDrafts[name] || { text: "", to: vkNoteTo(), open: false };
+    const saved = [
+      pr.myNote ? `<button type="button" class="vk-note-saved" data-edit="me"><b>🔒 Mitt notat${pr.myNoteDate ? " · " + vkFmtD(pr.myNoteDate) : ""}</b>${escapeHtmlText(pr.myNote)}</button>` : "",
+      pr.note ? `<button type="button" class="vk-note-saved to-coach" data-edit="coach"><b>💬 Til coachen${pr.noteDate ? " · " + vkFmtD(pr.noteDate) : ""}</b>${escapeHtmlText(pr.note)}</button>` : "",
+      pr.coachReply ? `<div class="vk-note-reply"><span class="dpp-coach-avatar"></span><div><b>Svar fra coachen${pr.coachReplyDate ? " · " + vkFmtD(pr.coachReplyDate) : ""}</b>${escapeHtmlText(pr.coachReply)}</div></div>` : ""
+    ].join("");
+    const chip = (v, label) => `<button type="button" class="${d.to === v ? "on" : ""}" data-to="${v}" aria-pressed="${d.to === v}">${label}</button>`;
+    const form = `<div class="vk-note-to" role="group" aria-label="Hvem er notatet til?">${chip("me", "🔒 Bare meg")}${chip("coach", "💬 Coachen")}${chip("both", "👥 Begge")}</div>
+      <textarea class="vk-note-input" rows="2" placeholder="${d.to === "me" ? "F.eks. «sete på 4», «neste gang 12 kg»" : "F.eks. «kjente litt i kneet», «for lett – kan jeg øke?»"}">${escapeHtmlText(d.text)}</textarea>
+      <div class="vk-note-foot"><small class="vk-note-hint">${d.to === "me" ? "Bare du ser dette." : d.to === "coach" ? "Coachen får beskjed." : "Lagres hos deg, og coachen får beskjed."}</small><button type="button" class="vk-note-save">Lagre</button></div>`;
+    const has = pr.myNote || pr.note || pr.coachReply;
+    return `<div class="vk-notebox${compact ? " compact" : ""}" data-ex="${escapeHtmlText(name)}">${saved}${compact
+      ? `<details class="vk-note-det"${d.open || d.text ? " open" : ""}><summary>✏️ ${has ? "Skriv nytt notat" : "Skriv et notat"}</summary>${form}</details>`
+      : form}</div>`;
+  }
+  function wireNoteBox(box, name) {
+    if (!box || box.dataset.wired) return;
+    box.dataset.wired = "1";
+    const d = vkNoteDrafts[name] = vkNoteDrafts[name] || { text: "", to: vkNoteTo(), open: false };
+    const input = box.querySelector(".vk-note-input");
+    const hint = box.querySelector(".vk-note-hint");
+    const setTo = (to) => {
+      d.to = to;
+      try { localStorage.setItem(VK_NOTE_TO_KEY, to); } catch (e) {}
+      box.querySelectorAll(".vk-note-to button").forEach(b => { const on = b.dataset.to === to; b.classList.toggle("on", on); b.setAttribute("aria-pressed", on); });
+      if (hint) hint.textContent = to === "me" ? "Bare du ser dette." : to === "coach" ? "Coachen får beskjed." : "Lagres hos deg, og coachen får beskjed.";
+    };
+    box.addEventListener("click", (e) => {
+      e.stopPropagation();
+      const t = e.target.closest("[data-to]");
+      if (t) { setTo(t.dataset.to); return; }
+      const ed = e.target.closest("[data-edit]");
+      if (ed && input) {
+        const pr = (data.exercisePRs && data.exercisePRs[name]) || {};
+        setTo(ed.dataset.edit);
+        input.value = d.text = ed.dataset.edit === "me" ? (pr.myNote || "") : (pr.note || "");
+        const det = box.querySelector("details"); if (det) det.open = d.open = true;
+        input.focus();
+        return;
+      }
+      if (e.target.closest(".vk-note-save")) saveNoteBox(box, name);
+    });
+    const det = box.querySelector("details");
+    if (det) det.addEventListener("toggle", () => { d.open = det.open; });
+    if (input) input.addEventListener("input", () => { d.text = input.value; });
+    box.querySelectorAll(".vk-note-reply .dpp-coach-avatar").forEach(fillCoachAvatar);
+  }
+  async function saveNoteBox(box, name) {
+    const d = vkNoteDrafts[name] || { text: "", to: "both" };
+    const btn = box.querySelector(".vk-note-save");
+    const txt = String((box.querySelector(".vk-note-input") || {}).value || d.text || "").trim();
+    if (!data.exercisePRs) data.exercisePRs = {};
+    const pr = data.exercisePRs[name] = data.exercisePRs[name] || {};
+    const today = toDateValue(new Date());
+    const toMe = d.to === "me" || d.to === "both", toCoach = d.to === "coach" || d.to === "both";
+    const coachBefore = String(pr.note || "").trim();
+    if (!txt && !confirm(toMe && toCoach ? "Slette notatene på denne øvelsen?" : toMe ? "Slette notatet ditt?" : "Slette notatet til coachen?")) return;
+    if (toMe) { if (txt) { pr.myNote = txt; pr.myNoteDate = today; } else { delete pr.myNote; delete pr.myNoteDate; } }
+    if (toCoach) { if (txt) { pr.note = txt; pr.noteDate = today; } else { delete pr.note; delete pr.noteDate; } }
+    if (btn) { btn.disabled = true; btn.textContent = "Lagrer …"; }
+    const ok = await save({ mutatingExercisePRs: true });
+    if (ok && toCoach && txt && txt !== coachBefore) sendToCoach("note", "notat om " + name, txt, name);
+    if (!ok) { if (btn) { btn.disabled = false; btn.textContent = "Prøv igjen"; } return; }
+    d.text = ""; d.open = false;
+    // Tegn bare notatboksen på nytt (resten av økta står i ro)
+    const tmp = document.createElement("div");
+    tmp.innerHTML = vkNoteBoxHtml(name, box.classList.contains("compact"));
+    const fresh = tmp.firstElementChild;
+    box.replaceWith(fresh);
+    wireNoteBox(fresh, name);
+    const done = document.createElement("div");
+    done.className = "vk-note-ok";
+    done.textContent = !txt ? "✓ Slettet" : toMe && toCoach ? "✓ Lagret og sendt til coachen" : toCoach ? "✓ Sendt til coachen" : "✓ Lagret – bare du ser det";
+    fresh.appendChild(done);
+    setTimeout(() => done.remove(), 2500);
+  }
   function coachTipHtml(ex) {
     const own = String((ex && ex.tip) || "").trim();
     const g = own ? null : exerciseGuide(ex && ex.name);
@@ -22763,6 +22840,7 @@ function getExercisePR(exerciseName) {
             ${rows}
           </div>
           ${tune}
+          ${vkNoteBoxHtml(ex.name, true)}
           <div class="vkf-setlinks"><button class="vkf-add" type="button" data-act="addset">+ Legg til sett</button>${vkf.active >= 0 && vals.length > 1 && !done.has(vkf.active) ? `<button class="vkf-dellink" type="button" data-delset="${vkf.active}" aria-label="Fjern sett ${vkf.active + 1}"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7h16M10 11v6M14 11v6M6 7l1 12a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2l1-12M9 7V4h6v3"/></svg>Fjern sett ${vkf.active + 1}</button>` : ""}</div>
         </div>
       </div>
@@ -22779,6 +22857,7 @@ function getExercisePR(exerciseName) {
       <div class="vkf-rest-btns"><button type="button" data-act="rest-minus">−15 s</button><button type="button" data-act="rest-plus">+15 s</button><button type="button" class="skip" data-act="rest-skip">Hopp over</button></div>
     </div></div>`;
     fillCoachTips(root);
+    root.querySelectorAll(".vk-notebox").forEach(b => wireNoteBox(b, b.dataset.ex));
     const c = document.getElementById("vkfClock");
     if (c) { const s = Math.floor((Date.now() - vkf.start) / 1000); c.textContent = String(Math.floor(s / 60)).padStart(2, "0") + ":" + String(s % 60).padStart(2, "0"); }
     if (vkf.restT) vkfPaintRest(true);
