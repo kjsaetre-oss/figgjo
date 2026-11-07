@@ -18079,7 +18079,7 @@ var DPP_IMG = [
     let task = list.find(x => x.id === id);
     if (!task) {
       task = { id, fromCoach: true, selfAdded: true, kind: "habit", title: "🏆 " + String(t.tittel || "Turnering").slice(0, 70),
-        note: "Du har lagt denne turneringen i kalenderen. Husk påmelding!", startDate: t.dato,
+        note: "", startDate: t.dato,
         days: [getWeekdayKeyFromDate(parseDateValue(t.dato))], weeks: 1, place: String(t.sted || "").slice(0, 60), photo: "bordtennis",
         tournament: { id: String(t.id), lenke: String(t.lenke || "") }, doneDates: [], skipDates: [], createdAt: new Date().toISOString() };
       list.push(task);
@@ -24711,11 +24711,11 @@ function getExercisePR(exerciseName) {
       (shown.length ? shown.map(function (t) {
         var d = new Date(t.dato + "T12:00:00"), on = mine.indexOf(t.id) >= 0;
         return '<div class="tp-tr' + (/figgjo/i.test(t.sted || "") ? " home" : "") + '"><div class="d"><b>' + d.getDate() + '</b><span>' + esc(d.toLocaleDateString("nb-NO", { month: "short" }).replace(".", "")) + '</span></div>' +
-          '<div class="x"><b>' + esc(t.tittel) + '</b><small>' + esc(t.sted || "") + (t.lenke ? ' · <a href="' + esc(t.lenke) + '" target="_blank" rel="noopener">Info og påmelding ↗</a>' : "") + '</small></div>' +
+          '<div class="x"><b>' + esc(t.tittel) + '</b><small>' + esc(t.sted || "") + (t.lenke ? ' · <a href="' + esc(t.lenke) + '" target="_blank" rel="noopener">Mer info ↗</a>' : "") + '</small></div>' +
           '<button type="button" class="add' + (on ? " on" : "") + '" data-id="' + esc(t.id) + '">' + (on ? "✓ I kalenderen" : "+ Kalender") + '</button></div>';
       }).join("") : '<div class="tp-turn-note">Ingen turneringer her akkurat nå. Trykk «Hele landet» for å se alle.</div>') +
       (rows.length > 6 ? '<button type="button" class="tp-more" data-more>' + (many ? "Vis færre" : "Vis alle " + rows.length) + '</button>' : "") +
-      '<div class="tp-turn-note">«+ Kalender» legger turneringen i kalenderen din, og treneren ser at du vil være med. Selve påmeldingen gjør du via «Info og påmelding».</div>';
+      '<div class="tp-turn-note">«+ Kalender» legger turneringen i kalenderen din, så du kan planlegge – og treneren ser hvilke du vil være med på.</div>';
   }
   box.addEventListener("click", async function (e) {
     var f = e.target.closest("[data-f]"); if (f) { all = f.dataset.f === "alle"; render(); return; }
@@ -24729,7 +24729,7 @@ function getExercisePR(exerciseName) {
     render();
     var nb = box.querySelector('button[data-id="' + t.id + '"]');
     if (nb && ok) { var d = new Date(t.dato + "T12:00:00"); var note = document.createElement("div"); note.className = "tp-turn-note"; note.style.color = on ? "#2e7d52" : "#646973"; note.style.fontWeight = "700";
-      note.textContent = on ? "✓ Lagt inn " + d.toLocaleDateString("nb-NO", { weekday: "long", day: "numeric", month: "long" }) + ". Husk påmelding!" : "Fjernet fra kalenderen.";
+      note.textContent = on ? "✓ Lagt inn " + d.toLocaleDateString("nb-NO", { weekday: "long", day: "numeric", month: "long" }) + "." : "Fjernet fra kalenderen.";
       nb.closest(".tp-tr").after(note); setTimeout(function () { note.remove(); }, 4000); }
     if (!ok) { b.disabled = false; b.textContent = "Prøv igjen"; }
   });
