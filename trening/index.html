@@ -24936,7 +24936,8 @@ function getExercisePR(exerciseName) {
   var box = document.getElementById("tpHours"); var m = window.MVT_memberData;
   if (!box || !m || !m.id) return;
   var esc = function (v) { return String(v == null ? "" : v).replace(/[&<>"']/g, function (c) { return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]; }); };
-  var TYPES = [["bordtennis", "🏓 Bordtennis", "#c8102e"], ["kamp", "🏆 Kamp/turnering", "#14161b"], ["styrke", "💪 Styrke", "#2f6fb0"], ["kondisjon", "🏃 Kondisjon", "#2e7d52"], ["annet", "✨ Annet", "#8a8f99"]];
+  var TYPES = [["bordtennis", "🏓 Bordtennis", "#c8102e"], ["kamp", "🏆 Kamp/turnering", "#14161b"], ["fysisk", "💪 Fysisk trening", "#2f6fb0"], ["annet", "✨ Annet", "#8a8f99"]];
+  var FYS = { fysisk: 1, styrke: 1, kondisjon: 1 };   // eldre «styrke»/«kondisjon» regnes som fysisk trening
   var TT = { bordtennis: 1, kamp: 1 };   // teller som spilletid på belegget
   var SIDES = [["forhand", "Forhånd"], ["baklengs", "Baklengs"], ["blad", "Blad"]];
   var LIFE = 60;                          // veiledende antall spilletimer før belegget bør byttes
@@ -24948,14 +24949,14 @@ function getExercisePR(exerciseName) {
   function hdec(min) { return (Math.round(min / 6) / 10).toString().replace(".", ","); }
   function sessions() {
     var P = window.vkPlayerData ? window.vkPlayerData() : null; if (!P) return null;
-    var out = P.log.map(function (l) { return { date: l.date, min: Number(l.min) || 0, type: l.type || "annet", title: l.title || "", own: true, id: l.id, note: l.note || "" }; });
+    var out = P.log.map(function (l) { return { date: l.date, min: Number(l.min) || 0, type: FYS[l.type] ? "fysisk" : (l.type || "annet"), title: l.title || "", own: true, id: l.id, note: l.note || "" }; });
     P.tasks.forEach(function (t) {
       var min = t.tournament ? 300 : mins(t.time, t.endTime);   // en turnering teller som 5 timer bordtennis
       if (!min) return;
-      var ty = t.tournament ? "kamp" : t.photo === "bordtennis" ? "bordtennis" : t.photo === "styrke" ? "styrke" : t.photo === "utholdenhet" ? "kondisjon" : "annet";
+      var ty = t.tournament ? "kamp" : t.photo === "bordtennis" ? "bordtennis" : (t.photo === "styrke" || t.photo === "utholdenhet" || t.photo === "toying") ? "fysisk" : "annet";
       t.doneDates.forEach(function (d) { out.push({ date: d, min: min, type: ty, title: String(t.title || "").replace(/^\S+\s/, function (w) { return /\p{Extended_Pictographic}/u.test(w) ? "" : w; }), own: false }); });
     });
-    P.programs.forEach(function (p) { p.completedDates.forEach(function (d) { var sl = p.sessionLog && p.sessionLog[d]; out.push({ date: d, min: sl && sl.min ? Number(sl.min) : 30, type: "styrke", title: String(p.title || "Styrkeøkt").replace(/^\S+\s/, function (w) { return /\p{Extended_Pictographic}/u.test(w) ? "" : w; }), own: false }); }); });
+    P.programs.forEach(function (p) { p.completedDates.forEach(function (d) { var sl = p.sessionLog && p.sessionLog[d]; out.push({ date: d, min: sl && sl.min ? Number(sl.min) : 30, type: "fysisk", title: String(p.title || "Styrkeøkt").replace(/^\S+\s/, function (w) { return /\p{Extended_Pictographic}/u.test(w) ? "" : w; }), own: false }); }); });
     return { list: out.filter(function (x) { return x.date && x.min > 0; }), gear: P.gear };
   }
   function render() {
@@ -24978,6 +24979,7 @@ function getExercisePR(exerciseName) {
     var html = '<div class="tp-team-head"><h2>⏱️ Treningstimer</h2><small>denne uka</small></div>' +
       '<div class="hr-big"><b>' + hdec(week) + '</b><span>timer denne uka</span></div>' +
       '<div class="hr-tiles"><div><b>' + hdec(month) + ' t</b><small>denne måneden</small></div><div><b>' + hdec(season) + ' t</b><small>denne sesongen</small></div><div><b>' + hdec(season / weeks) + ' t</b><small>snitt per uke</small></div></div>' +
+      '<div class="hr-tiles"><div><b>' + hdec(sum(season0, function (x) { return x.type === "bordtennis" || x.type === "kamp"; })) + ' t</b><small>🏓 bordtennis<br>i sesongen</small></div><div><b>' + hdec(sum(season0, function (x) { return x.type === "fysisk"; })) + ' t</b><small>💪 fysisk trening<br>i sesongen</small></div><div><b>' + hdec(sum(mon, function (x) { return x.type === "fysisk"; })) + ' t</b><small>💪 fysisk trening<br>denne uka</small></div></div>' +
       '<div class="hr-bars">' + bars.map(function (b) { return '<div class="' + (b.now ? "now" : "") + '"><em>' + (b.v ? hdec(b.v) : "") + '</em><i style="height:' + Math.round(b.v / maxb * 64) + 'px"></i><small>' + b.lbl + '</small></div>'; }).join("") + '</div>';
     if (byType.length) {
       var tot = byType.reduce(function (a, x) { return a + x[1]; }, 0);
