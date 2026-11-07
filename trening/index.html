@@ -135,6 +135,12 @@
   .tp-rank { margin: 10px 14px 0; border-radius: 22px; overflow: hidden; background: #fff; border: 1px solid #e6e7eb; color: #1b1d22; font-family: -apple-system, sans-serif;
     box-shadow: 0 1px 2px rgba(20,22,27,.04), 0 14px 34px -18px rgba(20,22,27,.25); }
   .rk-hero { position: relative; padding: 16px 16px 14px; color: #fff; background: radial-gradient(120% 120% at 100% 0%, rgba(200,16,46,.55), rgba(200,16,46,0) 55%), linear-gradient(160deg, #1d2030, #0d0f16); }
+  .rk-hero.rk-photo { min-height: 250px; display: flex; flex-direction: column; justify-content: flex-end;
+    background: linear-gradient(0deg, #0d0f16 0%, rgba(13,15,22,.92) 34%, rgba(13,15,22,.35) 62%, rgba(13,15,22,.15) 100%), var(--rk-img) 68% 30%/cover no-repeat, #0d0f16; }
+  .rk-hero.rk-photo::after { content: ""; position: absolute; left: 0; top: 0; bottom: 0; width: 6px; background: linear-gradient(180deg, #c8102e, #e0445a); }
+  .rk-hero.rk-photo .rk-top { position: absolute; left: 16px; right: 16px; top: 14px; }
+  .rk-hero.rk-photo .rk-top small { background: rgba(13,15,22,.55); padding: 4px 9px; border-radius: 999px; }
+  .rk-hero.rk-photo .rk-name { font-size: 28px; text-shadow: 0 2px 12px rgba(0,0,0,.5); }
   .rk-top { display: flex; justify-content: space-between; align-items: center; gap: 8px; }
   .rk-top small { font: 800 10.5px -apple-system, sans-serif; letter-spacing: .14em; text-transform: uppercase; color: rgba(255,255,255,.6); }
   .rk-top button { border: 0; background: rgba(255,255,255,.12); color: rgba(255,255,255,.8); border-radius: 999px; padding: 4px 10px; font: 700 11px -apple-system, sans-serif; }
@@ -24894,7 +24900,10 @@ function getExercisePR(exerciseName) {
     var ranks = [[p.plass ? "#" + fmtN(p.plass) : "–", "i Norge"], [p.plassVest ? "#" + p.plassVest : "–", "Region Vest"]];
     ranks.push(kl ? ["#" + kl.plass, esc(kl.klasse) + "<br>av " + kl.av] : [p.plassKlubb ? "#" + p.plassKlubb : "–", "i klubben"]);
     var form = ev.slice(0, 5).reverse();
-    box.innerHTML = '<div class="rk-hero"><div class="rk-top"><small>Norgesranking · ' + esc(new Date(R.periode + "T12:00:00").toLocaleDateString("nb-NO", { month: "long", year: "numeric" })) + '</small><button type="button" data-change>Bytt</button></div>' +
+    var photo = p.bilde ? ' rk-photo" style="--rk-img:url(\'' + esc(p.bilde) + '\')' : "";
+    // Eget bilde i hilsenen øverst også
+    try { var hh = document.querySelector(".tp-hero"); if (hh && p.bilde) { hh.style.backgroundImage = "url('" + p.bilde + "')"; hh.style.backgroundPosition = "70% 30%"; var bl = hh.querySelector(".tp-ball2"); if (bl) bl.remove(); } } catch (er) {}
+    box.innerHTML = '<div class="rk-hero' + photo + '"><div class="rk-top"><small>Norgesranking · ' + esc(new Date(R.periode + "T12:00:00").toLocaleDateString("nb-NO", { month: "long", year: "numeric" })) + '</small><button type="button" data-change>Bytt</button></div>' +
       '<div class="rk-name">' + esc(p.navn) + '</div><div class="rk-club">' + esc(p.klubb) + '</div>' +
       '<div class="rk-pts"><b>' + fmtN(p.poeng) + '</b><span>poeng</span><em class="rk-chg ' + cls + '">' + (chg > 0 ? "▲ +" : chg < 0 ? "▼ " : "") + fmtN(chg) + '</em></div>' +
       '<div class="rk-ranks">' + ranks.map(function (r) { return '<div><b>' + r[0] + '</b><small>' + r[1] + '</small></div>'; }).join("") + '</div></div>' +
