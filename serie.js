@@ -1,6 +1,6 @@
 /* Tabell og kamper hentet fra bordtennislive.no. Lages av oppdater-serie.py – ikke rediger for hånd. */
 const SERIE = {
- "oppdatert": "2026-11-07",
+ "oppdatert": "2026-11-08",
  "lag": {
   "Figgjo 2": {
    "divisjon": "3. divisjon avd. E",
@@ -9,13 +9,13 @@ const SERIE = {
     {
      "plass": "1",
      "lag": "Stord BTK 3",
-     "k": "5",
-     "v": "3",
+     "k": "7",
+     "v": "5",
      "u": "0",
      "t": "2",
-     "kamper": "26-24",
-     "sett": "93-87",
-     "p": "6"
+     "kamper": "41-29",
+     "sett": "144-113",
+     "p": "10"
     },
     {
      "plass": "2",
@@ -53,27 +53,38 @@ const SERIE = {
     {
      "plass": "5",
      "lag": "Rosseland BTK 2",
-     "k": "3",
+     "k": "4",
      "v": "2",
      "u": "0",
-     "t": "1",
-     "kamper": "17-13",
-     "sett": "60-58",
+     "t": "2",
+     "kamper": "19-21",
+     "sett": "72-84",
      "p": "4"
     },
     {
      "plass": "6",
      "lag": "Haugesund BTK 2",
-     "k": "6",
+     "k": "7",
      "v": "1",
-     "u": "1",
+     "u": "2",
      "t": "4",
-     "kamper": "23-37",
-     "sett": "88-128",
-     "p": "3"
+     "kamper": "28-42",
+     "sett": "105-147",
+     "p": "4"
     },
     {
      "plass": "7",
+     "lag": "Stavanger BTK",
+     "k": "4",
+     "v": "0",
+     "u": "2",
+     "t": "2",
+     "kamper": "16-24",
+     "sett": "71-82",
+     "p": "2"
+    },
+    {
+     "plass": "8",
      "lag": "Figgjo BTK 2",
      "k": "4",
      "v": "0",
@@ -82,17 +93,6 @@ const SERIE = {
      "kamper": "14-26",
      "sett": "63-89",
      "p": "2"
-    },
-    {
-     "plass": "8",
-     "lag": "Stavanger BTK",
-     "k": "2",
-     "v": "0",
-     "u": "1",
-     "t": "1",
-     "kamper": "8-12",
-     "sett": "38-40",
-     "p": "1"
     }
    ],
    "kamper": [
@@ -425,16 +425,27 @@ const SERIE = {
     {
      "plass": "1",
      "lag": "Stord 6",
-     "k": "2",
+     "k": "3",
      "v": "1",
-     "u": "1",
+     "u": "2",
      "t": "0",
-     "kamper": "11-9",
-     "sett": "39-37",
-     "p": "3"
+     "kamper": "16-14",
+     "sett": "58-53",
+     "p": "4"
     },
     {
      "plass": "2",
+     "lag": "Stavanger 2",
+     "k": "3",
+     "v": "1",
+     "u": "1",
+     "t": "1",
+     "kamper": "13-17",
+     "sett": "56-64",
+     "p": "3"
+    },
+    {
+     "plass": "3",
      "lag": "Stord 4",
      "k": "1",
      "v": "1",
@@ -445,7 +456,7 @@ const SERIE = {
      "p": "2"
     },
     {
-     "plass": "3",
+     "plass": "4",
      "lag": "Figgjo 3",
      "k": "1",
      "v": "1",
@@ -456,7 +467,7 @@ const SERIE = {
      "p": "2"
     },
     {
-     "plass": "4",
+     "plass": "5",
      "lag": "Lye",
      "k": "1",
      "v": "1",
@@ -467,26 +478,15 @@ const SERIE = {
      "p": "2"
     },
     {
-     "plass": "5",
-     "lag": "Stavanger 2",
-     "k": "2",
-     "v": "0",
-     "u": "1",
-     "t": "1",
-     "kamper": "7-13",
-     "sett": "36-45",
-     "p": "1"
-    },
-    {
      "plass": "6",
      "lag": "Haugesund 3",
-     "k": "0",
+     "k": "1",
      "v": "0",
-     "u": "0",
+     "u": "1",
      "t": "0",
-     "kamper": "0-0",
-     "sett": "0-0",
-     "p": "0"
+     "kamper": "5-5",
+     "sett": "16-19",
+     "p": "1"
     },
     {
      "plass": "7",
@@ -502,12 +502,12 @@ const SERIE = {
     {
      "plass": "8",
      "lag": "Randaberg",
-     "k": "2",
+     "k": "3",
      "v": "0",
      "u": "0",
-     "t": "2",
-     "kamper": "7-13",
-     "sett": "27-46",
+     "t": "3",
+     "kamper": "11-19",
+     "sett": "46-66",
      "p": "0"
     }
    ],
@@ -643,6 +643,17 @@ const SERIE = {
     },
     {
      "plass": "2",
+     "lag": "Varhaug",
+     "k": "2",
+     "v": "2",
+     "u": "0",
+     "t": "0",
+     "kamper": "17-3",
+     "sett": "54-14",
+     "p": "4"
+    },
+    {
+     "plass": "3",
      "lag": "Figgjo 4",
      "k": "2",
      "v": "2",
@@ -653,29 +664,29 @@ const SERIE = {
      "p": "4"
     },
     {
-     "plass": "3",
+     "plass": "4",
      "lag": "Haugesund 4",
-     "k": "3",
+     "k": "5",
      "v": "1",
      "u": "1",
-     "t": "1",
-     "kamper": "11-19",
-     "sett": "44-67",
+     "t": "3",
+     "kamper": "16-34",
+     "sett": "62-114",
      "p": "3"
     },
     {
-     "plass": "4",
-     "lag": "Varhaug",
-     "k": "1",
+     "plass": "5",
+     "lag": "Figgjo 5",
+     "k": "2",
      "v": "1",
      "u": "0",
-     "t": "0",
-     "kamper": "8-2",
-     "sett": "27-9",
+     "t": "1",
+     "kamper": "8-12",
+     "sett": "29-40",
      "p": "2"
     },
     {
-     "plass": "5",
+     "plass": "6",
      "lag": "Lye 2",
      "k": "2",
      "v": "0",
@@ -684,17 +695,6 @@ const SERIE = {
      "kamper": "5-15",
      "sett": "23-49",
      "p": "1"
-    },
-    {
-     "plass": "6",
-     "lag": "Figgjo 5",
-     "k": "1",
-     "v": "0",
-     "u": "0",
-     "t": "1",
-     "kamper": "2-8",
-     "sett": "9-27",
-     "p": "0"
     },
     {
      "plass": "7",
@@ -824,6 +824,17 @@ const SERIE = {
     },
     {
      "plass": "2",
+     "lag": "Varhaug",
+     "k": "2",
+     "v": "2",
+     "u": "0",
+     "t": "0",
+     "kamper": "17-3",
+     "sett": "54-14",
+     "p": "4"
+    },
+    {
+     "plass": "3",
      "lag": "Figgjo 4",
      "k": "2",
      "v": "2",
@@ -834,29 +845,29 @@ const SERIE = {
      "p": "4"
     },
     {
-     "plass": "3",
+     "plass": "4",
      "lag": "Haugesund 4",
-     "k": "3",
+     "k": "5",
      "v": "1",
      "u": "1",
-     "t": "1",
-     "kamper": "11-19",
-     "sett": "44-67",
+     "t": "3",
+     "kamper": "16-34",
+     "sett": "62-114",
      "p": "3"
     },
     {
-     "plass": "4",
-     "lag": "Varhaug",
-     "k": "1",
+     "plass": "5",
+     "lag": "Figgjo 5",
+     "k": "2",
      "v": "1",
      "u": "0",
-     "t": "0",
-     "kamper": "8-2",
-     "sett": "27-9",
+     "t": "1",
+     "kamper": "8-12",
+     "sett": "29-40",
      "p": "2"
     },
     {
-     "plass": "5",
+     "plass": "6",
      "lag": "Lye 2",
      "k": "2",
      "v": "0",
@@ -865,17 +876,6 @@ const SERIE = {
      "kamper": "5-15",
      "sett": "23-49",
      "p": "1"
-    },
-    {
-     "plass": "6",
-     "lag": "Figgjo 5",
-     "k": "1",
-     "v": "0",
-     "u": "0",
-     "t": "1",
-     "kamper": "2-8",
-     "sett": "9-27",
-     "p": "0"
     },
     {
      "plass": "7",
@@ -904,7 +904,7 @@ const SERIE = {
      "hjemme": "Figgjo 5",
      "borte": "Haugesund 4",
      "sted": "Varhaughallen",
-     "resultat": ""
+     "resultat": "6-4"
     },
     {
      "dato": "2026-11-21",
