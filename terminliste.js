@@ -1,15 +1,8 @@
 /* Hovedterminlisten fra bordtennis.no. Lages av oppdater-terminliste.py – ikke rediger for hånd. */
 const TERMINLISTE = {
- "oppdatert": "2026-11-07",
+ "oppdatert": "2026-11-08",
  "kilde": "https://bordtennis.no/hovedterminliste-2026-2027/",
  "turneringer": [
-  {
-   "id": "2026-11-07-regionalcup-1havorna-cup",
-   "dato": "2026-11-07",
-   "tittel": "Regionalcup 1/Havørna Cup",
-   "sted": "Bodø",
-   "lenke": "https://bordtennis.no/hovedterminliste-2026-2027/regionalcup-1havorna-cup/"
-  },
   {
    "id": "2026-11-14-individuelt-seriespill-trondheim3",
    "dato": "2026-11-14",

@@ -22179,7 +22179,7 @@ function getExercisePR(exerciseName) {
     });
   }
   function openQuickAdd() {
-    if (window.TL_STANDALONE) {
+    if (window.TL_STANDALONE && window.TL_STANDALONE.brand === "figgjo") {
       const sheet = favSheet("Legg til " + quickDayText());
       const grid = document.createElement("div");
       grid.className = "dpp-quick-grid";
@@ -22203,7 +22203,7 @@ function getExercisePR(exerciseName) {
     grid.className = "dpp-quick-grid";
     [["habit", "✅", "Vane"], ["todo", "📝", "To-do"], ["training", "🏋️", "Trening"], ["food", "🍽️", "Mat"], ["event", "📅", "Kalender"], ["birthday", "🎂", "Bursdag"]]
       // Treningssiden (figgjobtk.no/trening): bare trening, vaner, to-do og kalender
-      .filter(([k]) => !(window.TL_STANDALONE && (k === "food" || k === "birthday"))).forEach(([k, icon, label]) => {
+      .filter(([k]) => !(window.TL_STANDALONE && window.TL_STANDALONE.brand === "figgjo" && (k === "food" || k === "birthday"))).forEach(([k, icon, label]) => {
       const b = document.createElement("button");
       b.type = "button";
       b.className = "dpp-quick-tile has-photo";
