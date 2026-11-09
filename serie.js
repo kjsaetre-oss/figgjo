@@ -1,6 +1,6 @@
 /* Tabell og kamper hentet fra bordtennislive.no. Lages av oppdater-serie.py – ikke rediger for hånd. */
 const SERIE = {
- "oppdatert": "2026-11-08",
+ "oppdatert": "2026-11-09",
  "lag": {
   "Figgjo 2": {
    "divisjon": "3. divisjon avd. E",
@@ -424,6 +424,17 @@ const SERIE = {
    "tabell": [
     {
      "plass": "1",
+     "lag": "Lye",
+     "k": "2",
+     "v": "2",
+     "u": "0",
+     "t": "0",
+     "kamper": "14-6",
+     "sett": "49-26",
+     "p": "4"
+    },
+    {
+     "plass": "2",
      "lag": "Stord 6",
      "k": "3",
      "v": "1",
@@ -434,7 +445,7 @@ const SERIE = {
      "p": "4"
     },
     {
-     "plass": "2",
+     "plass": "3",
      "lag": "Stavanger 2",
      "k": "3",
      "v": "1",
@@ -445,7 +456,7 @@ const SERIE = {
      "p": "3"
     },
     {
-     "plass": "3",
+     "plass": "4",
      "lag": "Stord 4",
      "k": "1",
      "v": "1",
@@ -456,25 +467,14 @@ const SERIE = {
      "p": "2"
     },
     {
-     "plass": "4",
-     "lag": "Figgjo 3",
-     "k": "1",
-     "v": "1",
-     "u": "0",
-     "t": "0",
-     "kamper": "8-2",
-     "sett": "27-15",
-     "p": "2"
-    },
-    {
      "plass": "5",
-     "lag": "Lye",
-     "k": "1",
+     "lag": "Figgjo 3",
+     "k": "2",
      "v": "1",
      "u": "0",
-     "t": "0",
-     "kamper": "7-3",
-     "sett": "25-11",
+     "t": "1",
+     "kamper": "11-9",
+     "sett": "42-39",
      "p": "2"
     },
     {
@@ -526,7 +526,7 @@ const SERIE = {
      "hjemme": "Figgjo 3",
      "borte": "Lye",
      "sted": "Figgjohallen",
-     "resultat": ""
+     "resultat": "3-7"
     },
     {
      "dato": "2026-11-21",
