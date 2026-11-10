@@ -25436,12 +25436,11 @@ function getExercisePR(exerciseName) {
   var KEY = "tl_tp_nbtf:" + m.id;
   var esc = function (v) { return String(v == null ? "" : v).replace(/[&<>"']/g, function (c) { return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]; }); };
   var fmtN = function (n) { return Math.round(Number(n) || 0).toLocaleString("nb-NO"); };
-  var picking = false;
   function data() { try { return (typeof RANKING !== "undefined" && RANKING && RANKING.spillere) ? RANKING : null; } catch (e) { return null; } }
+  // Spilleren finnes bare ut fra navnet i lenken – spilleren kan ikke velge selv.
+  // Er fornavnet ikke på rankingen, eller finnes flere med samme fornavn, vises ikke kortet.
   function me(R) {
-    var id = ""; try { id = localStorage.getItem(KEY) || ""; } catch (e) {}
-    if (id === "0") return "none";
-    var hit = R.spillere.find(function (p) { return p.id === id; }); if (hit) return hit;
+    try { localStorage.removeItem(KEY); } catch (e) {}
     var first = String(m.name || "").trim().split(/\s+/)[0].toLowerCase();
     var c = first ? R.spillere.filter(function (p) { return p.fornavn.toLowerCase() === first; }) : [];
     return c.length === 1 ? c[0] : null;
@@ -25466,13 +25465,8 @@ function getExercisePR(exerciseName) {
   function render() {
     var R = data(); if (!R) return;
     var p = me(R);
-    if (p === "none") { box.hidden = true; return; }
+    if (!p) { box.hidden = true; box.innerHTML = ""; return; }
     box.hidden = false;
-    if (!p || picking) {
-      box.innerHTML = '<div class="rk-hero"><div class="rk-top"><small>Norgesranking</small></div><div class="rk-name">Hvem er du?</div><div class="rk-club">Velg deg selv, så viser vi rankingen og statistikken din.</div></div>' +
-        '<div class="rk-pick">' + R.spillere.slice().sort(function (a, b) { return a.navn.localeCompare(b.navn, "nb"); }).map(function (x) { return '<button type="button" data-pick="' + esc(x.id) + '">' + esc(x.navn) + '</button>'; }).join("") + '<button type="button" data-pick="0">Jeg står ikke her</button></div>';
-      return;
-    }
     // Sesongen starter 1. august
     var now = new Date(), sStart = new Date(now.getMonth() >= 7 ? now.getFullYear() : now.getFullYear() - 1, 7, 1);
     var ev = p.turneringer || [], sev = ev.filter(function (e) { return new Date(e.dato + "T12:00:00") >= sStart; });
@@ -25489,7 +25483,7 @@ function getExercisePR(exerciseName) {
     var photo = p.bilde ? ' rk-photo" style="--rk-img:url(\'' + esc(p.bilde) + '\')' : "";
     // Eget bilde i hilsenen øverst også
     try { var hh = document.querySelector(".tp-hero"); if (hh && p.bilde) { hh.style.backgroundImage = "url('" + p.bilde + "')"; hh.style.backgroundPosition = "70% 30%"; var bl = hh.querySelector(".tp-ball2"); if (bl) bl.remove(); } } catch (er) {}
-    box.innerHTML = '<div class="rk-hero' + photo + '"><div class="rk-top"><small>Norgesranking · ' + esc(new Date(R.periode + "T12:00:00").toLocaleDateString("nb-NO", { month: "long", year: "numeric" })) + '</small><button type="button" data-change>Bytt</button></div>' +
+    box.innerHTML = '<div class="rk-hero' + photo + '"><div class="rk-top"><small>Norgesranking · ' + esc(new Date(R.periode + "T12:00:00").toLocaleDateString("nb-NO", { month: "long", year: "numeric" })) + '</small></div>' +
       '<div class="rk-name">' + esc(p.navn) + '</div><div class="rk-club">' + esc(p.klubb) + '</div>' +
       '<div class="rk-pts"><b>' + fmtN(p.poeng) + '</b><span>poeng</span><em class="rk-chg ' + cls + '">' + (chg > 0 ? "▲ +" : chg < 0 ? "▼ " : "") + fmtN(chg) + '</em></div>' +
       '<div class="rk-ranks">' + ranks.map(function (r) { return '<div><b>' + r[0] + '</b><small>' + r[1] + '</small></div>'; }).join("") + '</div></div>' +
@@ -25506,11 +25500,7 @@ function getExercisePR(exerciseName) {
       '<div class="rk-sec"><h4>Siste turneringer</h4>' + ev.slice(0, 6).map(function (e) { var c = e.poeng > 0 ? "up" : e.poeng < 0 ? "down" : "eq"; return '<div class="rk-ev"><div class="x"><b>' + esc(e.navn) + '</b><small>' + esc(new Date(e.dato + "T12:00:00").toLocaleDateString("nb-NO", { day: "numeric", month: "short", year: "numeric" })) + ' · <span class="wl">' + e.s + ' seire, ' + e.t + ' tap</span></small></div><div class="pt ' + c + '">' + (e.poeng > 0 ? "+" : "") + fmtN(e.poeng) + '</div></div>'; }).join("") + '</div>' +
       '<div class="rk-foot"><span>Kilde: Norges Bordtennisforbund</span><a href="https://resultater.bordtennis.no/ranking/spiller/' + esc(p.id) + '" target="_blank" rel="noopener">Full profil ↗</a></div>';
   }
-  box.addEventListener("click", function (e) {
-    var pk = e.target.closest("[data-pick]"); if (pk) { try { localStorage.setItem(KEY, pk.dataset.pick); } catch (er) {} picking = false; render(); return; }
-    if (e.target.closest("[data-change]")) { picking = true; render(); }
-  });
-  window.addEventListener("load", function () { render(); setTimeout(function () { if (!picking) render(); }, 2500); });
+  window.addEventListener("load", function () { render(); setTimeout(render, 2500); });
 })();
 </script>
 <script>
