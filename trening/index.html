@@ -91,6 +91,8 @@
   .tp-hero { flex-direction: column; align-items: stretch; justify-content: flex-end; }
   .tp-hero > div:first-of-type { padding-bottom: 10px; }
   .tp-hero > .tp-coach { position: relative; right: auto; bottom: auto; align-self: flex-start; margin: 0 18px 16px; }
+  .tp-hero { min-height: 0; justify-content: center; }
+  .tp-hero > div:first-of-type { padding: 20px 70px 20px 18px; }
   .tp-hero .tp-ball2 { position: absolute; right: 18px; top: 16px; width: 34px; height: 34px; border-radius: 50%;
     background: radial-gradient(circle at 35% 30%, #fff, #f1f1f1 45%, #d9d9d9); box-shadow: 0 6px 14px rgba(0,0,0,.35); }
   /* Legg på hjemskjermen */
@@ -275,7 +277,7 @@
 <script>if (!window.TL_TP_OK) document.body.classList.add("tp-missing");</script>
 <div class="tp-app">
 <div id="tpA2hs"></div>
-<section class="tp-hero" aria-label="Hilsen"><span class="tp-ball2" aria-hidden="true"></span><div><h1 id="tpHello">Hei!</h1></div><div class="tp-coach"><img src="/bilder/kjetil-lindefjell-saetre.jpg" alt="" fetchpriority="high"><span><small>Treneren din</small><b>Kjetil</b></span></div></section>
+<section class="tp-hero" aria-label="Hilsen"><span class="tp-ball2" aria-hidden="true"></span><div><h1 id="tpHello">Hei!</h1></div></section>
 <section class="tp-focus" id="tpFocus" hidden></section>
 <script>
 // Sikkerhetsadapter (sikkerhet-2a-planer-funksjoner.sql): lesing og lagring av
