@@ -7,12 +7,12 @@
 <meta name="referrer" content="strict-origin-when-cross-origin">
 <meta name="theme-color" content="#c8102e">
 <meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-title" content="Trening">
+<meta name="apple-mobile-web-app-title" content="BT-coach">
 <meta name="apple-mobile-web-app-status-bar-style" content="black">
 <meta name="mobile-web-app-capable" content="yes">
 <link rel="apple-touch-icon" href="ikon-180.png?v=3">
 <link rel="icon" type="image/png" sizes="192x192" href="ikon-192.png?v=3">
-<title>Trening – Figgjo BTK</title>
+<title>BT-coach – Figgjo BTK</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@600;700;800&display=swap" rel="stylesheet">
 <script>
@@ -272,7 +272,7 @@
 </style>
 </head>
 <body class="tl-standalone tl-brand-figgjo">
-<header class="tp-head"><span class="tp-ball"></span><b>Figgjo BTK</b><small id="tpWho">Trening</small><button type="button" class="tp-refresh" id="tpRefresh" aria-label="Oppdater" title="Hent det nyeste">↻</button></header>
+<header class="tp-head"><span class="tp-ball"></span><b>Figgjo BTK</b><small id="tpWho">BT-coach</small><button type="button" class="tp-refresh" id="tpRefresh" aria-label="Oppdater" title="Hent det nyeste">↻</button></header>
 <div class="tp-nolink"><h1>🏓 Treningen din</h1><p>Denne siden åpnes med den personlige lenken du har fått fra treneren din.<br>Spør treneren om å få lenken på nytt.</p></div>
 <script>if (!window.TL_TP_OK) document.body.classList.add("tp-missing");</script>
 <div class="tp-app">
@@ -25533,7 +25533,7 @@ function getExercisePR(exerciseName) {
   var show = function (n) {
     if (!n) return;
     var first = String(n).trim().split(/\s+/)[0];
-    var el = document.getElementById("tpWho"); if (el) el.textContent = "Trening · " + first;
+    var el = document.getElementById("tpWho"); if (el) el.textContent = "BT-coach · " + first;
     var h = document.getElementById("tpHello"); if (h) h.textContent = "Hei, " + first + "!";
   };
   show(m.name);
