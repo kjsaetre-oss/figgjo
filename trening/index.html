@@ -26079,13 +26079,14 @@ function getExercisePR(exerciseName) {
       h += '<div class="lv-form"><label>Motstander<div class="mn-opp"><input type="text" id="lvOpp" autocomplete="off" placeholder="Søk på navn eller klubb"><div class="mn-sugg" id="lvSugg" hidden></div></div></label>' +
         '<div class="two"><label>Motstanderens poeng<input type="number" id="lvPts" inputmode="numeric" value="' + (lv.oppPts != null ? lv.oppPts : "") + '" placeholder="Fylles ut ved søk"></label><label>Dato<input type="date" id="lvDate" value="' + new Date().toISOString().slice(0, 10) + '"></label></div>' +
         '<div class="row"><button type="button" data-lvres="seier" class="' + (lv.res === "seier" ? "on" : "") + '">🟢 Seier</button><button type="button" data-lvres="tap" class="' + (lv.res === "tap" ? "on" : "") + '">🔴 Tap</button></div>' +
-        '<div class="lv-w"><span>Stevne:</span>' + [[1, "Vanlig ×1"], [1.5, "NM/SNC aldersbestemt ×1,5"], [2, "NM/SNC senior ×2"]].map(function (x) { return '<button type="button" data-lvw="' + x[0] + '" class="' + (lv.w === x[0] ? "on" : "") + '">' + x[1] + '</button>'; }).join("") + '</div>' + pv +
+        '<div class="lv-w"><span>Stevne:</span>' + [[1, "×1 Vanlig stevne / serie"], [1.5, "×1,5 NM/SNC aldersbestemt · Eliteserien"], [2, "×2 NM Elite · SNC senior"]].map(function (x) { return '<button type="button" data-lvw="' + x[0] + '" class="' + (lv.w === x[0] ? "on" : "") + '">' + x[1] + '</button>'; }).join("") + '</div>' + pv +
+        '<p class="lv-note" style="margin:0">WO teller ikke. Avbrutt kamp eller diskvalifikasjon teller som tap. Internasjonale turneringer i Norge og klasser for 10 år og yngre teller ikke.</p>' +
         '<button type="button" class="save" data-lvadd>Legg til kampen</button><button type="button" class="tp-more" data-lvcancel style="margin:0;width:100%;">Avbryt</button></div>';
     } else {
       h += '<div class="hr-actions" style="grid-template-columns:1fr 1fr;"><button type="button" data-lvopen>+ Legg inn kamp</button><button type="button" data-lvimport>Hent fra kampnotater</button></div>';
     }
     if (list.length) h += '<div class="lv-list">' + list.map(function (x) { var d = rkDelta(my, x.oppPts, x.win, x.w); return '<div class="lv-m"><span class="r ' + (x.win ? "w" : "l") + '">' + (x.win ? "S" : "T") + '</span><span class="x"><b>' + esc(x.opp) + '</b><small>' + lvDay(x.date) + ' · ' + fmtN(x.oppPts) + ' p' + (x.w !== 1 ? ' · ×' + String(x.w).replace(".", ",") : "") + '</small></span><span class="d ' + (d >= 0 ? "up" : "down") + '">' + (d > 0 ? "+" : "") + d.toLocaleString("nb-NO") + '</span><button type="button" data-lvdel="' + esc(x.id) + '" aria-label="Fjern">✕</button></div>'; }).join("") + '</div>' +
-      '<p class="lv-note">Tallene er et anslag etter forbundets poengtabell. Den offisielle rankingen kan avvike, f.eks. om en kamp ikke teller.</p>';
+      '<p class="lv-note">Tallene er et anslag etter forbundets poengtabell (reglementet 1.5). Den offisielle rankingen kan avvike – f.eks. justerer rankingkomiteen nye spillere etter første måned, og utenlandske spillere får skjønnsmessige poeng. Ny ranking kommer normalt den 1. hver måned.</p>';
     el.innerHTML = h;
   }
   function lvSugg() {
