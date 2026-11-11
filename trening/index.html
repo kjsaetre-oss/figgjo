@@ -9386,9 +9386,23 @@ var DPP_IMG = [
     if (inLib("Mobilitet") || /tøy|mobilitet|stretch|yoga/i.test(name)) return "mobility";
     let cat = ex && ex.category;
     if (!cat && typeof SWAP_LIBRARY !== "undefined") { const hit = Object.values(SWAP_LIBRARY).flat().find(x => x.name === name); cat = hit && hit.category; }
-    return VK_EX_CAT_PHOTOS[cat] ? cat : "";
+    if (VK_EX_CAT_PHOTOS[cat]) return cat;
+    // Ingen kategori: gjett ut fra navnet (2026-11-11)
+    if (/markløft|deadlift|hoftehev|hip ?thrust|glute|bridge|rygghev|good ?morning|swing|hyperext/i.test(name)) return "hinge";
+    if (/knebøy|squat|utfall|lunge|benpress|step.?up|split|wall ?sit|leggpress|tåhev|legg|bein/i.test(name)) return "legs";
+    if (/armhev|push|press|dips|benk|bench|skulder|triceps|flyes/i.test(name)) return "push";
+    if (/roing|row|pull|nedtrekk|chin|trekk|biceps|curl|face/i.test(name)) return "pull";
+    if (/planke|plank|dead ?bug|sit.?up|crunch|kjerne|core|mage|bird ?dog|pallof|hollow|russian|rulle/i.test(name)) return "core";
+    return "";
   }
+  // Videoer der midtbildet har tekst/logo: bruk et annet bilde (1 eller 3), eller "" = kategoribilde
+  const VK_YT_FRAME = { WNnLKAvHZfo: 1, onrtqZL5L20: 3, "0u40V0AhzRM": 3, FShbaqrGGu4: "", fpVHoidfg60: 1, P489_62b8JU: "", TnhIyp4kmO8: 3, "K--j4Qh9d2s": "", xcO96NpbQCQ: 1, G2K_jr_Bd8M: "" };
+  // Bilde for en øvelse (2026-11-11): et bilde fra midten av øvelsens egen YouTube-video (ikke forsidebildet,
+  // som ofte har tekst). Har øvelsen ingen video, brukes et fritt bilde etter muskelgruppe.
   function vkExPhotoUrl(ex, w) {
+    let yt = "";
+    try { yt = extractYouTubeId(libraryVideoForName(ex && ex.name) || (ex && ex.videoUrl) || ""); } catch (e) { yt = ""; }
+    if (yt && VK_YT_FRAME[yt] !== "") return `https://img.youtube.com/vi/${yt}/${(w || 160) > 320 ? "hq" : "mq"}${VK_YT_FRAME[yt] || 2}.jpg`;
     const k = vkExCatKey(ex);
     return vkPhoto(k ? VK_EX_CAT_PHOTOS[k] : VK_WORKOUT_PHOTOS.styrke, w || 160);
   }
