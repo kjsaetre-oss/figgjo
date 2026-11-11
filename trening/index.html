@@ -175,6 +175,18 @@
   .hr-row .x { flex: 1; min-width: 0; } .hr-row .x b { display: block; font: 700 13.5px/1.3 -apple-system, sans-serif; } .hr-row .x small { color: #646973; font-size: 11.5px; }
   .hr-row .t { flex: none; font: 800 14px "Outfit", sans-serif; } .hr-row .del { flex: none; border: 0; background: none; color: #a3a7b0; font-size: 14px; padding: 4px; }
   .gr-card { margin: 0 14px 10px; border-radius: 16px; background: #14161b; color: #fff; padding: 12px; }
+  .gr-card.has-col { box-shadow: inset 6px 0 0 var(--gc); padding-left: 18px; }
+  .gr-card.has-col[style*="#1b1b1f"] { box-shadow: inset 6px 0 0 #3a3b42; }
+  .gr-dot { display: inline-block; width: 12px; height: 12px; border-radius: 50%; margin-right: 7px; vertical-align: -1px; box-shadow: 0 0 0 2px rgba(255,255,255,.35); }
+  .gr-colpick { display: flex; gap: 8px; align-items: center; } .gr-colpick span { font: 700 12px -apple-system, sans-serif; color: #646973; margin-right: 2px; }
+  .gr-colpick button { display: inline-flex; align-items: center; gap: 7px; border: 1.5px solid #e6e7eb; background: #fff; border-radius: 999px; padding: 6px 12px 6px 7px; font: 700 13px -apple-system, sans-serif; color: #1b1d22; }
+  .gr-colpick button i { width: 18px; height: 18px; border-radius: 50%; box-shadow: inset 0 0 0 1px rgba(0,0,0,.15); }
+  .gr-colpick button.on { border-color: #14161b; box-shadow: 0 0 0 2px #14161b; }
+  .gr-rackets { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin: 0 14px 10px; }
+  .gr-pad { background: #f4f5f7; border-radius: 16px; padding: 10px 8px; text-align: center; min-width: 0; }
+  .gr-pad svg { width: 52px; height: 70px; display: block; margin: 0 auto 4px; filter: drop-shadow(0 6px 8px rgba(0,0,0,.18)); }
+  .gr-pad small { display: block; font: 800 10.5px -apple-system, sans-serif; letter-spacing: .1em; text-transform: uppercase; color: #646973; }
+  .gr-pad b { display: block; font: 700 12.5px -apple-system, sans-serif; color: #1b1d22; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
   .gr-card .h { display: flex; justify-content: space-between; align-items: baseline; gap: 8px; }
   .gr-card .h small { font: 800 10.5px -apple-system, sans-serif; letter-spacing: .12em; text-transform: uppercase; color: rgba(255,255,255,.6); }
   .gr-card .h b { font: 800 22px "Outfit", sans-serif; } .gr-card .n { font: 700 15px -apple-system, sans-serif; margin-top: 2px; } .gr-card .d { font-size: 12px; color: rgba(255,255,255,.65); margin-top: 2px; }
@@ -25791,7 +25803,16 @@ function getExercisePR(exerciseName) {
   var TT = { bordtennis: 1, kamp: 1 };   // teller som spilletid på belegget
   var SIDES = [["forhand", "Forhand"], ["baklengs", "Backhand"], ["blad", "Blad"]];
   var LIFE = 60;                          // veiledende antall spilletimer før belegget bør byttes
-  var mode = "", type = "bordtennis", side = "forhand", busy = false;
+  // Beleggfarge (2026-11-11): svart og rød i utgangspunktet – sidene skal ha hver sin farge
+  var COLS = [["svart", "Svart", "#1b1b1f"], ["rod", "Rød", "#c8102e"]];
+  var colHex = function (c) { var x = COLS.find(function (k) { return k[0] === c; }); return x ? x[2] : ""; };
+  var mode = "", type = "bordtennis", side = "forhand", color = "svart", busy = false;
+  function currentGear(S, sd) { return (S.gear || []).slice().sort(function (a, b) { return String(b.date).localeCompare(String(a.date)); }).find(function (g) { return g.side === sd; }); }
+  function defaultColor(S, sd) {
+    var other = currentGear(S, sd === "forhand" ? "baklengs" : "forhand");
+    if (other && other.color) return other.color === "svart" ? "rod" : "svart";
+    return sd === "forhand" ? "svart" : "rod";
+  }
   function dv(d) { return d.getFullYear() + "-" + String(d.getMonth() + 1).padStart(2, "0") + "-" + String(d.getDate()).padStart(2, "0"); }
   function pd(v) { return new Date(v + "T12:00:00"); }
   function mins(a, b) { var x = String(a || "").split(":").map(Number), y = String(b || "").split(":").map(Number); if (x.length < 2 || y.length < 2 || isNaN(x[0]) || isNaN(y[0])) return 0; var d = (y[0] * 60 + y[1]) - (x[0] * 60 + x[1]); return d > 0 ? d : 0; }
@@ -25847,6 +25868,7 @@ function getExercisePR(exerciseName) {
     if (mode === "gear") {
       html += '<div class="hr-form"><div class="row">' + SIDES.map(function (x) { return '<button type="button" data-side="' + x[0] + '" class="' + (side === x[0] ? "on" : "") + '">' + x[1] + '</button>'; }).join("") + '</div>' +
         '<label>' + (side === "blad" ? "Blad" : "Belegg") + '<input type="text" id="grName" maxlength="60" placeholder="' + (side === "blad" ? "F.eks. «Butterfly Viscaria»" : "F.eks. «Butterfly Tenergy 05, 2,1 mm»") + '"></label>' +
+        (side !== "blad" ? '<div class="gr-colpick"><span>Farge</span>' + COLS.map(function (c) { return '<button type="button" data-col="' + c[0] + '" class="' + (color === c[0] ? "on" : "") + '"><i style="background:' + c[2] + '"></i>' + c[1] + '</button>'; }).join("") + '</div>' : "") +
         '<label>Tatt i bruk<input type="date" id="grDate" value="' + dv(new Date()) + '"></label>' +
         '<button type="button" class="save" data-save-gear>Lagre</button></div>';
     }
@@ -25855,11 +25877,17 @@ function getExercisePR(exerciseName) {
     var cur = SIDES.map(function (x) { return [x, gear.find(function (g) { return g.side === x[0]; })]; }).filter(function (x) { return x[1]; });
     if (cur.length) {
       html += '<div class="hr-sub">🏓 Utstyret ditt</div>';
+      var fh = currentGear(S, "forhand"), bh = currentGear(S, "baklengs");
+      if ((fh && fh.color) || (bh && bh.color)) {
+        var pad = function (g, lbl) { var c = g && g.color ? colHex(g.color) : "#d5d7dd"; return '<div class="gr-pad"><svg viewBox="0 0 60 80" aria-hidden="true"><rect x="25" y="50" width="10" height="26" rx="4" fill="#b98a5a"/><rect x="25" y="50" width="10" height="26" rx="4" fill="url(#grWood)" opacity=".5"/><ellipse cx="30" cy="30" rx="26" ry="28" fill="#e8d3b3"/><ellipse cx="30" cy="30" rx="24" ry="26" fill="' + c + '"/><ellipse cx="22" cy="20" rx="8" ry="5" fill="#fff" opacity=".12"/></svg><small>' + lbl + '</small><b>' + esc(g ? g.name : "–") + '</b></div>'; };
+        html += '<div class="gr-rackets"><svg width="0" height="0" style="position:absolute"><defs><linearGradient id="grWood" x1="0" x2="1"><stop offset="0" stop-color="#fff"/><stop offset="1" stop-color="#000"/></linearGradient></defs></svg>' + pad(fh, "Forhand") + pad(bh, "Backhand") + '</div>';
+      }
       html += cur.map(function (x) {
         var g = x[1], played = S.list.filter(function (s) { return TT[s.type] && s.date >= g.date; }).reduce(function (a, s) { return a + s.min; }, 0);
         var h = played / 60, pct = Math.min(100, h / LIFE * 100), col = x[0][0] === "blad" ? "#8a8f99" : h < LIFE * 0.66 ? "#2ecc71" : h < LIFE ? "#f1c40f" : "#ff5a5a";
         var days = Math.round((new Date() - pd(g.date)) / 864e5);
-        return '<div class="gr-card"><div class="h"><small>' + x[0][1] + '</small><b>' + hdec(played) + ' t</b></div><div class="n">' + esc(g.name) + '</div>' +
+        var gc = x[0][0] !== "blad" && g.color ? colHex(g.color) : "";
+        return '<div class="gr-card' + (gc ? ' has-col' : '') + '"' + (gc ? ' style="--gc:' + gc + '"' : '') + '><div class="h"><small>' + x[0][1] + (gc ? ' · ' + (g.color === "rod" ? "rød" : "svart") : '') + '</small><b>' + hdec(played) + ' t</b></div><div class="n">' + (gc ? '<i class="gr-dot" style="background:' + gc + '"></i>' : '') + esc(g.name) + '</div>' +
           '<div class="d">Tatt i bruk ' + esc(pd(g.date).toLocaleDateString("nb-NO", { day: "numeric", month: "short", year: "numeric" })) + ' · ' + days + ' dager siden</div>' +
           (x[0][0] !== "blad" ? '<div class="gr-bar"><i style="width:' + pct + '%;background:' + col + '"></i></div><div class="tip">' + (h < LIFE * 0.66 ? "Belegget er i god stand." : h < LIFE ? "Begynner å bli brukt – følg med på grepet." : "Over " + LIFE + " timer – vurder å bytte belegg.") + '</div>' : "") +
           '<div class="act"><button type="button" data-swap="' + x[0][0] + '">Byttet nå</button><button type="button" data-delgear="' + esc(g.id) + '">Slett</button></div></div>';
@@ -25877,9 +25905,10 @@ function getExercisePR(exerciseName) {
   async function save(field, item) { busy = true; var ok = await window.vkListSave(field, item); busy = false; if (!ok) alert("Fikk ikke lagret – sjekk nettet og prøv igjen."); return ok; }
   box.addEventListener("click", async function (e) {
     if (busy) return;
-    var md = e.target.closest("[data-mode]"); if (md) { mode = mode === md.dataset.mode ? "" : md.dataset.mode; render(); return; }
+    var md = e.target.closest("[data-mode]"); if (md) { mode = mode === md.dataset.mode ? "" : md.dataset.mode; if (mode === "gear") { var S1 = sessions(); if (S1) color = defaultColor(S1, side); } render(); return; }
     var ty = e.target.closest("[data-type]"); if (ty) { type = ty.dataset.type; box.querySelectorAll("[data-type]").forEach(function (b) { b.classList.toggle("on", b === ty); }); var sel = document.getElementById("hrMin"); if (sel) sel.value = type === "kamp" ? "300" : "90"; return; }
-    var sd = e.target.closest("[data-side]"); if (sd) { side = sd.dataset.side; var keep = (document.getElementById("grName") || {}).value; render(); return; }
+    var sd = e.target.closest("[data-side]"); if (sd) { side = sd.dataset.side; var keep = (document.getElementById("grName") || {}).value; var S0 = sessions(); if (S0) color = defaultColor(S0, side); render(); var gi = document.getElementById("grName"); if (gi && keep) gi.value = keep; return; }
+    var cl = e.target.closest("[data-col]"); if (cl) { color = cl.dataset.col; box.querySelectorAll("[data-col]").forEach(function (b) { b.classList.toggle("on", b === cl); }); return; }
     if (e.target.closest("[data-save-log]")) {
       var item = { id: "log-" + Date.now().toString(36), date: document.getElementById("hrDate").value || dv(new Date()), min: Number(document.getElementById("hrMin").value) || 60, type: type, note: String(document.getElementById("hrNote").value || "").trim().slice(0, 80), createdAt: new Date().toISOString() };
       if (await save("playerLog", item)) { mode = ""; render(); }
@@ -25889,10 +25918,11 @@ function getExercisePR(exerciseName) {
       var name = String(document.getElementById("grName").value || "").trim();
       if (!name) { document.getElementById("grName").focus(); return; }
       var g = { id: "gear-" + Date.now().toString(36), side: side, name: name.slice(0, 60), date: document.getElementById("grDate").value || dv(new Date()), createdAt: new Date().toISOString() };
+      if (side !== "blad") g.color = color;
       if (await save("playerGear", g)) { mode = ""; render(); }
       return;
     }
-    var sw = e.target.closest("[data-swap]"); if (sw) { mode = "gear"; side = sw.dataset.swap; render(); var i = document.getElementById("grName"); if (i) { i.focus(); i.scrollIntoView({ block: "center" }); } return; }
+    var sw = e.target.closest("[data-swap]"); if (sw) { mode = "gear"; side = sw.dataset.swap; var S2 = sessions(); var oldG = S2 && currentGear(S2, side); color = oldG && oldG.color ? oldG.color : (S2 ? defaultColor(S2, side) : color); render(); var i = document.getElementById("grName"); if (i) { i.focus(); i.scrollIntoView({ block: "center" }); } return; }
     var dl = e.target.closest("[data-dellog]"); if (dl) { var P = window.vkPlayerData(); var x = P.log.find(function (l) { return l.id === dl.dataset.dellog; }); if (x && confirm("Slette denne treningen?")) { await save("playerLog", Object.assign({}, x, { removedAt: new Date().toISOString() })); render(); } return; }
     var dg = e.target.closest("[data-delgear]"); if (dg) { var P2 = window.vkPlayerData(); var y = P2.gear.find(function (l) { return l.id === dg.dataset.delgear; }); if (y && confirm("Slette «" + y.name + "»?")) { await save("playerGear", Object.assign({}, y, { removedAt: new Date().toISOString() })); render(); } }
   });
