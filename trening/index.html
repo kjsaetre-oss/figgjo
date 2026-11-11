@@ -170,6 +170,23 @@
   .gr-bar { height: 8px; border-radius: 999px; background: rgba(255,255,255,.12); margin-top: 9px; overflow: hidden; } .gr-bar i { display: block; height: 100%; border-radius: 999px; }
   .gr-card .tip { font-size: 11.5px; margin-top: 6px; color: rgba(255,255,255,.75); }
   .gr-card .act { display: flex; gap: 6px; margin-top: 9px; } .gr-card .act button { border: 1px solid rgba(255,255,255,.25); background: transparent; color: #fff; border-radius: 10px; padding: 6px 10px; font: 700 12px -apple-system, sans-serif; }
+  /* Motstanderprofil */
+  .op-card { background: #f6f7f9; border-radius: 14px; padding: 12px; margin-top: 8px; display: grid; gap: 10px; font: 14px -apple-system, sans-serif; color: #14161b; }
+  .op-wait { color: #646973; font-size: 13px; }
+  .op-top { display: flex; gap: 10px; align-items: center; }
+  .op-av { flex: none; width: 38px; height: 38px; border-radius: 50%; background: #14161b; color: #fff; display: grid; place-items: center; font: 800 13px -apple-system, sans-serif; }
+  .op-top b { display: block; font-size: 15px; } .op-top small { display: block; color: #646973; font-size: 12.5px; }
+  .op-h2h { display: flex; align-items: center; justify-content: space-between; gap: 10px; background: #fff; border-radius: 12px; padding: 8px 10px; }
+  .op-h2h b { display: block; font: 800 24px "Outfit", -apple-system, sans-serif; } .op-h2h small { color: #646973; font-size: 12px; }
+  .op-dots { display: flex; gap: 4px; flex-wrap: wrap; justify-content: flex-end; }
+  .op-dots i { width: 22px; height: 22px; border-radius: 50%; display: grid; place-items: center; font: 800 10.5px -apple-system, sans-serif; font-style: normal; color: #fff; }
+  .op-dots i.w { background: #2e7d52; } .op-dots i.l { background: #b0413e; }
+  .op-list { display: grid; gap: 4px; } .op-list div { display: grid; grid-template-columns: 44px 1fr auto; gap: 8px; font-size: 12.5px; align-items: baseline; }
+  .op-list span { font-weight: 800; } .op-list em { font-style: normal; color: #3b3f47; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; } .op-list small { color: #8a8f99; }
+  .op-card .up { color: #2e7d52; } .op-card .down { color: #b0413e; }
+  .op-none { margin: 0; color: #646973; font-size: 13px; }
+  .op-pts { font-size: 13px; color: #3b3f47; }
+  .op-link { border: 0; background: none; padding: 0; font: inherit; font-weight: 700; color: #14161b; text-align: left; cursor: pointer; text-decoration: underline; text-decoration-color: rgba(200,16,46,.4); text-underline-offset: 3px; }
   /* Liveranking */
   .rk-live h4 { margin: 0 0 8px; }
   .lv-head { display: flex; align-items: center; gap: 10px; background: #f6f7f9; border-radius: 14px; padding: 10px 12px; }
@@ -25872,6 +25889,63 @@ function getExercisePR(exerciseName) {
 })();
 </script>
 <script>
+// ── Motstanderprofil: tidligere oppgjør (ranking-kamper.js) + motstanderens ranking (ranking-alle.js)
+(function () {
+  var m = window.MVT_memberData;
+  var esc = function (v) { return String(v == null ? "" : v).replace(/[&<>"']/g, function (c) { return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]; }); };
+  var norm = function (t) { return String(t || "").toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g, "").replace(/ø/g, "o").replace(/æ/g, "ae").replace(/å/g, "a").replace(/\s+/g, " ").trim(); };
+  var fmtN = function (n) { return (Math.round((Number(n) || 0) * 10) / 10).toLocaleString("nb-NO"); };
+  var loading = {};
+  function load(file, glob, cb) {
+    if (window[glob]) { cb(); return; }
+    (loading[file] = loading[file] || []).push(cb);
+    if (loading[file].length > 1) return;
+    var sc = document.createElement("script"); sc.src = "/" + file + "?v=" + Math.floor(Date.now() / 864e5);
+    var done = function () { var l = loading[file] || []; loading[file] = null; l.forEach(function (f) { try { f(); } catch (e) {} }); };
+    sc.onload = done; sc.onerror = done; document.head.appendChild(sc);
+  }
+  function me() {
+    try {
+      var first = String((m && m.name) || "").trim().split(/\s+/)[0].toLowerCase();
+      var c = (typeof RANKING !== "undefined" && RANKING.spillere) ? RANKING.spillere.filter(function (p) { return p.fornavn.toLowerCase() === first; }) : [];
+      return c.length === 1 ? c[0] : null;
+    } catch (e) { return null; }
+  }
+  var RK_T = [[0, 8, -7, 8, -7], [49, 8, -8, 8, -6], [99, 10, -10, 7, -5], [149, 12, -12, 6, -4], [199, 14, -14, 5, -3], [299, 16, -16, 4, -2], [399, 18, -18, 3, -2], [599, 20, -20, 2, -1], [1e9, 25, -25, 1, -1]];
+  function delta(my, opp, win) { var d = Math.abs(my - opp); if (d === 0) return win ? 8 : -7; var r = RK_T.slice(1).find(function (x) { return d < x[0] + 1; }), hi = my > opp; return win ? (hi ? r[3] : r[1]) : (hi ? r[2] : r[4]); }
+  // "Navn (Klubb)" → navn
+  function baseName(t) { return String(t || "").replace(/\s*\([^)]*\)\s*$/, "").trim(); }
+  window.tpOppProfile = function (el, oppText) {
+    if (!el) return;
+    var name = baseName(oppText);
+    if (norm(name).length < 3) { el.hidden = true; el.innerHTML = ""; return; }
+    el.hidden = false; el.innerHTML = '<div class="op-card op-wait">Henter tidligere oppgjør …</div>';
+    load("ranking-alle.js", "RANKING_ALLE", function () { load("ranking-kamper.js", "RANKING_KAMPER", function () {
+      if (!el.isConnected) return;
+      var key = norm(name), clubHint = norm((String(oppText).match(/\(([^)]*)\)\s*$/) || [])[1] || "");
+      var all = (window.RANKING_ALLE && window.RANKING_ALLE.spillere) || [];
+      var cands = all.filter(function (r) { return norm(r[0]) === key; });
+      var opp = cands.length > 1 && clubHint ? (cands.find(function (r) { return norm(r[1]) === clubHint; }) || cands[0]) : cands[0];
+      var mine = me(), K = window.RANKING_KAMPER || { e: [], s: {} };
+      var games = mine ? (K.s[mine.id] || []).filter(function (g) { return norm(g[1]) === key; }) : [];
+      if (!opp && !games.length) { el.hidden = true; el.innerHTML = ""; return; }
+      var w = games.filter(function (g) { return g[2]; }).length, l = games.length - w;
+      var h = '<div class="op-card"><div class="op-top"><span class="op-av">' + esc(name.split(/\s+/).map(function (x) { return x[0]; }).slice(0, 2).join("")) + '</span><span><b>' + esc(name) + '</b>' +
+        (opp ? '<small>' + esc(opp[1] || "") + ' · ' + fmtN(opp[2]) + ' p' + (opp[3] ? ' · nr. ' + opp[3] + ' i Norge' : '') + '</small>' : '<small>Ikke på Norgesrankingen nå</small>') + '</span></div>';
+      if (mine) {
+        h += games.length
+          ? '<div class="op-h2h"><div><b class="' + (w > l ? "up" : w < l ? "down" : "") + '">' + w + '–' + l + '</b><small>Dine kamper mot ' + esc(name.split(/\s+/)[0]) + '</small></div>' +
+            '<div class="op-dots">' + games.slice(0, 8).reverse().map(function (g) { return '<i class="' + (g[2] ? "w" : "l") + '">' + (g[2] ? "S" : "T") + '</i>'; }).join("") + '</div></div>' +
+            '<div class="op-list">' + games.slice(0, 5).map(function (g) { return '<div><span class="' + (g[2] ? "up" : "down") + '">' + (g[2] ? "Seier" : "Tap") + '</span><em>' + esc(K.e[g[3]] || "") + '</em><small>' + esc(new Date(g[0] + "T12:00:00").toLocaleDateString("nb-NO", { day: "numeric", month: "short", year: "numeric" })) + '</small></div>'; }).join("") + '</div>'
+          : '<p class="op-none">Dere har ikke møtt hverandre i registrerte kamper.</p>';
+        if (opp) h += '<div class="op-pts">Du har ' + fmtN(mine.poeng) + ' p. Vinner du: <b class="up">+' + delta(mine.poeng, opp[2], true) + '</b> · Taper du: <b class="down">' + delta(mine.poeng, opp[2], false) + '</b></div>';
+      }
+      el.innerHTML = h + '</div>';
+    }); });
+  };
+})();
+</script>
+<script>
 // ── Kampnotater: hvem spilte du mot, resultat, hva fungerte og hva må øves på – treneren ser dem
 (function () {
   var box = document.getElementById("tpNotes"); var m = window.MVT_memberData;
@@ -25900,7 +25974,7 @@ function getExercisePR(exerciseName) {
       var focus = []; try { focus = window.vkFocusList ? window.vkFocusList() : []; } catch (e) {}
       html += '<div class="hr-form mn-form">' +
         '<div class="two"><label>Turnering / kamp<input type="text" id="mnEv" maxlength="60" value="' + esc(ev) + '" placeholder="F.eks. Figgjorekrutten"></label><label>Dato<input type="date" id="mnDate" value="' + esc(open === true ? dv(new Date()) : open) + '"></label></div>' +
-        '<label>Motstander<div class="mn-opp"><input type="text" id="mnOpp" maxlength="60" placeholder="Søk på navn eller klubb" autocomplete="off" autocapitalize="words"><div class="mn-sugg" id="mnSugg" hidden></div></div><small class="mn-hint">Søk blant alle på Norgesrankingen – eller skriv navnet selv</small></label>' +
+        '<label>Motstander<div class="mn-opp"><input type="text" id="mnOpp" maxlength="60" placeholder="Søk på navn eller klubb" autocomplete="off" autocapitalize="words"><div class="mn-sugg" id="mnSugg" hidden></div></div><small class="mn-hint">Søk blant alle på Norgesrankingen – eller skriv navnet selv</small></label><div id="mnProf" hidden></div>' +
         '<div class="row"><button type="button" data-res="seier" class="' + (res === "seier" ? "on" : "") + '">🟢 Seier</button><button type="button" data-res="tap" class="' + (res === "tap" ? "on" : "") + '">🔴 Tap</button>' +
         '<input type="text" id="mnScore" maxlength="12" placeholder="Sett, f.eks. 3–1" style="flex:1;min-width:90px;border:1px solid #d5d7dd;border-radius:10px;padding:7px 10px;font:15px -apple-system,sans-serif;"></div>' +
         '<label>Hva fungerte?<textarea id="mnGood" maxlength="300" placeholder="F.eks. «Kort serve til forhand ga meg mange enkle poeng»"></textarea></label>' +
@@ -25914,7 +25988,8 @@ function getExercisePR(exerciseName) {
     Object.keys(groups).slice(0, 6).forEach(function (k) {
       var g = groups[k]; html += '<div class="mn-ev">' + esc(g[0].event || "Kamp") + ' · ' + fmt(g[0].date) + '</div>';
       html += g.map(function (n) {
-        return '<div class="mn-m"><div class="top"><span class="r ' + (n.result === "seier" ? "w" : "l") + '">' + (n.result === "seier" ? "Seier" : "Tap") + (n.score ? " " + esc(n.score) : "") + '</span><span class="o">' + esc(n.opponent || "Motstander") + '</span><button type="button" class="del" data-del="' + esc(n.id) + '" aria-label="Slett">✕</button></div>' +
+        return '<div class="mn-m"><div class="top"><span class="r ' + (n.result === "seier" ? "w" : "l") + '">' + (n.result === "seier" ? "Seier" : "Tap") + (n.score ? " " + esc(n.score) : "") + '</span>' + (n.opponent ? '<button type="button" class="o op-link" data-prof="' + esc(n.opponent) + '">' + esc(n.opponent) + ' ›</button>' : '<span class="o">Motstander</span>') + '<button type="button" class="del" data-del="' + esc(n.id) + '" aria-label="Slett">✕</button></div>' +
+          '<div class="mn-prof" hidden></div>' +
           (n.good ? '<p><b>Fungerte:</b> ' + esc(n.good) + '</p>' : "") + (n.improve ? '<p><b>Øve på:</b> ' + esc(n.improve) + '</p>' : "") +
           (n.coachComment ? '<div class="cc"><img src="/bilder/kjetil-lindefjell-saetre.jpg" alt=""><span><b>Kjetil:</b> ' + esc(n.coachComment) + '</span></div>' : "") + '</div>';
       }).join("");
@@ -25944,12 +26019,13 @@ function getExercisePR(exerciseName) {
   }
   box.addEventListener("input", function (e) { if (e.target && e.target.id === "mnOpp") showSugg(); });
   box.addEventListener("focusin", function (e) { if (e.target && e.target.id === "mnOpp") loadRankAll(); });
-  box.addEventListener("focusout", function (e) { if (e.target && e.target.id === "mnOpp") setTimeout(function () { var sg = document.getElementById("mnSugg"); if (sg && !sg.contains(document.activeElement)) sg.hidden = true; }, 250); });
+  box.addEventListener("focusout", function (e) { if (e.target && e.target.id === "mnOpp") setTimeout(function () { var sg = document.getElementById("mnSugg"); if (sg && !sg.contains(document.activeElement)) { sg.hidden = true; if (window.tpOppProfile) window.tpOppProfile(document.getElementById("mnProf"), e.target.value); } }, 250); });
   async function save(item) { busy = true; var ok = await window.vkListSave("playerMatchNotes", item); busy = false; if (!ok) alert("Fikk ikke lagret – sjekk nettet og prøv igjen."); return ok; }
   box.addEventListener("click", async function (e) {
     if (busy) return;
     var st = e.target.closest("[data-start]"); if (st) { open = st.dataset.start || true; ev = st.dataset.ev || ""; res = "seier"; render(); var o = document.getElementById(ev ? "mnOpp" : "mnEv"); if (o) o.focus(); return; }
-    var pk = e.target.closest("[data-pick]"); if (pk) { var oi = document.getElementById("mnOpp"); if (oi) oi.value = pk.dataset.pick; var sg = document.getElementById("mnSugg"); if (sg) { sg.hidden = true; sg.innerHTML = ""; } return; }
+    var pk = e.target.closest("[data-pick]"); if (pk) { var oi = document.getElementById("mnOpp"); if (oi) oi.value = pk.dataset.pick; var sg = document.getElementById("mnSugg"); if (sg) { sg.hidden = true; sg.innerHTML = ""; } if (window.tpOppProfile) window.tpOppProfile(document.getElementById("mnProf"), pk.dataset.pick); return; }
+    var pf = e.target.closest("[data-prof]"); if (pf) { var holder = pf.closest(".mn-m").querySelector(".mn-prof"); if (holder) { if (!holder.hidden) { holder.hidden = true; return; } window.tpOppProfile(holder, pf.dataset.prof); } return; }
     if (e.target.closest("[data-cancel]")) { open = false; render(); return; }
     var r = e.target.closest("[data-res]"); if (r) { res = r.dataset.res; box.querySelectorAll("[data-res]").forEach(function (b) { b.classList.toggle("on", b === r); }); return; }
     if (e.target.closest("[data-save]")) {
@@ -26078,7 +26154,7 @@ function getExercisePR(exerciseName) {
     if (lv.form) {
       var pv = lv.oppPts != null ? '<div class="lv-prev">Vinner du: <b class="up">' + (rkDelta(my, lv.oppPts, true, lv.w) > 0 ? "+" : "") + rkDelta(my, lv.oppPts, true, lv.w).toLocaleString("nb-NO") + '</b> · Taper du: <b class="down">' + rkDelta(my, lv.oppPts, false, lv.w).toLocaleString("nb-NO") + '</b></div>' : "";
       h += '<div class="lv-form"><label>Motstander<div class="mn-opp"><input type="text" id="lvOpp" autocomplete="off" placeholder="Søk på navn eller klubb"><div class="mn-sugg" id="lvSugg" hidden></div></div></label>' +
-        '<div class="two"><label>Motstanderens poeng<input type="text" id="lvPts" inputmode="decimal" value="' + (lv.oppPts != null ? lv.oppPts : "") + '" placeholder="Fylles ut ved søk"></label><label>Dato<input type="date" id="lvDate" value="' + new Date().toISOString().slice(0, 10) + '"></label></div>' +
+        '<div id="lvProf" hidden></div><div class="two"><label>Motstanderens poeng<input type="text" id="lvPts" inputmode="decimal" value="' + (lv.oppPts != null ? lv.oppPts : "") + '" placeholder="Fylles ut ved søk"></label><label>Dato<input type="date" id="lvDate" value="' + new Date().toISOString().slice(0, 10) + '"></label></div>' +
         '<div class="row"><button type="button" data-lvres="seier" class="' + (lv.res === "seier" ? "on" : "") + '">🟢 Seier</button><button type="button" data-lvres="tap" class="' + (lv.res === "tap" ? "on" : "") + '">🔴 Tap</button></div>' +
         '<div class="lv-w"><span>Stevne:</span>' + [[1, "×1 Vanlig stevne / serie"], [1.5, "×1,5 NM/SNC aldersbestemt · Eliteserien"], [2, "×2 NM Elite · SNC senior"]].map(function (x) { return '<button type="button" data-lvw="' + x[0] + '" class="' + (lv.w === x[0] ? "on" : "") + '">' + x[1] + '</button>'; }).join("") + '</div>' + pv +
         '<p class="lv-note" style="margin:0">WO teller ikke. Avbrutt kamp eller diskvalifikasjon teller som tap. Internasjonale turneringer i Norge og klasser for 10 år og yngre teller ikke.</p>' +
@@ -26107,7 +26183,7 @@ function getExercisePR(exerciseName) {
     var t = e.target;
     if (t.closest("[data-lvopen]")) { lv.form = true; lv.oppPts = null; lv.res = "seier"; lv.w = 1; liveRender(); var o = document.getElementById("lvOpp"); if (o) o.focus(); return; }
     if (t.closest("[data-lvcancel]")) { lv.form = false; liveRender(); return; }
-    var pk = t.closest("[data-lvpick]"); if (pk) { var keep = { opp: pk.dataset.lvname, pts: Number(pk.dataset.lvpick) }; lv.oppPts = keep.pts; liveRender(); document.getElementById("lvOpp").value = keep.opp; return; }
+    var pk = t.closest("[data-lvpick]"); if (pk) { var keep = { opp: pk.dataset.lvname, pts: Number(pk.dataset.lvpick) }; lv.oppPts = keep.pts; liveRender(); document.getElementById("lvOpp").value = keep.opp; if (window.tpOppProfile) window.tpOppProfile(document.getElementById("lvProf"), keep.opp); return; }
     var r = t.closest("[data-lvres]"); if (r) { lv.res = r.dataset.lvres; box.querySelectorAll("[data-lvres]").forEach(function (b) { b.classList.toggle("on", b === r); }); return; }
     var w = t.closest("[data-lvw]"); if (w) { var o2 = document.getElementById("lvOpp"), v = o2 ? o2.value : "", d = document.getElementById("lvDate"), dv0 = d ? d.value : ""; lv.w = Number(w.dataset.lvw); liveRender(); if (document.getElementById("lvOpp")) document.getElementById("lvOpp").value = v; if (dv0 && document.getElementById("lvDate")) document.getElementById("lvDate").value = dv0; return; }
     if (t.closest("[data-lvadd]")) {
