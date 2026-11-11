@@ -923,8 +923,8 @@
   <button class="bla neste" onclick="blaBilde(1)" aria-label="Neste bilde">›</button>
 </div>
 
-<script src="innhold.js?v=1794394666"></script>
-<script src="serie.js?v=1794394666"></script>
+<script src="innhold.js?v=1794401936"></script>
+<script src="serie.js?v=1794401936"></script>
 <script>
 const ANTALL_NYHETER_FORST = 6;
 
@@ -1182,8 +1182,16 @@ function kommendeKamper(lag) {
   return felles ? utenDobbeltforing(kamper) : kamper;
 }
 
+// Ett lagvalg styrer tabell, siste resultater og kommende kamper (2026-11-11)
+function velgLag(lag) {
+  valgtLag = lag;
+  if (SERIEDATA.lag[lag] && (SERIEDATA.lag[lag].tabell || []).length) valgtTabell = lag;
+  visTabell(); tegnResultater(); visKampfilter(); tegnKamper(6);
+}
+
 function tegnResultater() {
-  const spilt = utenDobbeltforing(alleKamper().filter(k => k.resultat)
+  const felles = !valgtLag || valgtLag === "Alle";
+  const spilt = utenDobbeltforing(alleKamper().filter(k => k.resultat && (felles || k.lag === valgtLag))
     .sort((a, b) => b.datoObj - a.datoObj || b.kl.localeCompare(a.kl))).slice(0, 6);
   $("resultatblokk").hidden = !spilt.length;
   $("resultater").innerHTML = spilt.map(k => {
@@ -1212,7 +1220,7 @@ function visTabell() {
   const d = SERIEDATA.lag[valgtTabell];
   $("tabellfaner").hidden = lag.length < 2;
   $("tabellfaner").innerHTML = lag.map(l => `<button class="${l === valgtTabell ? "valgt" : ""}" data-lag="${esc(l)}">${esc(l)}</button>`).join("");
-  $("tabellfaner").onclick = e => { const b = e.target.closest("button"); if (b) { valgtTabell = b.dataset.lag; visTabell(); } };
+  $("tabellfaner").onclick = e => { const b = e.target.closest("button"); if (b) velgLag(b.dataset.lag); };
 
   const startet = d.tabell.some(r => +r.k > 0);
   const dato = lesDato(SERIEDATA.oppdatert);
@@ -1262,7 +1270,7 @@ function visKampfilter() {
   $("lagfilter").innerHTML = lag.map(l => `<button class="${l === valgtLag ? "valgt" : ""}" data-lag="${esc(l)}">${esc(l)}</button>`).join("");
   $("lagfilter").onclick = e => {
     const b = e.target.closest("button"); if (!b) return;
-    valgtLag = b.dataset.lag; visKampfilter(); tegnKamper(6);
+    velgLag(b.dataset.lag);
   };
 }
 
