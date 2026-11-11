@@ -25715,6 +25715,7 @@ function getExercisePR(exerciseName) {
       var n = row && row.member_name ? String(row.member_name) : "";
       if (!n || /^Kunde [0-9a-f]{8}$/i.test(n)) return;
       m.name = n; show(n);
+      try { window.dispatchEvent(new Event("tp-name")); } catch (e) {}
       try { localStorage.setItem("tl_tp_name:" + m.id, n); } catch (e) {}
     }).catch(function () {});
 })();
@@ -25917,13 +25918,27 @@ function getExercisePR(exerciseName) {
     var done = function () { var l = loading[file] || []; loading[file] = null; l.forEach(function (f) { try { f(); } catch (e) {} }); };
     sc.onload = done; sc.onerror = done; document.head.appendChild(sc);
   }
-  function me() {
+  // Hvem er spilleren på rankingen? Fullt navn fra planen (dashbordet) → fornavn + etternavn → unikt fornavn.
+  // Spilleren velger aldri selv.
+  window.tpRankMe = function (R) {
     try {
-      var first = String((m && m.name) || "").trim().split(/\s+/)[0].toLowerCase();
-      var c = (typeof RANKING !== "undefined" && RANKING.spillere) ? RANKING.spillere.filter(function (p) { return p.fornavn.toLowerCase() === first; }) : [];
-      return c.length === 1 ? c[0] : null;
+      R = R || ((typeof RANKING !== "undefined") ? RANKING : null);
+      if (!R || !R.spillere) return null;
+      var full = norm((m && m.name) || ""), w = full.split(" ").filter(Boolean);
+      if (!w.length) return null;
+      var hit = R.spillere.filter(function (p) { return norm(p.navn) === full; });
+      if (hit.length === 1) return hit[0];
+      if (w.length > 1) {
+        hit = R.spillere.filter(function (p) { var pw = norm(p.navn).split(" "); return pw[0] === w[0] && pw[pw.length - 1] === w[w.length - 1]; });
+        if (hit.length === 1) return hit[0];
+        hit = R.spillere.filter(function (p) { var pn = " " + norm(p.navn) + " "; return pn.indexOf(" " + w[0] + " ") === 0 && w.slice(1).every(function (x) { return pn.indexOf(" " + x + " ") >= 0; }); });
+        if (hit.length === 1) return hit[0];
+      }
+      hit = R.spillere.filter(function (p) { return norm(p.fornavn) === w[0]; });
+      return hit.length === 1 ? hit[0] : null;
     } catch (e) { return null; }
-  }
+  };
+  function me() { return window.tpRankMe(); }
   var RK_T = [[0, 8, -7, 8, -7], [49, 8, -8, 8, -6], [99, 10, -10, 7, -5], [149, 12, -12, 6, -4], [199, 14, -14, 5, -3], [299, 16, -16, 4, -2], [399, 18, -18, 3, -2], [599, 20, -20, 2, -1], [1e9, 25, -25, 1, -1]];
   function delta(my, opp, win) { var d = Math.abs(my - opp); if (d === 0) return win ? 8 : -7; var r = RK_T.slice(1).find(function (x) { return d < x[0] + 1; }), hi = my > opp; return win ? (hi ? r[3] : r[1]) : (hi ? r[2] : r[4]); }
   // "Navn (Klubb)" → navn
@@ -26072,9 +26087,7 @@ function getExercisePR(exerciseName) {
   // Er fornavnet ikke på rankingen, eller finnes flere med samme fornavn, vises ikke kortet.
   function me(R) {
     try { localStorage.removeItem(KEY); } catch (e) {}
-    var first = String(m.name || "").trim().split(/\s+/)[0].toLowerCase();
-    var c = first ? R.spillere.filter(function (p) { return p.fornavn.toLowerCase() === first; }) : [];
-    return c.length === 1 ? c[0] : null;
+    return window.tpRankMe ? window.tpRankMe(R) : null;
   }
   function chart(h) {
     var pts = h.slice().reverse().filter(function (x) { return x.poeng > 0; });
@@ -26227,6 +26240,7 @@ function getExercisePR(exerciseName) {
   var baseRender = render;
   render = function () { if (lv.form) return; baseRender(); var R = data(); curR = R; curP = R ? me(R) : null; liveRender(); };
   window.addEventListener("load", function () { render(); setTimeout(render, 2500); });
+  window.addEventListener("tp-name", function () { render(); });
 })();
 </script>
 <script>
