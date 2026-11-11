@@ -923,8 +923,8 @@
   <button class="bla neste" onclick="blaBilde(1)" aria-label="Neste bilde">›</button>
 </div>
 
-<script src="innhold.js?v=1794401936"></script>
-<script src="serie.js?v=1794401936"></script>
+<script src="innhold.js?v=1794402087"></script>
+<script src="serie.js?v=1794402087"></script>
 <script>
 const ANTALL_NYHETER_FORST = 6;
 
@@ -1183,15 +1183,17 @@ function kommendeKamper(lag) {
 }
 
 // Ett lagvalg styrer tabell, siste resultater og kommende kamper (2026-11-11)
+// Tabell og siste resultater følger valgt lag (start: Figgjo 1). Kommende kamper starter på «Alle»;
+// «Alle» der endrer bare kamplista.
 function velgLag(lag) {
   valgtLag = lag;
-  if (SERIEDATA.lag[lag] && (SERIEDATA.lag[lag].tabell || []).length) valgtTabell = lag;
+  if (lag !== "Alle" && SERIEDATA.lag[lag] && (SERIEDATA.lag[lag].tabell || []).length) valgtTabell = lag;
   visTabell(); tegnResultater(); visKampfilter(); tegnKamper(6);
 }
 
 function tegnResultater() {
-  const felles = !valgtLag || valgtLag === "Alle";
-  const spilt = utenDobbeltforing(alleKamper().filter(k => k.resultat && (felles || k.lag === valgtLag))
+  const resLag = valgtTabell || (valgtLag !== "Alle" ? valgtLag : null);
+  const spilt = utenDobbeltforing(alleKamper().filter(k => k.resultat && (!resLag || k.lag === resLag))
     .sort((a, b) => b.datoObj - a.datoObj || b.kl.localeCompare(a.kl))).slice(0, 6);
   $("resultatblokk").hidden = !spilt.length;
   $("resultater").innerHTML = spilt.map(k => {
@@ -1211,7 +1213,7 @@ function tegnResultater() {
   }).join("");
 }
 
-let valgtTabell = null;
+let valgtTabell = "Figgjo 1";
 function visTabell() {
   const lag = Object.keys(SERIEDATA.lag).filter(l => (SERIEDATA.lag[l].tabell || []).length).sort();
   $("tabellblokk").hidden = !lag.length;
