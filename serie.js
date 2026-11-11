@@ -1,6 +1,6 @@
 /* Tabell og kamper hentet fra bordtennislive.no. Lages av oppdater-serie.py – ikke rediger for hånd. */
 const SERIE = {
- "oppdatert": "2026-11-09",
+ "oppdatert": "2026-11-11",
  "lag": {
   "Figgjo 2": {
    "divisjon": "3. divisjon avd. E",
@@ -632,6 +632,17 @@ const SERIE = {
    "tabell": [
     {
      "plass": "1",
+     "lag": "Varhaug",
+     "k": "3",
+     "v": "3",
+     "u": "0",
+     "t": "0",
+     "kamper": "25-5",
+     "sett": "78-24",
+     "p": "6"
+    },
+    {
+     "plass": "2",
      "lag": "Skjoldar",
      "k": "3",
      "v": "2",
@@ -639,17 +650,6 @@ const SERIE = {
      "t": "1",
      "kamper": "24-6",
      "sett": "81-31",
-     "p": "4"
-    },
-    {
-     "plass": "2",
-     "lag": "Varhaug",
-     "k": "2",
-     "v": "2",
-     "u": "0",
-     "t": "0",
-     "kamper": "17-3",
-     "sett": "54-14",
      "p": "4"
     },
     {
@@ -699,12 +699,12 @@ const SERIE = {
     {
      "plass": "7",
      "lag": "Dalane",
-     "k": "2",
+     "k": "3",
      "v": "0",
      "u": "0",
-     "t": "2",
-     "kamper": "4-16",
-     "sett": "23-50",
+     "t": "3",
+     "kamper": "6-24",
+     "sett": "33-74",
      "p": "0"
     }
    ],
@@ -813,6 +813,17 @@ const SERIE = {
    "tabell": [
     {
      "plass": "1",
+     "lag": "Varhaug",
+     "k": "3",
+     "v": "3",
+     "u": "0",
+     "t": "0",
+     "kamper": "25-5",
+     "sett": "78-24",
+     "p": "6"
+    },
+    {
+     "plass": "2",
      "lag": "Skjoldar",
      "k": "3",
      "v": "2",
@@ -820,17 +831,6 @@ const SERIE = {
      "t": "1",
      "kamper": "24-6",
      "sett": "81-31",
-     "p": "4"
-    },
-    {
-     "plass": "2",
-     "lag": "Varhaug",
-     "k": "2",
-     "v": "2",
-     "u": "0",
-     "t": "0",
-     "kamper": "17-3",
-     "sett": "54-14",
      "p": "4"
     },
     {
@@ -880,12 +880,12 @@ const SERIE = {
     {
      "plass": "7",
      "lag": "Dalane",
-     "k": "2",
+     "k": "3",
      "v": "0",
      "u": "0",
-     "t": "2",
-     "kamper": "4-16",
-     "sett": "23-50",
+     "t": "3",
+     "kamper": "6-24",
+     "sett": "33-74",
      "p": "0"
     }
    ],
