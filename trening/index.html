@@ -193,6 +193,26 @@
   .gr-bar { height: 8px; border-radius: 999px; background: rgba(255,255,255,.12); margin-top: 9px; overflow: hidden; } .gr-bar i { display: block; height: 100%; border-radius: 999px; }
   .gr-card .tip { font-size: 11.5px; margin-top: 6px; color: rgba(255,255,255,.75); }
   .gr-card .act { display: flex; gap: 6px; margin-top: 9px; } .gr-card .act button { border: 1px solid rgba(255,255,255,.25); background: transparent; color: #fff; border-radius: 10px; padding: 6px 10px; font: 700 12px -apple-system, sans-serif; }
+  /* Øvelsesbank */
+  .dr-cats { display: flex; gap: 6px; overflow-x: auto; padding: 0 14px 10px; scrollbar-width: none; } .dr-cats::-webkit-scrollbar { display: none; }
+  .dr-cats button { flex: none; border: 1px solid #e6e7eb; background: #f4f5f7; border-radius: 999px; padding: 7px 12px; font: 700 12.5px -apple-system, sans-serif; color: #1b1d22; }
+  .dr-cats button.on { background: #14161b; border-color: #14161b; color: #fff; }
+  .dr-list { display: grid; gap: 8px; padding: 0 14px 6px; }
+  .dr-item { background: #f6f7f9; border-radius: 16px; overflow: hidden; }
+  .dr-item.open { background: #fff; box-shadow: 0 0 0 1.5px #14161b; }
+  .dr-row { width: 100%; display: grid; grid-template-columns: 92px 1fr 22px; gap: 10px; align-items: center; border: 0; background: none; padding: 8px; text-align: left; font: inherit; color: #14161b; cursor: pointer; }
+  .dr-th { width: 92px; height: 56px; border-radius: 11px; background: #22252c center/cover no-repeat; display: grid; place-items: center; }
+  .dr-th i { width: 26px; height: 26px; border-radius: 50%; background: rgba(255,255,255,.92); color: #c8102e; font-style: normal; font-size: 11px; display: grid; place-items: center; padding-left: 2px; }
+  .dr-x { min-width: 0; } .dr-x b { display: block; font: 700 14.5px/1.25 -apple-system, sans-serif; } .dr-x small { font: 12px -apple-system, sans-serif; color: #646973; } .dr-x em { font-style: normal; color: #2e7d52; font-weight: 700; }
+  .dr-chev { font: 800 20px -apple-system, sans-serif; color: #8a8f99; text-align: center; }
+  .dr-body { padding: 0 12px 14px; font: 14px/1.5 -apple-system, sans-serif; color: #1b1d22; }
+  .dr-video { position: relative; aspect-ratio: 16 / 9; border-radius: 12px; overflow: hidden; background: #000; }
+  .dr-video iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
+  .dr-src { font-size: 11.5px; color: #8a8f99; margin-top: 4px; }
+  .dr-body h4 { margin: 12px 0 4px; font: 800 13px -apple-system, sans-serif; text-transform: uppercase; letter-spacing: .06em; color: #646973; }
+  .dr-body ol { margin: 0; padding-left: 20px; display: grid; gap: 4px; }
+  .dr-plan { margin-top: 10px; background: #fdf0f2; border-radius: 12px; padding: 10px 12px; } .dr-plan b { display: block; color: #c8102e; font-size: 12.5px; text-transform: uppercase; letter-spacing: .06em; margin-bottom: 2px; }
+  .dr-done { width: 100%; margin-top: 10px; border: 0; border-radius: 12px; padding: 12px; background: #c8102e; color: #fff; font: 800 14.5px -apple-system, sans-serif; }
   /* Motstanderprofil */
   .op-card { background: #f6f7f9; border-radius: 14px; padding: 12px; margin-top: 8px; display: grid; gap: 10px; font: 14px -apple-system, sans-serif; color: #14161b; }
   .op-wait { color: #646973; font-size: 13px; }
@@ -303,7 +323,7 @@
   .tp-nav { position: fixed; left: 0; right: 0; bottom: 0; z-index: 40; display: grid; grid-auto-flow: column; grid-auto-columns: 1fr;
     background: rgba(255,255,255,.97); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); border-top: 1px solid #e6e7eb;
     padding: 6px 4px calc(6px + env(safe-area-inset-bottom)); box-shadow: 0 -8px 24px -16px rgba(20,22,27,.35); }
-  .tp-nav button { min-width: 0; border: 0; background: none; display: grid; justify-items: center; gap: 2px; padding: 4px 2px; font: 700 10.5px -apple-system, sans-serif; color: #646973; }
+  .tp-nav button { min-width: 0; border: 0; background: none; display: grid; justify-items: center; gap: 2px; padding: 4px 1px; font: 700 10px -apple-system, sans-serif; letter-spacing: -.01em; color: #646973; white-space: nowrap; overflow: hidden; }
   .tp-nav button i { font-style: normal; font-size: 20px; line-height: 1.1; filter: grayscale(1); opacity: .7; }
   .tp-nav button.on { color: #c8102e; } .tp-nav button.on i { filter: none; opacity: 1; }
   .tp-nav button[hidden] { display: none; }
@@ -25699,6 +25719,7 @@ function getExercisePR(exerciseName) {
 <div id="dppProgressToast" class="dpp-progress-toast" aria-live="polite"></div>
 
 <section class="tp-team tp-hours" id="tpHours" hidden></section>
+<section class="tp-team tp-drills" id="tpDrills" hidden></section>
 <section class="tp-rank" id="tpRank" hidden></section>
 <section class="tp-team tp-goals" id="tpGoals" hidden></section>
 <section class="tp-team" id="tpTeam" hidden></section>
@@ -25734,18 +25755,19 @@ function getExercisePR(exerciseName) {
 </script>
 <nav class="tp-nav" id="tpNav" aria-label="Meny">
   <button type="button" data-go="tpTop" class="on"><i>📅</i>Kalender</button>
+  <button type="button" data-go="tpDrills" hidden><i>📚</i>Øvelser</button>
   <button type="button" data-go="tpHours" hidden><i>⏱️</i>Timer</button>
   <button type="button" data-go="tpRank" hidden><i>📈</i>Ranking</button>
   <button type="button" data-go="tpGoals" hidden><i>⭐</i>Mål</button>
   <button type="button" data-go="tpTeam" hidden><i>🏓</i>Laget</button>
-  <button type="button" data-go="tpTurn" hidden><i>🏆</i>Turneringer</button>
+  <button type="button" data-go="tpTurn" hidden><i>🏆</i>Turnering</button>
 </nav>
 <script>
 // ── Meny nederst: hopper til delene på siden og viser hvor du er
 (function () {
   var nav = document.getElementById("tpNav"); if (!nav) return;
   if (!window.TL_TP_OK) { nav.remove(); return; }
-  var ids = ["tpTop", "tpHours", "tpRank", "tpGoals", "tpTeam", "tpTurn"];
+  var ids = ["tpTop", "tpDrills", "tpHours", "tpRank", "tpGoals", "tpTeam", "tpTurn"];
   var el = function (id) {
     if (id === "tpTop") return document.getElementById("dppApp");
     if (id === "tpTurn") { var n = document.getElementById("tpNotes"); if (n && !n.hidden) return n; }
@@ -25767,7 +25789,7 @@ function getExercisePR(exerciseName) {
   window.addEventListener("load", function () { sync(); setTimeout(sync, 2600); setTimeout(sync, 7200); });
   // Følg bare med på når delene blir synlige (ikke på menyen selv)
   var mo = new MutationObserver(function () { sync(); });
-  ["tpHours", "tpRank", "tpGoals", "tpTeam", "tpNotes", "tpTurn"].forEach(function (id) { var e = document.getElementById(id); if (e) mo.observe(e, { attributes: true, attributeFilter: ["hidden"] }); });
+  ["tpDrills", "tpHours", "tpRank", "tpGoals", "tpTeam", "tpNotes", "tpTurn"].forEach(function (id) { var e = document.getElementById(id); if (e) mo.observe(e, { attributes: true, attributeFilter: ["hidden"] }); });
 })();
 </script>
 <script>
@@ -25930,6 +25952,129 @@ function getExercisePR(exerciseName) {
   window.addEventListener("load", function () { render(); setTimeout(soft, 2500); setTimeout(soft, 7000); });
   // Når spilleren krysser av en trening i kalenderen, oppdateres timene
   document.addEventListener("click", function (e) { if (e.target.closest(".vk-cta, .dpp-check")) setTimeout(soft, 1200); }, true);
+})();
+</script>
+<script>
+// ── Øvelsesbank for bordtennis (2026-11-11): videoer på YouTube (sjekket at de kan spilles av inne i appen),
+// forklaring og opplegg på norsk. «Øvd i dag» logges som bordtennistrening (playerLog).
+(function () {
+  var box = document.getElementById("tpDrills"); var m = window.MVT_memberData;
+  if (!box || !m || !m.id) return;
+  var esc = function (v) { return String(v == null ? "" : v).replace(/[&<>"']/g, function (c) { return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]; }); };
+  var CATS = [["alle", "Alle"], ["grunnslag", "Grunnslag"], ["serve", "Serve"], ["mottak", "Mottak"], ["fotarbeid", "Fotarbeid"], ["trening", "Treningsformer"], ["taktikk", "Taktikk"]];
+  // [id, kategori, tittel, youtube-id, bilde (1–3), nivå, minutter, kilde, slik gjør du [..], øv slik]
+  var D = [
+    ["fh-drive", "grunnslag", "Forhand drive", "h-Qqe0Ty9KI", 2, "Nybegynner", 10, "Tom Lodziak",
+      ["Stå litt sidelengs med venstre fot (høyrehendt) litt foran.", "Vri fra hofta – armen følger med, ikke bare albuen.", "Treff ballen foran kroppen på toppen av spretten, og avslutt med racketen ved pannen."],
+      "Forhand diagonalt mot en partner: 3 × 3 minutter. Tell hvor mange baller på rad dere klarer – prøv å slå rekorden."],
+    ["bh-drive", "grunnslag", "Backhand drive", "W_ZfwwhGsl8", 2, "Nybegynner", 10, "PingSkills",
+      ["Stå rett mot bordet med racketen foran magen.", "Albuen litt fram, slå med underarmen og håndleddet.", "Treff ballen tidlig, rett etter spretten."],
+      "Backhand diagonalt: 3 × 3 minutter. Hold ballen lav over nettet og jevn i tempoet."],
+    ["kontra", "grunnslag", "Forhand og backhand kontra", "iYRJ2YV3PGY", 2, "Nybegynner", 15, "PingSkills",
+      ["Korte, kontrollerte slag – fokus på kontakt, ikke kraft.", "Kom raskt tilbake til grunnstillingen etter hvert slag.", "Hold racketen foran deg mellom slagene."],
+      "1 forhand + 1 backhand (partneren spiller alt til samme sted): 4 × 2 minutter."],
+    ["push", "grunnslag", "Push (underskru)", "Hx5ZQSsmFjo", 2, "Nybegynner", 10, "PingSkills",
+      ["Åpne racketbladet og gå under ballen.", "Kort bevegelse fram – ikke ned.", "Hold pushen lav og helst lang eller veldig kort."],
+      "Push mot push diagonalt på backhand: 3 × 3 minutter. Bytt til forhand de siste rundene."],
+    ["fh-blokk", "grunnslag", "Forhand blokk", "V021kGUUTsU", 2, "Viderekommen", 10, "PingSkills",
+      ["Lukk racketbladet litt mot overskru.", "Kort bevegelse – la ballens fart gjøre jobben.", "Treff tidlig, rett etter spretten."],
+      "Partneren spiller forhand topspin, du blokker: 3 × 2 minutter hver."],
+    ["bh-blokk", "grunnslag", "Backhand blokk", "q-gQutk9tgo", 2, "Viderekommen", 10, "PingSkills",
+      ["Racketen foran kroppen, bladet litt lukket.", "Møt ballen – ikke slå.", "Juster vinkelen etter hvor mye skru motstanderen har."],
+      "Partneren spiller topspin på backhand, du blokker: 3 × 2 minutter hver."],
+    ["fh-topspin", "grunnslag", "Forhand topspin – grunnlaget", "KVaWcIAyKgQ", 2, "Nybegynner", 15, "Tom Lodziak",
+      ["Senk racketen under ballen og bøy knærne.", "Børst ballen oppover og framover – ikke slå rett på den.", "Bruk beina og hofta, ikke bare armen."],
+      "Partneren blokker, du spiller forhand topspin: 4 × 2 minutter. Start rolig – kontroll før fart."],
+    ["fh-topspin-us", "grunnslag", "Forhand topspin mot underskru", "_Bi3vOTH_do", 2, "Viderekommen", 15, "PingSkills",
+      ["Mer løft enn mot overskru – racketen starter lavere.", "Vent til ballen har nådd toppen eller er på vei ned.", "Børst fint – mye skru, ikke så mye fart."],
+      "Partneren pusher langt til forhanden, du topspinner: 10 baller × 5 runder. Tell hvor mange som går inn."],
+    ["bh-topspin-us", "grunnslag", "Backhand topspin mot underskru", "2QoQh3_12WE", 2, "Viderekommen", 15, "TableTennisDaily",
+      ["Senk racketen ned mot kneet og bøy deg.", "Bruk underarmen og håndleddet – børst oppover.", "Avslutt med racketen foran ansiktet."],
+      "Partneren pusher langt til backhanden: 10 baller × 5 runder."],
+    ["bh-flick", "grunnslag", "Backhand flick", "QUsYDghnLWk", 2, "Viderekommen", 10, "Tom Lodziak",
+      ["Gå inn over bordet med høyre fot (høyrehendt).", "Albuen høyt, racketen peker ned.", "Rask håndleddsbevegelse framover – treff ballen på toppen."],
+      "Partneren server kort til backhand, du flicker: 10 baller × 4 runder."],
+    ["fh-smash", "grunnslag", "Forhand smash", "T8dHrFpZ8LA", 2, "Viderekommen", 10, "PingSkills",
+      ["Kom bak ballen med beina først.", "Treff høyt ballen på toppen av spretten.", "Slå framover og litt ned – hele kroppen er med."],
+      "Partneren slår høye baller (lobber), du smasher: 10 baller × 4 runder."],
+    ["serve-skru", "serve", "Serve med overskru, underskru og sideskru", "eMUPrs3vvpI", 2, "Nybegynner", 15, "PingSkills",
+      ["Kast ballen minst 16 cm rett opp fra åpen hånd.", "Børst ballen – skruen kommer fra hvor på ballen du treffer.", "Underskru: under ballen. Overskru: bak og opp. Sideskru: på siden."],
+      "Server 20 baller av hver skrutype. Legg en ball eller et ark som mål på motstanderens side."],
+    ["serve-kort", "serve", "Kort serve", "SpY9kniEbYI", 2, "Nybegynner", 10, "PingSkills",
+      ["Første sprett nær nettet på din side.", "Liten, myk berøring – ikke slå.", "Målet: ballen skal sprette to ganger på motstanderens side."],
+      "30 korte server. Teller som god hvis den spretter to ganger hos motstanderen."],
+    ["pendel", "serve", "Pendelserve", "twNlkfRRafw", 2, "Viderekommen", 15, "Craig Bryant",
+      ["Stå sidelengs i backhandhjørnet.", "Svingen går som en pendel fra høyre mot venstre (høyrehendt).", "Varier mellom underskru og sideskru med samme bevegelse."],
+      "20 pendelserver med underskru, 20 med sideskru. Prøv å skjule hvilken du slår."],
+    ["serve-lang", "serve", "Rask lang serve", "n5JRm7DOjdw", 2, "Viderekommen", 10, "Tom Lodziak",
+      ["Første sprett nær din egen baklinje.", "Lav ballbane – rett over nettet.", "Sikt mot hjørnet eller rett på albuen til motstanderen."],
+      "20 raske lange server mot backhandhjørnet, 20 mot forhandhjørnet."],
+    ["mottak", "mottak", "Mottak av serve – enkel metode", "uBUy9QT2iEw", 2, "Nybegynner", 15, "Tom Lodziak",
+      ["Se på racketen til motstanderen når hen treffer ballen.", "Kort serve: gå inn med beinet og push eller flick.", "Lang serve: gå litt bakover og spill topspin."],
+      "Partneren server 10 server av hver type, du returnerer: 4 runder."],
+    ["mottak-kort", "mottak", "Mottak av korte underskruserver", "lxeN8pI3vp0", 2, "Viderekommen", 10, "Tom Lodziak",
+      ["Gå godt inn over bordet med riktig fot.", "Kort push, lang push eller flick – varier.", "Hold returen lav."],
+      "Partneren server kort underskru, du varierer returen: 3 × 10 baller."],
+    ["fot-grunn", "fotarbeid", "Grunnleggende fotarbeid", "M0v5SvlD1oQ", 2, "Nybegynner", 10, "PingSkills",
+      ["Stå på fremre del av foten, knærne litt bøyd.", "Små, raske steg – ikke kryss beina.", "Tilbake til grunnstillingen etter hvert slag."],
+      "Skyggetrening uten ball: 4 × 30 sekunder side-til-side, 30 sekunder pause."],
+    ["fot-side", "fotarbeid", "Side-til-side fotarbeid", "lUTLexlAmSU", 2, "Viderekommen", 15, "TI LONG",
+      ["Steg sidelengs – ikke løp.", "Hold samme høyde i kroppen hele tiden.", "Slå forhand fra midten og fra forhandhjørnet."],
+      "Partneren spiller annenhver ball til midten og forhandhjørnet: 4 × 1 minutt."],
+    ["falkenberg", "fotarbeid", "Falkenberg", "Ebl0ZRBfJt0", 2, "Viderekommen", 15, "Tom Lodziak",
+      ["Backhand fra backhandhjørnet, forhand fra backhandhjørnet, forhand fra forhandhjørnet.", "Partneren spiller: backhand – backhand – forhand.", "Raske, korte steg og kom tilbake mellom slagene."],
+      "4 × 1 minutt med 1 minutt pause. Tell hvor mange runder du klarer uten feil."],
+    ["multiball", "trening", "Multiball", "rCIiUIx9z-0", 2, "Alle", 15, "PingSkills",
+      ["Treneren eller en partner mater mange baller raskt etter hverandre.", "Fokus på riktig teknikk – mange repetisjoner på kort tid.", "Varier: én type slag, to punkter, eller tilfeldig."],
+      "3 × 30 baller med 1 minutt pause. Bytt den som mater."],
+    ["skygge", "trening", "Skyggetrening", "SzH1whJ5M44", 2, "Alle", 10, "PingSkills",
+      ["Gjør slagene uten ball – fullt fokus på teknikk.", "Bruk speil eller film deg selv.", "Kombiner med fotarbeid."],
+      "Hjemme: 3 × 1 minutt forhand, 3 × 1 minutt backhand, 3 × 1 minutt fotarbeid."],
+    ["oppvarming", "trening", "Oppvarming før trening og kamp", "3GJyHzf15N8", 2, "Alle", 8, "PingSkills",
+      ["Få opp pulsen – jogg eller hopp.", "Bevegelighet i skuldre, hofter og ankler.", "Avslutt med korte, raske steg som i spillet."],
+      "Gjør hele rutinen før hver trening og før turneringer."],
+    ["tredjeball", "taktikk", "Serve og tredjeballsangrep", "-K1Kuox4NL4", 2, "Viderekommen", 15, "Tom Lodziak",
+      ["Server kort underskru – motstanderen må pushe.", "Vær klar for en lang push til backhand eller forhand.", "Angrip den tredje ballen med topspin."],
+      "Server kort, partneren pusher langt, du angriper: 3 × 10 baller."]
+  ];
+  var cat = "alle", open = "", busy = false;
+  function counts() {
+    var P = window.vkPlayerData ? window.vkPlayerData() : null, c = {};
+    (P ? P.log : []).forEach(function (l) { var mm = /^Øvelse: (.+)$/.exec(l.note || ""); if (mm) c[mm[1]] = (c[mm[1]] || 0) + 1; });
+    return c;
+  }
+  function render() {
+    box.hidden = false;
+    var C = counts(), list = D.filter(function (d) { return cat === "alle" || d[1] === cat; });
+    var html = '<div class="tp-team-head"><h2>📚 Øvelsesbank</h2><small>' + D.length + ' øvelser med video</small></div>' +
+      '<div class="dr-cats">' + CATS.map(function (c) { return '<button type="button" data-cat="' + c[0] + '" class="' + (cat === c[0] ? "on" : "") + '">' + c[1] + '</button>'; }).join("") + '</div>' +
+      '<div class="dr-list">' + list.map(function (d) {
+        var n = C[d[2]] || 0, on = open === d[0];
+        return '<div class="dr-item' + (on ? " open" : "") + '"><button type="button" class="dr-row" data-open="' + d[0] + '"><span class="dr-th" style="background-image:url(\'https://img.youtube.com/vi/' + d[3] + '/mq' + d[4] + '.jpg\')"><i>▶</i></span><span class="dr-x"><b>' + esc(d[2]) + '</b><small>' + esc(d[5]) + ' · ca. ' + d[6] + ' min' + (n ? ' · <em>øvd ' + n + ' ' + (n === 1 ? "gang" : "ganger") + '</em>' : '') + '</small></span><span class="dr-chev">' + (on ? "–" : "+") + '</span></button>' +
+          (on ? '<div class="dr-body"><div class="dr-video"><iframe src="https://www.youtube-nocookie.com/embed/' + d[3] + '?rel=0&modestbranding=1&playsinline=1" title="' + esc(d[2]) + '" allow="autoplay; encrypted-media; picture-in-picture" allowfullscreen loading="lazy"></iframe></div>' +
+            '<div class="dr-src">Video: ' + esc(d[7]) + ' (på engelsk)</div>' +
+            '<h4>Slik gjør du</h4><ol>' + d[8].map(function (t) { return '<li>' + esc(t) + '</li>'; }).join("") + '</ol>' +
+            '<div class="dr-plan"><b>Øv slik</b>' + esc(d[9]) + '</div>' +
+            '<button type="button" class="dr-done" data-done="' + d[0] + '">✓ Øvd i dag (' + d[6] + ' min)</button></div>' : '') + '</div>';
+      }).join("") + '</div>' +
+      '<div class="tp-turn-note">Videoene er fra YouTube. «Øvd i dag» legges inn som bordtennistrening under Timer.</div>';
+    box.innerHTML = html;
+  }
+  box.addEventListener("click", async function (e) {
+    if (busy) return;
+    var c = e.target.closest("[data-cat]"); if (c) { cat = c.dataset.cat; open = ""; render(); return; }
+    var o = e.target.closest("[data-open]"); if (o) { open = open === o.dataset.open ? "" : o.dataset.open; render(); var it = box.querySelector(".dr-item.open"); if (it) it.scrollIntoView({ block: "start", behavior: "smooth" }); return; }
+    var dn = e.target.closest("[data-done]"); if (dn) {
+      var d = D.find(function (x) { return x[0] === dn.dataset.done; }); if (!d || !window.vkListSave) return;
+      busy = true; dn.disabled = true; dn.textContent = "Lagrer …";
+      var now = new Date(), dv = now.getFullYear() + "-" + String(now.getMonth() + 1).padStart(2, "0") + "-" + String(now.getDate()).padStart(2, "0");
+      var ok = await window.vkListSave("playerLog", { id: "log-" + Date.now().toString(36), date: dv, min: d[6], type: "bordtennis", note: "Øvelse: " + d[2], createdAt: now.toISOString() });
+      busy = false;
+      if (!ok) { dn.disabled = false; dn.textContent = "Prøv igjen"; return; }
+      dn.textContent = "✓ Lagt inn – bra jobba!"; setTimeout(render, 1400);
+    }
+  });
+  window.addEventListener("load", function () { render(); });
 })();
 </script>
 <script>
