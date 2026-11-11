@@ -171,6 +171,15 @@
   .gr-card .tip { font-size: 11.5px; margin-top: 6px; color: rgba(255,255,255,.75); }
   .gr-card .act { display: flex; gap: 6px; margin-top: 9px; } .gr-card .act button { border: 1px solid rgba(255,255,255,.25); background: transparent; color: #fff; border-radius: 10px; padding: 6px 10px; font: 700 12px -apple-system, sans-serif; }
   /* Kampnotater */
+  .mn-opp { position: relative; }
+  .mn-sugg { position: absolute; left: 0; right: 0; top: calc(100% + 4px); z-index: 30; background: #fff; border: 1px solid #e3e5ea; border-radius: 14px; box-shadow: 0 16px 34px -14px rgba(20,22,27,.45); overflow: hidden; }
+  .mn-sugg button { display: grid; grid-template-columns: 1fr auto; gap: 0 10px; width: 100%; text-align: left; border: 0; border-bottom: 1px solid #f0f1f4; background: #fff; padding: 9px 12px; font: 14px -apple-system, sans-serif; color: #14161b; cursor: pointer; }
+  .mn-sugg button:last-child { border-bottom: 0; }
+  .mn-sugg button:active { background: #fdf0f2; }
+  .mn-sugg b { font-weight: 700; } .mn-sugg span { grid-column: 1; font-size: 12.5px; color: #646973; }
+  .mn-sugg em { grid-column: 2; grid-row: 1 / span 2; align-self: center; font-style: normal; font-size: 12px; font-weight: 800; color: #c8102e; white-space: nowrap; }
+  .mn-sugg .none { padding: 10px 12px; font-size: 13px; color: #646973; }
+  .mn-hint { display: block; margin-top: 4px; font-size: 11.5px; color: #8a8f99; font-weight: 600; }
   .mn-nudge { margin: 0 12px 10px; padding: 10px 12px; border-radius: 14px; background: #fdeef0; display: flex; gap: 10px; align-items: center; font: 13px/1.35 -apple-system, sans-serif; }
   .mn-nudge b { display: block; } .mn-nudge button { margin-left: auto; flex: none; border: 0; border-radius: 10px; background: #c8102e; color: #fff; padding: 8px 10px; font: 800 12.5px -apple-system, sans-serif; }
   .mn-stats { display: flex; gap: 8px; padding: 0 12px 10px; } .mn-stats div { flex: 1; background: #f4f5f7; border-radius: 12px; padding: 8px; text-align: center; }
@@ -25864,7 +25873,7 @@ function getExercisePR(exerciseName) {
       var focus = []; try { focus = window.vkFocusList ? window.vkFocusList() : []; } catch (e) {}
       html += '<div class="hr-form mn-form">' +
         '<div class="two"><label>Turnering / kamp<input type="text" id="mnEv" maxlength="60" value="' + esc(ev) + '" placeholder="F.eks. Figgjorekrutten"></label><label>Dato<input type="date" id="mnDate" value="' + esc(open === true ? dv(new Date()) : open) + '"></label></div>' +
-        '<label>Motstander<input type="text" id="mnOpp" maxlength="50" placeholder="Navn og klubb"></label>' +
+        '<label>Motstander<div class="mn-opp"><input type="text" id="mnOpp" maxlength="60" placeholder="Søk på navn eller klubb" autocomplete="off" autocapitalize="words"><div class="mn-sugg" id="mnSugg" hidden></div></div><small class="mn-hint">Søk blant alle på Norgesrankingen – eller skriv navnet selv</small></label>' +
         '<div class="row"><button type="button" data-res="seier" class="' + (res === "seier" ? "on" : "") + '">🟢 Seier</button><button type="button" data-res="tap" class="' + (res === "tap" ? "on" : "") + '">🔴 Tap</button>' +
         '<input type="text" id="mnScore" maxlength="12" placeholder="Sett, f.eks. 3–1" style="flex:1;min-width:90px;border:1px solid #d5d7dd;border-radius:10px;padding:7px 10px;font:15px -apple-system,sans-serif;"></div>' +
         '<label>Hva fungerte?<textarea id="mnGood" maxlength="300" placeholder="F.eks. «Kort serve til forhand ga meg mange enkle poeng»"></textarea></label>' +
@@ -25885,15 +25894,40 @@ function getExercisePR(exerciseName) {
     });
     box.innerHTML = html;
   }
+  // Motstander-søk i hele Norgesrankingen (ranking-alle.js lastes først når kampnotatet åpnes)
+  var rankAll = null, rankLoading = false;
+  function norm(t) { return String(t || "").toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/ø/g, "o").replace(/æ/g, "ae").replace(/å/g, "a"); }
+  function loadRankAll(cb) {
+    if (rankAll) { cb && cb(); return; }
+    if (window.RANKING_ALLE) { rankAll = window.RANKING_ALLE.spillere.map(function (r) { return { n: r[0], k: r[1], p: r[2], pl: r[3], s: norm(r[0] + " " + r[1]) }; }); cb && cb(); return; }
+    if (rankLoading) return; rankLoading = true;
+    var sc = document.createElement("script"); sc.src = "/ranking-alle.js?v=" + Math.floor(Date.now() / 864e5);
+    sc.onload = function () { rankLoading = false; loadRankAll(cb); }; sc.onerror = function () { rankLoading = false; };
+    document.head.appendChild(sc);
+  }
+  function showSugg() {
+    var inp = document.getElementById("mnOpp"), sg = document.getElementById("mnSugg"); if (!inp || !sg) return;
+    var q = norm(inp.value).trim(); if (q.length < 2) { sg.hidden = true; sg.innerHTML = ""; return; }
+    if (!rankAll) { loadRankAll(showSugg); return; }
+    var words = q.split(/\s+/);
+    var hits = rankAll.filter(function (r) { return words.every(function (w) { return r.s.indexOf(w) >= 0; }); }).slice(0, 8);
+    if (!hits.length) { sg.innerHTML = '<div class="none">Fant ingen på rankingen – navnet lagres slik du skriver det</div>'; sg.hidden = false; return; }
+    sg.innerHTML = hits.map(function (r) { return '<button type="button" data-pick="' + esc(r.n + (r.k ? " (" + r.k + ")" : "")) + '"><b>' + esc(r.n) + '</b><span>' + esc(r.k || "") + '</span><em>' + Math.round(r.p).toLocaleString("nb-NO") + ' p' + (r.pl ? ' · nr. ' + r.pl : '') + '</em></button>'; }).join("");
+    sg.hidden = false;
+  }
+  box.addEventListener("input", function (e) { if (e.target && e.target.id === "mnOpp") showSugg(); });
+  box.addEventListener("focusin", function (e) { if (e.target && e.target.id === "mnOpp") loadRankAll(); });
+  box.addEventListener("focusout", function (e) { if (e.target && e.target.id === "mnOpp") setTimeout(function () { var sg = document.getElementById("mnSugg"); if (sg && !sg.contains(document.activeElement)) sg.hidden = true; }, 250); });
   async function save(item) { busy = true; var ok = await window.vkListSave("playerMatchNotes", item); busy = false; if (!ok) alert("Fikk ikke lagret – sjekk nettet og prøv igjen."); return ok; }
   box.addEventListener("click", async function (e) {
     if (busy) return;
     var st = e.target.closest("[data-start]"); if (st) { open = st.dataset.start || true; ev = st.dataset.ev || ""; res = "seier"; render(); var o = document.getElementById(ev ? "mnOpp" : "mnEv"); if (o) o.focus(); return; }
+    var pk = e.target.closest("[data-pick]"); if (pk) { var oi = document.getElementById("mnOpp"); if (oi) oi.value = pk.dataset.pick; var sg = document.getElementById("mnSugg"); if (sg) { sg.hidden = true; sg.innerHTML = ""; } return; }
     if (e.target.closest("[data-cancel]")) { open = false; render(); return; }
     var r = e.target.closest("[data-res]"); if (r) { res = r.dataset.res; box.querySelectorAll("[data-res]").forEach(function (b) { b.classList.toggle("on", b === r); }); return; }
     if (e.target.closest("[data-save]")) {
       var g = function (id) { var x = document.getElementById(id); return x ? String(x.value || "").trim() : ""; };
-      var item = { id: "kamp-" + Date.now().toString(36), date: g("mnDate") || dv(new Date()), event: g("mnEv").slice(0, 60), opponent: g("mnOpp").slice(0, 50), result: res, score: g("mnScore").slice(0, 12), good: g("mnGood").slice(0, 300), improve: g("mnImprove").slice(0, 300), focusId: g("mnFocus"), createdAt: new Date().toISOString() };
+      var item = { id: "kamp-" + Date.now().toString(36), date: g("mnDate") || dv(new Date()), event: g("mnEv").slice(0, 60), opponent: g("mnOpp").slice(0, 60), result: res, score: g("mnScore").slice(0, 12), good: g("mnGood").slice(0, 300), improve: g("mnImprove").slice(0, 300), focusId: g("mnFocus"), createdAt: new Date().toISOString() };
       if (!item.opponent && !item.good && !item.improve) { document.getElementById("mnOpp").focus(); return; }
       if (await save(item)) {
         ev = item.event;
