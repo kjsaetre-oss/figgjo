@@ -213,6 +213,19 @@
   .dr-body ol { margin: 0; padding-left: 20px; display: grid; gap: 4px; }
   .dr-plan { margin-top: 10px; background: #fdf0f2; border-radius: 12px; padding: 10px 12px; } .dr-plan b { display: block; color: #c8102e; font-size: 12.5px; text-transform: uppercase; letter-spacing: .06em; margin-bottom: 2px; }
   .dr-done { width: 100%; margin-top: 10px; border: 0; border-radius: 12px; padding: 12px; background: #c8102e; color: #fff; font: 800 14.5px -apple-system, sans-serif; }
+  .dr-coachact { display: flex; gap: 8px; margin-top: 8px; } .dr-coachact button { flex: 1; border: 1px solid #d5d7dd; background: #fff; border-radius: 10px; padding: 8px; font: 700 13px -apple-system, sans-serif; color: #1b1d22; }
+  .dr-coachlink { display: block; margin: 8px auto 0; border: 0; background: none; font: 600 12.5px -apple-system, sans-serif; color: #8a8f99; text-decoration: underline; }
+  .dr-coach { margin: 10px 14px 4px; display: grid; gap: 8px; }
+  .dr-coach > b { font: 800 14px -apple-system, sans-serif; }
+  .dr-coach small { color: #b0413e; font: 600 12.5px -apple-system, sans-serif; }
+  .dr-login { display: flex; gap: 8px; } .dr-login input { flex: 1; min-width: 0; border: 1px solid #d5d7dd; border-radius: 10px; padding: 9px 10px; font: 16px -apple-system, sans-serif; }
+  .dr-login button, .dr-new { border: 0; border-radius: 12px; padding: 11px 14px; background: #c8102e; color: #fff; font: 800 14px -apple-system, sans-serif; }
+  .dr-cancel { border: 1px solid #d5d7dd; border-radius: 12px; padding: 11px 14px; background: #fff; color: #1b1d22; font: 700 14px -apple-system, sans-serif; }
+  .dr-form { background: #f6f7f9; border-radius: 16px; padding: 12px; }
+  .dr-form label { display: grid; gap: 4px; font: 700 12px -apple-system, sans-serif; color: #646973; }
+  .dr-form input, .dr-form select, .dr-form textarea { border: 1px solid #d5d7dd; border-radius: 10px; padding: 9px 10px; font: 16px -apple-system, sans-serif; background: #fff; color: #1b1d22; width: 100%; box-sizing: border-box; min-width: 0; }
+  .dr-form .two { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+  .dr-prev span { display: block; width: 100%; aspect-ratio: 16 / 9; border-radius: 10px; background: #22252c center/cover no-repeat; }
   /* Motstanderprofil */
   .op-card { background: #f6f7f9; border-radius: 14px; padding: 12px; margin-top: 8px; display: grid; gap: 10px; font: 14px -apple-system, sans-serif; color: #14161b; }
   .op-wait { color: #646973; font-size: 13px; }
@@ -26038,6 +26051,24 @@ function getExercisePR(exerciseName) {
       "Server kort, partneren pusher langt, du angriper: 3 × 10 baller."]
   ];
   var cat = "alle", open = "", busy = false;
+  // Treneren legger til egne øvelser rett i appen (bt_drills i Supabase, bordtennis-ovelser.sql)
+  var custom = [], coachCode = "", coachUi = "", edit = null, LEVELS = ["Nybegynner", "Viderekommen", "Alle"];
+  try { coachCode = localStorage.getItem("bt_trenerkode") || ""; } catch (e) {}
+  function rpc(name, body) {
+    return fetch("https://cpqbdorxilssxylkqdkt.supabase.co/rest/v1/rpc/" + name, { method: "POST", headers: { apikey: "sb_publishable_37LxJJHdYNa8HpqDOVKpVw_0fJlfDmd", Authorization: "Bearer sb_publishable_37LxJJHdYNa8HpqDOVKpVw_0fJlfDmd", "Content-Type": "application/json" }, body: JSON.stringify(body || {}) })
+      .then(function (r) { return r.ok ? r.json() : null; }).catch(function () { return null; });
+  }
+  function ytId(u) { var mm = String(u || "").match(/(?:youtu\.be\/|v=|\/embed\/|\/shorts\/)([\w-]{11})/) || String(u || "").match(/^([\w-]{11})$/); return mm ? mm[1] : ""; }
+  function loadCustom() {
+    rpc("bt_drills_list").then(function (rows) {
+      if (!Array.isArray(rows)) return;
+      custom = rows.filter(function (x) { return x && x.id && x.title && x.yt; }).map(function (x) {
+        return [x.id, x.cat || "grunnslag", x.title, x.yt, Number(x.frame) || 2, x.level || "Alle", Number(x.min) || 10, x.kilde || "Treneren", Array.isArray(x.steps) ? x.steps : [], x.plan || "", true];
+      });
+      if (!edit) render();
+    });
+  }
+  function all() { return D.concat(custom); }
   function counts() {
     var P = window.vkPlayerData ? window.vkPlayerData() : null, c = {};
     (P ? P.log : []).forEach(function (l) { var mm = /^Øvelse: (.+)$/.exec(l.note || ""); if (mm) c[mm[1]] = (c[mm[1]] || 0) + 1; });
@@ -26045,27 +26076,82 @@ function getExercisePR(exerciseName) {
   }
   function render() {
     box.hidden = false;
-    var C = counts(), list = D.filter(function (d) { return cat === "alle" || d[1] === cat; });
-    var html = '<div class="tp-team-head"><h2>📚 Øvelsesbank</h2><small>' + D.length + ' øvelser med video</small></div>' +
+    var C = counts(), A = all(), list = A.filter(function (d) { return cat === "alle" || d[1] === cat; });
+    var html = '<div class="tp-team-head"><h2>📚 Øvelsesbank</h2><small>' + A.length + ' øvelser med video</small></div>' +
       '<div class="dr-cats">' + CATS.map(function (c) { return '<button type="button" data-cat="' + c[0] + '" class="' + (cat === c[0] ? "on" : "") + '">' + c[1] + '</button>'; }).join("") + '</div>' +
       '<div class="dr-list">' + list.map(function (d) {
         var n = C[d[2]] || 0, on = open === d[0];
         return '<div class="dr-item' + (on ? " open" : "") + '"><button type="button" class="dr-row" data-open="' + d[0] + '"><span class="dr-th" style="background-image:url(\'https://img.youtube.com/vi/' + d[3] + '/mq' + d[4] + '.jpg\')"><i>▶</i></span><span class="dr-x"><b>' + esc(d[2]) + '</b><small>' + esc(d[5]) + ' · ca. ' + d[6] + ' min' + (n ? ' · <em>øvd ' + n + ' ' + (n === 1 ? "gang" : "ganger") + '</em>' : '') + '</small></span><span class="dr-chev">' + (on ? "–" : "+") + '</span></button>' +
           (on ? '<div class="dr-body"><div class="dr-video"><iframe src="https://www.youtube-nocookie.com/embed/' + d[3] + '?rel=0&modestbranding=1&playsinline=1" title="' + esc(d[2]) + '" allow="autoplay; encrypted-media; picture-in-picture" allowfullscreen loading="lazy"></iframe></div>' +
-            '<div class="dr-src">Video: ' + esc(d[7]) + ' (på engelsk)</div>' +
-            '<h4>Slik gjør du</h4><ol>' + d[8].map(function (t) { return '<li>' + esc(t) + '</li>'; }).join("") + '</ol>' +
-            '<div class="dr-plan"><b>Øv slik</b>' + esc(d[9]) + '</div>' +
-            '<button type="button" class="dr-done" data-done="' + d[0] + '">✓ Øvd i dag (' + d[6] + ' min)</button></div>' : '') + '</div>';
+            '<div class="dr-src">' + (d[10] ? 'Lagt til av treneren' : 'Video: ' + esc(d[7]) + ' (på engelsk)') + '</div>' +
+            (d[8].length ? '<h4>Slik gjør du</h4><ol>' + d[8].map(function (t) { return '<li>' + esc(t) + '</li>'; }).join("") + '</ol>' : '') +
+            (d[9] ? '<div class="dr-plan"><b>Øv slik</b>' + esc(d[9]) + '</div>' : '') +
+            '<button type="button" class="dr-done" data-done="' + esc(d[0]) + '">✓ Øvd i dag (' + d[6] + ' min)</button>' +
+            (d[10] && coachCode ? '<div class="dr-coachact"><button type="button" data-edit="' + esc(d[0]) + '">✎ Endre</button><button type="button" data-delc="' + esc(d[0]) + '">Slett</button></div>' : '') + '</div>' : '') + '</div>';
       }).join("") + '</div>' +
+      coachHtml() +
       '<div class="tp-turn-note">Videoene er fra YouTube. «Øvd i dag» legges inn som bordtennistrening under Timer.</div>';
     box.innerHTML = html;
   }
+  function coachHtml() {
+    if (!coachCode) {
+      if (coachUi === "login") return '<div class="dr-coach"><b>Trenerinnlogging</b><div class="dr-login"><input type="password" id="drCode" placeholder="Trenerkode" autocomplete="off"><button type="button" data-login>Logg inn</button></div><small id="drMsg"></small></div>';
+      return '<button type="button" class="dr-coachlink" data-coach>Trener? Logg inn for å legge til øvelser</button>';
+    }
+    if (!edit) return '<div class="dr-coach"><button type="button" class="dr-new" data-new>+ Ny øvelse</button><button type="button" class="dr-coachlink" data-logout>Logg ut som trener</button></div>';
+    var e = edit;
+    return '<div class="dr-coach dr-form"><b>' + (e.isNew ? "Ny øvelse" : "Endre øvelse") + '</b>' +
+      '<label>Navn<input type="text" id="drT" maxlength="70" value="' + esc(e.title) + '" placeholder="F.eks. «Kort serve + flick»"></label>' +
+      '<label>YouTube-lenke<input type="text" id="drY" value="' + esc(e.yt ? "https://youtu.be/" + e.yt : "") + '" placeholder="Lim inn lenken til videoen"></label>' +
+      '<div id="drPrev" class="dr-prev">' + (e.yt ? '<span style="background-image:url(\'https://img.youtube.com/vi/' + e.yt + '/mq2.jpg\')"></span>' : '') + '</div>' +
+      '<div class="two"><label>Kategori<select id="drC">' + CATS.slice(1).map(function (c) { return '<option value="' + c[0] + '"' + (e.cat === c[0] ? " selected" : "") + '>' + c[1] + '</option>'; }).join("") + '</select></label>' +
+      '<label>Nivå<select id="drL">' + LEVELS.map(function (l) { return '<option' + (e.level === l ? " selected" : "") + '>' + l + '</option>'; }).join("") + '</select></label></div>' +
+      '<label>Minutter<input type="number" id="drM" inputmode="numeric" min="1" max="120" value="' + (e.min || 10) + '"></label>' +
+      '<label>Slik gjør du (ett punkt per linje)<textarea id="drS" rows="3" placeholder="Stå litt sidelengs …">' + esc((e.steps || []).join("\n")) + '</textarea></label>' +
+      '<label>Øv slik<textarea id="drP" rows="2" placeholder="F.eks. 3 × 10 baller">' + esc(e.plan || "") + '</textarea></label>' +
+      '<div class="two"><button type="button" class="dr-new" data-savec>Lagre øvelsen</button><button type="button" class="dr-cancel" data-cancelc>Avbryt</button></div><small id="drMsg"></small></div>';
+  }
+  async function saveCustom(item) {
+    busy = true; var ok = await rpc("bt_drill_save", { p_code: coachCode, p_item: item }); busy = false;
+    if (ok !== true) { var mm = document.getElementById("drMsg"); if (mm) mm.textContent = "Fikk ikke lagret. Sjekk nettet – eller logg inn på nytt med trenerkoden."; return false; }
+    return true;
+  }
+  box.addEventListener("input", function (e) {
+    if (e.target.id === "drY") { var id = ytId(e.target.value), pv = document.getElementById("drPrev"); if (pv) pv.innerHTML = id ? '<span style="background-image:url(\'https://img.youtube.com/vi/' + id + '/mq2.jpg\')"></span>' : ""; }
+  });
   box.addEventListener("click", async function (e) {
     if (busy) return;
-    var c = e.target.closest("[data-cat]"); if (c) { cat = c.dataset.cat; open = ""; render(); return; }
+    if (e.target.closest("[data-coach]")) { coachUi = "login"; render(); var ci = document.getElementById("drCode"); if (ci) ci.focus(); return; }
+    if (e.target.closest("[data-login]")) {
+      var code = String((document.getElementById("drCode") || {}).value || "").trim(); if (!code) return;
+      busy = true; var ok0 = await rpc("bt_code_ok", { p_code: code }); busy = false;
+      if (ok0 === true) { coachCode = code; try { localStorage.setItem("bt_trenerkode", code); } catch (er) {} coachUi = ""; render(); }
+      else { var mm0 = document.getElementById("drMsg"); if (mm0) mm0.textContent = ok0 === false ? "Feil kode." : "Fikk ikke kontakt – prøv igjen."; }
+      return;
+    }
+    if (e.target.closest("[data-logout]")) { coachCode = ""; try { localStorage.removeItem("bt_trenerkode"); } catch (er) {} render(); return; }
+    if (e.target.closest("[data-new]")) { edit = { isNew: true, id: "egen-" + Date.now().toString(36), title: "", yt: "", cat: cat !== "alle" ? cat : "grunnslag", level: "Alle", min: 10, steps: [], plan: "" }; render(); var ti = document.getElementById("drT"); if (ti) { ti.focus(); ti.scrollIntoView({ block: "center" }); } return; }
+    if (e.target.closest("[data-cancelc]")) { edit = null; render(); return; }
+    var ed = e.target.closest("[data-edit]"); if (ed) { var x = custom.find(function (k) { return k[0] === ed.dataset.edit; }); if (x) { edit = { id: x[0], cat: x[1], title: x[2], yt: x[3], level: x[5], min: x[6], steps: x[8], plan: x[9] }; render(); var t2 = document.getElementById("drT"); if (t2) t2.scrollIntoView({ block: "center" }); } return; }
+    var dc = e.target.closest("[data-delc]"); if (dc) { var y = custom.find(function (k) { return k[0] === dc.dataset.delc; }); if (y && confirm("Slette «" + y[2] + "» fra øvelsesbanken?")) { if (await saveCustom({ id: y[0], title: y[2], removed: true })) { custom = custom.filter(function (k) { return k[0] !== y[0]; }); open = ""; render(); } } return; }
+    if (e.target.closest("[data-savec]")) {
+      var g = function (id) { var el = document.getElementById(id); return el ? String(el.value || "").trim() : ""; };
+      var yt = ytId(g("drY")), title = g("drT"), msg = document.getElementById("drMsg");
+      if (!title) { document.getElementById("drT").focus(); return; }
+      if (!yt) { if (msg) msg.textContent = "Lim inn en gyldig YouTube-lenke."; document.getElementById("drY").focus(); return; }
+      var item = { id: edit.id, title: title.slice(0, 70), yt: yt, frame: 2, cat: g("drC") || "grunnslag", level: g("drL") || "Alle", min: Math.max(1, Math.min(120, parseInt(g("drM"), 10) || 10)), kilde: "Treneren", steps: g("drS").split(/\n+/).map(function (t) { return t.trim(); }).filter(Boolean).slice(0, 6), plan: g("drP").slice(0, 400) };
+      if (await saveCustom(item)) {
+        var arr = [item.id, item.cat, item.title, item.yt, 2, item.level, item.min, "Treneren", item.steps, item.plan, true];
+        var i0 = custom.findIndex(function (k) { return k[0] === item.id; }); if (i0 >= 0) custom[i0] = arr; else custom.push(arr);
+        edit = null; cat = item.cat; open = item.id; render();
+        var it = box.querySelector(".dr-item.open"); if (it) it.scrollIntoView({ block: "start", behavior: "smooth" });
+      }
+      return;
+    }
+    var c = e.target.closest("[data-cat]"); if (c) { cat = c.dataset.cat; open = ""; if (!edit) render(); else { box.querySelectorAll("[data-cat]").forEach(function (b) { b.classList.toggle("on", b === c); }); } return; }
     var o = e.target.closest("[data-open]"); if (o) { open = open === o.dataset.open ? "" : o.dataset.open; render(); var it = box.querySelector(".dr-item.open"); if (it) it.scrollIntoView({ block: "start", behavior: "smooth" }); return; }
     var dn = e.target.closest("[data-done]"); if (dn) {
-      var d = D.find(function (x) { return x[0] === dn.dataset.done; }); if (!d || !window.vkListSave) return;
+      var d = all().find(function (x) { return x[0] === dn.dataset.done; }); if (!d || !window.vkListSave) return;
       busy = true; dn.disabled = true; dn.textContent = "Lagrer …";
       var now = new Date(), dv = now.getFullYear() + "-" + String(now.getMonth() + 1).padStart(2, "0") + "-" + String(now.getDate()).padStart(2, "0");
       var ok = await window.vkListSave("playerLog", { id: "log-" + Date.now().toString(36), date: dv, min: d[6], type: "bordtennis", note: "Øvelse: " + d[2], createdAt: now.toISOString() });
@@ -26074,7 +26160,7 @@ function getExercisePR(exerciseName) {
       dn.textContent = "✓ Lagt inn – bra jobba!"; setTimeout(render, 1400);
     }
   });
-  window.addEventListener("load", function () { render(); });
+  window.addEventListener("load", function () { render(); loadCustom(); });
 })();
 </script>
 <script>
