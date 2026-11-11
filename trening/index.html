@@ -26048,7 +26048,8 @@ function getExercisePR(exerciseName) {
   var LKEY = "tl_tp_live:" + m.id, lv = { res: "seier", w: 1, oppPts: null, form: false }, curP = null, curR = null;
   var RK_T = [[0, 8, -7, 8, -7], [49, 8, -8, 8, -6], [99, 10, -10, 7, -5], [149, 12, -12, 6, -4], [199, 14, -14, 5, -3], [299, 16, -16, 4, -2], [399, 18, -18, 3, -2], [599, 20, -20, 2, -1], [1e9, 25, -25, 1, -1]];
   function rkDelta(my, opp, win, w) {
-    var d = Math.round(Math.abs(my - opp)), r = RK_T.find(function (x) { return d <= x[0]; }), hi = my > opp;
+    // Ingen avrunding: 99,5 hører til 50–99 (sjekket mot forbundets egne tall)
+    var d = Math.abs(my - opp), r = RK_T.slice(1).find(function (x) { return d < x[0] + 1; }), hi = my > opp;
     // Høyest rangert vinner = forventet (kol. 3/4), lavest rangert vinner = uventet (kol. 1/2)
     var v = d === 0 ? (win ? 8 : -7) : win ? (hi ? r[3] : r[1]) : (hi ? r[2] : r[4]);
     return Math.round(v * (w || 1) * 10) / 10;
