@@ -193,7 +193,19 @@
   .gr-bar { height: 8px; border-radius: 999px; background: rgba(255,255,255,.12); margin-top: 9px; overflow: hidden; } .gr-bar i { display: block; height: 100%; border-radius: 999px; }
   .gr-card .tip { font-size: 11.5px; margin-top: 6px; color: rgba(255,255,255,.75); }
   .gr-card .act { display: flex; gap: 6px; margin-top: 9px; } .gr-card .act button { border: 1px solid rgba(255,255,255,.25); background: transparent; color: #fff; border-radius: 10px; padding: 6px 10px; font: 700 12px -apple-system, sans-serif; }
-  /* Øvelsesbank */
+  /* Øvelsesbank (velger og visning legges over kalenderen) */
+  .bd-ov { position: fixed; inset: 0; z-index: 100050; background: rgba(15,17,21,.55); display: flex; align-items: flex-end; justify-content: center; }
+  .bd-sheet { width: 100%; max-width: 520px; max-height: 92vh; background: #fff; border-radius: 22px 22px 0 0; display: flex; flex-direction: column; overflow: hidden; box-shadow: 0 -20px 50px rgba(0,0,0,.3); }
+  .bd-head { display: flex; align-items: center; justify-content: space-between; gap: 10px; padding: 14px 16px 8px; }
+  .bd-head b { font: 800 18px "Outfit", -apple-system, sans-serif; color: #14161b; }
+  .bd-x { border: 0; background: #f1f2f5; width: 34px; height: 34px; border-radius: 50%; font-size: 15px; color: #3b3f47; }
+  .bd-body { overflow-y: auto; overflow-x: hidden; padding: 0 0 calc(14px + env(safe-area-inset-bottom)); -webkit-overflow-scrolling: touch; }
+  .bd-foot { position: sticky; bottom: 0; padding: 10px 14px 4px; background: linear-gradient(180deg, rgba(255,255,255,0), #fff 30%); display: grid; }
+  .bd-sum { margin: 0 16px 8px; font: 600 13px -apple-system, sans-serif; color: #646973; }
+  .dr-item.sel { background: #fdf0f2; box-shadow: 0 0 0 1.5px #c8102e; }
+  .dr-chk { width: 28px; height: 28px; border-radius: 50%; display: grid; place-items: center; font: 800 15px -apple-system, sans-serif; color: #8a8f99; background: #fff; box-shadow: inset 0 0 0 1.5px #d5d7dd; }
+  .dr-item.sel .dr-chk { background: #c8102e; color: #fff; box-shadow: none; }
+  .dr-th i { font-weight: 800; }
   .dr-cats { display: flex; gap: 6px; overflow-x: auto; padding: 0 14px 10px; scrollbar-width: none; } .dr-cats::-webkit-scrollbar { display: none; }
   .dr-cats button { flex: none; border: 1px solid #e6e7eb; background: #f4f5f7; border-radius: 999px; padding: 7px 12px; font: 700 12.5px -apple-system, sans-serif; color: #1b1d22; }
   .dr-cats button.on { background: #14161b; border-color: #14161b; color: #fff; }
@@ -4059,6 +4071,10 @@
   .vk-w-photo .vk-w-btns{ position:absolute; top:14px; right:14px; z-index:1; }
   .vk-w-photo .vk-info, .vk-w-photo .vk-dots{ background:rgba(20,12,32,.45); color:#fff; }
   .vk-activity{ min-height:200px; }
+  .vk-activity .vk-act-drills{ position:relative; z-index:1; display:inline-flex; align-items:center; gap:6px; margin:10px 0 0; padding:7px 12px; border:0; border-radius:999px; background:rgba(255,255,255,.92); color:#14161b; font:800 13px -apple-system, sans-serif; cursor:pointer; }
+  .vk-activity .vk-act-drills.empty{ background:rgba(255,255,255,.2); color:#fff; box-shadow:inset 0 0 0 1px rgba(255,255,255,.45); }
+  .vk-sport-drills{ display:grid; gap:8px; }
+  .vk-drill-chips{ display:flex; flex-wrap:wrap; gap:6px; } .vk-drill-chips span{ font-size:.82rem; font-weight:700; padding:5px 10px; border-radius:999px; background:#f3eee7; color:#303d38; }
   .vk-activity .vk-act-note{ display:flex; gap:8px; align-items:center; margin:10px 0 0; color:rgba(255,255,255,.92); font-size:13.5px; line-height:1.35; }
   .vk-activity .vk-act-note img, .vk-activity .vk-act-note .dpp-coach-avatar{ width:26px; height:26px; border-radius:50%; flex:none; object-fit:cover; }
   .vk-activity.is-done .vk-cta{ background:rgba(255,255,255,.2); color:#fff; }
@@ -9640,6 +9656,11 @@ var DPP_IMG = [
     card.style.setProperty("--vk-w-img", `url("${vkActivityPhotoUrl(item.activityPhoto)}")`);
     const when = item.time ? formatClock(item.time) + (item.endTime ? "–" + formatClock(item.endTime) : "") : "";
     const meta = [when, item.place].filter(Boolean).map(escapeHtmlText).join(" · ");
+    // Øvelser i bordtennisøkta (velges fra øvelsesbanken i bordtennisappen)
+    const ownTask = (data.assignedTasks || []).find(t => t && t.id === item.taskId);
+    const drills = ownTask && Array.isArray(ownTask.drills) ? ownTask.drills : [];
+    const canDrills = !!window.btDrillView && !item.isTournament && (item.activityPhoto === "bordtennis" || (ownTask && ownTask.sportType === "bordtennis"));
+    const drillBtn = canDrills ? `<button type="button" class="vk-act-drills${drills.length ? "" : " empty"}">${drills.length ? "📚 " + drills.length + " øvelse" + (drills.length > 1 ? "r" : "") + " i økta" : "+ Legg inn øvelser"}</button>` : "";
     card.innerHTML = `<div class="vk-w-top">
         <div class="vk-wring" style="--p:${isDone ? 100 : 0}"><span>${isDone ? "✓" : item.isTournament ? "🏆" : (VK_ACTIVITY_EMOJI[item.activityPhoto] || "⭐")}</span></div>
         <div class="vk-w-title"><h3>${escapeHtmlText(vkStrip(item.title))}</h3>
@@ -9647,6 +9668,7 @@ var DPP_IMG = [
         <div class="vk-w-btns"><button type="button" class="vk-dots" aria-label="Hopp over denne dagen">${VK_DOTS_SVG}</button></div>
       </div>
       ${item.coachNote ? `<div class="vk-act-note"></div>` : ""}
+      ${drillBtn}
       <button type="button" class="vk-cta">${item.isTournament ? (isDone ? "✓ Jeg var med" : "Jeg var med") : (isDone ? "✓ Gjennomført" : "Marker som gjennomført")}</button>`;
     const noteEl = card.querySelector(".vk-act-note");
     if (noteEl) noteEl.textContent = item.coachNote;
@@ -9659,6 +9681,13 @@ var DPP_IMG = [
             if (!t.skipDates.includes(item.date)) t.skipDates.push(item.date);
           });
         }
+        return;
+      }
+      if (e.target.closest(".vk-act-drills")) {
+        e.stopPropagation();
+        const saveDrills = nl => updateCoachTask(item.taskId, t => { t.drills = nl; }, "⚠️ Kunne ikke lagre øvelsene — sjekk internett og prøv igjen");
+        if (drills.length) window.btDrillView(drills, { title: vkStrip(item.title), onEdit: saveDrills });
+        else window.btDrillPicker([], nl => { if (nl.length) saveDrills(nl); });
         return;
       }
       if (e.target.closest(".vk-cta")) { e.stopPropagation(); await toggleTaskDayDone(item, e); }
@@ -22726,12 +22755,24 @@ function getExercisePR(exerciseName) {
       </div>`}
       <div class="dpp-own-label">Sted (valgfritt)</div>
       <input class="dpp-own-input" id="dppSportPlace" type="text" maxlength="60" placeholder="F.eks. Figgjohallen" />
+      ${kind === "bordtennis" && window.btDrillPicker ? `<div class="dpp-own-label">Øvelser i økta (valgfritt)</div><div class="vk-sport-drills" id="dppSportDrills"></div>` : ""}
       <button class="dpp-own-save" type="button" id="dppSportSave">Legg i kalenderen</button>
       <div class="dpp-own-msg" aria-live="polite"></div>`;
     sheet.appendChild(wrap);
     quickBack(sheet);
     const $ = sel => wrap.querySelector(sel);
     const msg = $(".dpp-own-msg");
+    // Øvelser fra øvelsesbanken (bordtennisappen) – lagres på økta som drills
+    let drills = [];
+    const paintDrills = () => {
+      const box = $("#dppSportDrills"); if (!box) return;
+      box.innerHTML = (drills.length ? `<div class="vk-drill-chips">${drills.map((d, i) => `<span>${i + 1}. ${escapeExHtml(d.title)}</span>`).join("")}</div>` : "") +
+        `<button type="button" class="dpp-quick-chip vk-drill-pick">${drills.length ? "✎ Endre øvelsene" : "+ Velg øvelser"}</button>`;
+    };
+    if ($("#dppSportDrills")) {
+      paintDrills();
+      $("#dppSportDrills").addEventListener("click", (e) => { if (!e.target.closest(".vk-drill-pick")) return; window.btDrillPicker(drills, nl => { drills = nl; paintDrills(); }); });
+    }
     const chips = (q, fn) => wrap.querySelectorAll(`[data-q="${q}"] [data-v]`).forEach(b => b.addEventListener("click", () => {
       wrap.querySelectorAll(`[data-q="${q}"] [data-v]`).forEach(x => x.classList.toggle("on", x === b)); fn(b.dataset.v); paint();
     }));
@@ -22789,6 +22830,7 @@ function getExercisePR(exerciseName) {
         startDate: date, days, weeks, time, endTime,
         place: ($("#dppSportPlace").value || "").trim().slice(0, 60), photo: k[3],
         ...(tour ? { tournament: { id, lenke: "" } } : {}),
+        ...(drills.length ? { drills } : {}),
         doneDates: done, skipDates: [], createdAt: new Date().toISOString() };
       btn.disabled = true; btn.textContent = "Lagrer …";
       data.assignedTasks = (data.assignedTasks || []).concat(task);
@@ -25732,7 +25774,6 @@ function getExercisePR(exerciseName) {
 <div id="dppProgressToast" class="dpp-progress-toast" aria-live="polite"></div>
 
 <section class="tp-team tp-hours" id="tpHours" hidden></section>
-<section class="tp-team tp-drills" id="tpDrills" hidden></section>
 <section class="tp-rank" id="tpRank" hidden></section>
 <section class="tp-team tp-goals" id="tpGoals" hidden></section>
 <section class="tp-team" id="tpTeam" hidden></section>
@@ -25768,19 +25809,18 @@ function getExercisePR(exerciseName) {
 </script>
 <nav class="tp-nav" id="tpNav" aria-label="Meny">
   <button type="button" data-go="tpTop" class="on"><i>📅</i>Kalender</button>
-  <button type="button" data-go="tpDrills" hidden><i>📚</i>Øvelser</button>
   <button type="button" data-go="tpHours" hidden><i>⏱️</i>Timer</button>
   <button type="button" data-go="tpRank" hidden><i>📈</i>Ranking</button>
   <button type="button" data-go="tpGoals" hidden><i>⭐</i>Mål</button>
   <button type="button" data-go="tpTeam" hidden><i>🏓</i>Laget</button>
-  <button type="button" data-go="tpTurn" hidden><i>🏆</i>Turnering</button>
+  <button type="button" data-go="tpTurn" hidden><i>🏆</i>Turneringer</button>
 </nav>
 <script>
 // ── Meny nederst: hopper til delene på siden og viser hvor du er
 (function () {
   var nav = document.getElementById("tpNav"); if (!nav) return;
   if (!window.TL_TP_OK) { nav.remove(); return; }
-  var ids = ["tpTop", "tpDrills", "tpHours", "tpRank", "tpGoals", "tpTeam", "tpTurn"];
+  var ids = ["tpTop", "tpHours", "tpRank", "tpGoals", "tpTeam", "tpTurn"];
   var el = function (id) {
     if (id === "tpTop") return document.getElementById("dppApp");
     if (id === "tpTurn") { var n = document.getElementById("tpNotes"); if (n && !n.hidden) return n; }
@@ -25802,7 +25842,7 @@ function getExercisePR(exerciseName) {
   window.addEventListener("load", function () { sync(); setTimeout(sync, 2600); setTimeout(sync, 7200); });
   // Følg bare med på når delene blir synlige (ikke på menyen selv)
   var mo = new MutationObserver(function () { sync(); });
-  ["tpDrills", "tpHours", "tpRank", "tpGoals", "tpTeam", "tpNotes", "tpTurn"].forEach(function (id) { var e = document.getElementById(id); if (e) mo.observe(e, { attributes: true, attributeFilter: ["hidden"] }); });
+  ["tpHours", "tpRank", "tpGoals", "tpTeam", "tpNotes", "tpTurn"].forEach(function (id) { var e = document.getElementById(id); if (e) mo.observe(e, { attributes: true, attributeFilter: ["hidden"] }); });
 })();
 </script>
 <script>
@@ -25968,13 +26008,14 @@ function getExercisePR(exerciseName) {
 })();
 </script>
 <script>
-// ── Øvelsesbank for bordtennis (2026-11-11): videoer på YouTube (sjekket at de kan spilles av inne i appen),
-// forklaring og opplegg på norsk. «Øvd i dag» logges som bordtennistrening (playerLog).
+// ── Øvelsesbank for bordtennis (2026-11-11): vises ikke som egen side – øvelsene legges inn i en
+// bordtennisøkt i kalenderen. Kalenderen kaller window.btDrillPicker (velg øvelser) og
+// window.btDrillView (se øvelsene i økta). Treneren kan legge til egne øvelser (bt_drills i Supabase,
+// bordtennis-ovelser.sql) med trenerkode – det skjer inne i velgeren.
 (function () {
-  var box = document.getElementById("tpDrills"); var m = window.MVT_memberData;
-  if (!box || !m || !m.id) return;
   var esc = function (v) { return String(v == null ? "" : v).replace(/[&<>"']/g, function (c) { return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]; }); };
   var CATS = [["alle", "Alle"], ["grunnslag", "Grunnslag"], ["serve", "Serve"], ["mottak", "Mottak"], ["fotarbeid", "Fotarbeid"], ["trening", "Treningsformer"], ["taktikk", "Taktikk"]];
+  var LEVELS = ["Nybegynner", "Viderekommen", "Alle"];
   // [id, kategori, tittel, youtube-id, bilde (1–3), nivå, minutter, kilde, slik gjør du [..], øv slik]
   var D = [
     ["fh-drive", "grunnslag", "Forhand drive", "h-Qqe0Ty9KI", 2, "Nybegynner", 10, "Tom Lodziak",
@@ -26049,118 +26090,140 @@ function getExercisePR(exerciseName) {
     ["tredjeball", "taktikk", "Serve og tredjeballsangrep", "-K1Kuox4NL4", 2, "Viderekommen", 15, "Tom Lodziak",
       ["Server kort underskru – motstanderen må pushe.", "Vær klar for en lang push til backhand eller forhand.", "Angrip den tredje ballen med topspin."],
       "Server kort, partneren pusher langt, du angriper: 3 × 10 baller."]
-  ];
-  var cat = "alle", open = "", busy = false;
-  // Treneren legger til egne øvelser rett i appen (bt_drills i Supabase, bordtennis-ovelser.sql)
-  var custom = [], coachCode = "", coachUi = "", edit = null, LEVELS = ["Nybegynner", "Viderekommen", "Alle"];
+  ];  var custom = [], coachCode = "";
   try { coachCode = localStorage.getItem("bt_trenerkode") || ""; } catch (e) {}
   function rpc(name, body) {
     return fetch("https://cpqbdorxilssxylkqdkt.supabase.co/rest/v1/rpc/" + name, { method: "POST", headers: { apikey: "sb_publishable_37LxJJHdYNa8HpqDOVKpVw_0fJlfDmd", Authorization: "Bearer sb_publishable_37LxJJHdYNa8HpqDOVKpVw_0fJlfDmd", "Content-Type": "application/json" }, body: JSON.stringify(body || {}) })
       .then(function (r) { return r.ok ? r.json() : null; }).catch(function () { return null; });
   }
   function ytId(u) { var mm = String(u || "").match(/(?:youtu\.be\/|v=|\/embed\/|\/shorts\/)([\w-]{11})/) || String(u || "").match(/^([\w-]{11})$/); return mm ? mm[1] : ""; }
-  function loadCustom() {
+  var loaded = false;
+  function loadCustom(cb) {
     rpc("bt_drills_list").then(function (rows) {
-      if (!Array.isArray(rows)) return;
-      custom = rows.filter(function (x) { return x && x.id && x.title && x.yt; }).map(function (x) {
+      if (Array.isArray(rows)) custom = rows.filter(function (x) { return x && x.id && x.title && x.yt; }).map(function (x) {
         return [x.id, x.cat || "grunnslag", x.title, x.yt, Number(x.frame) || 2, x.level || "Alle", Number(x.min) || 10, x.kilde || "Treneren", Array.isArray(x.steps) ? x.steps : [], x.plan || "", true];
       });
-      if (!edit) render();
+      loaded = true; cb && cb();
     });
   }
   function all() { return D.concat(custom); }
-  function counts() {
-    var P = window.vkPlayerData ? window.vkPlayerData() : null, c = {};
-    (P ? P.log : []).forEach(function (l) { var mm = /^Øvelse: (.+)$/.exec(l.note || ""); if (mm) c[mm[1]] = (c[mm[1]] || 0) + 1; });
-    return c;
+  function find(id) { return all().find(function (d) { return d[0] === id; }); }
+  function snap(d) { return { id: d[0], title: d[2], yt: d[3], frame: d[4], min: d[6] }; }
+  function thumb(yt, fr) { return "https://img.youtube.com/vi/" + yt + "/mq" + (fr || 2) + ".jpg"; }
+  window.addEventListener("load", function () { loadCustom(); });
+
+  // Felles overlegg (ligger over kalenderens egne vinduer)
+  function overlay(title) {
+    var ov = document.createElement("div"); ov.className = "bd-ov";
+    ov.innerHTML = '<div class="bd-sheet" role="dialog" aria-label="' + esc(title) + '"><div class="bd-head"><b>' + esc(title) + '</b><button type="button" class="bd-x" aria-label="Lukk">✕</button></div><div class="bd-body"></div></div>';
+    document.body.appendChild(ov);
+    var close = function () { ov.remove(); document.removeEventListener("keydown", onKey); };
+    var onKey = function (e) { if (e.key === "Escape") close(); };
+    document.addEventListener("keydown", onKey);
+    ov.addEventListener("click", function (e) { if (e.target === ov || e.target.closest(".bd-x")) close(); });
+    return { el: ov, body: ov.querySelector(".bd-body"), close: close };
   }
-  function render() {
-    box.hidden = false;
-    var C = counts(), A = all(), list = A.filter(function (d) { return cat === "alle" || d[1] === cat; });
-    var html = '<div class="tp-team-head"><h2>📚 Øvelsesbank</h2><small>' + A.length + ' øvelser med video</small></div>' +
-      '<div class="dr-cats">' + CATS.map(function (c) { return '<button type="button" data-cat="' + c[0] + '" class="' + (cat === c[0] ? "on" : "") + '">' + c[1] + '</button>'; }).join("") + '</div>' +
-      '<div class="dr-list">' + list.map(function (d) {
-        var n = C[d[2]] || 0, on = open === d[0];
-        return '<div class="dr-item' + (on ? " open" : "") + '"><button type="button" class="dr-row" data-open="' + d[0] + '"><span class="dr-th" style="background-image:url(\'https://img.youtube.com/vi/' + d[3] + '/mq' + d[4] + '.jpg\')"><i>▶</i></span><span class="dr-x"><b>' + esc(d[2]) + '</b><small>' + esc(d[5]) + ' · ca. ' + d[6] + ' min' + (n ? ' · <em>øvd ' + n + ' ' + (n === 1 ? "gang" : "ganger") + '</em>' : '') + '</small></span><span class="dr-chev">' + (on ? "–" : "+") + '</span></button>' +
+
+  // ── Velg øvelser til en økt. selected = [{id,…}], onDone(liste med øvelser)
+  window.btDrillPicker = function (selected, onDone, title) {
+    var O = overlay(title || "Velg øvelser til økta"), body = O.body;
+    var pick = (selected || []).map(function (x) { return x.id; }), cat = "alle", coachUi = "", edit = null, busy = false;
+    function render() {
+      var list = all().filter(function (d) { return cat === "alle" || d[1] === cat; });
+      body.innerHTML = '<div class="dr-cats">' + CATS.map(function (c) { return '<button type="button" data-cat="' + c[0] + '" class="' + (cat === c[0] ? "on" : "") + '">' + c[1] + '</button>'; }).join("") + '</div>' +
+        '<div class="dr-list">' + list.map(function (d) {
+          var on = pick.indexOf(d[0]) >= 0;
+          return '<div class="dr-item' + (on ? " sel" : "") + '"><button type="button" class="dr-row" data-tog="' + esc(d[0]) + '"><span class="dr-th" style="background-image:url(\'' + thumb(d[3], d[4]) + '\')"></span><span class="dr-x"><b>' + esc(d[2]) + '</b><small>' + esc(d[5]) + ' · ca. ' + d[6] + ' min' + (d[10] ? ' · fra treneren' : '') + '</small></span><span class="dr-chk">' + (on ? "✓" : "+") + '</span></button>' +
+            (d[10] && coachCode ? '<div class="dr-coachact"><button type="button" data-edit="' + esc(d[0]) + '">✎ Endre</button><button type="button" data-delc="' + esc(d[0]) + '">Slett fra banken</button></div>' : '') + '</div>';
+        }).join("") + '</div>' + coachHtml() +
+        '<div class="bd-foot"><button type="button" class="dr-new" data-done>' + (pick.length ? "Legg inn " + pick.length + " øvelse" + (pick.length > 1 ? "r" : "") : "Ingen øvelser valgt") + '</button></div>';
+    }
+    function coachHtml() {
+      if (!coachCode) {
+        if (coachUi === "login") return '<div class="dr-coach"><b>Trenerinnlogging</b><div class="dr-login"><input type="password" id="drCode" placeholder="Trenerkode" autocomplete="off"><button type="button" data-login>Logg inn</button></div><small id="drMsg"></small></div>';
+        return '<button type="button" class="dr-coachlink" data-coach>Trener? Logg inn for å legge til nye øvelser i banken</button>';
+      }
+      if (!edit) return '<div class="dr-coach"><button type="button" class="dr-cancel" data-new>+ Ny øvelse i banken</button><button type="button" class="dr-coachlink" data-logout>Logg ut som trener</button></div>';
+      var e = edit;
+      return '<div class="dr-coach dr-form"><b>' + (e.isNew ? "Ny øvelse i banken" : "Endre øvelse") + '</b>' +
+        '<label>Navn<input type="text" id="drT" maxlength="70" value="' + esc(e.title) + '" placeholder="F.eks. «Kort serve + flick»"></label>' +
+        '<label>YouTube-lenke<input type="text" id="drY" value="' + esc(e.yt ? "https://youtu.be/" + e.yt : "") + '" placeholder="Lim inn lenken til videoen"></label>' +
+        '<div id="drPrev" class="dr-prev">' + (e.yt ? '<span style="background-image:url(\'' + thumb(e.yt) + '\')"></span>' : '') + '</div>' +
+        '<div class="two"><label>Kategori<select id="drC">' + CATS.slice(1).map(function (c) { return '<option value="' + c[0] + '"' + (e.cat === c[0] ? " selected" : "") + '>' + c[1] + '</option>'; }).join("") + '</select></label>' +
+        '<label>Nivå<select id="drL">' + LEVELS.map(function (l) { return '<option' + (e.level === l ? " selected" : "") + '>' + l + '</option>'; }).join("") + '</select></label></div>' +
+        '<label>Minutter<input type="number" id="drM" inputmode="numeric" min="1" max="120" value="' + (e.min || 10) + '"></label>' +
+        '<label>Slik gjør du (ett punkt per linje)<textarea id="drS" rows="3" placeholder="Stå litt sidelengs …">' + esc((e.steps || []).join("\n")) + '</textarea></label>' +
+        '<label>Øv slik<textarea id="drP" rows="2" placeholder="F.eks. 3 × 10 baller">' + esc(e.plan || "") + '</textarea></label>' +
+        '<div class="two"><button type="button" class="dr-new" data-savec>Lagre øvelsen</button><button type="button" class="dr-cancel" data-cancelc>Avbryt</button></div><small id="drMsg"></small></div>';
+    }
+    async function saveCustom(item) {
+      busy = true; var ok = await rpc("bt_drill_save", { p_code: coachCode, p_item: item }); busy = false;
+      if (ok !== true) { var mm = body.querySelector("#drMsg"); if (mm) mm.textContent = "Fikk ikke lagret. Sjekk nettet – eller logg inn på nytt med trenerkoden."; return false; }
+      return true;
+    }
+    body.addEventListener("input", function (e) {
+      if (e.target.id === "drY") { var id = ytId(e.target.value), pv = body.querySelector("#drPrev"); if (pv) pv.innerHTML = id ? '<span style="background-image:url(\'' + thumb(id) + '\')"></span>' : ""; }
+    });
+    body.addEventListener("click", async function (e) {
+      if (busy) return;
+      var t = e.target;
+      var c = t.closest("[data-cat]"); if (c) { cat = c.dataset.cat; if (!edit) render(); else body.querySelectorAll("[data-cat]").forEach(function (b) { b.classList.toggle("on", b === c); }); return; }
+      var tg = t.closest("[data-tog]"); if (tg) { var id = tg.dataset.tog, i = pick.indexOf(id); if (i >= 0) pick.splice(i, 1); else pick.push(id); var sc = body.scrollTop; render(); body.scrollTop = sc; return; }
+      if (t.closest("[data-done]")) { var out = pick.map(find).filter(Boolean).map(snap); O.close(); onDone && onDone(out); return; }
+      if (t.closest("[data-coach]")) { coachUi = "login"; render(); var ci = body.querySelector("#drCode"); if (ci) ci.focus(); return; }
+      if (t.closest("[data-login]")) {
+        var code = String((body.querySelector("#drCode") || {}).value || "").trim(); if (!code) return;
+        busy = true; var ok0 = await rpc("bt_code_ok", { p_code: code }); busy = false;
+        if (ok0 === true) { coachCode = code; try { localStorage.setItem("bt_trenerkode", code); } catch (er) {} coachUi = ""; render(); }
+        else { var mm0 = body.querySelector("#drMsg"); if (mm0) mm0.textContent = ok0 === false ? "Feil kode." : "Fikk ikke kontakt – prøv igjen."; }
+        return;
+      }
+      if (t.closest("[data-logout]")) { coachCode = ""; try { localStorage.removeItem("bt_trenerkode"); } catch (er) {} render(); return; }
+      if (t.closest("[data-new]")) { edit = { isNew: true, id: "egen-" + Date.now().toString(36), title: "", yt: "", cat: cat !== "alle" ? cat : "grunnslag", level: "Alle", min: 10, steps: [], plan: "" }; render(); var ti = body.querySelector("#drT"); if (ti) { ti.focus(); ti.scrollIntoView({ block: "center" }); } return; }
+      if (t.closest("[data-cancelc]")) { edit = null; render(); return; }
+      var ed = t.closest("[data-edit]"); if (ed) { var x = custom.find(function (k) { return k[0] === ed.dataset.edit; }); if (x) { edit = { id: x[0], cat: x[1], title: x[2], yt: x[3], level: x[5], min: x[6], steps: x[8], plan: x[9] }; render(); var t2 = body.querySelector("#drT"); if (t2) t2.scrollIntoView({ block: "center" }); } return; }
+      var dc = t.closest("[data-delc]"); if (dc) { var y = custom.find(function (k) { return k[0] === dc.dataset.delc; }); if (y && confirm("Slette «" + y[2] + "» fra øvelsesbanken? Økter som allerede har øvelsen, beholder den.")) { if (await saveCustom({ id: y[0], title: y[2], removed: true })) { custom = custom.filter(function (k) { return k[0] !== y[0]; }); pick = pick.filter(function (p) { return p !== y[0]; }); render(); } } return; }
+      if (t.closest("[data-savec]")) {
+        var g = function (id) { var el = body.querySelector("#" + id); return el ? String(el.value || "").trim() : ""; };
+        var yt = ytId(g("drY")), title = g("drT"), msg = body.querySelector("#drMsg");
+        if (!title) { body.querySelector("#drT").focus(); return; }
+        if (!yt) { if (msg) msg.textContent = "Lim inn en gyldig YouTube-lenke."; body.querySelector("#drY").focus(); return; }
+        var item = { id: edit.id, title: title.slice(0, 70), yt: yt, frame: 2, cat: g("drC") || "grunnslag", level: g("drL") || "Alle", min: Math.max(1, Math.min(120, parseInt(g("drM"), 10) || 10)), kilde: "Treneren", steps: g("drS").split(/\n+/).map(function (s) { return s.trim(); }).filter(Boolean).slice(0, 6), plan: g("drP").slice(0, 400) };
+        if (await saveCustom(item)) {
+          var arr = [item.id, item.cat, item.title, item.yt, 2, item.level, item.min, "Treneren", item.steps, item.plan, true];
+          var i0 = custom.findIndex(function (k) { return k[0] === item.id; }); if (i0 >= 0) custom[i0] = arr; else custom.push(arr);
+          if (edit.isNew && pick.indexOf(item.id) < 0) pick.push(item.id);
+          edit = null; cat = item.cat; render();
+        }
+        return;
+      }
+    });
+    if (!loaded) loadCustom(render);
+    render();
+  };
+
+  // ── Se øvelsene i en økt. list = [{id,title,yt,frame,min}], opts = { title, onEdit(nyListe) }
+  window.btDrillView = function (list, opts) {
+    opts = opts || {};
+    var O = overlay(opts.title || "Øvelser i økta"), body = O.body, open = (list[0] || {}).id || "";
+    function render() {
+      var tot = list.reduce(function (a, x) { var d = find(x.id); return a + (d ? d[6] : Number(x.min) || 0); }, 0);
+      body.innerHTML = '<p class="bd-sum">' + list.length + ' øvelse' + (list.length === 1 ? "" : "r") + ' · ca. ' + tot + ' min</p><div class="dr-list">' + list.map(function (x, i) {
+        var d = find(x.id) || [x.id, "", x.title, x.yt, x.frame || 2, "", x.min || 10, "", [], "", true], on = open === x.id;
+        return '<div class="dr-item' + (on ? " open" : "") + '"><button type="button" class="dr-row" data-open="' + esc(x.id) + '"><span class="dr-th" style="background-image:url(\'' + thumb(d[3], d[4]) + '\')"><i>' + (i + 1) + '</i></span><span class="dr-x"><b>' + esc(d[2]) + '</b><small>ca. ' + d[6] + ' min' + (d[5] ? ' · ' + esc(d[5]) : '') + '</small></span><span class="dr-chev">' + (on ? "–" : "+") + '</span></button>' +
           (on ? '<div class="dr-body"><div class="dr-video"><iframe src="https://www.youtube-nocookie.com/embed/' + d[3] + '?rel=0&modestbranding=1&playsinline=1" title="' + esc(d[2]) + '" allow="autoplay; encrypted-media; picture-in-picture" allowfullscreen loading="lazy"></iframe></div>' +
             '<div class="dr-src">' + (d[10] ? 'Lagt til av treneren' : 'Video: ' + esc(d[7]) + ' (på engelsk)') + '</div>' +
             (d[8].length ? '<h4>Slik gjør du</h4><ol>' + d[8].map(function (t) { return '<li>' + esc(t) + '</li>'; }).join("") + '</ol>' : '') +
-            (d[9] ? '<div class="dr-plan"><b>Øv slik</b>' + esc(d[9]) + '</div>' : '') +
-            '<button type="button" class="dr-done" data-done="' + esc(d[0]) + '">✓ Øvd i dag (' + d[6] + ' min)</button>' +
-            (d[10] && coachCode ? '<div class="dr-coachact"><button type="button" data-edit="' + esc(d[0]) + '">✎ Endre</button><button type="button" data-delc="' + esc(d[0]) + '">Slett</button></div>' : '') + '</div>' : '') + '</div>';
-      }).join("") + '</div>' +
-      coachHtml() +
-      '<div class="tp-turn-note">Videoene er fra YouTube. «Øvd i dag» legges inn som bordtennistrening under Timer.</div>';
-    box.innerHTML = html;
-  }
-  function coachHtml() {
-    if (!coachCode) {
-      if (coachUi === "login") return '<div class="dr-coach"><b>Trenerinnlogging</b><div class="dr-login"><input type="password" id="drCode" placeholder="Trenerkode" autocomplete="off"><button type="button" data-login>Logg inn</button></div><small id="drMsg"></small></div>';
-      return '<button type="button" class="dr-coachlink" data-coach>Trener? Logg inn for å legge til øvelser</button>';
+            (d[9] ? '<div class="dr-plan"><b>Øv slik</b>' + esc(d[9]) + '</div>' : '') + '</div>' : '') + '</div>';
+      }).join("") + '</div>' + (opts.onEdit ? '<div class="bd-foot"><button type="button" class="dr-cancel" data-chg>✎ Endre øvelsene</button></div>' : '');
     }
-    if (!edit) return '<div class="dr-coach"><button type="button" class="dr-new" data-new>+ Ny øvelse</button><button type="button" class="dr-coachlink" data-logout>Logg ut som trener</button></div>';
-    var e = edit;
-    return '<div class="dr-coach dr-form"><b>' + (e.isNew ? "Ny øvelse" : "Endre øvelse") + '</b>' +
-      '<label>Navn<input type="text" id="drT" maxlength="70" value="' + esc(e.title) + '" placeholder="F.eks. «Kort serve + flick»"></label>' +
-      '<label>YouTube-lenke<input type="text" id="drY" value="' + esc(e.yt ? "https://youtu.be/" + e.yt : "") + '" placeholder="Lim inn lenken til videoen"></label>' +
-      '<div id="drPrev" class="dr-prev">' + (e.yt ? '<span style="background-image:url(\'https://img.youtube.com/vi/' + e.yt + '/mq2.jpg\')"></span>' : '') + '</div>' +
-      '<div class="two"><label>Kategori<select id="drC">' + CATS.slice(1).map(function (c) { return '<option value="' + c[0] + '"' + (e.cat === c[0] ? " selected" : "") + '>' + c[1] + '</option>'; }).join("") + '</select></label>' +
-      '<label>Nivå<select id="drL">' + LEVELS.map(function (l) { return '<option' + (e.level === l ? " selected" : "") + '>' + l + '</option>'; }).join("") + '</select></label></div>' +
-      '<label>Minutter<input type="number" id="drM" inputmode="numeric" min="1" max="120" value="' + (e.min || 10) + '"></label>' +
-      '<label>Slik gjør du (ett punkt per linje)<textarea id="drS" rows="3" placeholder="Stå litt sidelengs …">' + esc((e.steps || []).join("\n")) + '</textarea></label>' +
-      '<label>Øv slik<textarea id="drP" rows="2" placeholder="F.eks. 3 × 10 baller">' + esc(e.plan || "") + '</textarea></label>' +
-      '<div class="two"><button type="button" class="dr-new" data-savec>Lagre øvelsen</button><button type="button" class="dr-cancel" data-cancelc>Avbryt</button></div><small id="drMsg"></small></div>';
-  }
-  async function saveCustom(item) {
-    busy = true; var ok = await rpc("bt_drill_save", { p_code: coachCode, p_item: item }); busy = false;
-    if (ok !== true) { var mm = document.getElementById("drMsg"); if (mm) mm.textContent = "Fikk ikke lagret. Sjekk nettet – eller logg inn på nytt med trenerkoden."; return false; }
-    return true;
-  }
-  box.addEventListener("input", function (e) {
-    if (e.target.id === "drY") { var id = ytId(e.target.value), pv = document.getElementById("drPrev"); if (pv) pv.innerHTML = id ? '<span style="background-image:url(\'https://img.youtube.com/vi/' + id + '/mq2.jpg\')"></span>' : ""; }
-  });
-  box.addEventListener("click", async function (e) {
-    if (busy) return;
-    if (e.target.closest("[data-coach]")) { coachUi = "login"; render(); var ci = document.getElementById("drCode"); if (ci) ci.focus(); return; }
-    if (e.target.closest("[data-login]")) {
-      var code = String((document.getElementById("drCode") || {}).value || "").trim(); if (!code) return;
-      busy = true; var ok0 = await rpc("bt_code_ok", { p_code: code }); busy = false;
-      if (ok0 === true) { coachCode = code; try { localStorage.setItem("bt_trenerkode", code); } catch (er) {} coachUi = ""; render(); }
-      else { var mm0 = document.getElementById("drMsg"); if (mm0) mm0.textContent = ok0 === false ? "Feil kode." : "Fikk ikke kontakt – prøv igjen."; }
-      return;
-    }
-    if (e.target.closest("[data-logout]")) { coachCode = ""; try { localStorage.removeItem("bt_trenerkode"); } catch (er) {} render(); return; }
-    if (e.target.closest("[data-new]")) { edit = { isNew: true, id: "egen-" + Date.now().toString(36), title: "", yt: "", cat: cat !== "alle" ? cat : "grunnslag", level: "Alle", min: 10, steps: [], plan: "" }; render(); var ti = document.getElementById("drT"); if (ti) { ti.focus(); ti.scrollIntoView({ block: "center" }); } return; }
-    if (e.target.closest("[data-cancelc]")) { edit = null; render(); return; }
-    var ed = e.target.closest("[data-edit]"); if (ed) { var x = custom.find(function (k) { return k[0] === ed.dataset.edit; }); if (x) { edit = { id: x[0], cat: x[1], title: x[2], yt: x[3], level: x[5], min: x[6], steps: x[8], plan: x[9] }; render(); var t2 = document.getElementById("drT"); if (t2) t2.scrollIntoView({ block: "center" }); } return; }
-    var dc = e.target.closest("[data-delc]"); if (dc) { var y = custom.find(function (k) { return k[0] === dc.dataset.delc; }); if (y && confirm("Slette «" + y[2] + "» fra øvelsesbanken?")) { if (await saveCustom({ id: y[0], title: y[2], removed: true })) { custom = custom.filter(function (k) { return k[0] !== y[0]; }); open = ""; render(); } } return; }
-    if (e.target.closest("[data-savec]")) {
-      var g = function (id) { var el = document.getElementById(id); return el ? String(el.value || "").trim() : ""; };
-      var yt = ytId(g("drY")), title = g("drT"), msg = document.getElementById("drMsg");
-      if (!title) { document.getElementById("drT").focus(); return; }
-      if (!yt) { if (msg) msg.textContent = "Lim inn en gyldig YouTube-lenke."; document.getElementById("drY").focus(); return; }
-      var item = { id: edit.id, title: title.slice(0, 70), yt: yt, frame: 2, cat: g("drC") || "grunnslag", level: g("drL") || "Alle", min: Math.max(1, Math.min(120, parseInt(g("drM"), 10) || 10)), kilde: "Treneren", steps: g("drS").split(/\n+/).map(function (t) { return t.trim(); }).filter(Boolean).slice(0, 6), plan: g("drP").slice(0, 400) };
-      if (await saveCustom(item)) {
-        var arr = [item.id, item.cat, item.title, item.yt, 2, item.level, item.min, "Treneren", item.steps, item.plan, true];
-        var i0 = custom.findIndex(function (k) { return k[0] === item.id; }); if (i0 >= 0) custom[i0] = arr; else custom.push(arr);
-        edit = null; cat = item.cat; open = item.id; render();
-        var it = box.querySelector(".dr-item.open"); if (it) it.scrollIntoView({ block: "start", behavior: "smooth" });
-      }
-      return;
-    }
-    var c = e.target.closest("[data-cat]"); if (c) { cat = c.dataset.cat; open = ""; if (!edit) render(); else { box.querySelectorAll("[data-cat]").forEach(function (b) { b.classList.toggle("on", b === c); }); } return; }
-    var o = e.target.closest("[data-open]"); if (o) { open = open === o.dataset.open ? "" : o.dataset.open; render(); var it = box.querySelector(".dr-item.open"); if (it) it.scrollIntoView({ block: "start", behavior: "smooth" }); return; }
-    var dn = e.target.closest("[data-done]"); if (dn) {
-      var d = all().find(function (x) { return x[0] === dn.dataset.done; }); if (!d || !window.vkListSave) return;
-      busy = true; dn.disabled = true; dn.textContent = "Lagrer …";
-      var now = new Date(), dv = now.getFullYear() + "-" + String(now.getMonth() + 1).padStart(2, "0") + "-" + String(now.getDate()).padStart(2, "0");
-      var ok = await window.vkListSave("playerLog", { id: "log-" + Date.now().toString(36), date: dv, min: d[6], type: "bordtennis", note: "Øvelse: " + d[2], createdAt: now.toISOString() });
-      busy = false;
-      if (!ok) { dn.disabled = false; dn.textContent = "Prøv igjen"; return; }
-      dn.textContent = "✓ Lagt inn – bra jobba!"; setTimeout(render, 1400);
-    }
-  });
-  window.addEventListener("load", function () { render(); loadCustom(); });
+    body.addEventListener("click", function (e) {
+      var o = e.target.closest("[data-open]"); if (o) { open = open === o.dataset.open ? "" : o.dataset.open; render(); return; }
+      if (e.target.closest("[data-chg]")) { O.close(); window.btDrillPicker(list, function (nl) { opts.onEdit(nl); }, "Endre øvelsene i økta"); }
+    });
+    if (!loaded) loadCustom(render);
+    render();
+  };
 })();
 </script>
 <script>
