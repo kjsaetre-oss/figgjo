@@ -95,6 +95,17 @@
   .tp-hero > div:first-of-type { padding: 22px 70px 20px 20px; }
   .tp-hero .tp-ball2 { position: absolute; right: 18px; top: 16px; width: 34px; height: 34px; border-radius: 50%;
     background: radial-gradient(circle at 35% 30%, #fff, #f1f1f1 45%, #d9d9d9); box-shadow: 0 6px 14px rgba(0,0,0,.35); }
+  /* Hilsen uten stort bilde (2026-11-11): mørk flate med klubbrødt, bordets midtlinje, lite profilbilde */
+  .tp-hero { min-height: 0; flex-direction: row; align-items: center; justify-content: flex-start;
+    background: radial-gradient(120% 160% at 100% 0%, rgba(200,16,46,.5), rgba(200,16,46,0) 58%), linear-gradient(135deg, #1d2028, #0f1115) !important; }
+  .tp-hero::before { background: linear-gradient(90deg, transparent calc(50% - 1px), rgba(255,255,255,.07) calc(50% - 1px), rgba(255,255,255,.07) calc(50% + 1px), transparent calc(50% + 1px)); }
+  .tp-hero > div:first-of-type { padding: 18px 62px 18px 0; min-width: 0; }
+  .tp-av { position: relative; flex: none; width: 56px; height: 56px; margin: 16px 14px 16px 18px; border-radius: 50%; background: #2a2d35 center 22%/cover no-repeat;
+    box-shadow: 0 0 0 2.5px #c8102e, 0 0 0 6px rgba(255,255,255,.07); display: grid; place-items: center; font: 800 19px "Outfit", -apple-system, sans-serif; color: #fff; }
+  .tp-eyebrow { display: block; font: 700 10.5px -apple-system, sans-serif; letter-spacing: .12em; text-transform: uppercase; color: rgba(255,255,255,.6); margin-bottom: 3px; }
+  .tp-hero h1 { font-size: 25px; }
+  .tp-hello-sub { margin: 5px 0 0 !important; font: 600 13px -apple-system, sans-serif !important; color: rgba(255,255,255,.78) !important; }
+  .tp-hello-sub b { color: #fff; } .tp-hello-sub .up { color: #86dcaa; } .tp-hello-sub .down { color: #ff9a9a; }
   /* Legg på hjemskjermen */
   .tp-a2hs { margin: 10px 14px 0; display: flex; gap: 10px; align-items: center; padding: 10px 12px; border-radius: 16px; background: #fff;
     border: 1px solid #e6e7eb; font: 13px/1.4 -apple-system, sans-serif; color: #1b1d22; }
@@ -330,7 +341,7 @@
 <script>if (!window.TL_TP_OK) document.body.classList.add("tp-missing");</script>
 <div class="tp-app">
 <div id="tpA2hs"></div>
-<section class="tp-hero" aria-label="Hilsen"><span class="tp-ball2" aria-hidden="true"></span><div><h1 id="tpHello">Hei!</h1></div></section>
+<section class="tp-hero" aria-label="Hilsen"><span class="tp-ball2" aria-hidden="true"></span><span class="tp-av" id="tpAv" aria-hidden="true"></span><div><small class="tp-eyebrow" id="tpEyebrow"></small><h1 id="tpHello">Hei!</h1><p class="tp-hello-sub" id="tpHelloSub" hidden></p></div></section>
 <section class="tp-focus" id="tpFocus" hidden></section>
 <script>
 // Sikkerhetsadapter (sikkerhet-2a-planer-funksjoner.sql): lesing og lagring av
@@ -25692,6 +25703,8 @@ function getExercisePR(exerciseName) {
     var first = String(n).trim().split(/\s+/)[0];
     var el = document.getElementById("tpWho"); if (el) el.textContent = "BT-coach · " + first;
     var h = document.getElementById("tpHello"); if (h) h.textContent = "Hei, " + first + "!";
+    var av = document.getElementById("tpAv"); if (av && !av.style.backgroundImage) av.textContent = String(n).trim().split(/\s+/).map(function (x) { return x[0] || ""; }).slice(0, 2).join("").toUpperCase();
+    var eb = document.getElementById("tpEyebrow"); if (eb) eb.textContent = new Date().toLocaleDateString("nb-NO", { weekday: "long", day: "numeric", month: "long" });
   };
   show(m.name);
   fetch("https://cpqbdorxilssxylkqdkt.supabase.co/rest/v1/rpc/tl_plan_get", { method: "POST",
@@ -26100,7 +26113,11 @@ function getExercisePR(exerciseName) {
     var form = ev.slice(0, 5).reverse();
     var photo = p.bilde ? ' rk-photo" style="--rk-img:url(\'' + esc(p.bilde) + '\')' : "";
     // Eget bilde i hilsenen øverst også
-    try { var hh = document.querySelector(".tp-hero"); if (hh && p.bilde) { hh.style.backgroundImage = "url('" + p.bilde + "')"; hh.style.backgroundPosition = "70% 30%"; var bl = hh.querySelector(".tp-ball2"); if (bl) bl.remove(); } } catch (er) {}
+    try {
+      var av = document.getElementById("tpAv"); if (av && p.bilde) { av.style.backgroundImage = "url('" + p.bilde + "')"; av.textContent = ""; }
+      var sub = document.getElementById("tpHelloSub");
+      if (sub) { var c0 = Number(p.endring) || 0; sub.innerHTML = '<b>' + fmtN(p.poeng) + ' p</b>' + (p.plass ? ' · nr. ' + fmtN(p.plass) + ' i Norge' : '') + (c0 ? ' <span class="' + (c0 > 0 ? "up" : "down") + '">' + (c0 > 0 ? "▲ +" : "▼ ") + fmtN(c0) + '</span>' : ''); sub.hidden = false; }
+    } catch (er) {}
     box.innerHTML = '<div class="rk-hero' + photo + '"><div class="rk-top"><small>Norgesranking · ' + esc(new Date(R.periode + "T12:00:00").toLocaleDateString("nb-NO", { month: "long", year: "numeric" })) + '</small></div>' +
       '<div class="rk-name">' + esc(p.navn) + '</div><div class="rk-club">' + esc(p.klubb) + '</div>' +
       '<div class="rk-pts"><b>' + fmtN(p.poeng) + '</b><span>poeng</span><em class="rk-chg ' + cls + '">' + (chg > 0 ? "▲ +" : chg < 0 ? "▼ " : "") + fmtN(chg) + '</em></div>' +
