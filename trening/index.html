@@ -26078,7 +26078,7 @@ function getExercisePR(exerciseName) {
     if (lv.form) {
       var pv = lv.oppPts != null ? '<div class="lv-prev">Vinner du: <b class="up">' + (rkDelta(my, lv.oppPts, true, lv.w) > 0 ? "+" : "") + rkDelta(my, lv.oppPts, true, lv.w).toLocaleString("nb-NO") + '</b> · Taper du: <b class="down">' + rkDelta(my, lv.oppPts, false, lv.w).toLocaleString("nb-NO") + '</b></div>' : "";
       h += '<div class="lv-form"><label>Motstander<div class="mn-opp"><input type="text" id="lvOpp" autocomplete="off" placeholder="Søk på navn eller klubb"><div class="mn-sugg" id="lvSugg" hidden></div></div></label>' +
-        '<div class="two"><label>Motstanderens poeng<input type="number" id="lvPts" inputmode="numeric" value="' + (lv.oppPts != null ? lv.oppPts : "") + '" placeholder="Fylles ut ved søk"></label><label>Dato<input type="date" id="lvDate" value="' + new Date().toISOString().slice(0, 10) + '"></label></div>' +
+        '<div class="two"><label>Motstanderens poeng<input type="text" id="lvPts" inputmode="decimal" value="' + (lv.oppPts != null ? lv.oppPts : "") + '" placeholder="Fylles ut ved søk"></label><label>Dato<input type="date" id="lvDate" value="' + new Date().toISOString().slice(0, 10) + '"></label></div>' +
         '<div class="row"><button type="button" data-lvres="seier" class="' + (lv.res === "seier" ? "on" : "") + '">🟢 Seier</button><button type="button" data-lvres="tap" class="' + (lv.res === "tap" ? "on" : "") + '">🔴 Tap</button></div>' +
         '<div class="lv-w"><span>Stevne:</span>' + [[1, "×1 Vanlig stevne / serie"], [1.5, "×1,5 NM/SNC aldersbestemt · Eliteserien"], [2, "×2 NM Elite · SNC senior"]].map(function (x) { return '<button type="button" data-lvw="' + x[0] + '" class="' + (lv.w === x[0] ? "on" : "") + '">' + x[1] + '</button>'; }).join("") + '</div>' + pv +
         '<p class="lv-note" style="margin:0">WO teller ikke. Avbrutt kamp eller diskvalifikasjon teller som tap. Internasjonale turneringer i Norge og klasser for 10 år og yngre teller ikke.</p>' +
@@ -26100,7 +26100,7 @@ function getExercisePR(exerciseName) {
   }
   box.addEventListener("input", function (e) {
     if (e.target.id === "lvOpp") lvSugg();
-    if (e.target.id === "lvPts") { var n = parseInt(e.target.value, 10); lv.oppPts = n >= 0 ? n : null; var pv = box.querySelector(".lv-prev"); var my = Number(curP && curP.poeng) || 0; if (lv.oppPts != null) { var html = 'Vinner du: <b class="up">+' + rkDelta(my, lv.oppPts, true, lv.w).toLocaleString("nb-NO") + '</b> · Taper du: <b class="down">' + rkDelta(my, lv.oppPts, false, lv.w).toLocaleString("nb-NO") + '</b>'; if (pv) pv.innerHTML = html; else e.target.closest(".lv-form").querySelector("[data-lvadd]").insertAdjacentHTML("beforebegin", '<div class="lv-prev">' + html + '</div>'); } }
+    if (e.target.id === "lvPts") { var n = parseFloat(String(e.target.value || "").replace(",", ".")); lv.oppPts = n >= 0 ? n : null; var pv = box.querySelector(".lv-prev"); var my = Number(curP && curP.poeng) || 0; if (lv.oppPts != null) { var html = 'Vinner du: <b class="up">+' + rkDelta(my, lv.oppPts, true, lv.w).toLocaleString("nb-NO") + '</b> · Taper du: <b class="down">' + rkDelta(my, lv.oppPts, false, lv.w).toLocaleString("nb-NO") + '</b>'; if (pv) pv.innerHTML = html; else e.target.closest(".lv-form").querySelector("[data-lvadd]").insertAdjacentHTML("beforebegin", '<div class="lv-prev">' + html + '</div>'); } }
   });
   box.addEventListener("focusin", function (e) { if (e.target.id === "lvOpp") loadAll(); });
   box.addEventListener("click", function (e) {
@@ -26111,7 +26111,7 @@ function getExercisePR(exerciseName) {
     var r = t.closest("[data-lvres]"); if (r) { lv.res = r.dataset.lvres; box.querySelectorAll("[data-lvres]").forEach(function (b) { b.classList.toggle("on", b === r); }); return; }
     var w = t.closest("[data-lvw]"); if (w) { var o2 = document.getElementById("lvOpp"), v = o2 ? o2.value : "", d = document.getElementById("lvDate"), dv0 = d ? d.value : ""; lv.w = Number(w.dataset.lvw); liveRender(); if (document.getElementById("lvOpp")) document.getElementById("lvOpp").value = v; if (dv0 && document.getElementById("lvDate")) document.getElementById("lvDate").value = dv0; return; }
     if (t.closest("[data-lvadd]")) {
-      var opp = String((document.getElementById("lvOpp") || {}).value || "").trim(), pts = parseInt((document.getElementById("lvPts") || {}).value, 10), date = (document.getElementById("lvDate") || {}).value || new Date().toISOString().slice(0, 10);
+      var opp = String((document.getElementById("lvOpp") || {}).value || "").trim(), pts = parseFloat(String((document.getElementById("lvPts") || {}).value || "").replace(",", ".")), date = (document.getElementById("lvDate") || {}).value || new Date().toISOString().slice(0, 10);
       if (!(pts >= 0)) { var pi = document.getElementById("lvPts"); if (pi) pi.focus(); return; }
       var a = lvLoad(); a.push({ id: "lv-" + Date.now().toString(36), date: date, opp: opp || "Motstander", oppPts: pts, win: lv.res === "seier", w: lv.w }); lvSave(a);
       lv.form = false; liveRender(); return;
