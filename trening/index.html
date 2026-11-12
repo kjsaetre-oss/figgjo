@@ -523,6 +523,17 @@
   .th-tiles b u { text-decoration: none; font-size: 16px; color: #8a8f99; font-weight: 700; }
   .th-tiles em { margin-top: auto; color: #8a8f99 !important; font-weight: 700 !important; font-size: 12px !important; }
   .c-red em { color: #c8102e !important; }
+  .tp-fi-list .tp-fi.mine .n { color: #2f63c9 !important; }
+  .fi-del { flex: none; margin-left: auto; width: 28px; height: 28px; border: 0; border-radius: 50%; background: #f4f5f7; color: #8a8f99; font: 700 12px -apple-system, sans-serif; cursor: pointer; }
+  .fi-new { width: 100%; display: flex; align-items: center; gap: 10px; border: 0; border-top: 1px solid #f0f1f4; background: none; padding: 14px 0; font: 700 14px -apple-system, sans-serif; color: #c8102e; cursor: pointer; text-align: left; }
+  .tp-fi-list > .fi-new:first-child, .fi-empty + .fi-new { border-top: 0; }
+  .fi-new span { width: 22px; height: 22px; border-radius: 50%; background: #fdecee; display: grid; place-items: center; font-size: 16px; line-height: 1; }
+  .fi-add { display: flex; gap: 8px; padding: 12px 0 14px; border-top: 1px solid #f0f1f4; }
+  .fi-add input { flex: 1; min-width: 0; border: 1.5px solid #e6e7eb; border-radius: 12px; padding: 10px 12px; font: 16px -apple-system, sans-serif; color: #14161b; outline: none; }
+  .fi-add input:focus { border-color: #c8102e; }
+  .fi-add button { flex: none; border: 0; border-radius: 12px; padding: 0 14px; background: #c8102e; color: #fff; font: 800 14px -apple-system, sans-serif; }
+  .fi-add button.ghost { background: #f4f5f7; color: #8a8f99; padding: 0 12px; }
+  .fi-empty { padding: 16px 0 6px; font: 500 13.5px/1.45 -apple-system, sans-serif; color: #8a8f99; }
   .th-plus { display: grid; place-items: center; width: 30px; height: 30px; border-radius: 50%; background: #c8102e; color: #fff; font: 700 20px/1 -apple-system, sans-serif; }
   .th-bar { display: block; width: 100%; height: 6px; border-radius: 99px; background: #eef0f3; margin: 2px 0 7px; overflow: hidden; }
   .th-bar span { display: block; height: 100%; border-radius: inherit; background: #2e7d52; }
@@ -6062,6 +6073,7 @@ var DPP_IMG = [
     normalized.playerLog = Array.isArray(raw.playerLog) ? raw.playerLog : [];
     normalized.playerGear = Array.isArray(raw.playerGear) ? raw.playerGear : [];
     normalized.playerDrills = Array.isArray(raw.playerDrills) ? raw.playerDrills : [];
+    normalized.playerFocus = Array.isArray(raw.playerFocus) ? raw.playerFocus : [];
     normalized.playerMatchNotes = Array.isArray(raw.playerMatchNotes) ? raw.playerMatchNotes : [];
     normalized.exerciseDoneMap = (raw.exerciseDoneMap && typeof raw.exerciseDoneMap === "object" && !Array.isArray(raw.exerciseDoneMap)) ? raw.exerciseDoneMap : {};
     normalized.exerciseSetDoneMap = (raw.exerciseSetDoneMap && typeof raw.exerciseSetDoneMap === "object" && !Array.isArray(raw.exerciseSetDoneMap)) ? raw.exerciseSetDoneMap : {};
@@ -6315,6 +6327,7 @@ var DPP_IMG = [
       playerLog: data.playerLog || [],
       playerGear: data.playerGear || [],
       playerDrills: data.playerDrills || [],
+      playerFocus: data.playerFocus || [],
       playerMatchNotes: data.playerMatchNotes || [],
       // Samme beskyttelse for avkrysning av enkelt\u00f8velser i en \u00f8kt.
       exerciseDoneMap: data.exerciseDoneMap || {},
@@ -6516,6 +6529,7 @@ var DPP_IMG = [
           if (Array.isArray(raw.playerLog)) data.playerLog = raw.playerLog;
           if (Array.isArray(raw.playerGear)) data.playerGear = raw.playerGear;
           if (Array.isArray(raw.playerDrills)) data.playerDrills = raw.playerDrills;
+          if (Array.isArray(raw.playerFocus)) data.playerFocus = raw.playerFocus;
           if (Array.isArray(raw.playerMatchNotes)) data.playerMatchNotes = raw.playerMatchNotes;
           if (!opts.mutatingTodoNotes) {
             data.todoNotes = (raw.todoNotes && typeof raw.todoNotes === "object" && !Array.isArray(raw.todoNotes)) ? raw.todoNotes : {};
@@ -18864,6 +18878,7 @@ var DPP_IMG = [
       log: (data.playerLog || []).filter(x => x && !x.removedAt),
       gear: (data.playerGear || []).filter(x => x && !x.removedAt),
       drills: (data.playerDrills || []).filter(x => x && !x.removedAt),
+      focus: (data.playerFocus || []).filter(x => x && !x.removedAt && x.text),
       notes: (data.playerMatchNotes || []).filter(x => x && !x.removedAt),
       tasks: (data.assignedTasks || []).filter(t => t && !t.removedAt && t.kind === "habit" && Array.isArray(t.doneDates) && t.doneDates.length),
       programs: (data.assignedPrograms || []).filter(p => p && Array.isArray(p.completedDates) && p.completedDates.length)
@@ -18871,7 +18886,7 @@ var DPP_IMG = [
     };
   };
   window.vkListSave = async function (field, item) {
-    if (!["playerLog", "playerGear", "playerMatchNotes", "playerDrills"].includes(field) || !item || !item.id) return false;
+    if (!["playerLog", "playerGear", "playerMatchNotes", "playerDrills", "playerFocus"].includes(field) || !item || !item.id) return false;
     const m = getMovementMember();
     if (!m.id) return false;
     const prev = deepClone(data[field] || []);
@@ -26920,17 +26935,51 @@ function getExercisePR(exerciseName) {
   var esc = function (v) { return String(v == null ? "" : v).replace(/[&<>"']/g, function (c) { return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]; }); };
   var busy = false;
   function today() { var d = new Date(); return d.getFullYear() + "-" + String(d.getMonth() + 1).padStart(2, "0") + "-" + String(d.getDate()).padStart(2, "0"); }
+  var adding = false;
+  function mine() { try { var P = window.vkPlayerData ? window.vkPlayerData() : null; return P && Array.isArray(P.focus) ? P.focus : []; } catch (e) { return []; } }
   function render() {
+    if (!window.vkPlayerData) { box.hidden = true; return; }
     var list = []; try { list = window.vkFocusList ? window.vkFocusList() : []; } catch (e) {}
-    if (!list.length) { box.hidden = true; return; }
-    var t = today();
+    var own = mine().slice().sort(function (a, b) { return String(a.at || "").localeCompare(String(b.at || "")); });
+    var n = 0, row = function (f, isMine) {
+      n++;
+      return '<div class="tp-fi' + (isMine ? " mine" : "") + '"><span class="n">' + String(n).padStart(2, "0") + '</span><span class="t">' + esc(f.text) + (f.note ? '<small>' + esc(f.note) + '</small>' : isMine ? '<small>Ditt eget fokus</small>' : "") + '</span>' +
+        (isMine ? '<button type="button" class="fi-del" data-fdel="' + esc(f.id) + '" aria-label="Fjern">✕</button>' : '') + '</div>';
+    };
+    var rows = list.map(function (f) { return row(f, false); }).join("") + own.map(function (f) { return row(f, true); }).join("");
+    var form = adding ? '<div class="fi-add"><input type="text" id="fiT" maxlength="80" placeholder="F.eks. «Bøy knærne på mottak»" enterkeyhint="done"><button type="button" data-fsave>Lagre</button><button type="button" class="ghost" data-fcancel aria-label="Avbryt">✕</button></div>'
+      : '<button type="button" class="fi-new" data-fnew><span>+</span>Legg til ditt eget fokus</button>';
     box.hidden = false;
-    box.innerHTML = '<div class="th-sec"><h4>Fokus nå</h4><span class="th-coach"><img src="/bilder/kjetil-lindefjell-saetre.jpg" alt="">Fra treneren</span></div><div class="tp-fi-list">' +
-      list.map(function (f, i) {
-        return '<div class="tp-fi"><span class="n">' + String(i + 1).padStart(2, "0") + '</span><span class="t">' + esc(f.text) + (f.note ? '<small>' + esc(f.note) + '</small>' : "") + '</span></div>';
-      }).join("") + '</div>';
+    box.innerHTML = '<div class="th-sec"><h4>Fokus nå</h4>' + (list.length ? '<span class="th-coach"><img src="/bilder/kjetil-lindefjell-saetre.jpg" alt="">Treneren og deg</span>' : '') + '</div>' +
+      '<div class="tp-fi-list">' + (rows || '<div class="fi-empty">Hva vil du jobbe med nå? Skriv det ned – da husker du det på trening.</div>') + form + '</div>';
+    if (adding) { var i = box.querySelector("#fiT"); if (i) i.focus(); }
   }
-  window.addEventListener("load", function () { render(); setTimeout(function () { if (!busy) render(); }, 2500); setTimeout(function () { if (!busy) render(); }, 7000); });
+  async function save() {
+    var i = box.querySelector("#fiT"), txt = i ? String(i.value || "").trim() : "";
+    if (!txt) { if (i) i.focus(); return; }
+    busy = true;
+    var item = { id: "pf-" + Date.now().toString(36), text: txt.slice(0, 80), at: new Date().toISOString() };
+    var ok = await window.vkListSave("playerFocus", item);
+    if (!ok) { await new Promise(function (r) { setTimeout(r, 1500); }); ok = await window.vkListSave("playerFocus", item); }
+    busy = false;
+    if (ok) { adding = false; render(); }   // ingen feilmelding til spilleren – feltet blir stående
+  }
+  box.addEventListener("click", async function (e) {
+    if (busy) return;
+    if (e.target.closest("[data-fnew]")) { adding = true; render(); return; }
+    if (e.target.closest("[data-fcancel]")) { adding = false; render(); return; }
+    if (e.target.closest("[data-fsave]")) { save(); return; }
+    var d = e.target.closest("[data-fdel]");
+    if (d) {
+      var f = mine().find(function (x) { return x.id === d.dataset.fdel; }); if (!f) return;
+      busy = true; d.closest(".tp-fi").style.opacity = ".4";
+      var ok = await window.vkListSave("playerFocus", Object.assign({}, f, { removedAt: new Date().toISOString() }));
+      busy = false; render(); if (!ok) render();
+    }
+  });
+  box.addEventListener("keydown", function (e) { if (e.key === "Enter" && e.target.id === "fiT") { e.preventDefault(); save(); } if (e.key === "Escape" && e.target.id === "fiT") { adding = false; render(); } });
+  window.addEventListener("tp-view", function () { if (!busy && !adding && document.body.getAttribute("data-view") === "hjem") render(); });
+  window.addEventListener("load", function () { render(); setTimeout(function () { if (!busy && !adding) render(); }, 2500); setTimeout(function () { if (!busy && !adding) render(); }, 7000); });
 })();
 </script>
 <script>
