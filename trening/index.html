@@ -545,12 +545,79 @@
   .tp-nav button i svg { width: 22px; height: 22px; fill: none; stroke: currentColor; stroke-width: 1.9; stroke-linecap: round; stroke-linejoin: round; }
   .tp-nav button.on { color: #c8102e !important; }
   .tp-nav button.on i { background: #fdecee; }
+  /* ══ Felles stil på alle sider (2026-11-12, runde 2) ══ */
+  :root { --tp-card-sh: 0 1px 2px rgba(20,22,27,.04), 0 6px 20px rgba(20,22,27,.05); }
+  /* Topp: merke + navn */
+  .tp-head { gap: 11px !important; padding-top: calc(env(safe-area-inset-top) + 10px) !important; padding-bottom: 10px !important; }
+  .tp-head .tp-ball { display: none !important; }
+  .tp-mark { flex: none; width: 34px; height: 34px; border-radius: 11px; background: linear-gradient(145deg, #e0183a, #a50b23); display: grid; place-items: center; box-shadow: 0 6px 14px -6px rgba(200,16,46,.7); }
+  .tp-mark svg { width: 24px; height: 24px; }
+  .tp-brand { display: flex; flex-direction: column; line-height: 1.05; min-width: 0; }
+  .tp-brand b { font: 800 18px/1.05 "Outfit", -apple-system, sans-serif !important; letter-spacing: -.025em !important; color: #14161b; }
+  .tp-brand em { font: 700 10.5px -apple-system, sans-serif; font-style: normal; letter-spacing: .08em; text-transform: uppercase; color: #c8102e; margin-top: 2px; }
+  .tp-head #tpWho { display: none !important; }
+  .tp-head .tp-refresh { margin-left: auto !important; }
+  /* Kort på alle sider */
+  .tp-team { margin: 16px 20px 0 !important; border: 0 !important; border-radius: 24px !important; box-shadow: var(--tp-card-sh) !important; padding-bottom: 6px; }
+  .tp-team-head { padding: 18px 18px 10px !important; flex-wrap: wrap; row-gap: 2px; }
+  .tp-team-head h2 { font-size: 20px !important; letter-spacing: -.02em; width: 100%; }
+  .tp-team-head h2::before { display: none !important; }
+  .tp-team-head small { color: #8a8f99 !important; font-size: 12.5px !important; }
+  .tp-team-head h2 + small { margin-top: -2px; }
+  .tp-team-head select { position: absolute; right: 16px; top: 16px; }
+  .tp-team { position: relative; }
+  .tp-more { width: calc(100% - 36px) !important; margin: 6px 18px 14px !important; border-radius: 14px !important; padding: 12px !important; font-size: 14px !important; background: #fdecee !important; color: #c8102e !important; }
+  .hr-actions button, .mn-nudge button { border-radius: 14px !important; }
+  .mn-nudge { border-radius: 18px !important; }
+  /* Timer */
+  .hr-big { padding: 2px 18px 0 !important; } .hr-big b { font-size: 48px !important; }
+  .hr-tiles { padding: 12px 18px 4px !important; gap: 10px !important; }
+  .hr-tiles div { background: #f6f6f8 !important; border-radius: 16px !important; padding: 12px 6px !important; }
+  .hr-tiles b { font-size: 20px !important; letter-spacing: -.02em; } .hr-tiles small { color: #8a8f99 !important; font-weight: 600; }
+  .hr-bars { padding: 14px 18px 0 !important; } .hr-split, .hr-legend { margin-left: 18px !important; margin-right: 18px !important; padding-left: 0 !important; }
+  .tp-team .tp-table { width: calc(100% - 36px); margin: 0 18px 14px; }
+  .tp-team .tp-match { margin: 0 16px 12px; border-radius: 20px; }
+  .tp-team .tp-last { margin: 0 18px 12px; }
+  .tp-tr { padding: 11px 18px !important; }
+  /* Ranking: bildekort øverst + egne lyse kort */
+  .tp-rank { margin: 16px 20px 0 !important; background: none !important; border: 0 !important; box-shadow: none !important; overflow: visible !important; border-radius: 0 !important; }
+  .rk-hero { border-radius: 28px; overflow: hidden; box-shadow: 0 24px 40px -24px rgba(20,22,27,.55); }
+  .rk-hero.rk-photo { min-height: 270px !important; }
+  .rk-hero.rk-photo::after { display: none; }
+  .rk-hero .rk-ranks div { background: rgba(255,255,255,.12) !important; border: 0 !important; -webkit-backdrop-filter: blur(8px); backdrop-filter: blur(8px); border-radius: 16px !important; }
+  .rk-hero.rk-photo .rk-top small { background: rgba(255,255,255,.16) !important; -webkit-backdrop-filter: blur(8px); backdrop-filter: blur(8px); color: #fff !important; }
+  .rk-chart, .rk-sec { background: #fff; border-radius: 24px; box-shadow: var(--tp-card-sh); margin-top: 14px; padding: 18px !important; }
+  .rk-chart h4, .rk-sec h4 { font: 800 17px "Outfit", -apple-system, sans-serif !important; letter-spacing: -.02em !important; text-transform: none !important; color: #14161b !important; margin: 0 0 12px !important; }
+  .rk-tiles { padding: 0 !important; margin-top: 14px; gap: 10px !important; }
+  .rk-tile { background: #fff !important; border-radius: 20px !important; box-shadow: var(--tp-card-sh); padding: 14px 8px !important; }
+  .rk-tile b { font-size: 22px !important; letter-spacing: -.02em; } .rk-tile small { color: #8a8f99 !important; font-weight: 600; }
+  .rk-ring span { background: #fff !important; }
+  .rk-form span { border-radius: 12px !important; padding: 8px 2px !important; }
+  .rk-form .w { background: #e8f5ee !important; color: #2e7d52 !important; } .rk-form .l { background: #fdecee !important; color: #c8102e !important; } .rk-form .e { background: #f1f2f5 !important; color: #646973 !important; }
+  .rk-ev { padding: 12px 0 !important; border-top-color: #f0f1f4 !important; } .rk-ev:first-of-type { border-top: 0 !important; }
+  .rk-foot { padding: 12px 4px 0 !important; }
+  .rk-pick { background: #fff; border-radius: 24px; box-shadow: var(--tp-card-sh); margin-top: 14px; padding: 16px !important; }
+  /* Ukestripe: valgt dag vs. i dag */
+  .th-days button.today:not(.on) { box-shadow: inset 0 0 0 2px #c8102e, 0 4px 14px rgba(20,22,27,.04) !important; }
+  .th-days button.today:not(.on) b { color: #c8102e; }
+  .th-more { margin-top: 6px; font: 700 12px -apple-system, sans-serif !important; opacity: .8; }
+  .th-tiles b u { font-size: 20px !important; color: #14161b !important; font-weight: 800 !important; margin-left: 2px; }
+  /* Bevegelse */
+  @keyframes tpIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: none; } }
+  @keyframes tpSwap { from { opacity: .35; transform: scale(.985); } to { opacity: 1; transform: none; } }
+  body.tp-anim .tp-app > section:not([hidden]), body.tp-anim .tp-app > .tp-hero { animation: tpIn .34s cubic-bezier(.2,.7,.2,1) both; }
+  body.tp-anim .tp-app > section:nth-of-type(2) { animation-delay: .04s; } body.tp-anim .tp-app > section:nth-of-type(3) { animation-delay: .08s; } body.tp-anim .tp-app > section:nth-of-type(4) { animation-delay: .12s; }
+  .th-next.swap { animation: tpSwap .28s ease both; }
+  .tp-fi-list .tp-fi.mine:last-of-type { animation: tpIn .3s ease both; }
+  .th-bar span { transition: width .6s cubic-bezier(.2,.7,.2,1); }
+  .tp-nav button, .tp-more, .dr-row, .fi-new, .th-next button { -webkit-tap-highlight-color: transparent; }
+  @media (prefers-reduced-motion: reduce) { body.tp-anim .tp-app > *, .th-next.swap, .tp-fi-list .tp-fi.mine:last-of-type { animation: none !important; } }
   /* Treningsmodus: ingen matdel */
   .tl-standalone .vk-sec[data-sec="Mat"] { display: none !important; }
 </style>
 </head>
 <body class="tl-standalone tl-brand-figgjo">
-<header class="tp-head"><span class="tp-ball"></span><b>Figgjo BTK</b><small id="tpWho">BT-coach</small><button type="button" class="tp-refresh" id="tpRefresh" aria-label="Oppdater" title="Hent det nyeste">↻</button></header>
+<header class="tp-head"><span class="tp-mark" aria-hidden="true"><svg viewBox="0 0 32 32"><circle cx="18.5" cy="12.5" r="8.5" fill="#fff"/><path d="M12.6 18.6L6.8 25.4" stroke="#fff" stroke-width="3.6" stroke-linecap="round"/><circle cx="7" cy="8" r="2.9" fill="#ffd5da"/></svg></span><span class="tp-brand"><b>BT-coach</b><em>Figgjo BTK</em></span><small id="tpWho">BT-coach</small><button type="button" class="tp-refresh" id="tpRefresh" aria-label="Oppdater" title="Hent det nyeste">↻</button></header>
 <div class="tp-nolink"><h1>🏓 Treningen din</h1><p>Denne siden åpnes med den personlige lenken du har fått fra treneren din.<br>Spør treneren om å få lenken på nytt.</p></div>
 <script>if (!window.TL_TP_OK) document.body.classList.add("tp-missing");</script>
 <div class="tp-app">
@@ -26035,7 +26102,9 @@ function getExercisePR(exerciseName) {
   var VIEWS = ["hjem", "kalender", "ranking", "maal", "laget", "timer"];
   window.tpGo = function (v, opts) {
     if (VIEWS.indexOf(v) < 0) v = "hjem";
+    var prevV = document.body.getAttribute("data-view");
     document.body.setAttribute("data-view", v);
+    if (prevV && prevV !== v) { document.body.classList.remove("tp-anim"); void document.body.offsetWidth; document.body.classList.add("tp-anim"); clearTimeout(window.__tpAnimT); window.__tpAnimT = setTimeout(function () { document.body.classList.remove("tp-anim"); }, 600); }
     nav.querySelectorAll("[data-go]").forEach(function (b) { b.classList.toggle("on", b.dataset.go === v || (v === "timer" && b.dataset.go === "hjem")); });
     try { sessionStorage.setItem("tp_view", v); } catch (e) {}
     if (!opts || !opts.keepScroll) window.scrollTo(0, 0);
@@ -26074,6 +26143,7 @@ function getExercisePR(exerciseName) {
     P.programs.forEach(function (p) { (p.completedDates || []).forEach(function (d) { if (d >= from && d <= to) { var sl = p.sessionLog && p.sessionLog[d]; sum += sl && sl.min ? Number(sl.min) : 30; } }); });
     return sum;
   }
+  var selDay = "";
   function render() {
     if (!window.vkTrainingDays) return;
     var now = new Date(); now.setHours(12, 0, 0, 0);
@@ -26081,25 +26151,31 @@ function getExercisePR(exerciseName) {
     var week = window.vkTrainingDays(dv(mon), 7), todayV = dv(now);
     var ahead = window.vkTrainingDays(todayV, 21);
     var next = ahead.filter(function (x) { return !x.done; })[0];
+    // Valgt dag i ukestripen (blir på Hjem). Uten valg: neste trening.
+    if (selDay && selDay < dv(mon)) selDay = "";
+    var dayList = selDay ? ahead.concat(week).filter(function (x, i, a) { return x.date === selDay && a.findIndex(function (y) { return y.id === x.id && y.date === x.date; }) === i; }) : null;
+    if (dayList) next = dayList.filter(function (x) { return !x.done; })[0] || dayList[0];
     // Kalenderen er kanskje ikke ferdig lastet ennå – prøv igjen litt senere
     if (!ahead.length && !week.length && (render.tries = (render.tries || 0) + 1) < 15) setTimeout(render, 2000);
     var DAYS = ["MA", "TI", "ON", "TO", "FR", "LØ", "SØ"];
     var strip = DAYS.map(function (l, i) {
       var d = new Date(mon); d.setDate(mon.getDate() + i); var v = dv(d);
       var has = week.some(function (x) { return x.date === v; }), done = week.some(function (x) { return x.date === v && x.done; });
-      return '<button type="button" data-day="' + v + '" class="' + (v === todayV ? "on" : "") + (has ? " has" : "") + (done ? " done" : "") + '">' + l + '<b>' + d.getDate() + '</b></button>';
+      return '<button type="button" data-pick="' + v + '" class="' + (v === (selDay || todayV) ? "on" : "") + (v === todayV ? " today" : "") + (has ? " has" : "") + (done ? " done" : "") + '">' + l + '<b>' + d.getDate() + '</b></button>';
     }).join("");
     var card;
     if (next) {
       var dd = pd(next.date), diff = Math.round((dd - now) / 864e5);
-      var when = diff === 0 ? "I DAG" : diff === 1 ? "I MORGEN" : dd.toLocaleDateString("nb-NO", { weekday: "long", day: "numeric", month: "short" }).toUpperCase().replace(".", "");
+      var when = diff === 0 ? "I DAG" : diff === 1 ? "I MORGEN" : diff === -1 ? "I GÅR" : dd.toLocaleDateString("nb-NO", { weekday: "long", day: "numeric", month: "short" }).toUpperCase().replace(".", "");
       var len = mins(next.time, next.endTime);
       var meta = [next.place, next.drills ? next.drills + " øvelser" : next.nEx ? next.nEx + " øvelser" : "", len ? (len >= 60 ? (Math.round(len / 6) / 10).toString().replace(".", ",") + " t" : len + " min") : ""].filter(Boolean).map(esc).join(" · ");
       card = '<div class="th-next" style="background-image:linear-gradient(180deg,rgba(20,22,27,0) 25%,rgba(20,22,27,.88)),url(\'' + esc(next.photo) + '\')">' +
-        '<small>' + (next.tournament ? "NESTE TURNERING" : "NESTE TRENING") + ' · ' + esc(when) + (next.time ? " " + esc(next.time) : "") + '</small><h3>' + esc(next.title) + '</h3>' + (meta ? '<span>' + meta + '</span>' : '') +
+        '<small>' + (next.done ? "✓ GJENNOMFØRT" : dayList ? (next.tournament ? "TURNERING" : "TRENING") : (next.tournament ? "NESTE TURNERING" : "NESTE TRENING")) + ' · ' + esc(when) + (next.time ? " " + esc(next.time) : "") + '</small><h3>' + esc(next.title) + '</h3>' + (meta ? '<span>' + meta + '</span>' : '') +
+        (dayList && dayList.length > 1 ? '<span class="th-more">+ ' + (dayList.length - 1) + ' til denne dagen</span>' : '') +
         '<button type="button" data-day="' + next.date + '">▶ Se økta</button></div>';
     } else {
-      card = '<div class="th-next empty"><small>INGEN TRENING PLANLAGT</small><h3>Legg inn neste økt</h3><span>Treningene dine fra treneren dukker opp her.</span><button type="button" data-day="' + todayV + '">+ Åpne kalenderen</button></div>';
+      card = selDay ? '<div class="th-next empty"><small>' + esc(pd(selDay).toLocaleDateString("nb-NO", { weekday: "long", day: "numeric", month: "long" }).toUpperCase()) + '</small><h3>Ingen trening denne dagen</h3><span>En fin dag for hvile – eller legg inn en økt selv.</span><button type="button" data-day="' + selDay + '">+ Legg inn økt</button></div>'
+        : '<div class="th-next empty"><small>INGEN TRENING PLANLAGT</small><h3>Legg inn neste økt</h3><span>Treningene dine fra treneren dukker opp her.</span><button type="button" data-day="' + todayV + '">+ Åpne kalenderen</button></div>';
     }
     box.innerHTML = '<div class="th-days">' + strip + '</div>' + card;
     // Fliser
@@ -26113,7 +26189,7 @@ function getExercisePR(exerciseName) {
     var t = [];
     if (R) t.push('<button type="button" class="c-red" data-go="ranking">' + ic('<path d="M3 17l6-6 4 4 8-8"/><path d="M15 7h6v6"/>') + '<small>Ranking</small><b>' + fmtN(R.poeng) + '</b><em>' + (R.plass ? "nr. " + fmtN(R.plass) + " i Norge" : "poeng") + '</em></button>');
     if (h != null) t.push('<button type="button" class="c-green" data-go="timer">' + ic('<circle cx="12" cy="13" r="8"/><path d="M12 9v4l2.5 2.5M9 2h6"/>') + '<small>Trent denne uka</small><b>' + (Math.round(h / 6) / 10).toString().replace(".", ",") + '<u> t</u></b>' +
-      (planned ? bar(doneN / planned * 100) + '<em>' + doneN + ' av ' + planned + ' økter</em>' : '<em>Se alle timer</em>') + '</button>');
+      (planned ? bar(doneN / planned * 100) + '<em>' + (doneN ? doneN + ' av ' + planned + ' økter gjort' : planned + ' økter planlagt') + '</em>' : '<em>Se alle timer</em>') + '</button>');
     t.push('<button type="button" class="c-gold" data-go="maal">' + ic('<circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1.2"/>') + '<small>Mine mål</small><b>' + (g.length ? gd + '<u>/' + g.length + '</u>' : '<span class="th-plus">+</span>') + '</b>' +
       (g.length ? bar(gd / g.length * 100) + '<em>mål nådd</em>' : '<em>Sett deg et mål</em>') + '</button>');
     var hasLag = ["tpTeam", "tpTurn"].some(function (id) { var e = document.getElementById(id); return e && !e.hidden; });
@@ -26121,7 +26197,11 @@ function getExercisePR(exerciseName) {
     tiles.hidden = false;
     tiles.innerHTML = '<div class="th-sec"><h4>Denne uka</h4></div><div class="th-tiles' + (t.length % 2 ? " odd" : "") + '">' + t.join("") + '</div>';
   }
-  box.addEventListener("click", function (e) { var b = e.target.closest("[data-day]"); if (b) goDay(b.dataset.day); });
+  box.addEventListener("click", function (e) {
+    var pk = e.target.closest("[data-pick]");
+    if (pk) { var v = pk.dataset.pick; selDay = v === dv(new Date()) ? "" : v; render(); var c = box.querySelector(".th-next"); if (c) { c.classList.remove("swap"); void c.offsetWidth; c.classList.add("swap"); } return; }
+    var b = e.target.closest("[data-day]"); if (b) goDay(b.dataset.day);
+  });
   tiles.addEventListener("click", function (e) { var b = e.target.closest("[data-go]"); if (b) window.tpGo(b.dataset.go); });
   window.addEventListener("load", function () { render(); setTimeout(render, 1500); setTimeout(render, 4000); setTimeout(render, 8000); });
   window.addEventListener("tp-view", function () { if (document.body.getAttribute("data-view") === "hjem") render(); });
@@ -26209,10 +26289,10 @@ function getExercisePR(exerciseName) {
     var bars = []; for (var i = 7; i >= 0; i--) { var a = new Date(mon); a.setDate(mon.getDate() - i * 7); var b = new Date(a); b.setDate(a.getDate() + 6); var v = S.list.filter(function (x) { var d = pd(x.date); return d >= a && d <= b; }).reduce(function (q, x) { return q + x.min; }, 0); bars.push({ v: v, lbl: "u" + isoWeek(a), now: i === 0 }); }
     var maxb = Math.max(60, Math.max.apply(null, bars.map(function (b) { return b.v; })));
     var byType = TYPES.map(function (t) { return [t, sum(season0, function (x) { return x.type === t[0]; })]; }).filter(function (x) { return x[1] > 0; });
-    var html = '<div class="tp-team-head"><h2>⏱️ Treningstimer</h2><small>denne uka</small></div>' +
+    var html = '<div class="tp-team-head"><h2>Treningstimer</h2><small>denne uka</small></div>' +
       '<div class="hr-big"><b>' + hdec(week) + '</b><span>timer denne uka</span></div>' +
       '<div class="hr-tiles"><div><b>' + hdec(month) + ' t</b><small>denne måneden</small></div><div><b>' + hdec(season) + ' t</b><small>denne sesongen</small></div><div><b>' + hdec(season / weeks) + ' t</b><small>snitt per uke</small></div></div>' +
-      '<div class="hr-tiles"><div><b>' + hdec(sum(season0, function (x) { return x.type === "bordtennis" || x.type === "kamp"; })) + ' t</b><small>🏓 bordtennis<br>i sesongen</small></div><div><b>' + hdec(sum(season0, function (x) { return x.type === "fysisk"; })) + ' t</b><small>💪 fysisk trening<br>i sesongen</small></div><div><b>' + hdec(sum(mon, function (x) { return x.type === "fysisk"; })) + ' t</b><small>💪 fysisk trening<br>denne uka</small></div></div>' +
+      '<div class="hr-tiles"><div><b>' + hdec(sum(season0, function (x) { return x.type === "bordtennis" || x.type === "kamp"; })) + ' t</b><small>bordtennis<br>i sesongen</small></div><div><b>' + hdec(sum(season0, function (x) { return x.type === "fysisk"; })) + ' t</b><small>fysisk trening<br>i sesongen</small></div><div><b>' + hdec(sum(mon, function (x) { return x.type === "fysisk"; })) + ' t</b><small>fysisk trening<br>denne uka</small></div></div>' +
       '<div class="hr-bars">' + bars.map(function (b) { return '<div class="' + (b.now ? "now" : "") + '"><em>' + (b.v ? hdec(b.v) : "") + '</em><i style="height:' + Math.round(b.v / maxb * 64) + 'px"></i><small>' + b.lbl + '</small></div>'; }).join("") + '</div>';
     if (byType.length) {
       var tot = byType.reduce(function (a, x) { return a + x[1]; }, 0);
@@ -26423,6 +26503,7 @@ function getExercisePR(exerciseName) {
   window.btDrillPicker = function (selected, onDone, title) {
     var O = overlay(title || "Velg øvelser til økta"), body = O.body;
     var pick = (selected || []).map(function (x) { return x.id; }), cat = "alle", coachUi = "", edit = null, mineEdit = null, busy = false;
+    var RACKET = '<svg viewBox="0 0 32 32" width="30" height="30"><circle cx="18.5" cy="12.5" r="8.5" fill="#fff"/><path d="M12.6 18.6L6.8 25.4" stroke="#fff" stroke-width="3.6" stroke-linecap="round"/><circle cx="7" cy="8" r="2.9" fill="#ffd5da"/></svg>';
     var HEART = '<svg viewBox="0 0 24 24"><path d="M12 20.5s-7.5-4.6-9.3-9.2C1.5 8 3.6 4.5 7.1 4.5c2 0 3.6 1.1 4.9 2.8 1.3-1.7 2.9-2.8 4.9-2.8 3.5 0 5.6 3.5 4.4 6.8-1.8 4.6-9.3 9.2-9.3 9.2z"/></svg>';
     function render() {
       var F = favs(), mine = own();
@@ -26435,7 +26516,7 @@ function getExercisePR(exerciseName) {
         (mineEdit ? '' : '<div class="dr-mynew"><button type="button" data-mynew><span>+</span>Lag din egen øvelse</button></div>') + myFormHtml() +
         '<div class="dr-list">' + (list.length ? list.map(function (d) {
           var on = pick.indexOf(d[0]) >= 0, fav = F.indexOf(d[0]) >= 0;
-          return '<div class="dr-item' + (on ? " sel" : "") + '"><button type="button" class="dr-row" data-tog="' + esc(d[0]) + '"><span class="dr-th' + (d[3] ? "" : " novid") + '"' + thStyle(d[3], d[4]) + '>' + (d[3] ? "" : "🏓") + '</span><span class="dr-x"><b>' + esc(d[2]) + '</b><small>' + esc(d[5]) + ' · ca. ' + d[6] + ' min' + (d[10] ? ' · fra treneren' : '') + '</small></span><span class="dr-chk">' + (on ? "✓" : "+") + '</span></button>' +
+          return '<div class="dr-item' + (on ? " sel" : "") + '"><button type="button" class="dr-row" data-tog="' + esc(d[0]) + '"><span class="dr-th' + (d[3] ? "" : " novid") + '"' + thStyle(d[3], d[4]) + '>' + (d[3] ? "" : RACKET) + '</span><span class="dr-x"><b>' + esc(d[2]) + '</b><small>' + esc(d[5]) + ' · ca. ' + d[6] + ' min' + (d[10] ? ' · fra treneren' : '') + '</small></span><span class="dr-chk">' + (on ? "✓" : "+") + '</span></button>' +
             '<button type="button" class="dr-fav' + (fav ? " on" : "") + '" data-fav="' + esc(d[0]) + '" aria-label="' + (fav ? "Fjern fra favoritter" : "Legg til i favoritter") + '">' + HEART + '</button>' +
             (d[11] ? '<div class="dr-coachact"><button type="button" data-myedit="' + esc(d[0]) + '">✎ Endre</button><button type="button" data-mydel="' + esc(d[0]) + '">Slett</button></div>' : '') +
             (d[10] && coachCode ? '<div class="dr-coachact"><button type="button" data-edit="' + esc(d[0]) + '">✎ Endre</button><button type="button" data-delc="' + esc(d[0]) + '">Slett fra banken</button></div>' : '') + '</div>';
@@ -26676,7 +26757,7 @@ function getExercisePR(exerciseName) {
     var missing = recent.filter(function (r) { return !notes.some(function (n) { return n.date === r.date; }); });
     box.hidden = false;
     var w = notes.filter(function (n) { return n.result === "seier"; }).length, l = notes.filter(function (n) { return n.result === "tap"; }).length;
-    var html = '<div class="tp-team-head"><h2>📝 Kampnotater</h2><small>Treneren ser notatene dine</small></div>';
+    var html = '<div class="tp-team-head"><h2>Kampnotater</h2><small>Treneren ser notatene dine</small></div>';
     if (missing.length && !open) html += '<div class="mn-nudge"><span><b>Du var med på ' + esc(missing[0].name) + '</b>' + fmt(missing[0].date) + ' – hvordan gikk kampene?</span><button type="button" data-start="' + esc(missing[0].date) + '" data-ev="' + esc(missing[0].name) + '">Skriv</button></div>';
     if (notes.length) html += '<div class="mn-stats"><div><b>' + notes.length + '</b><small>kamper notert</small></div><div><b style="color:#2e7d52">' + w + '</b><small>seire</small></div><div><b style="color:#b0413e">' + l + '</b><small>tap</small></div></div>';
     if (open) {
@@ -26863,7 +26944,7 @@ function getExercisePR(exerciseName) {
     var my = Number(curP.poeng) || 0, list = lvMatches().sort(function (a, b) { return String(b.date).localeCompare(String(a.date)); });
     var sum = list.reduce(function (a, x) { return a + rkDelta(my, x.oppPts, x.win, x.w); }, 0), live = Math.round(my + sum);
     var cls = sum > 0 ? "up" : sum < 0 ? "down" : "eq";
-    var h = '<h4>📈 Liveranking</h4><div class="lv-head"><div><small>Publisert</small><b>' + fmtN(my) + '</b></div><div class="arr">→</div><div><small>Live nå</small><b class="lv-now">' + fmtN(live) + '</b></div><em class="rk-chg ' + cls + '">' + (sum > 0 ? "▲ +" : sum < 0 ? "▼ " : "") + (Math.round(sum * 10) / 10).toLocaleString("nb-NO") + '</em></div>' +
+    var h = '<h4>Liveranking</h4><div class="lv-head"><div><small>Publisert</small><b>' + fmtN(my) + '</b></div><div class="arr">→</div><div><small>Live nå</small><b class="lv-now">' + fmtN(live) + '</b></div><em class="rk-chg ' + cls + '">' + (sum > 0 ? "▲ +" : sum < 0 ? "▼ " : "") + (Math.round(sum * 10) / 10).toLocaleString("nb-NO") + '</em></div>' +
       '<p class="lv-note">Legg inn kampene du har spilt etter ' + esc(new Date(curR.periode + "T12:00:00").toLocaleDateString("nb-NO", { day: "numeric", month: "long" })) + ', så ser du omtrent hvor du havner på neste ranking. Kampene lagres bare på denne telefonen.</p>';
     if (lv.form) {
       var pv = lv.oppPts != null ? '<div class="lv-prev">Vinner du: <b class="up">' + (rkDelta(my, lv.oppPts, true, lv.w) > 0 ? "+" : "") + rkDelta(my, lv.oppPts, true, lv.w).toLocaleString("nb-NO") + '</b> · Taper du: <b class="down">' + rkDelta(my, lv.oppPts, false, lv.w).toLocaleString("nb-NO") + '</b></div>' : "";
@@ -26998,7 +27079,7 @@ function getExercisePR(exerciseName) {
     var g = goals().sort(function (a, b) { return (a.status === "nådd") - (b.status === "nådd") || String(a.createdAt).localeCompare(String(b.createdAt)); });
     var done = g.filter(function (x) { return x.status === "nådd"; }).length;
     box.hidden = false;
-    var html = '<div class="tp-team-head"><h2>🎯 Mine mål</h2><small>' + (g.length ? done + " av " + g.length + " nådd" : "Treneren ser målene dine") + '</small></div>';
+    var html = '<div class="tp-team-head"><h2>Mine mål</h2><small>' + (g.length ? done + " av " + g.length + " nådd" : "Treneren ser målene dine") + '</small></div>';
     html += g.map(function (x) {
       var t = (TYPES.find(function (y) { return y[0] === x.type; }) || ["", "✨"])[1].split(" ")[0];
       return '<div class="tp-goal' + (x.status === "nådd" ? " done" : "") + '"><button type="button" class="ck" data-done="' + esc(x.id) + '" aria-label="Nådd">' + (x.status === "nådd" ? "✓" : "") + '</button>' +
