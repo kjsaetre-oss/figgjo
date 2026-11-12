@@ -1,6 +1,6 @@
 /* Hovedterminlisten fra bordtennis.no. Lages av oppdater-terminliste.py – ikke rediger for hånd. */
 const TERMINLISTE = {
- "oppdatert": "2026-11-11",
+ "oppdatert": "2026-11-12",
  "kilde": "https://bordtennis.no/hovedterminliste-2026-2027/",
  "turneringer": [
   {
@@ -102,6 +102,13 @@ const TERMINLISTE = {
    "lenke": "https://bordtennis.no/hovedterminliste-2026-2027/oslo-ranking-2/"
   },
   {
+   "id": "2026-12-26-romjulscup",
+   "dato": "2026-12-26",
+   "tittel": "Romjulscup",
+   "sted": "Fornebu",
+   "lenke": "https://bordtennis.no/hovedterminliste-2026-2027/romjulscup/"
+  },
+  {
    "id": "2026-12-27-romjulsranking",
    "dato": "2026-12-27",
    "tittel": "Romjulsranking",
@@ -121,6 +128,13 @@ const TERMINLISTE = {
    "tittel": "Laksevågkruset 2027",
    "sted": "Bergen",
    "lenke": "https://bordtennis.no/hovedterminliste-2026-2027/laksevagkruset-2027/"
+  },
+  {
+   "id": "2027-01-16-fornebu-nyttarscup",
+   "dato": "2027-01-16",
+   "tittel": "Fornebu Nyttårscup",
+   "sted": "Fornebu",
+   "lenke": "https://bordtennis.no/hovedterminliste-2026-2027/fornebu-nyttarscup/"
   },
   {
    "id": "2027-01-23-snakeliga-2",
@@ -156,6 +170,20 @@ const TERMINLISTE = {
    "tittel": "Regionscup nr. 2 - region sør",
    "sted": "Hokksund",
    "lenke": "https://bordtennis.no/hovedterminliste-2026-2027/regionscup-nr.-2---region-sor/"
+  },
+  {
+   "id": "2027-02-13-fornebu-lagturnering",
+   "dato": "2027-02-13",
+   "tittel": "Fornebu lagturnering",
+   "sted": "Fornebu",
+   "lenke": "https://bordtennis.no/hovedterminliste-2026-2027/fornebu-lagturnering/"
+  },
+  {
+   "id": "2027-02-14-rankingstevne-u1700p",
+   "dato": "2027-02-14",
+   "tittel": "Rankingstevne U1700p",
+   "sted": "Fornebu",
+   "lenke": "https://bordtennis.no/hovedterminliste-2026-2027/rankingstevne-u1700p/"
   },
   {
    "id": "2027-02-20-sparebank-1-cup-2027",
@@ -226,6 +254,13 @@ const TERMINLISTE = {
    "tittel": "NM",
    "sted": "Bergen",
    "lenke": "https://bordtennis.no/hovedterminliste-2026-2027/nm/"
+  },
+  {
+   "id": "2027-03-27-rankingstevne",
+   "dato": "2027-03-27",
+   "tittel": "Rankingstevne",
+   "sted": "Fornebu",
+   "lenke": "https://bordtennis.no/hovedterminliste-2026-2027/rankingstevne/"
   },
   {
    "id": "2027-04-09-nm-for-junior-og-eldre-junior",

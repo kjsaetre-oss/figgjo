@@ -388,6 +388,67 @@
   .tl-standalone .dpp-quick-chip.on, .tl-standalone .dpp-weekday.on { background: #c8102e !important; border-color: #c8102e !important; color: #fff !important; }
   .tl-standalone .vk-sport-time input { color: #14161b; }
   .tl-standalone .dpp-own-save { background: linear-gradient(90deg, #c8102e, #e0445a) !important; color: #fff !important; }
+  /* ── Lys og luftig (forslag 1, 2026-11-12) ── */
+  html, body, body.tl-standalone { background: #f6f6f8 !important; }
+  .tp-head { background: rgba(255,255,255,.92) !important; color: #14161b !important; border-bottom: 1px solid #ececf0 !important; -webkit-backdrop-filter: blur(10px); backdrop-filter: blur(10px); }
+  .tp-head small { color: #8a8f99 !important; }
+  .tp-head .tp-refresh { background: #f4f5f7 !important; color: #3b3f47 !important; border-color: #e6e7eb !important; }
+  /* Sider */
+  body[data-view]:not([data-view="hjem"]) #tpA2hs, body[data-view]:not([data-view="hjem"]) .tp-hero,
+  body[data-view]:not([data-view="hjem"]) #tpHome, body[data-view]:not([data-view="hjem"]) #tpFocus, body[data-view]:not([data-view="hjem"]) #tpTiles { display: none !important; }
+  body[data-view]:not([data-view="kalender"]) #dppApp { display: none !important; }
+  body[data-view]:not([data-view="ranking"]) #tpRank { display: none !important; }
+  body[data-view]:not([data-view="maal"]) #tpGoals, body[data-view]:not([data-view="maal"]) #tpNotes { display: none !important; }
+  body[data-view]:not([data-view="laget"]) #tpTeam, body[data-view]:not([data-view="laget"]) #tpTurn { display: none !important; }
+  body[data-view]:not([data-view="timer"]) #tpHours { display: none !important; }
+  body[data-view] .tp-team, body[data-view] .tp-rank { margin-top: 16px !important; }
+  /* Hilsen */
+  .tp-hero { background: none !important; color: #14161b !important; box-shadow: none !important; margin: 18px 20px 0 !important; min-height: 0 !important; border-radius: 0 !important; overflow: visible !important; }
+  .tp-hero::before { display: none !important; }
+  .tp-hero .tp-ball2 { display: none !important; }
+  .tp-hero .tp-av { width: 48px !important; height: 48px !important; margin: 0 14px 0 0 !important; box-shadow: 0 0 0 2.5px #c8102e !important; }
+  .tp-hero > div:first-of-type { padding: 0 !important; }
+  .tp-hero h1 { color: #14161b !important; font-size: 25px !important; }
+  .tp-eyebrow { color: #8a8f99 !important; }
+  .tp-hello-sub { color: #5a5f6a !important; } .tp-hello-sub b { color: #14161b !important; } .tp-hello-sub .up { color: #2e7d52 !important; } .tp-hello-sub .down { color: #c8102e !important; }
+  /* Ukestripe og neste trening */
+  .tp-home { margin: 16px 20px 0; }
+  .th-days { display: flex; gap: 7px; }
+  .th-days button { flex: 1; min-width: 0; border: 0; background: #fff; border-radius: 15px; padding: 8px 0 10px; font: 800 10.5px -apple-system, sans-serif; color: #8a8f99; position: relative; box-shadow: 0 2px 10px rgba(20,22,27,.04); }
+  .th-days button b { display: block; font: 800 17px "Outfit", -apple-system, sans-serif; color: #14161b; margin-top: 1px; }
+  .th-days button.has::after { content: ""; position: absolute; left: 50%; bottom: 4px; width: 5px; height: 5px; margin-left: -2.5px; border-radius: 50%; background: #c8102e; }
+  .th-days button.done::after { background: #2e7d52; }
+  .th-days button.on { background: #c8102e; color: #ffd9de; } .th-days button.on b { color: #fff; } .th-days button.on::after { background: #fff; }
+  .th-next { margin-top: 14px; min-height: 210px; border-radius: 26px; color: #fff; padding: 18px; display: flex; flex-direction: column; justify-content: flex-end; background: #22252c center/cover no-repeat; box-shadow: 0 18px 30px -18px rgba(0,0,0,.45); }
+  .th-next.empty { background: linear-gradient(150deg, #1d2028, #2c303a); }
+  .th-next small { font: 800 11px -apple-system, sans-serif; letter-spacing: .12em; color: #ffb3bd; }
+  .th-next h3 { margin: 4px 0 3px; font: 800 24px/1.15 "Outfit", -apple-system, sans-serif; }
+  .th-next span { font: 600 13px -apple-system, sans-serif; opacity: .88; }
+  .th-next button { margin-top: 14px; border: 0; border-radius: 14px; padding: 13px; font: 800 15px -apple-system, sans-serif; background: #c8102e; color: #fff; }
+  /* Fokus som kort */
+  .tp-focus { background: none !important; color: #14161b !important; padding: 0 !important; margin: 22px 0 0 !important; border-radius: 0 !important; }
+  .tp-focus-head { margin: 0 20px 10px !important; }
+  .tp-focus-head img { width: 34px !important; height: 34px !important; }
+  .tp-focus-head b { color: #14161b; font-size: 17px !important; } .tp-focus-head small { color: #8a8f99 !important; }
+  .tp-fi-row { display: flex; gap: 10px; overflow-x: auto; padding: 2px 20px 8px; scroll-padding-left: 20px; scroll-snap-type: x mandatory; scrollbar-width: none; }
+  .tp-fi-row::after { content: ""; flex: 0 0 10px; }
+  .tp-fi-row::-webkit-scrollbar { display: none; }
+  .tp-fi { flex: 0 0 62%; max-width: 230px; scroll-snap-align: start; display: flex !important; flex-direction: column; align-items: flex-start !important; gap: 8px !important; background: #fff; border-radius: 20px; padding: 14px !important; border: 0 !important; box-shadow: 0 2px 12px rgba(20,22,27,.05); }
+  .tp-fi .n { background: #fdecee !important; color: #c8102e !important; }
+  .tp-fi .t { color: #14161b; font-size: 14.5px !important; } .tp-fi .t small { color: #8a8f99 !important; }
+  .tp-fi button { margin-top: auto; border: 1.5px solid #e6e7eb !important; color: #14161b !important; background: #fff !important; border-radius: 12px !important; padding: 7px 11px !important; }
+  .tp-fi button.on { background: #2e7d52 !important; border-color: #2e7d52 !important; color: #fff !important; }
+  /* Fliser */
+  .tp-tiles { margin: 18px 20px 0; }
+  .tp-tiles h4 { margin: 0 0 10px; font: 800 17px "Outfit", -apple-system, sans-serif; color: #14161b; }
+  .th-tiles { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+  .th-tiles button { text-align: left; border: 0; background: #fff; border-radius: 20px; padding: 14px; box-shadow: 0 2px 12px rgba(20,22,27,.05); font-family: -apple-system, sans-serif; color: #14161b; }
+  .th-tiles small { display: block; font-size: 11.5px; font-weight: 700; color: #8a8f99; }
+  .th-tiles b { display: block; font: 800 26px/1.15 "Outfit", -apple-system, sans-serif; margin: 2px 0; }
+  .th-tiles em { font-style: normal; font-size: 11.5px; font-weight: 800; color: #c8102e; }
+  /* Meny */
+  .tp-nav { background: rgba(255,255,255,.96) !important; border-top: 1px solid #ececf0 !important; box-shadow: 0 -6px 20px rgba(20,22,27,.05); }
+  .tp-nav button { font-size: 10.5px !important; }
   /* Treningsmodus: ingen matdel */
   .tl-standalone .vk-sec[data-sec="Mat"] { display: none !important; }
 </style>
@@ -399,7 +460,9 @@
 <div class="tp-app">
 <div id="tpA2hs"></div>
 <section class="tp-hero" aria-label="Hilsen"><span class="tp-ball2" aria-hidden="true"></span><span class="tp-av" id="tpAv" aria-hidden="true"></span><div><small class="tp-eyebrow" id="tpEyebrow"></small><h1 id="tpHello">Hei!</h1><p class="tp-hello-sub" id="tpHelloSub" hidden></p></div></section>
+<section class="tp-home" id="tpHome"></section>
 <section class="tp-focus" id="tpFocus" hidden></section>
+<section class="tp-tiles" id="tpTiles" hidden></section>
 <script>
 // Sikkerhetsadapter (sikkerhet-2a-planer-funksjoner.sql): lesing og lagring av
   // movement_plans går via funksjoner som bare gir ut/lagrer ÉN kundes plan.
@@ -18683,6 +18746,30 @@ var DPP_IMG = [
       return true;
     } catch (e) { data.coachFocus = prev; return false; }
   };
+  // ── Startsiden i BT-coach (2026-11-12): økter de neste dagene, og «åpne kalenderen på en dag»
+  window.vkTrainingDays = function (fromValue, days) {
+    const out = [];
+    const start = parseDateValue(fromValue) || new Date();
+    for (let i = 0; i < (days || 7); i++) {
+      const d = addDays(start, i), dv = toDateValue(d);
+      (data.items || []).forEach(it => {
+        const prog = it.isVirtualProgram && it.programType !== "praksis" && Array.isArray(it.exercises) && it.exercises.length;
+        const act = it.isVirtualTask && it.taskKind === "habit" && vkActivityPhotoUrl(it.activityPhoto);
+        if (!prog && !act) return;
+        try { if (!isDueOnDate(it, d)) return; } catch (e) { return; }
+        const task = act ? (data.assignedTasks || []).find(t => t && t.id === it.taskId) : null;
+        out.push({ date: dv, id: it.id, title: vkStrip(it.title), time: it.time || "", endTime: it.endTime || "", place: it.place || "",
+          photo: act ? vkActivityPhotoUrl(it.activityPhoto) : vkPhoto(vkWorkoutPhotoId(it), 900),
+          done: !!isItemDoneOnDate(it, d), program: !!prog, nEx: prog ? it.exercises.length : 0,
+          drills: task && Array.isArray(task.drills) ? task.drills.length : 0, tournament: !!it.isTournament });
+      });
+    }
+    return out.sort((a, b) => a.date.localeCompare(b.date) || String(a.time || "99").localeCompare(String(b.time || "99")));
+  };
+  window.vkOpenDay = function (dv) {
+    const d = parseDateValue(dv); if (!d) return;
+    viewedDate = d; renderWeekLabel(); renderWeekBar(); renderList(); renderHabitStats();
+  };
   // ── Egne treninger og utstyr (treningssiden). vkPlayerData gir også avkryssede aktiviteter fra kalenderen.
   window.vkPlayerData = function () {
     return {
@@ -25830,41 +25917,109 @@ function getExercisePR(exerciseName) {
 })();
 </script>
 <nav class="tp-nav" id="tpNav" aria-label="Meny">
-  <button type="button" data-go="tpTop" class="on"><i>📅</i>Kalender</button>
-  <button type="button" data-go="tpHours" hidden><i>⏱️</i>Timer</button>
-  <button type="button" data-go="tpRank" hidden><i>📈</i>Ranking</button>
-  <button type="button" data-go="tpGoals" hidden><i>⭐</i>Mål</button>
-  <button type="button" data-go="tpTeam" hidden><i>🏓</i>Laget</button>
-  <button type="button" data-go="tpTurn" hidden><i>🏆</i>Turneringer</button>
+  <button type="button" data-go="hjem" class="on"><i>🏠</i>Hjem</button>
+  <button type="button" data-go="kalender"><i>📅</i>Kalender</button>
+  <button type="button" data-go="ranking"><i>📈</i>Ranking</button>
+  <button type="button" data-go="maal"><i>⭐</i>Mål</button>
+  <button type="button" data-go="laget"><i>🏓</i>Laget</button>
 </nav>
 <script>
-// ── Meny nederst: hopper til delene på siden og viser hvor du er
+// ── Én side per fane (2026-11-12): Hjem, Kalender, Ranking, Mål (+ kampnotater), Laget (+ turneringer), Timer (fra flis)
 (function () {
   var nav = document.getElementById("tpNav"); if (!nav) return;
   if (!window.TL_TP_OK) { nav.remove(); return; }
-  var ids = ["tpTop", "tpHours", "tpRank", "tpGoals", "tpTeam", "tpTurn"];
-  var el = function (id) {
-    if (id === "tpTop") return document.getElementById("dppApp");
-    if (id === "tpTurn") { var n = document.getElementById("tpNotes"); if (n && !n.hidden) return n; }
-    return document.getElementById(id);
+  var VIEWS = ["hjem", "kalender", "ranking", "maal", "laget", "timer"];
+  window.tpGo = function (v, opts) {
+    if (VIEWS.indexOf(v) < 0) v = "hjem";
+    document.body.setAttribute("data-view", v);
+    nav.querySelectorAll("[data-go]").forEach(function (b) { b.classList.toggle("on", b.dataset.go === v || (v === "timer" && b.dataset.go === "hjem")); });
+    try { sessionStorage.setItem("tp_view", v); } catch (e) {}
+    if (!opts || !opts.keepScroll) window.scrollTo(0, 0);
+    try { window.dispatchEvent(new Event("tp-view")); } catch (e) {}
   };
+  var start = "hjem"; try { start = sessionStorage.getItem("tp_view") || "hjem"; } catch (e) {}
+  window.tpGo(start, { keepScroll: true });
+  nav.addEventListener("click", function (e) { var b = e.target.closest("[data-go]"); if (b) window.tpGo(b.dataset.go); });
+  // Skjul faner uten innhold (f.eks. Ranking når spilleren ikke står på rankingen)
   function sync() {
-    ids.forEach(function (id) { var b = nav.querySelector('[data-go="' + id + '"]'), e = el(id); var h = id !== "tpTop" && (!e || e.hidden); if (b && b.hidden !== h) b.hidden = h; });
-    var cur = "tpTop", y = window.scrollY + window.innerHeight * 0.35;
-    ids.forEach(function (id) { var e = el(id); if (e && !e.hidden && e.getBoundingClientRect().top + window.scrollY <= y) cur = id; });
-    if (window.scrollY < 40) cur = "tpTop";
-    nav.querySelectorAll("button").forEach(function (b) { var on = b.dataset.go === cur; if (b.classList.contains("on") !== on) b.classList.toggle("on", on); });
+    var has = function (ids) { return ids.some(function (id) { var e = document.getElementById(id); return e && !e.hidden; }); };
+    var r = nav.querySelector('[data-go="ranking"]'); if (r) r.hidden = !has(["tpRank"]);
+    var l = nav.querySelector('[data-go="laget"]'); if (l) l.hidden = !has(["tpTeam", "tpTurn"]);
   }
-  nav.addEventListener("click", function (e) {
-    var b = e.target.closest("[data-go]"); if (!b) return;
-    var t = b.dataset.go === "tpTop" ? 0 : (el(b.dataset.go).getBoundingClientRect().top + window.scrollY - 64);
-    window.scrollTo({ top: Math.max(0, t), behavior: "smooth" });
-  });
-  window.addEventListener("scroll", function () { window.requestAnimationFrame(sync); }, { passive: true });
-  window.addEventListener("load", function () { sync(); setTimeout(sync, 2600); setTimeout(sync, 7200); });
-  // Følg bare med på når delene blir synlige (ikke på menyen selv)
-  var mo = new MutationObserver(function () { sync(); });
-  ["tpHours", "tpRank", "tpGoals", "tpTeam", "tpNotes", "tpTurn"].forEach(function (id) { var e = document.getElementById(id); if (e) mo.observe(e, { attributes: true, attributeFilter: ["hidden"] }); });
+  var mo = new MutationObserver(sync);
+  ["tpRank", "tpTeam", "tpTurn"].forEach(function (id) { var e = document.getElementById(id); if (e) mo.observe(e, { attributes: true, attributeFilter: ["hidden"] }); });
+  window.addEventListener("load", function () { sync(); setTimeout(sync, 2600); });
+})();
+</script>
+<script>
+// ── Hjem: ukestripe, neste trening og fliser med tall
+(function () {
+  var box = document.getElementById("tpHome"), tiles = document.getElementById("tpTiles"); var m = window.MVT_memberData;
+  if (!box || !m || !m.id) return;
+  var esc = function (v) { return String(v == null ? "" : v).replace(/[&<>"']/g, function (c) { return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]; }); };
+  var fmtN = function (n) { return Math.round(Number(n) || 0).toLocaleString("nb-NO"); };
+  function dv(d) { return d.getFullYear() + "-" + String(d.getMonth() + 1).padStart(2, "0") + "-" + String(d.getDate()).padStart(2, "0"); }
+  function pd(v) { return new Date(v + "T12:00:00"); }
+  function mins(a, b) { var x = String(a || "").split(":").map(Number), y = String(b || "").split(":").map(Number); if (x.length < 2 || y.length < 2 || isNaN(x[0]) || isNaN(y[0])) return 0; var d = (y[0] * 60 + y[1]) - (x[0] * 60 + x[1]); return d > 0 ? d : 0; }
+  function goDay(v) { if (window.vkOpenDay) window.vkOpenDay(v); window.tpGo("kalender"); }
+  function weekHours(mon) {
+    var P = window.vkPlayerData ? window.vkPlayerData() : null; if (!P) return null;
+    var from = dv(mon), to = dv(new Date()), sum = 0;
+    P.log.forEach(function (l) { if (l.date >= from && l.date <= to) sum += Number(l.min) || 0; });
+    P.tasks.forEach(function (t) { var mn = t.tournament ? 300 : mins(t.time, t.endTime); (t.doneDates || []).forEach(function (d) { if (d >= from && d <= to) sum += mn; }); });
+    P.programs.forEach(function (p) { (p.completedDates || []).forEach(function (d) { if (d >= from && d <= to) { var sl = p.sessionLog && p.sessionLog[d]; sum += sl && sl.min ? Number(sl.min) : 30; } }); });
+    return sum;
+  }
+  function render() {
+    if (!window.vkTrainingDays) return;
+    var now = new Date(); now.setHours(12, 0, 0, 0);
+    var mon = new Date(now); mon.setDate(now.getDate() - ((now.getDay() + 6) % 7));
+    var week = window.vkTrainingDays(dv(mon), 7), todayV = dv(now);
+    var ahead = window.vkTrainingDays(todayV, 21);
+    var next = ahead.filter(function (x) { return !x.done; })[0];
+    // Kalenderen er kanskje ikke ferdig lastet ennå – prøv igjen litt senere
+    if (!ahead.length && !week.length && (render.tries = (render.tries || 0) + 1) < 15) setTimeout(render, 2000);
+    var DAYS = ["MA", "TI", "ON", "TO", "FR", "LØ", "SØ"];
+    var strip = DAYS.map(function (l, i) {
+      var d = new Date(mon); d.setDate(mon.getDate() + i); var v = dv(d);
+      var has = week.some(function (x) { return x.date === v; }), done = week.some(function (x) { return x.date === v && x.done; });
+      return '<button type="button" data-day="' + v + '" class="' + (v === todayV ? "on" : "") + (has ? " has" : "") + (done ? " done" : "") + '">' + l + '<b>' + d.getDate() + '</b></button>';
+    }).join("");
+    var card;
+    if (next) {
+      var dd = pd(next.date), diff = Math.round((dd - now) / 864e5);
+      var when = diff === 0 ? "I DAG" : diff === 1 ? "I MORGEN" : dd.toLocaleDateString("nb-NO", { weekday: "long", day: "numeric", month: "short" }).toUpperCase().replace(".", "");
+      var len = mins(next.time, next.endTime);
+      var meta = [next.place, next.drills ? next.drills + " øvelser" : next.nEx ? next.nEx + " øvelser" : "", len ? (len >= 60 ? (Math.round(len / 6) / 10).toString().replace(".", ",") + " t" : len + " min") : ""].filter(Boolean).map(esc).join(" · ");
+      card = '<div class="th-next" style="background-image:linear-gradient(180deg,rgba(20,22,27,0) 25%,rgba(20,22,27,.88)),url(\'' + esc(next.photo) + '\')">' +
+        '<small>' + (next.tournament ? "NESTE TURNERING" : "NESTE TRENING") + ' · ' + esc(when) + (next.time ? " " + esc(next.time) : "") + '</small><h3>' + esc(next.title) + '</h3>' + (meta ? '<span>' + meta + '</span>' : '') +
+        '<button type="button" data-day="' + next.date + '">▶ Se økta</button></div>';
+    } else {
+      card = '<div class="th-next empty"><small>INGEN TRENING PLANLAGT</small><h3>Legg inn neste økt</h3><span>Treningene dine fra treneren dukker opp her.</span><button type="button" data-day="' + todayV + '">+ Åpne kalenderen</button></div>';
+    }
+    box.innerHTML = '<div class="th-days">' + strip + '</div>' + card;
+    // Fliser
+    var R = null; try { R = window.tpRankMe ? window.tpRankMe() : null; } catch (e) {}
+    var h = weekHours(mon);
+    var g = []; try { g = window.vkGoalsList ? window.vkGoalsList() : []; } catch (e) {}
+    var gd = g.filter(function (x) { return x.status === "nådd"; }).length;
+    var t = [];
+    if (R) t.push('<button type="button" data-go="ranking"><small>Ranking</small><b>' + fmtN(R.poeng) + '</b><em>' + (R.plass ? "nr. " + fmtN(R.plass) + " i Norge" : "poeng") + '</em></button>');
+    if (h != null) t.push('<button type="button" data-go="timer"><small>Trent denne uka</small><b>' + (Math.round(h / 6) / 10).toString().replace(".", ",") + ' t</b><em>Se alle timer ›</em></button>');
+    t.push('<button type="button" data-go="maal"><small>Mine mål</small><b>' + (g.length ? gd + "/" + g.length : "–") + '</b><em>' + (g.length ? "nådd" : "Sett et mål ›") + '</em></button>');
+    var hasLag = ["tpTeam", "tpTurn"].some(function (id) { var e = document.getElementById(id); return e && !e.hidden; });
+    if (hasLag) t.push('<button type="button" data-go="laget"><small>Laget</small><b>🏓</b><em>Tabell og kamper ›</em></button>');
+    tiles.hidden = false;
+    tiles.innerHTML = '<h4>Denne uka</h4><div class="th-tiles">' + t.join("") + '</div>';
+  }
+  box.addEventListener("click", function (e) { var b = e.target.closest("[data-day]"); if (b) goDay(b.dataset.day); });
+  tiles.addEventListener("click", function (e) { var b = e.target.closest("[data-go]"); if (b) window.tpGo(b.dataset.go); });
+  window.addEventListener("load", function () { render(); setTimeout(render, 1500); setTimeout(render, 4000); setTimeout(render, 8000); });
+  window.addEventListener("tp-view", function () { if (document.body.getAttribute("data-view") === "hjem") render(); });
+  window.addEventListener("tp-name", render);
+  // Hold startsiden oppdatert (f.eks. når en økt er gjennomført)
+  setInterval(function () { if (document.body.getAttribute("data-view") === "hjem" && !document.hidden) render(); }, 15000);
+  document.addEventListener("visibilitychange", function () { if (!document.hidden && document.body.getAttribute("data-view") === "hjem") render(); });
 })();
 </script>
 <script>
@@ -26602,12 +26757,12 @@ function getExercisePR(exerciseName) {
     if (!list.length) { box.hidden = true; return; }
     var t = today();
     box.hidden = false;
-    box.innerHTML = '<div class="tp-focus-head"><img src="/bilder/kjetil-lindefjell-saetre.jpg" alt=""><span><b>Fokus nå</b><small>Fra treneren din – dette jobber vi med</small></span></div>' +
+    box.innerHTML = '<div class="tp-focus-head"><img src="/bilder/kjetil-lindefjell-saetre.jpg" alt=""><span><b>Fokus nå</b><small>Fra treneren din – dette jobber vi med</small></span></div><div class="tp-fi-row">' +
       list.map(function (f, i) {
         var n = (f.doneDates || []).length, on = (f.doneDates || []).indexOf(t) >= 0;
         return '<div class="tp-fi"><span class="n">' + (i + 1) + '</span><span class="t">' + esc(f.text) + (f.note ? '<small>' + esc(f.note) + '</small>' : n ? '<small>Øvd ' + n + ' gang' + (n === 1 ? "" : "er") + '</small>' : "") + '</span>' +
           '<button type="button" data-f="' + esc(f.id) + '" class="' + (on ? "on" : "") + '">' + (on ? "✓ Øvd i dag" : "Øvd i dag?") + '</button></div>';
-      }).join("");
+      }).join("") + '</div>';
   }
   box.addEventListener("click", async function (e) {
     var b = e.target.closest("[data-f]"); if (!b || busy || !window.vkFocusToggle) return;
