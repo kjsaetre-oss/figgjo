@@ -618,6 +618,26 @@
   .tp-app .two > *, .bd-ov .two > * { min-width: 0; }
   .tp-goal-form label { display: grid !important; gap: 6px !important; align-items: stretch !important; }
   .tp-goal-form input[type=date] { padding: 9px 12px !important; border-radius: 12px !important; font-size: 16px !important; }
+  /* Skjema: myke grå felt, rød kant ved fokus */
+  .tp-team input[type=text], .tp-team input[type=number], .tp-team input[type=date], .tp-team textarea, .tp-team select,
+  .rk-sec input[type=text], .rk-sec input[type=date], .rk-sec select, .tp-goal-form input[type=text] {
+    background: #f6f6f8 !important; border: 1.5px solid transparent !important; border-radius: 14px !important; padding: 11px 13px !important; font-size: 16px !important; color: #14161b !important; transition: border-color .15s, background .15s; outline: none; }
+  .tp-team input:focus, .tp-team textarea:focus, .tp-team select:focus, .rk-sec input:focus, .rk-sec select:focus { background: #fff !important; border-color: #c8102e !important; }
+  .tp-team input::placeholder, .tp-team textarea::placeholder, .rk-sec input::placeholder { color: #a3a7b0; }
+  .tp-team label, .rk-sec label { color: #646973 !important; font-weight: 700 !important; font-size: 12.5px !important; }
+  .tp-team .row button, .rk-sec .row button, .lv-w button { display: inline-flex; align-items: center; gap: 6px; border: 1.5px solid #ececf0 !important; background: #fff !important; color: #14161b !important; border-radius: 999px !important; padding: 8px 13px !important; font-weight: 700 !important; }
+  .tp-team .row button.on, .rk-sec .row button.on, .lv-w button.on { background: #14161b !important; border-color: #14161b !important; color: #fff !important; }
+  .tp-team .row button[data-res="seier"].on, .rk-sec .row button[data-lvres="seier"].on { background: #2e7d52 !important; border-color: #2e7d52 !important; }
+  .tp-team .row button[data-res="tap"].on, .rk-sec .row button[data-lvres="tap"].on { background: #c8102e !important; border-color: #c8102e !important; }
+  .dot { display: inline-block; width: 9px; height: 9px; border-radius: 50%; } .dot.w { background: #2e7d52; } .dot.l { background: #c8102e; }
+  .on > .dot { background: #fff; }
+  .tp-team .save, .tp-goal-form [data-save], .tp-team .hr-actions button:first-child { border-radius: 14px !important; padding: 13px !important; font-size: 15px !important; box-shadow: 0 8px 18px -10px rgba(200,16,46,.7); }
+  .tp-goal-form { padding: 0 18px 16px !important; gap: 12px !important; }
+  /* Kalender: samme lyse stil */
+  body.tl-standalone #dppApp .dpp-top { background: transparent !important; box-shadow: none !important; border: 0 !important; }
+  body.tl-standalone #dppApp .vk-sec-head h2 { font-size: 20px !important; letter-spacing: -.02em; }
+  body.tl-standalone #dppApp .vk-sec-head h2::before { display: none !important; }
+  body.tl-standalone #dppApp .dpp-weekday-btn { background: #fff; border-radius: 16px !important; box-shadow: 0 1px 2px rgba(20,22,27,.04), 0 4px 14px rgba(20,22,27,.04); }
   /* Treningsmodus: ingen matdel */
   .tl-standalone .vk-sec[data-sec="Mat"] { display: none !important; }
 </style>
@@ -26771,12 +26791,12 @@ function getExercisePR(exerciseName) {
       html += '<div class="hr-form mn-form">' +
         '<div class="two"><label>Turnering / kamp<input type="text" id="mnEv" maxlength="60" value="' + esc(ev) + '" placeholder="F.eks. Figgjorekrutten"></label><label>Dato<input type="date" id="mnDate" value="' + esc(open === true ? dv(new Date()) : open) + '"></label></div>' +
         '<label>Motstander<div class="mn-opp"><input type="text" id="mnOpp" maxlength="60" placeholder="Søk på navn eller klubb" autocomplete="off" autocapitalize="words"><div class="mn-sugg" id="mnSugg" hidden></div></div><small class="mn-hint">Søk blant alle på Norgesrankingen – eller skriv navnet selv</small></label><div id="mnProf" hidden></div>' +
-        '<div class="row"><button type="button" data-res="seier" class="' + (res === "seier" ? "on" : "") + '">🟢 Seier</button><button type="button" data-res="tap" class="' + (res === "tap" ? "on" : "") + '">🔴 Tap</button>' +
+        '<div class="row"><button type="button" data-res="seier" class="' + (res === "seier" ? "on" : "") + '"><i class="dot w"></i>Seier</button><button type="button" data-res="tap" class="' + (res === "tap" ? "on" : "") + '"><i class="dot l"></i>Tap</button>' +
         '<input type="text" id="mnScore" maxlength="12" placeholder="Sett, f.eks. 3–1" style="flex:1;min-width:90px;border:1px solid #d5d7dd;border-radius:10px;padding:7px 10px;font:15px -apple-system,sans-serif;"></div>' +
         '<label>Hva fungerte?<textarea id="mnGood" maxlength="300" placeholder="F.eks. «Kort serve til forhand ga meg mange enkle poeng»"></textarea></label>' +
         '<label>Hva må jeg øve på?<textarea id="mnImprove" maxlength="300" placeholder="F.eks. «Mottak av lange server til backhand»"></textarea></label>' +
         (focus.length ? '<label>Passer det med fokuset ditt? (valgfritt)<select id="mnFocus"><option value="">–</option>' + focus.map(function (f) { return '<option value="' + esc(f.id) + '">' + esc(f.text) + '</option>'; }).join("") + '</select></label>' : "") +
-        '<button type="button" class="save" data-save>Lagre kampnotat</button><button type="button" class="tp-more" data-cancel style="margin:0;width:100%;">Avbryt</button></div>';
+        '<button type="button" class="save" data-save>Lagre kampnotat</button><button type="button" class="tp-more" data-cancel style="margin:0;width:100%;background:none!important;color:#8a8f99!important;">Avbryt</button></div>';
     } else {
       html += '<div class="hr-actions" style="grid-template-columns:1fr;"><button type="button" data-start="">+ Nytt kampnotat</button></div>';
     }
@@ -26956,7 +26976,7 @@ function getExercisePR(exerciseName) {
       var pv = lv.oppPts != null ? '<div class="lv-prev">Vinner du: <b class="up">' + (rkDelta(my, lv.oppPts, true, lv.w) > 0 ? "+" : "") + rkDelta(my, lv.oppPts, true, lv.w).toLocaleString("nb-NO") + '</b> · Taper du: <b class="down">' + rkDelta(my, lv.oppPts, false, lv.w).toLocaleString("nb-NO") + '</b></div>' : "";
       h += '<div class="lv-form"><label>Motstander<div class="mn-opp"><input type="text" id="lvOpp" autocomplete="off" placeholder="Søk på navn eller klubb"><div class="mn-sugg" id="lvSugg" hidden></div></div></label>' +
         '<div id="lvProf" hidden></div><div class="two"><label>Motstanderens poeng<input type="text" id="lvPts" inputmode="decimal" value="' + (lv.oppPts != null ? lv.oppPts : "") + '" placeholder="Fylles ut ved søk"></label><label>Dato<input type="date" id="lvDate" value="' + new Date().toISOString().slice(0, 10) + '"></label></div>' +
-        '<div class="row"><button type="button" data-lvres="seier" class="' + (lv.res === "seier" ? "on" : "") + '">🟢 Seier</button><button type="button" data-lvres="tap" class="' + (lv.res === "tap" ? "on" : "") + '">🔴 Tap</button></div>' +
+        '<div class="row"><button type="button" data-lvres="seier" class="' + (lv.res === "seier" ? "on" : "") + '"><i class="dot w"></i>Seier</button><button type="button" data-lvres="tap" class="' + (lv.res === "tap" ? "on" : "") + '"><i class="dot l"></i>Tap</button></div>' +
         '<div class="lv-w"><span>Stevne:</span>' + [[1, "×1 Vanlig stevne / serie"], [1.5, "×1,5 NM/SNC aldersbestemt · Eliteserien"], [2, "×2 NM Elite · SNC senior"]].map(function (x) { return '<button type="button" data-lvw="' + x[0] + '" class="' + (lv.w === x[0] ? "on" : "") + '">' + x[1] + '</button>'; }).join("") + '</div>' + pv +
         '<p class="lv-note" style="margin:0">WO teller ikke. Avbrutt kamp eller diskvalifikasjon teller som tap. Internasjonale turneringer i Norge og klasser for 10 år og yngre teller ikke.</p>' +
         '<button type="button" class="save" data-lvadd>Legg til kampen</button><button type="button" class="tp-more" data-lvcancel style="margin:0;width:100%;">Avbryt</button></div>';
@@ -27075,7 +27095,7 @@ function getExercisePR(exerciseName) {
   var box = document.getElementById("tpGoals"); var m = window.MVT_memberData;
   if (!box || !m || !m.id) return;
   var esc = function (v) { return String(v == null ? "" : v).replace(/[&<>"']/g, function (c) { return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]; }); };
-  var TYPES = [["teknikk", "🏓 Teknikk"], ["kamp", "🏆 Kamp"], ["fysisk", "💪 Fysisk"], ["annet", "✨ Annet"]];
+  var TYPES = [["teknikk", "Teknikk"], ["kamp", "Kamp"], ["fysisk", "Fysisk"], ["annet", "Annet"]];
   var SUG = { teknikk: ["20 forhand topspin på rad", "Lære en ny serve", "Bedre backhand-flick"], kamp: ["Vinne en kamp i serien", "Komme til semifinalen i en turnering", "Rykke opp en ranking-klasse"], fysisk: ["Planke i 1 minutt", "Trene styrke 3 ganger i uka", "Raskere fotarbeid"], annet: ["Være med på 3 turneringer", "Møte på alle treningene i en måned"] };
   var open = false, type = "teknikk", busy = false;
   function goals() { try { return window.vkGoalsList ? window.vkGoalsList() : []; } catch (e) { return []; } }
