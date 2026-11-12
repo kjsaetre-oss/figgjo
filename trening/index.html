@@ -750,6 +750,11 @@
   body[data-view="hjem"] .tp-hello-sub .down, body[data-view="hjem"] .tp-hello-sub .up { padding: 5px 10px !important; }
   /* Ingen oppdateringsknapp (Kjetils ønske) – siden henter ferske data selv */
   #tpRefresh { display: none !important; }
+  .th-tiles button.c-vio { background: radial-gradient(90% 90% at 100% 0%, rgba(255,255,255,.18), transparent 60%), linear-gradient(145deg, var(--c-vio1), var(--c-vio2)) !important; box-shadow: 0 16px 28px -18px rgba(124,58,237,.85) !important; }
+  .th-tiles b.sm { font-size: 19px !important; line-height: 1.2 !important; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 100%; }
+  .th-tiles em { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 100%; }
+  #tpHours .hr-sub { font: 800 18px "Outfit", -apple-system, sans-serif !important; letter-spacing: -.02em; color: #14161b !important; text-transform: none !important; padding: 18px 18px 6px !important; border-top: 1px solid #f0f1f4; margin-top: 12px; }
+  .tp-nav button i { width: 46px !important; }
   /* Treningsmodus: ingen matdel */
   .tl-standalone .vk-sec[data-sec="Mat"] { display: none !important; }
 </style>
@@ -26228,6 +26233,7 @@ function getExercisePR(exerciseName) {
 <nav class="tp-nav" id="tpNav" aria-label="Meny">
   <button type="button" data-go="hjem" class="on"><i><svg viewBox="0 0 24 24"><path d="M3 10.5 12 3l9 7.5V20a1 1 0 0 1-1 1h-5v-6h-6v6H4a1 1 0 0 1-1-1z"/></svg></i>Hjem</button>
   <button type="button" data-go="ranking"><i><svg viewBox="0 0 24 24"><path d="M3 17l6-6 4 4 8-8"/><path d="M15 7h6v6"/></svg></i>Ranking</button>
+  <button type="button" data-go="timer"><i><svg viewBox="0 0 24 24"><circle cx="12" cy="13" r="8"/><path d="M12 9v4l2.5 2.5M9 2h6"/></svg></i>Trening</button>
   <button type="button" data-go="maal"><i><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1.2"/></svg></i>Mål</button>
   <button type="button" data-go="laget"><i><svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.9M16 3.1a4 4 0 0 1 0 7.8"/></svg></i>Laget</button>
 </nav>
@@ -26242,7 +26248,7 @@ function getExercisePR(exerciseName) {
     var prevV = document.body.getAttribute("data-view");
     document.body.setAttribute("data-view", v);
     if (prevV && prevV !== v) { document.body.classList.remove("tp-anim"); void document.body.offsetWidth; document.body.classList.add("tp-anim"); clearTimeout(window.__tpAnimT); window.__tpAnimT = setTimeout(function () { document.body.classList.remove("tp-anim"); }, 600); }
-    nav.querySelectorAll("[data-go]").forEach(function (b) { b.classList.toggle("on", b.dataset.go === v || (v === "timer" && b.dataset.go === "hjem")); });
+    nav.querySelectorAll("[data-go]").forEach(function (b) { b.classList.toggle("on", b.dataset.go === v); });
     try { sessionStorage.setItem("tp_view", v); } catch (e) {}
     if (!opts || !opts.keepScroll) window.scrollTo(0, 0);
     try { window.dispatchEvent(new Event("tp-view")); } catch (e) {}
@@ -26329,6 +26335,11 @@ function getExercisePR(exerciseName) {
       (planned ? bar(doneN / planned * 100) + '<em>' + (doneN ? doneN + ' av ' + planned + ' økter gjort' : planned + ' økter planlagt') + '</em>' : '<em>Se alle timer</em>') + '</button>');
     t.push('<button type="button" class="c-gold" data-go="maal">' + ic('<circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1.2"/>') + '<small>Mine mål</small><b>' + (g.length ? gd + '<u>/' + g.length + '</u>' : '<span class="th-plus">+</span>') + '</b>' +
       (g.length ? bar(gd / g.length * 100) + '<em>mål nådd</em>' : '<em>Sett deg et mål</em>') + '</button>');
+    var G = []; try { G = (window.vkPlayerData && window.vkPlayerData().gear) || []; } catch (e) {}
+    var lastOf = function (side) { return G.filter(function (x) { return x.side === side; }).sort(function (a, b) { return String(b.date).localeCompare(String(a.date)); })[0]; };
+    var gF = lastOf("forhand"), gB = lastOf("baklengs");
+    t.push('<button type="button" class="c-vio" data-go="timer" data-gear="1">' + ic('<circle cx="14.5" cy="9.5" r="6.5"/><path d="M9.8 14.2L4 20"/><circle cx="4.5" cy="4.5" r="1.6"/>') + '<small>Utstyret ditt</small>' +
+      (gF || gB ? '<b class="sm">' + esc((gF || gB).name).slice(0, 18) + '</b><em>' + (gF && gB ? esc(gB.name).slice(0, 22) : "Legg inn begge sider") + '</em>' : '<b class="sm">Belegg</b><em>Legg inn racketen din</em>') + '</button>');
     var hasLag = ["tpTeam", "tpTurn"].some(function (id) { var e = document.getElementById(id); return e && !e.hidden; });
     if (hasLag) t.push('<button type="button" class="c-blue" data-go="laget">' + ic('<path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.9M16 3.1a4 4 0 0 1 0 7.8"/>') + '<small>Laget</small><b class="sm">Tabell</b><em>og kamper</em></button>');
     tiles.hidden = false;
@@ -26339,7 +26350,11 @@ function getExercisePR(exerciseName) {
     if (pk) { var v = pk.dataset.pick; selDay = v === dv(new Date()) ? "" : v; render(); var c = box.querySelector(".th-next"); if (c) { c.classList.remove("swap"); void c.offsetWidth; c.classList.add("swap"); } return; }
     var b = e.target.closest("[data-day]"); if (b) goDay(b.dataset.day);
   });
-  tiles.addEventListener("click", function (e) { var b = e.target.closest("[data-go]"); if (b) window.tpGo(b.dataset.go); });
+  tiles.addEventListener("click", function (e) {
+    var b = e.target.closest("[data-go]"); if (!b) return;
+    window.tpGo(b.dataset.go);
+    if (b.dataset.gear) setTimeout(function () { var g = document.querySelector("#tpHours .hr-sub") || document.querySelector('#tpHours [data-mode="gear"]'); if (g) g.scrollIntoView({ behavior: "smooth", block: "center" }); }, 120);
+  });
   window.addEventListener("load", function () { render(); setTimeout(render, 1500); setTimeout(render, 4000); setTimeout(render, 8000); });
   window.addEventListener("tp-view", function () { if (document.body.getAttribute("data-view") === "hjem") render(); });
   window.addEventListener("tp-name", render);
@@ -26454,7 +26469,7 @@ function getExercisePR(exerciseName) {
     var gear = S.gear.slice().sort(function (a, b) { return String(b.date).localeCompare(String(a.date)); });
     var cur = SIDES.map(function (x) { return [x, gear.find(function (g) { return g.side === x[0]; })]; }).filter(function (x) { return x[1]; });
     if (cur.length) {
-      html += '<div class="hr-sub">🏓 Utstyret ditt</div>';
+      html += '<div class="hr-sub">Utstyret ditt</div>';
       var fh = currentGear(S, "forhand"), bh = currentGear(S, "baklengs");
       if ((fh && fh.color) || (bh && bh.color)) {
         var pad = function (g, lbl) { var c = g && g.color ? colHex(g.color) : "#d5d7dd"; return '<div class="gr-pad"><svg viewBox="0 0 60 80" aria-hidden="true"><rect x="25" y="50" width="10" height="26" rx="4" fill="#b98a5a"/><rect x="25" y="50" width="10" height="26" rx="4" fill="url(#grWood)" opacity=".5"/><ellipse cx="30" cy="30" rx="26" ry="28" fill="#e8d3b3"/><ellipse cx="30" cy="30" rx="24" ry="26" fill="' + c + '"/><ellipse cx="22" cy="20" rx="8" ry="5" fill="#fff" opacity=".12"/></svg><small>' + lbl + '</small><b>' + esc(g ? g.name : "–") + '</b></div>'; };
