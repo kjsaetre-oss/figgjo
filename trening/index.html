@@ -648,8 +648,6 @@
   body[data-view="hjem"] .tp-mark svg circle, body[data-view="hjem"] .tp-mark svg path { fill: #e0183a; stroke: #e0183a; } body[data-view="hjem"] .tp-mark svg circle:last-child { fill: #ff9a3c; stroke: none; }
   body[data-view="hjem"] .tp-head .tp-refresh { background: rgba(255,255,255,.18) !important; color: #fff !important; border-color: rgba(255,255,255,.25) !important; }
   body[data-view="hjem"] .tp-app { position: relative; }
-  body[data-view="hjem"] .tp-app::before { content: ""; position: absolute; z-index: -1; left: 0; right: 0; top: 0; height: 158px; border-radius: 0 0 34px 34px;
-    background: radial-gradient(70% 60% at 100% 100%, rgba(255,170,60,.75) 0%, rgba(255,170,60,0) 70%), radial-gradient(80% 70% at 0% 100%, rgba(139,92,246,.55) 0%, rgba(139,92,246,0) 70%), linear-gradient(180deg, #e3193f 0%, #e2264f 55%, #d7305c 100%); }
   body[data-view="hjem"] .tp-hero h1 { color: #fff !important; }
   body[data-view="hjem"] .tp-eyebrow { color: rgba(255,255,255,.75) !important; }
   body[data-view="hjem"] .tp-hello-sub, body[data-view="hjem"] .tp-hello-sub b { color: #fff !important; }
@@ -727,6 +725,31 @@
   body.tl-standalone .dpp-quick-add { background: #fff !important; color: #e0183a !important; box-shadow: none !important; width: 34px !important; height: 34px !important; }
   body.tl-standalone .dpp-quick-add::before, body.tl-standalone .dpp-quick-add::after { background: #e0183a !important; }
   body.tl-standalone .dpp-quick-add-label { color: #fff !important; font-size: 14.5px !important; }
+  /* ══ Hilsen som mørkt, profesjonelt panel (2026-11-12, runde 4) ══ */
+  body[data-view="hjem"] .tp-head { background: #17090f !important; border-bottom: 0 !important; -webkit-backdrop-filter: none !important; backdrop-filter: none !important; box-shadow: 0 1px 0 #17090f !important; }
+  body[data-view="hjem"] .tp-brand em { color: rgba(255,255,255,.55) !important; }
+  body[data-view="hjem"] .tp-mark { background: linear-gradient(145deg, #ff3b5c, #c8102e) !important; }
+  body[data-view="hjem"] .tp-mark svg circle, body[data-view="hjem"] .tp-mark svg path { fill: #fff; stroke: #fff; } body[data-view="hjem"] .tp-mark svg circle:last-child { fill: #ffd5da; }
+  body[data-view="hjem"] .tp-head .tp-refresh { background: rgba(255,255,255,.08) !important; border-color: rgba(255,255,255,.14) !important; }
+  body[data-view="hjem"] .tp-hero { margin: 0 0 22px !important; padding: 14px 20px 26px !important; border-radius: 0 0 30px 30px !important; overflow: hidden !important; position: relative;
+    background: radial-gradient(85% 110% at 105% 85%, rgba(200,16,46,.6) 0%, rgba(200,16,46,0) 62%), radial-gradient(60% 80% at 0% 100%, rgba(200,16,46,.18) 0%, rgba(200,16,46,0) 70%), linear-gradient(180deg, #17090f 0%, #1d0c14 100%) !important;
+    box-shadow: 0 18px 36px -24px rgba(23,9,15,.9) !important; }
+  body[data-view="hjem"] .tp-hero > div:first-of-type { position: relative; z-index: 1; }
+  body[data-view="hjem"] .tp-hero .tp-av { width: 62px !important; height: 62px !important; box-shadow: 0 0 0 2px #17090f, 0 0 0 4px rgba(255,59,92,.9), 0 12px 24px -10px rgba(0,0,0,.8) !important; position: relative; z-index: 1; }
+  body[data-view="hjem"] .tp-eyebrow { color: rgba(255,255,255,.5) !important; font-size: 10.5px !important; letter-spacing: .16em !important; }
+  body[data-view="hjem"] .tp-hero h1 { font-size: 30px !important; letter-spacing: -.03em !important; color: #fff !important; }
+  .tp-hello-sub { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 10px !important; }
+  .hs-chip { display: inline-flex; align-items: center; gap: 4px; padding: 5px 10px; border-radius: 999px; font: 600 12px -apple-system, sans-serif; letter-spacing: .01em;
+    background: #fff; color: #5a5f6a; box-shadow: 0 1px 2px rgba(20,22,27,.06); }
+  .hs-chip b { color: #14161b; font-weight: 800; }
+  .hs-chip.down { color: #c8102e; background: #fdecee; } .hs-chip.up { color: #1f7a4f; background: #e8f5ee; }
+  body[data-view="hjem"] .hs-chip { background: rgba(255,255,255,.08) !important; color: rgba(255,255,255,.72) !important; box-shadow: inset 0 0 0 1px rgba(255,255,255,.1); -webkit-backdrop-filter: blur(8px); backdrop-filter: blur(8px); }
+  body[data-view="hjem"] .hs-chip b { color: #fff !important; }
+  body[data-view="hjem"] .hs-chip.down { background: rgba(255,59,92,.16) !important; color: #ff8fa3 !important; box-shadow: inset 0 0 0 1px rgba(255,59,92,.3); }
+  body[data-view="hjem"] .hs-chip.up { background: rgba(34,211,166,.14) !important; color: #7ff0cf !important; box-shadow: inset 0 0 0 1px rgba(34,211,166,.3); }
+  body[data-view="hjem"] .tp-hello-sub .down, body[data-view="hjem"] .tp-hello-sub .up { padding: 5px 10px !important; }
+  /* Ingen oppdateringsknapp (Kjetils ønske) – siden henter ferske data selv */
+  #tpRefresh { display: none !important; }
   /* Treningsmodus: ingen matdel */
   .tl-standalone .vk-sec[data-sec="Mat"] { display: none !important; }
 </style>
@@ -27008,7 +27031,7 @@ function getExercisePR(exerciseName) {
     try {
       var av = document.getElementById("tpAv"); if (av && p.bilde) { av.style.backgroundImage = "url('" + p.bilde + "')"; av.textContent = ""; }
       var sub = document.getElementById("tpHelloSub");
-      if (sub) { var c0 = Number(p.endring) || 0; sub.innerHTML = '<b>' + fmtN(p.poeng) + ' p</b>' + (p.plass ? ' · nr. ' + fmtN(p.plass) + ' i Norge' : '') + (c0 ? ' <span class="' + (c0 > 0 ? "up" : "down") + '">' + (c0 > 0 ? "▲ +" : "▼ ") + fmtN(c0) + '</span>' : ''); sub.hidden = false; }
+      if (sub) { var c0 = Number(p.endring) || 0; sub.innerHTML = '<span class="hs-chip"><b>' + fmtN(p.poeng) + '</b> poeng</span>' + (p.plass ? '<span class="hs-chip">Nr. <b>' + fmtN(p.plass) + '</b> i Norge</span>' : '') + (c0 ? '<span class="hs-chip ' + (c0 > 0 ? "up" : "down") + '">' + (c0 > 0 ? "▲ +" : "▼ ") + fmtN(Math.abs(c0)) + '</span>' : ''); sub.hidden = false; }
     } catch (er) {}
     box.innerHTML = '<div class="rk-hero' + photo + '"><div class="rk-top"><small>Norgesranking · ' + esc(new Date(R.periode + "T12:00:00").toLocaleDateString("nb-NO", { month: "long", year: "numeric" })) + '</small></div>' +
       '<div class="rk-name">' + esc(p.navn) + '</div><div class="rk-club">' + esc(p.klubb) + '</div>' +
