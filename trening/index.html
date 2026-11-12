@@ -237,6 +237,19 @@
   .dr-form label { display: grid; gap: 4px; font: 700 12px -apple-system, sans-serif; color: #646973; }
   .dr-form input, .dr-form select, .dr-form textarea { border: 1px solid #d5d7dd; border-radius: 10px; padding: 9px 10px; font: 16px -apple-system, sans-serif; background: #fff; color: #1b1d22; width: 100%; box-sizing: border-box; min-width: 0; }
   .dr-form .two { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+  /* Egne øvelser og favoritter (2026-11-12) */
+  .dr-item { position: relative; }
+  .dr-fav { position: absolute; left: 12px; top: 12px; width: 28px; height: 28px; border: 0; padding: 0; border-radius: 50%; background: rgba(20,22,27,.45); -webkit-backdrop-filter: blur(6px); backdrop-filter: blur(6px); display: grid; place-items: center; cursor: pointer; }
+  .dr-fav svg { width: 15px; height: 15px; fill: none; stroke: #fff; stroke-width: 2.2; stroke-linejoin: round; }
+  .dr-fav.on { background: #fff; box-shadow: 0 2px 8px rgba(0,0,0,.2); } .dr-fav.on svg { fill: #c8102e; stroke: #c8102e; }
+  .dr-th.novid { background: linear-gradient(140deg, #c8102e, #7a0a1d) !important; font-size: 22px; }
+  .dr-mynew { padding: 0 14px 10px; }
+  .dr-mynew button { width: 100%; display: flex; align-items: center; justify-content: center; gap: 8px; border: 1.5px dashed #d5d7dd; background: #fff; border-radius: 14px; padding: 12px; font: 800 14px -apple-system, sans-serif; color: #14161b; cursor: pointer; }
+  .dr-mynew button span { width: 22px; height: 22px; border-radius: 50%; background: #c8102e; color: #fff; display: grid; place-items: center; font-size: 16px; line-height: 1; }
+  .dr-myform { margin: 0 14px 12px !important; }
+  .dr-form .opt { font-weight: 500; color: #9a9ea6; }
+  .dr-empty { padding: 26px 18px; text-align: center; font: 500 13.5px/1.45 -apple-system, sans-serif; color: #8a8f99; }
+  .dr-empty b { display: block; color: #14161b; font-size: 15px; margin-bottom: 4px; }
   .dr-prev span { display: block; width: 100%; aspect-ratio: 16 / 9; border-radius: 10px; background: #22252c center/cover no-repeat; }
   /* Motstanderprofil */
   .op-card { background: #f6f7f9; border-radius: 14px; padding: 12px; margin-top: 8px; display: grid; gap: 10px; font: 14px -apple-system, sans-serif; color: #14161b; }
@@ -449,6 +462,78 @@
   /* Meny */
   .tp-nav { background: rgba(255,255,255,.96) !important; border-top: 1px solid #ececf0 !important; box-shadow: 0 -6px 20px rgba(20,22,27,.05); }
   .tp-nav button { font-size: 10.5px !important; }
+  /* ── Finpuss (2026-11-12) ── */
+  body.tl-standalone { -webkit-font-smoothing: antialiased; }
+  .tp-head { box-shadow: none !important; }
+  .tp-head b { font-family: "Outfit", -apple-system, sans-serif; letter-spacing: -.02em; }
+  .tp-hero { align-items: center !important; margin-top: 22px !important; }
+  .tp-hero .tp-av { width: 54px !important; height: 54px !important; box-shadow: 0 0 0 3px #f6f6f8, 0 0 0 5px #c8102e !important; }
+  .tp-hero h1 { font-size: 28px !important; letter-spacing: -.025em !important; }
+  .tp-eyebrow { font-size: 11px !important; letter-spacing: .1em !important; }
+  .tp-hello-sub { font-size: 13.5px !important; }
+  /* Seksjonstitler */
+  .th-sec { display: flex; align-items: center; justify-content: space-between; margin: 0 0 12px; }
+  .th-sec h4 { margin: 0; font: 800 19px "Outfit", -apple-system, sans-serif; letter-spacing: -.02em; color: #14161b; }
+  .th-coach { display: inline-flex; align-items: center; gap: 7px; font: 700 12px -apple-system, sans-serif; color: #8a8f99; }
+  .th-coach img { width: 24px; height: 24px; border-radius: 50%; object-fit: cover; box-shadow: 0 0 0 2px #fff, 0 0 0 3.5px #c8102e; }
+  /* Ukestripe */
+  .tp-home { margin-top: 20px !important; }
+  .th-days { gap: 6px !important; }
+  .th-days button { border-radius: 16px !important; padding: 9px 0 13px !important; box-shadow: 0 1px 2px rgba(20,22,27,.04), 0 4px 14px rgba(20,22,27,.04) !important; letter-spacing: .04em; transition: transform .15s; }
+  .th-days button:active { transform: scale(.95); }
+  .th-days button b { font-size: 18px !important; margin-top: 2px !important; }
+  .th-days button.has::after { bottom: 5px !important; }
+  .th-days button.on { background: linear-gradient(160deg, #e0183a, #b00d27) !important; box-shadow: 0 8px 18px -8px rgba(200,16,46,.7) !important; }
+  /* Neste trening */
+  .th-next { position: relative; min-height: 236px !important; border-radius: 28px !important; padding: 20px !important; box-shadow: 0 24px 40px -24px rgba(20,22,27,.55) !important; overflow: hidden; }
+  .th-next small { align-self: flex-start; padding: 5px 10px; border-radius: 999px; background: rgba(255,255,255,.16); -webkit-backdrop-filter: blur(8px); backdrop-filter: blur(8px); color: #fff !important; font-size: 10.5px !important; letter-spacing: .1em !important; }
+  .th-next h3 { margin: 10px 0 4px !important; font-size: 28px !important; letter-spacing: -.02em; }
+  .th-next span { font-size: 13.5px !important; opacity: .82 !important; }
+  .th-next button { align-self: stretch; margin-top: 16px !important; border-radius: 16px !important; padding: 14px !important; background: #fff !important; color: #14161b !important; font-size: 15px !important; box-shadow: 0 8px 20px -10px rgba(0,0,0,.5); transition: transform .15s; }
+  .th-next button:active { transform: scale(.98); }
+  .th-next.empty { background: linear-gradient(150deg, #c8102e, #7a0a1d) !important; }
+  /* Fokus nå – liste */
+  .tp-focus { margin: 28px 20px 0 !important; }
+  .tp-fi-list { background: #fff; border-radius: 22px; padding: 4px 16px; box-shadow: 0 1px 2px rgba(20,22,27,.04), 0 6px 20px rgba(20,22,27,.05); }
+  .tp-fi-list .tp-fi { flex: none; max-width: none; display: flex !important; flex-direction: row !important; align-items: flex-start !important; gap: 14px !important; padding: 15px 0 !important; background: none; border-radius: 0; box-shadow: none; border-top: 1px solid #f0f1f4 !important; }
+  .tp-fi-list .tp-fi:first-child { border-top: 0 !important; }
+  .tp-fi-list .tp-fi .n { width: auto !important; height: auto !important; background: none !important; border-radius: 0 !important; color: #c8102e !important; font: 800 15px/1.35 "Outfit", -apple-system, sans-serif !important; letter-spacing: .02em; display: block !important; padding-top: 1px; flex: none; width: 22px !important; }
+  .tp-fi-list .tp-fi .t { font: 650 15px/1.4 -apple-system, sans-serif !important; color: #14161b !important; }
+  .tp-fi-list .tp-fi .t small { margin-top: 3px; font-size: 12.5px !important; font-weight: 500 !important; line-height: 1.4; }
+  /* Fliser */
+  .tp-tiles { margin-top: 28px !important; }
+  .th-tiles { gap: 12px !important; }
+  .th-tiles.odd button:last-child { grid-column: span 2; min-height: 0; display: grid; grid-template-columns: auto 1fr auto; grid-template-rows: auto auto; column-gap: 14px; align-items: center; }
+  .th-tiles.odd button:last-child .th-ic { grid-row: span 2; margin: 0; width: 44px; height: 44px; border-radius: 14px; }
+  .th-tiles.odd button:last-child small { grid-column: 2; }
+  .th-tiles.odd button:last-child b { grid-column: 3; grid-row: 1 / span 2; margin: 0 22px 0 0 !important; }
+  .th-tiles.odd button:last-child .th-bar { display: none; }
+  .th-tiles.odd button:last-child em { grid-column: 2; grid-row: 2; margin: 0; }
+  .th-tiles.odd button:last-child::after { top: 50%; margin-top: -10px; }
+  .th-tiles button { position: relative; min-height: 136px; display: flex; flex-direction: column; align-items: flex-start; padding: 16px !important; border-radius: 22px !important; box-shadow: 0 1px 2px rgba(20,22,27,.04), 0 6px 20px rgba(20,22,27,.05) !important; transition: transform .15s; }
+  .th-tiles button:active { transform: scale(.97); }
+  .th-tiles button::after { content: "›"; position: absolute; right: 16px; top: 14px; font: 600 20px/1 -apple-system, sans-serif; color: #c4c7ce; }
+  .th-ic { display: grid; place-items: center; width: 36px; height: 36px; border-radius: 12px; margin-bottom: 12px; }
+  .th-ic svg { width: 19px; height: 19px; }
+  .c-red .th-ic { background: #fdecee; color: #c8102e; } .c-green .th-ic { background: #e8f5ee; color: #2e7d52; }
+  .c-gold .th-ic { background: #fdf3e1; color: #c27c0e; } .c-blue .th-ic { background: #e9f0fc; color: #2f63c9; }
+  .th-tiles small { font-size: 12px !important; color: #8a8f99 !important; }
+  .th-tiles b { font-size: 28px !important; letter-spacing: -.025em; margin: 1px 0 4px !important; }
+  .th-tiles b.sm { font-size: 22px !important; }
+  .th-tiles b u { text-decoration: none; font-size: 16px; color: #8a8f99; font-weight: 700; }
+  .th-tiles em { margin-top: auto; color: #8a8f99 !important; font-weight: 700 !important; font-size: 12px !important; }
+  .c-red em { color: #c8102e !important; }
+  .th-plus { display: grid; place-items: center; width: 30px; height: 30px; border-radius: 50%; background: #c8102e; color: #fff; font: 700 20px/1 -apple-system, sans-serif; }
+  .th-bar { display: block; width: 100%; height: 6px; border-radius: 99px; background: #eef0f3; margin: 2px 0 7px; overflow: hidden; }
+  .th-bar span { display: block; height: 100%; border-radius: inherit; background: #2e7d52; }
+  .c-gold .th-bar span { background: #e0a030; }
+  /* Meny */
+  .tp-nav { padding-top: 6px !important; }
+  .tp-nav button { gap: 3px !important; color: #8a8f99 !important; font-weight: 700 !important; }
+  .tp-nav button i { display: grid; place-items: center; width: 52px; height: 30px; border-radius: 999px; filter: none !important; opacity: 1 !important; transition: background .2s; }
+  .tp-nav button i svg { width: 22px; height: 22px; fill: none; stroke: currentColor; stroke-width: 1.9; stroke-linecap: round; stroke-linejoin: round; }
+  .tp-nav button.on { color: #c8102e !important; }
+  .tp-nav button.on i { background: #fdecee; }
   /* Treningsmodus: ingen matdel */
   .tl-standalone .vk-sec[data-sec="Mat"] { display: none !important; }
 </style>
@@ -5976,6 +6061,7 @@ var DPP_IMG = [
     // Spillerens egne treninger og utstyr (treningssiden) – lagres atomisk
     normalized.playerLog = Array.isArray(raw.playerLog) ? raw.playerLog : [];
     normalized.playerGear = Array.isArray(raw.playerGear) ? raw.playerGear : [];
+    normalized.playerDrills = Array.isArray(raw.playerDrills) ? raw.playerDrills : [];
     normalized.playerMatchNotes = Array.isArray(raw.playerMatchNotes) ? raw.playerMatchNotes : [];
     normalized.exerciseDoneMap = (raw.exerciseDoneMap && typeof raw.exerciseDoneMap === "object" && !Array.isArray(raw.exerciseDoneMap)) ? raw.exerciseDoneMap : {};
     normalized.exerciseSetDoneMap = (raw.exerciseSetDoneMap && typeof raw.exerciseSetDoneMap === "object" && !Array.isArray(raw.exerciseSetDoneMap)) ? raw.exerciseSetDoneMap : {};
@@ -6228,6 +6314,7 @@ var DPP_IMG = [
       coachFocus: data.coachFocus || [],
       playerLog: data.playerLog || [],
       playerGear: data.playerGear || [],
+      playerDrills: data.playerDrills || [],
       playerMatchNotes: data.playerMatchNotes || [],
       // Samme beskyttelse for avkrysning av enkelt\u00f8velser i en \u00f8kt.
       exerciseDoneMap: data.exerciseDoneMap || {},
@@ -6428,6 +6515,7 @@ var DPP_IMG = [
           if (Array.isArray(raw.coachFocus)) data.coachFocus = raw.coachFocus;
           if (Array.isArray(raw.playerLog)) data.playerLog = raw.playerLog;
           if (Array.isArray(raw.playerGear)) data.playerGear = raw.playerGear;
+          if (Array.isArray(raw.playerDrills)) data.playerDrills = raw.playerDrills;
           if (Array.isArray(raw.playerMatchNotes)) data.playerMatchNotes = raw.playerMatchNotes;
           if (!opts.mutatingTodoNotes) {
             data.todoNotes = (raw.todoNotes && typeof raw.todoNotes === "object" && !Array.isArray(raw.todoNotes)) ? raw.todoNotes : {};
@@ -18775,6 +18863,7 @@ var DPP_IMG = [
     return {
       log: (data.playerLog || []).filter(x => x && !x.removedAt),
       gear: (data.playerGear || []).filter(x => x && !x.removedAt),
+      drills: (data.playerDrills || []).filter(x => x && !x.removedAt),
       notes: (data.playerMatchNotes || []).filter(x => x && !x.removedAt),
       tasks: (data.assignedTasks || []).filter(t => t && !t.removedAt && t.kind === "habit" && Array.isArray(t.doneDates) && t.doneDates.length),
       programs: (data.assignedPrograms || []).filter(p => p && Array.isArray(p.completedDates) && p.completedDates.length)
@@ -18782,7 +18871,7 @@ var DPP_IMG = [
     };
   };
   window.vkListSave = async function (field, item) {
-    if (!["playerLog", "playerGear", "playerMatchNotes"].includes(field) || !item || !item.id) return false;
+    if (!["playerLog", "playerGear", "playerMatchNotes", "playerDrills"].includes(field) || !item || !item.id) return false;
     const m = getMovementMember();
     if (!m.id) return false;
     const prev = deepClone(data[field] || []);
@@ -25917,11 +26006,11 @@ function getExercisePR(exerciseName) {
 })();
 </script>
 <nav class="tp-nav" id="tpNav" aria-label="Meny">
-  <button type="button" data-go="hjem" class="on"><i>🏠</i>Hjem</button>
-  <button type="button" data-go="kalender"><i>📅</i>Kalender</button>
-  <button type="button" data-go="ranking"><i>📈</i>Ranking</button>
-  <button type="button" data-go="maal"><i>⭐</i>Mål</button>
-  <button type="button" data-go="laget"><i>🏓</i>Laget</button>
+  <button type="button" data-go="hjem" class="on"><i><svg viewBox="0 0 24 24"><path d="M3 10.5 12 3l9 7.5V20a1 1 0 0 1-1 1h-5v-6h-6v6H4a1 1 0 0 1-1-1z"/></svg></i>Hjem</button>
+  <button type="button" data-go="kalender"><i><svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="16" rx="3"/><path d="M3 10h18M8 3v4M16 3v4"/></svg></i>Kalender</button>
+  <button type="button" data-go="ranking"><i><svg viewBox="0 0 24 24"><path d="M3 17l6-6 4 4 8-8"/><path d="M15 7h6v6"/></svg></i>Ranking</button>
+  <button type="button" data-go="maal"><i><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1.2"/></svg></i>Mål</button>
+  <button type="button" data-go="laget"><i><svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.9M16 3.1a4 4 0 0 1 0 7.8"/></svg></i>Laget</button>
 </nav>
 <script>
 // ── Én side per fane (2026-11-12): Hjem, Kalender, Ranking, Mål (+ kampnotater), Laget (+ turneringer), Timer (fra flis)
@@ -26003,14 +26092,19 @@ function getExercisePR(exerciseName) {
     var h = weekHours(mon);
     var g = []; try { g = window.vkGoalsList ? window.vkGoalsList() : []; } catch (e) {}
     var gd = g.filter(function (x) { return x.status === "nådd"; }).length;
+    var ic = function (p) { return '<i class="th-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">' + p + '</svg></i>'; };
+    var bar = function (pct) { return '<span class="th-bar"><span style="width:' + Math.max(4, Math.min(100, Math.round(pct))) + '%"></span></span>'; };
+    var planned = week.length, doneN = week.filter(function (x) { return x.done; }).length;
     var t = [];
-    if (R) t.push('<button type="button" data-go="ranking"><small>Ranking</small><b>' + fmtN(R.poeng) + '</b><em>' + (R.plass ? "nr. " + fmtN(R.plass) + " i Norge" : "poeng") + '</em></button>');
-    if (h != null) t.push('<button type="button" data-go="timer"><small>Trent denne uka</small><b>' + (Math.round(h / 6) / 10).toString().replace(".", ",") + ' t</b><em>Se alle timer ›</em></button>');
-    t.push('<button type="button" data-go="maal"><small>Mine mål</small><b>' + (g.length ? gd + "/" + g.length : "–") + '</b><em>' + (g.length ? "nådd" : "Sett et mål ›") + '</em></button>');
+    if (R) t.push('<button type="button" class="c-red" data-go="ranking">' + ic('<path d="M3 17l6-6 4 4 8-8"/><path d="M15 7h6v6"/>') + '<small>Ranking</small><b>' + fmtN(R.poeng) + '</b><em>' + (R.plass ? "nr. " + fmtN(R.plass) + " i Norge" : "poeng") + '</em></button>');
+    if (h != null) t.push('<button type="button" class="c-green" data-go="timer">' + ic('<circle cx="12" cy="13" r="8"/><path d="M12 9v4l2.5 2.5M9 2h6"/>') + '<small>Trent denne uka</small><b>' + (Math.round(h / 6) / 10).toString().replace(".", ",") + '<u> t</u></b>' +
+      (planned ? bar(doneN / planned * 100) + '<em>' + doneN + ' av ' + planned + ' økter</em>' : '<em>Se alle timer</em>') + '</button>');
+    t.push('<button type="button" class="c-gold" data-go="maal">' + ic('<circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1.2"/>') + '<small>Mine mål</small><b>' + (g.length ? gd + '<u>/' + g.length + '</u>' : '<span class="th-plus">+</span>') + '</b>' +
+      (g.length ? bar(gd / g.length * 100) + '<em>mål nådd</em>' : '<em>Sett deg et mål</em>') + '</button>');
     var hasLag = ["tpTeam", "tpTurn"].some(function (id) { var e = document.getElementById(id); return e && !e.hidden; });
-    if (hasLag) t.push('<button type="button" data-go="laget"><small>Laget</small><b>🏓</b><em>Tabell og kamper ›</em></button>');
+    if (hasLag) t.push('<button type="button" class="c-blue" data-go="laget">' + ic('<path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.9M16 3.1a4 4 0 0 1 0 7.8"/>') + '<small>Laget</small><b class="sm">Tabell</b><em>og kamper</em></button>');
     tiles.hidden = false;
-    tiles.innerHTML = '<h4>Denne uka</h4><div class="th-tiles">' + t.join("") + '</div>';
+    tiles.innerHTML = '<div class="th-sec"><h4>Denne uka</h4></div><div class="th-tiles' + (t.length % 2 ? " odd" : "") + '">' + t.join("") + '</div>';
   }
   box.addEventListener("click", function (e) { var b = e.target.closest("[data-day]"); if (b) goDay(b.dataset.day); });
   tiles.addEventListener("click", function (e) { var b = e.target.closest("[data-go]"); if (b) window.tpGo(b.dataset.go); });
@@ -26283,10 +26377,19 @@ function getExercisePR(exerciseName) {
       loaded = true; cb && cb();
     });
   }
-  function all() { return D.concat(custom); }
+  // Spillerens egne øvelser og favoritter (state_json.playerDrills, lagres atomisk via vkListSave)
+  // Egen øvelse: {id:"min-…", kind:"own", title, yt, cat, min, steps, plan}. Favoritt: {id:"fav-<øvelse-id>", kind:"fav", drill}
+  function myList() { try { var P = window.vkPlayerData ? window.vkPlayerData() : null; return P && Array.isArray(P.drills) ? P.drills : []; } catch (e) { return []; } }
+  function own() { return myList().filter(function (x) { return x.kind === "own" && x.title; }).map(function (x) {
+    return [x.id, x.cat || "grunnslag", x.title, x.yt || "", 2, "Egen øvelse", Number(x.min) || 10, "Deg", Array.isArray(x.steps) ? x.steps : [], x.plan || "", false, true];
+  }); }
+  function favs() { return myList().filter(function (x) { return x.kind === "fav" && x.drill; }).map(function (x) { return x.drill; }); }
+  function saveMine(item) { return window.vkListSave ? window.vkListSave("playerDrills", item) : Promise.resolve(false); }
+  function all() { return own().concat(D, custom); }
   function find(id) { return all().find(function (d) { return d[0] === id; }); }
   function snap(d) { return { id: d[0], title: d[2], yt: d[3], frame: d[4], min: d[6] }; }
-  function thumb(yt, fr) { return "https://img.youtube.com/vi/" + yt + "/mq" + (fr || 2) + ".jpg"; }
+  function thumb(yt, fr) { return yt ? "https://img.youtube.com/vi/" + yt + "/mq" + (fr || 2) + ".jpg" : ""; }
+  function thStyle(yt, fr) { return yt ? ' style="background-image:url(\'' + thumb(yt, fr) + '\')"' : ''; }
   window.addEventListener("load", function () { loadCustom(); });
 
   // Felles overlegg (ligger over kalenderens egne vinduer)
@@ -26304,16 +26407,37 @@ function getExercisePR(exerciseName) {
   // ── Velg øvelser til en økt. selected = [{id,…}], onDone(liste med øvelser)
   window.btDrillPicker = function (selected, onDone, title) {
     var O = overlay(title || "Velg øvelser til økta"), body = O.body;
-    var pick = (selected || []).map(function (x) { return x.id; }), cat = "alle", coachUi = "", edit = null, busy = false;
+    var pick = (selected || []).map(function (x) { return x.id; }), cat = "alle", coachUi = "", edit = null, mineEdit = null, busy = false;
+    var HEART = '<svg viewBox="0 0 24 24"><path d="M12 20.5s-7.5-4.6-9.3-9.2C1.5 8 3.6 4.5 7.1 4.5c2 0 3.6 1.1 4.9 2.8 1.3-1.7 2.9-2.8 4.9-2.8 3.5 0 5.6 3.5 4.4 6.8-1.8 4.6-9.3 9.2-9.3 9.2z"/></svg>';
     function render() {
-      var list = all().filter(function (d) { return cat === "alle" || d[1] === cat; });
-      body.innerHTML = '<div class="dr-cats">' + CATS.map(function (c) { return '<button type="button" data-cat="' + c[0] + '" class="' + (cat === c[0] ? "on" : "") + '">' + c[1] + '</button>'; }).join("") + '</div>' +
-        '<div class="dr-list">' + list.map(function (d) {
-          var on = pick.indexOf(d[0]) >= 0;
-          return '<div class="dr-item' + (on ? " sel" : "") + '"><button type="button" class="dr-row" data-tog="' + esc(d[0]) + '"><span class="dr-th" style="background-image:url(\'' + thumb(d[3], d[4]) + '\')"></span><span class="dr-x"><b>' + esc(d[2]) + '</b><small>' + esc(d[5]) + ' · ca. ' + d[6] + ' min' + (d[10] ? ' · fra treneren' : '') + '</small></span><span class="dr-chk">' + (on ? "✓" : "+") + '</span></button>' +
+      var F = favs(), mine = own();
+      var list = all().filter(function (d) { return cat === "alle" || (cat === "fav" ? F.indexOf(d[0]) >= 0 : cat === "mine" ? d[11] : d[1] === cat); });
+      if (cat === "alle") list.sort(function (a, b) { return (F.indexOf(b[0]) >= 0) - (F.indexOf(a[0]) >= 0); });
+      var cats = [CATS[0], ["fav", "♥ Favoritter" + (F.length ? " " + F.length : "")], ["mine", "Mine øvelser" + (mine.length ? " " + mine.length : "")]].concat(CATS.slice(1));
+      var empty = cat === "fav" ? '<div class="dr-empty"><b>Ingen favoritter ennå</b>Trykk på hjertet på en øvelse for å lagre den her.</div>'
+        : cat === "mine" ? '<div class="dr-empty"><b>Du har ingen egne øvelser ennå</b>Lag dine egne øvelser – med eller uten video.</div>' : '';
+      body.innerHTML = '<div class="dr-cats">' + cats.map(function (c) { return '<button type="button" data-cat="' + c[0] + '" class="' + (cat === c[0] ? "on" : "") + '">' + c[1] + '</button>'; }).join("") + '</div>' +
+        (mineEdit ? '' : '<div class="dr-mynew"><button type="button" data-mynew><span>+</span>Lag din egen øvelse</button></div>') + myFormHtml() +
+        '<div class="dr-list">' + (list.length ? list.map(function (d) {
+          var on = pick.indexOf(d[0]) >= 0, fav = F.indexOf(d[0]) >= 0;
+          return '<div class="dr-item' + (on ? " sel" : "") + '"><button type="button" class="dr-row" data-tog="' + esc(d[0]) + '"><span class="dr-th' + (d[3] ? "" : " novid") + '"' + thStyle(d[3], d[4]) + '>' + (d[3] ? "" : "🏓") + '</span><span class="dr-x"><b>' + esc(d[2]) + '</b><small>' + esc(d[5]) + ' · ca. ' + d[6] + ' min' + (d[10] ? ' · fra treneren' : '') + '</small></span><span class="dr-chk">' + (on ? "✓" : "+") + '</span></button>' +
+            '<button type="button" class="dr-fav' + (fav ? " on" : "") + '" data-fav="' + esc(d[0]) + '" aria-label="' + (fav ? "Fjern fra favoritter" : "Legg til i favoritter") + '">' + HEART + '</button>' +
+            (d[11] ? '<div class="dr-coachact"><button type="button" data-myedit="' + esc(d[0]) + '">✎ Endre</button><button type="button" data-mydel="' + esc(d[0]) + '">Slett</button></div>' : '') +
             (d[10] && coachCode ? '<div class="dr-coachact"><button type="button" data-edit="' + esc(d[0]) + '">✎ Endre</button><button type="button" data-delc="' + esc(d[0]) + '">Slett fra banken</button></div>' : '') + '</div>';
-        }).join("") + '</div>' + coachHtml() +
+        }).join("") : empty) + '</div>' + coachHtml() +
         '<div class="bd-foot"><button type="button" class="dr-new" data-done>' + (pick.length ? "Legg inn " + pick.length + " øvelse" + (pick.length > 1 ? "r" : "") : "Ingen øvelser valgt") + '</button></div>';
+    }
+    function myFormHtml() {
+      if (!mineEdit) return "";
+      var e = mineEdit;
+      return '<div class="dr-coach dr-form dr-myform"><b>' + (e.isNew ? "Din egen øvelse" : "Endre øvelsen") + '</b>' +
+        '<label>Navn<input type="text" id="myT" maxlength="70" value="' + esc(e.title) + '" placeholder="F.eks. «Serve + 3. ball mot backhand»"></label>' +
+        '<div class="two"><label>Kategori<select id="myC">' + CATS.slice(1).map(function (c) { return '<option value="' + c[0] + '"' + (e.cat === c[0] ? " selected" : "") + '>' + c[1] + '</option>'; }).join("") + '</select></label>' +
+        '<label>Minutter<input type="number" id="myM" inputmode="numeric" min="1" max="120" value="' + (e.min || 10) + '"></label></div>' +
+        '<label>Slik gjør du <span class="opt">(valgfritt)</span><textarea id="myP" rows="3" placeholder="F.eks. 3 × 10 baller, partneren pusher langt til forhand">' + esc(e.plan || "") + '</textarea></label>' +
+        '<label>YouTube-lenke <span class="opt">(valgfritt)</span><input type="text" id="myY" value="' + esc(e.yt ? "https://youtu.be/" + e.yt : "") + '" placeholder="Lim inn lenken hvis du har en video"></label>' +
+        '<div id="myPrev" class="dr-prev">' + (e.yt ? '<span' + thStyle(e.yt) + '></span>' : '') + '</div>' +
+        '<div class="two"><button type="button" class="dr-new" data-mysave>Lagre</button><button type="button" class="dr-cancel" data-mycancel>Avbryt</button></div><small id="myMsg"></small></div>';
     }
     function coachHtml() {
       if (!coachCode) {
@@ -26338,7 +26462,48 @@ function getExercisePR(exerciseName) {
       if (ok !== true) { var mm = body.querySelector("#drMsg"); if (mm) mm.textContent = "Fikk ikke lagret. Sjekk nettet – eller logg inn på nytt med trenerkoden."; return false; }
       return true;
     }
+    body.addEventListener("click", async function (e) {
+      if (busy) return;
+      var t = e.target, keep = function () { var sc = body.scrollTop; render(); body.scrollTop = sc; };
+      var fv = t.closest("[data-fav]");
+      if (fv) {
+        e.stopImmediatePropagation();
+        var did = fv.dataset.fav, on = favs().indexOf(did) >= 0;
+        fv.classList.toggle("on", !on); busy = true;
+        await saveMine(on ? { id: "fav-" + did, kind: "fav", drill: did, removedAt: new Date().toISOString() } : { id: "fav-" + did, kind: "fav", drill: did, at: new Date().toISOString() });
+        busy = false; keep(); return;
+      }
+      if (t.closest("[data-mynew]")) { e.stopImmediatePropagation(); mineEdit = { isNew: true, id: "min-" + Date.now().toString(36), title: "", yt: "", cat: ["alle", "fav", "mine"].indexOf(cat) < 0 ? cat : "grunnslag", min: 10, plan: "" }; render(); body.scrollTop = 0; var mt = body.querySelector("#myT"); if (mt) mt.focus(); return; }
+      if (t.closest("[data-mycancel]")) { e.stopImmediatePropagation(); mineEdit = null; render(); return; }
+      var me = t.closest("[data-myedit]");
+      if (me) { e.stopImmediatePropagation(); var x = myList().find(function (k) { return k.id === me.dataset.myedit; }); if (x) { mineEdit = { id: x.id, title: x.title, yt: x.yt || "", cat: x.cat, min: x.min, plan: x.plan || "" }; render(); body.scrollTop = 0; } return; }
+      var md = t.closest("[data-mydel]");
+      if (md) {
+        e.stopImmediatePropagation();
+        var y = myList().find(function (k) { return k.id === md.dataset.mydel; });
+        if (y && confirm("Slette «" + y.title + "»? Økter som allerede har øvelsen, beholder den.")) {
+          busy = true; var r0 = await saveMine(Object.assign({}, y, { removedAt: new Date().toISOString() })); busy = false;
+          if (r0) { pick = pick.filter(function (p) { return p !== y.id; }); keep(); }
+        }
+        return;
+      }
+      if (t.closest("[data-mysave]")) {
+        e.stopImmediatePropagation();
+        var g = function (id) { var el = body.querySelector("#" + id); return el ? String(el.value || "").trim() : ""; };
+        var title = g("myT"), yraw = g("myY"), yt = ytId(yraw), msg = body.querySelector("#myMsg");
+        if (!title) { body.querySelector("#myT").focus(); return; }
+        if (yraw && !yt) { if (msg) msg.textContent = "Lenken ser ikke ut som en YouTube-lenke. Fjern den eller lim inn på nytt."; return; }
+        var item = { id: mineEdit.id, kind: "own", title: title.slice(0, 70), yt: yt, cat: g("myC") || "grunnslag", min: Math.max(1, Math.min(120, parseInt(g("myM"), 10) || 10)), plan: g("myP").slice(0, 400), at: new Date().toISOString() };
+        busy = true; var ok = await saveMine(item);
+        if (!ok) { await new Promise(function (r) { setTimeout(r, 1500); }); ok = await saveMine(item); }
+        busy = false;
+        if (!ok) return;   // kundesider viser ikke feil – skjemaet blir stående så spilleren kan trykke igjen
+        if (mineEdit.isNew && pick.indexOf(item.id) < 0) pick.push(item.id);
+        mineEdit = null; cat = "mine"; render(); return;
+      }
+    }, true);
     body.addEventListener("input", function (e) {
+      if (e.target.id === "myY") { var id2 = ytId(e.target.value), pv2 = body.querySelector("#myPrev"); if (pv2) pv2.innerHTML = id2 ? '<span' + thStyle(id2) + '></span>' : ""; }
       if (e.target.id === "drY") { var id = ytId(e.target.value), pv = body.querySelector("#drPrev"); if (pv) pv.innerHTML = id ? '<span style="background-image:url(\'' + thumb(id) + '\')"></span>' : ""; }
     });
     body.addEventListener("click", async function (e) {
@@ -26387,9 +26552,9 @@ function getExercisePR(exerciseName) {
       var tot = list.reduce(function (a, x) { var d = find(x.id); return a + (d ? d[6] : Number(x.min) || 0); }, 0);
       body.innerHTML = '<p class="bd-sum">' + list.length + ' øvelse' + (list.length === 1 ? "" : "r") + ' · ca. ' + tot + ' min</p><div class="dr-list">' + list.map(function (x, i) {
         var d = find(x.id) || [x.id, "", x.title, x.yt, x.frame || 2, "", x.min || 10, "", [], "", true], on = open === x.id;
-        return '<div class="dr-item' + (on ? " open" : "") + '"><button type="button" class="dr-row" data-open="' + esc(x.id) + '"><span class="dr-th" style="background-image:url(\'' + thumb(d[3], d[4]) + '\')"><i>' + (i + 1) + '</i></span><span class="dr-x"><b>' + esc(d[2]) + '</b><small>ca. ' + d[6] + ' min' + (d[5] ? ' · ' + esc(d[5]) : '') + '</small></span><span class="dr-chev">' + (on ? "–" : "+") + '</span></button>' +
-          (on ? '<div class="dr-body"><div class="dr-video"><iframe src="https://www.youtube-nocookie.com/embed/' + d[3] + '?rel=0&modestbranding=1&playsinline=1" title="' + esc(d[2]) + '" allow="autoplay; encrypted-media; picture-in-picture" allowfullscreen loading="lazy"></iframe></div>' +
-            '<div class="dr-src">' + (d[10] ? 'Lagt til av treneren' : 'Video: ' + esc(d[7]) + ' (på engelsk)') + '</div>' +
+        return '<div class="dr-item' + (on ? " open" : "") + '"><button type="button" class="dr-row" data-open="' + esc(x.id) + '"><span class="dr-th' + (d[3] ? "" : " novid") + '"' + thStyle(d[3], d[4]) + '><i>' + (i + 1) + '</i></span><span class="dr-x"><b>' + esc(d[2]) + '</b><small>ca. ' + d[6] + ' min' + (d[5] ? ' · ' + esc(d[5]) : '') + '</small></span><span class="dr-chev">' + (on ? "–" : "+") + '</span></button>' +
+          (on ? '<div class="dr-body">' + (d[3] ? '<div class="dr-video"><iframe src="https://www.youtube-nocookie.com/embed/' + d[3] + '?rel=0&modestbranding=1&playsinline=1" title="' + esc(d[2]) + '" allow="autoplay; encrypted-media; picture-in-picture" allowfullscreen loading="lazy"></iframe></div>' : '') +
+            '<div class="dr-src">' + (d[11] ? 'Din egen øvelse' : d[10] ? 'Lagt til av treneren' : 'Video: ' + esc(d[7]) + ' (på engelsk)') + '</div>' +
             (d[8].length ? '<h4>Slik gjør du</h4><ol>' + d[8].map(function (t) { return '<li>' + esc(t) + '</li>'; }).join("") + '</ol>' : '') +
             (d[9] ? '<div class="dr-plan"><b>Øv slik</b>' + esc(d[9]) + '</div>' : '') + '</div>' : '') + '</div>';
       }).join("") + '</div>' + (opts.onEdit ? '<div class="bd-foot"><button type="button" class="dr-cancel" data-chg>✎ Endre øvelsene</button></div>' : '');
@@ -26619,7 +26784,10 @@ function getExercisePR(exerciseName) {
     var winp = W + L ? Math.round(W / (W + L) * 100) : 0;
     var seasonPts = sev.reduce(function (a, e) { return a + (Number(e.poeng) || 0); }, 0);
     var peak = Math.max.apply(null, (p.historikk || []).map(function (h) { return h.poeng; }).concat([p.poeng]));
-    var best = ev.slice().sort(function (a, b) { return (b.poeng || 0) - (a.poeng || 0); })[0];
+    // Beste turnering de siste 2 årene (samme periode som grafen) – ikke gamle stevner fra mange år siden
+    var twoY = new Date(now); twoY.setFullYear(now.getFullYear() - 2);
+    var best = ev.filter(function (e) { return new Date(e.dato + "T12:00:00") >= twoY && (Number(e.poeng) || 0) > 0; }).sort(function (a, b) { return (b.poeng || 0) - (a.poeng || 0); })[0];
+    var bestWhen = best ? new Date(best.dato + "T12:00:00").toLocaleDateString("nb-NO", { month: "short", year: "numeric" }).replace(".", "") : "";
     var chg = Number(p.endring) || 0, cls = chg > 0 ? "up" : chg < 0 ? "down" : "eq";
     var kl = (p.klasser || [])[0];
     var ranks = [[p.plass ? "#" + fmtN(p.plass) : "–", "i Norge"], [p.plassVest ? "#" + p.plassVest : "–", "Region Vest"]];
@@ -26643,7 +26811,7 @@ function getExercisePR(exerciseName) {
         '<div class="rk-tile"><b>' + (seasonPts > 0 ? "+" : "") + fmtN(seasonPts) + '</b><small>Poeng tjent<br>denne sesongen</small></div>' +
         '<div class="rk-tile"><b>' + sev.length + '</b><small>Turneringer<br>denne sesongen</small></div>' +
         '<div class="rk-tile"><b>' + fmtN(peak) + '</b><small>Høyeste<br>poengsum</small></div>' +
-        '<div class="rk-tile"><b>' + (best ? "+" + fmtN(best.poeng) : "–") + '</b><small>Beste turnering' + (best ? "<br>" + esc(best.navn).slice(0, 22) : "") + '</small></div>' +
+        '<div class="rk-tile"><b>' + (best ? "+" + fmtN(best.poeng) : "–") + '</b><small>Beste turnering siste 2 år' + (best ? "<br>" + esc(best.navn).slice(0, 22) + " · " + esc(bestWhen) : "") + '</small></div>' +
       '</div>' +
       (form.length ? '<div class="rk-sec"><h4>Form – siste turneringer</h4><div class="rk-form">' + form.map(function (e) { var c = e.s > e.t ? "w" : e.s < e.t ? "l" : "e"; return '<span class="' + c + '">' + e.s + '–' + e.t + '<small>' + esc(new Date(e.dato + "T12:00:00").toLocaleDateString("nb-NO", { day: "numeric", month: "short" }).replace(".", "")) + '</small></span>'; }).join("") + '</div></div>' : "") +
       '<div class="rk-sec"><h4>Siste turneringer</h4>' + ev.slice(0, 6).map(function (e) { var c = e.poeng > 0 ? "up" : e.poeng < 0 ? "down" : "eq"; return '<div class="rk-ev"><div class="x"><b>' + esc(e.navn) + '</b><small>' + esc(new Date(e.dato + "T12:00:00").toLocaleDateString("nb-NO", { day: "numeric", month: "short", year: "numeric" })) + ' · <span class="wl">' + e.s + ' seire, ' + e.t + ' tap</span></small></div><div class="pt ' + c + '">' + (e.poeng > 0 ? "+" : "") + fmtN(e.poeng) + '</div></div>'; }).join("") + '</div>' +
@@ -26757,19 +26925,11 @@ function getExercisePR(exerciseName) {
     if (!list.length) { box.hidden = true; return; }
     var t = today();
     box.hidden = false;
-    box.innerHTML = '<div class="tp-focus-head"><img src="/bilder/kjetil-lindefjell-saetre.jpg" alt=""><span><b>Fokus nå</b><small>Fra treneren din – dette jobber vi med</small></span></div><div class="tp-fi-row">' +
+    box.innerHTML = '<div class="th-sec"><h4>Fokus nå</h4><span class="th-coach"><img src="/bilder/kjetil-lindefjell-saetre.jpg" alt="">Fra treneren</span></div><div class="tp-fi-list">' +
       list.map(function (f, i) {
-        var n = (f.doneDates || []).length, on = (f.doneDates || []).indexOf(t) >= 0;
-        return '<div class="tp-fi"><span class="n">' + (i + 1) + '</span><span class="t">' + esc(f.text) + (f.note ? '<small>' + esc(f.note) + '</small>' : n ? '<small>Øvd ' + n + ' gang' + (n === 1 ? "" : "er") + '</small>' : "") + '</span>' +
-          '<button type="button" data-f="' + esc(f.id) + '" class="' + (on ? "on" : "") + '">' + (on ? "✓ Øvd i dag" : "Øvd i dag?") + '</button></div>';
+        return '<div class="tp-fi"><span class="n">' + String(i + 1).padStart(2, "0") + '</span><span class="t">' + esc(f.text) + (f.note ? '<small>' + esc(f.note) + '</small>' : "") + '</span></div>';
       }).join("") + '</div>';
   }
-  box.addEventListener("click", async function (e) {
-    var b = e.target.closest("[data-f]"); if (!b || busy || !window.vkFocusToggle) return;
-    busy = true; b.disabled = true;
-    await window.vkFocusToggle(b.dataset.f);
-    busy = false; render();
-  });
   window.addEventListener("load", function () { render(); setTimeout(function () { if (!busy) render(); }, 2500); setTimeout(function () { if (!busy) render(); }, 7000); });
 })();
 </script>
