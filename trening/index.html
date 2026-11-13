@@ -19058,6 +19058,20 @@ var DPP_IMG = [
       return true;
     } catch (e) { data.coachFocus = prev; return false; }
   };
+  // Spilleren kan fjerne et fokusområde fra coachen (merkes removedAt, removedBy: "player")
+  window.vkFocusRemove = async function (id) {
+    const m = getMovementMember();
+    const f = (data.coachFocus || []).find(x => x.id === id);
+    if (!m.id || !f) return false;
+    const prev = deepClone(data.coachFocus || []);
+    f.removedAt = new Date().toISOString(); f.removedBy = "player";
+    try {
+      const client = await getSupabaseClient();
+      const { error } = await client.rpc("upsert_movement_plan_list_item", { p_member_id: m.id, p_member_name: m.name || "", p_field: "coachFocus", p_item: f });
+      if (error) throw error;
+      return true;
+    } catch (e) { data.coachFocus = prev; return false; }
+  };
   // ── Startsiden i BT-coach (2026-11-12): økter de neste dagene, og «åpne kalenderen på en dag»
   window.vkTrainingDays = function (fromValue, days) {
     const out = [];
@@ -27177,7 +27191,7 @@ function getExercisePR(exerciseName) {
     var n = 0, row = function (f, isMine) {
       n++;
       return '<div class="tp-fi' + (isMine ? " mine" : "") + '"><span class="n">' + String(n).padStart(2, "0") + '</span><span class="t">' + esc(f.text) + (f.note ? '<small>' + esc(f.note) + '</small>' : isMine ? '<small>Ditt eget fokus</small>' : "") + '</span>' +
-        (isMine ? '<button type="button" class="fi-del" data-fdel="' + esc(f.id) + '" aria-label="Fjern">✕</button>' : '') + '</div>';
+        '<button type="button" class="fi-del" ' + (isMine ? 'data-fdel' : 'data-cdel') + '="' + esc(f.id) + '" aria-label="Fjern">✕</button></div>';
     };
     var rows = list.map(function (f) { return row(f, false); }).join("") + own.map(function (f) { return row(f, true); }).join("");
     var form = adding ? '<div class="fi-add"><input type="text" id="fiT" maxlength="80" placeholder="F.eks. «Bøy knærne på mottak»" enterkeyhint="done"><button type="button" data-fsave>Lagre</button><button type="button" class="ghost" data-fcancel aria-label="Avbryt">✕</button></div>'
@@ -27202,6 +27216,14 @@ function getExercisePR(exerciseName) {
     if (e.target.closest("[data-fnew]")) { adding = true; render(); return; }
     if (e.target.closest("[data-fcancel]")) { adding = false; render(); return; }
     if (e.target.closest("[data-fsave]")) { save(); return; }
+    var cd = e.target.closest("[data-cdel]");
+    if (cd) {
+      var cf = (window.vkFocusList ? window.vkFocusList() : []).find(function (x) { return x.id === cd.dataset.cdel; }); if (!cf || !window.vkFocusRemove) return;
+      if (!confirm("Fjerne «" + cf.text + "» fra fokuslista di?")) return;
+      busy = true; cd.closest(".tp-fi").style.opacity = ".4";
+      await window.vkFocusRemove(cf.id);
+      busy = false; render(); return;
+    }
     var d = e.target.closest("[data-fdel]");
     if (d) {
       var f = mine().find(function (x) { return x.id === d.dataset.fdel; }); if (!f) return;
