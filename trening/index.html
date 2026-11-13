@@ -26227,7 +26227,8 @@ function getExercisePR(exerciseName) {
     var first = String(n).trim().split(/\s+/)[0];
     var el = document.getElementById("tpWho"); if (el) el.textContent = "BT-coach · " + first;
     var h = document.getElementById("tpHello"); if (h) h.textContent = "Hei, " + first + "!";
-    var av = document.getElementById("tpAv"); if (av && !av.style.backgroundImage) av.textContent = String(n).trim().split(/\s+/).map(function (x) { return x[0] || ""; }).slice(0, 2).join("").toUpperCase();
+    // Rundingen i hilsenen viser alltid coachen (Kjetil) – hos alle spillere
+    var av = document.getElementById("tpAv"); if (av) { av.style.backgroundImage = "url('/bilder/kjetil-lindefjell-saetre.jpg')"; av.textContent = ""; av.title = "Coachen din"; }
     var eb = document.getElementById("tpEyebrow"); if (eb) eb.textContent = new Date().toLocaleDateString("nb-NO", { weekday: "long", day: "numeric", month: "long" });
   };
   show(m.name);
@@ -27058,7 +27059,7 @@ function getExercisePR(exerciseName) {
     var photo = p.bilde ? ' rk-photo" style="--rk-img:url(\'' + esc(p.bilde) + '\')' : "";
     // Eget bilde i hilsenen øverst også
     try {
-      var av = document.getElementById("tpAv"); if (av && p.bilde) { av.style.backgroundImage = "url('" + p.bilde + "')"; av.textContent = ""; }
+
       var sub = document.getElementById("tpHelloSub");
       if (sub) { var c0 = Number(p.endring) || 0; sub.innerHTML = '<span class="hs-chip"><b>' + fmtN(p.poeng) + '</b> poeng</span>' + (p.plass ? '<span class="hs-chip">Nr. <b>' + fmtN(p.plass) + '</b> i Norge</span>' : '') + (c0 ? '<span class="hs-chip ' + (c0 > 0 ? "up" : "down") + '">' + (c0 > 0 ? "▲ +" : "▼ ") + fmtN(Math.abs(c0)) + '</span>' : ''); sub.hidden = false; }
     } catch (er) {}
