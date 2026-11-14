@@ -1,6 +1,6 @@
 /* Tabell og kamper hentet fra bordtennislive.no. Lages av oppdater-serie.py – ikke rediger for hånd. */
 const SERIE = {
- "oppdatert": "2026-11-11",
+ "oppdatert": "2026-11-14",
  "lag": {
   "Figgjo 2": {
    "divisjon": "3. divisjon avd. E",
@@ -643,6 +643,17 @@ const SERIE = {
     },
     {
      "plass": "2",
+     "lag": "Figgjo 4",
+     "k": "3",
+     "v": "3",
+     "u": "0",
+     "t": "0",
+     "kamper": "24-6",
+     "sett": "79-37",
+     "p": "6"
+    },
+    {
+     "plass": "3",
      "lag": "Skjoldar",
      "k": "3",
      "v": "2",
@@ -650,17 +661,6 @@ const SERIE = {
      "t": "1",
      "kamper": "24-6",
      "sett": "81-31",
-     "p": "4"
-    },
-    {
-     "plass": "3",
-     "lag": "Figgjo 4",
-     "k": "2",
-     "v": "2",
-     "u": "0",
-     "t": "0",
-     "kamper": "16-4",
-     "sett": "52-26",
      "p": "4"
     },
     {
@@ -688,12 +688,12 @@ const SERIE = {
     {
      "plass": "6",
      "lag": "Lye 2",
-     "k": "2",
+     "k": "3",
      "v": "0",
      "u": "1",
-     "t": "1",
-     "kamper": "5-15",
-     "sett": "23-49",
+     "t": "2",
+     "kamper": "7-23",
+     "sett": "34-76",
      "p": "1"
     },
     {
@@ -731,7 +731,7 @@ const SERIE = {
      "hjemme": "Lye 2",
      "borte": "Figgjo 4",
      "sted": "Lyehallen",
-     "resultat": ""
+     "resultat": "2-8"
     },
     {
      "dato": "2026-11-29",
@@ -824,6 +824,17 @@ const SERIE = {
     },
     {
      "plass": "2",
+     "lag": "Figgjo 4",
+     "k": "3",
+     "v": "3",
+     "u": "0",
+     "t": "0",
+     "kamper": "24-6",
+     "sett": "79-37",
+     "p": "6"
+    },
+    {
+     "plass": "3",
      "lag": "Skjoldar",
      "k": "3",
      "v": "2",
@@ -831,17 +842,6 @@ const SERIE = {
      "t": "1",
      "kamper": "24-6",
      "sett": "81-31",
-     "p": "4"
-    },
-    {
-     "plass": "3",
-     "lag": "Figgjo 4",
-     "k": "2",
-     "v": "2",
-     "u": "0",
-     "t": "0",
-     "kamper": "16-4",
-     "sett": "52-26",
      "p": "4"
     },
     {
@@ -869,12 +869,12 @@ const SERIE = {
     {
      "plass": "6",
      "lag": "Lye 2",
-     "k": "2",
+     "k": "3",
      "v": "0",
      "u": "1",
-     "t": "1",
-     "kamper": "5-15",
-     "sett": "23-49",
+     "t": "2",
+     "kamper": "7-23",
+     "sett": "34-76",
      "p": "1"
     },
     {

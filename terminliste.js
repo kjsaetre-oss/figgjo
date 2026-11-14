@@ -1,22 +1,8 @@
 /* Hovedterminlisten fra bordtennis.no. Lages av oppdater-terminliste.py – ikke rediger for hånd. */
 const TERMINLISTE = {
- "oppdatert": "2026-11-13",
+ "oppdatert": "2026-11-14",
  "kilde": "https://bordtennis.no/hovedterminliste-2026-2027/",
  "turneringer": [
-  {
-   "id": "2026-11-14-individuelt-seriespill-trondheim3",
-   "dato": "2026-11-14",
-   "tittel": "Individuelt Seriespill Trondheim",
-   "sted": "Trondheim",
-   "lenke": "https://bordtennis.no/hovedterminliste-2026-2027/individuelt-seriespill-trondheim3/"
-  },
-  {
-   "id": "2026-11-14-heros-hostcup",
-   "dato": "2026-11-14",
-   "tittel": "Heros Høstcup",
-   "sted": "Bergen",
-   "lenke": "https://bordtennis.no/hovedterminliste-2026-2027/heros-hostcup/"
-  },
   {
    "id": "2026-11-15-figgjorekrutten",
    "dato": "2026-11-15",
