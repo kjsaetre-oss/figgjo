@@ -1,6 +1,6 @@
 /* Hovedterminlisten fra bordtennis.no. Lages av oppdater-terminliste.py – ikke rediger for hånd. */
 const TERMINLISTE = {
- "oppdatert": "2026-11-14",
+ "oppdatert": "2026-11-15",
  "kilde": "https://bordtennis.no/hovedterminliste-2026-2027/",
  "turneringer": [
   {

@@ -26948,7 +26948,7 @@ function getExercisePR(exerciseName) {
         return '<div class="mn-m"><div class="top"><span class="r ' + (n.result === "seier" ? "w" : "l") + '">' + (n.result === "seier" ? "Seier" : "Tap") + (n.score ? " " + esc(n.score) : "") + '</span>' + (n.opponent ? '<button type="button" class="o op-link" data-prof="' + esc(n.opponent) + '">' + esc(n.opponent) + ' ›</button>' : '<span class="o">Motstander</span>') + '<button type="button" class="del" data-del="' + esc(n.id) + '" aria-label="Slett">✕</button></div>' +
           '<div class="mn-prof" hidden></div>' +
           (n.good ? '<p><b>Fungerte:</b> ' + esc(n.good) + '</p>' : "") + (n.improve ? '<p><b>Øve på:</b> ' + esc(n.improve) + '</p>' : "") +
-          (n.coachComment ? '<div class="cc"><img src="/bilder/kjetil-lindefjell-saetre.jpg" alt=""><span><b>Kjetil:</b> ' + esc(n.coachComment) + '</span></div>' : "") + '</div>';
+          (n.coachComment || n.coachReaction ? '<div class="cc"><img src="/bilder/kjetil-lindefjell-saetre.jpg" alt=""><span><b>Kjetil:</b> ' + (n.coachReaction ? esc(n.coachReaction) + ' ' : '') + (n.coachComment ? esc(n.coachComment) : 'har lest kampnotatet ditt') + '</span></div>' : "") + '</div>';
       }).join("");
     });
     box.innerHTML = html;
