@@ -201,6 +201,14 @@ const INNHOLD = {
   // Eksempel: { tittel: "Klubbmesterskap", dato: "2026-10-05", bilder: [{ bilde: "bilder/km-1.jpg", tekst: "Finalen" }] }
   galleri: [
     {
+      tittel: "Sommeravslutningen 2026",
+      dato: "2026-06-16",
+      bilder: [
+        { bilde: "bilder/klubbilde-sommeravslutning-2026.jpg", tekst: "Klubbilde fra sommeravslutningen 2026" },
+        { bilde: "bilder/premie-kurt-5div-2026.jpg", tekst: "Henning og Kurt Rusnak – Kurt med premien for 2. plass i 5. divisjon" },
+      ],
+    },
+    {
       tittel: "Spillere",
       dato: "",
       bilder: [
@@ -212,6 +220,7 @@ const INNHOLD = {
         { bilde: "bilder/spiller-arian-myrbakk.jpg", tekst: "Arian Myrbakk" },
         { bilde: "bilder/spiller-kenneth-haugland.jpg", tekst: "Kenneth Haugland" },
         { bilde: "bilder/spiller-samuel-lindefjell-saetre.jpg", tekst: "Samuel Lindefjell Sætre" },
+        { bilde: "bilder/spiller-felix-boe.jpg", tekst: "Felix Bøe" },
       ],
     },
     {
