@@ -215,6 +215,7 @@ const INNHOLD = {
         { bilde: "bilder/stord-cup-2025.jpg", tekst: "Premiestemning på Stord Cup" },
         { bilde: "bilder/stord-cup-2025-samuel.jpg", tekst: "Samuel Lindefjell Sætre" },
         { bilde: "bilder/stord-cup-2025-kasper.jpg", tekst: "Kasper Pedersen" },
+        { bilde: "bilder/stord-cup-2025-kjell-roar.jpg", tekst: "Kjell Roar Bjørnsen" },
       ],
     },
     {
