@@ -224,6 +224,7 @@ const INNHOLD = {
         { bilde: "bilder/spiller-samuel-lindefjell-saetre.jpg", tekst: "Samuel Lindefjell Sætre" },
         { bilde: "bilder/spiller-felix-boe.jpg", tekst: "Felix Bøe" },
         { bilde: "bilder/spiller-kurt-rusnak.jpg", tekst: "Kurt Rusnak" },
+        { bilde: "bilder/spiller-kjetil-lindefjell-saetre.jpg", tekst: "Kjetil Lindefjell Sætre" },
       ],
     },
     {
