@@ -213,6 +213,7 @@ const INNHOLD = {
       dato: "",
       bilder: [
         { bilde: "bilder/spiller-tobias-sunde.jpg", tekst: "Tobias Sunde" },
+        { bilde: "bilder/spiller-tobias-sunde-2.jpg", tekst: "Tobias Sunde" },
         { bilde: "bilder/spiller-daniel-mydland.jpg", tekst: "Daniel Mydland" },
         { bilde: "bilder/spiller-daniel-mydland-2.jpg", tekst: "Daniel Mydland" },
         { bilde: "bilder/spiller-stian-pedersen.jpg", tekst: "Stian Pedersen" },
@@ -222,6 +223,7 @@ const INNHOLD = {
         { bilde: "bilder/spiller-arian-myrbakk.jpg", tekst: "Arian Myrbakk" },
         { bilde: "bilder/spiller-kenneth-haugland.jpg", tekst: "Kenneth Haugland" },
         { bilde: "bilder/spiller-samuel-lindefjell-saetre.jpg", tekst: "Samuel Lindefjell Sætre" },
+        { bilde: "bilder/spiller-samuel-lindefjell-saetre-2.jpg", tekst: "Samuel Lindefjell Sætre" },
         { bilde: "bilder/spiller-felix-boe.jpg", tekst: "Felix Bøe" },
         { bilde: "bilder/spiller-kurt-rusnak.jpg", tekst: "Kurt Rusnak" },
         { bilde: "bilder/spiller-kjetil-lindefjell-saetre.jpg", tekst: "Kjetil Lindefjell Sætre" },
