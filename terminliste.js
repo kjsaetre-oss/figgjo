@@ -1,15 +1,8 @@
 /* Hovedterminlisten fra bordtennis.no. Lages av oppdater-terminliste.py – ikke rediger for hånd. */
 const TERMINLISTE = {
- "oppdatert": "2026-11-15",
+ "oppdatert": "2026-11-17",
  "kilde": "https://bordtennis.no/hovedterminliste-2026-2027/",
  "turneringer": [
-  {
-   "id": "2026-11-15-figgjorekrutten",
-   "dato": "2026-11-15",
-   "tittel": "Figgjorekrutten",
-   "sted": "Figgjo",
-   "lenke": "https://bordtennis.no/hovedterminliste-2026-2027/figgjorekrutten/"
-  },
   {
    "id": "2026-11-28-snt-sweden-star-trondheim-masters",
    "dato": "2026-11-28",
