@@ -209,6 +209,13 @@ const INNHOLD = {
       ],
     },
     {
+      tittel: "Stord Cup 2025",
+      dato: "2025-10-04",
+      bilder: [
+        { bilde: "bilder/stord-cup-2025.jpg", tekst: "Premiestemning på Stord Cup" },
+      ],
+    },
+    {
       tittel: "Spillere",
       dato: "",
       bilder: [
