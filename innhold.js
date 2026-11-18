@@ -37,6 +37,14 @@ const INNHOLD = {
   // Nyeste vises først uansett rekkefølge her. Dato: "ÅÅÅÅ-MM-DD"
   nyheter: [
     {
+      dato: "2026-11-18",
+      tittel: "Kretsmesterskap Rogaland i Figgjohallen 12. desember",
+      tekst: "Lørdag 12. desember arrangerer vi Kretsmesterskap Rogaland 2026 i Figgjohallen, og vi håper mange av klubbens spillere vil være med!\n\nDet spilles i to bolker, kl. 11.00 og kl. 15.00, med klasser for alle nivåer: åpne klasser, herrer/damer D, E og F, junior, gutter/piker 13 og 15, rekrutt og double. Hallen åpner kl. 10.00.\n\nPåmelding skjer på bordtennislive.no eller på e-post til Kenneth på ff34@hotmail.com innen fredag 4. desember. Alle født i 2013 eller tidligere må ha betalt spillerlisens.\n\nSom arrangør trenger vi hjelp fra alle i klubben. Det blir felles rigging fredag 11. desember og felles rydding etter turneringen på lørdag. Still opp om du kan – sammen gjør vi dette til en flott dag!\n\nHele innbydelsen finner du i PDF-en under.",
+      lenke: "dokumenter/kretsmesterskap-rogaland-2026-innbydelse.pdf",
+      lenketekst: "Les innbydelsen (PDF)",
+      bilder: ["bilder/bordtennis-racketer-bla-bord.jpg"],
+    },
+    {
       dato: "2026-11-04",
       tittel: "Høstranking for rekrutter og nye spillere i Figgjohallen 15. november",
       tekst: "Søndag 15. november inviterer vi til rankingstevne i Figgjohallen for rekrutter og nye spillere. Dette er et lavterskelstevne der spilleglede, mestring og gode opplevelser ved bordet står i fokus.\n\nHallen åpner kl. 10.00, og stevnet starter kl. 11.00. Det koster 150 kr å delta, og da er stevnetier til 10 kr inkludert.\n\nRankinggrensen er maksimalt 1050 poeng. Stevnet følger rankingreglementet til Norges Bordtennisforbund, og alle deltakere må ha gyldig lisens.\n\nPåmeldingsfristen er 8. november. Du kan melde deg på i bordtennislive.no under «Figgjorekrutten», eller på e-post til Kenneth Haugland: ff34@hotmail.com.\n\nVelkommen til en kjekk og sosial bordtennisdag i Figgjohallen!",
