@@ -177,7 +177,7 @@ const INNHOLD = {
       bilde: "bilder/trener-christian-ibenfeld.jpg",
       tekst: "Fysioterapeut, utdannet i Montpellier i Frankrike i 1999, og har jobbet på Fysio Forum siden 2000. Med sin idrettsbakgrunn har han særlig fokus på funksjonell og individuelt tilpasset trening. Han driver flere treningsgrupper, blant annet en bordtennisgruppe for Parkinson i Stavanger.",
     },
-    { navn: "Egil Klungtveit", rolle: "Trener – gatebordtennis med Frelsesarmeen (tirsdager)", bilde: "bilder/egil-klungtveit.jpg", tekst: "Egil har et stort hjerte for alle mennesker rundt seg. Han er mest engasjert i gatebordtennisen med Frelsesarmeen på tirsdager, der alle er velkomne uansett bakgrunn og ferdigheter. Med sin varme og inkluderende måte å være på sørger Egil for at alle føler seg sett." },
+    { navn: "Egil Klungtveit", rolle: "Trener – gatebordtennis med Frelsesarmeen (tirsdager)", telefon: "451 94 395", epost: "klungtveit2013@gmail.com", bilde: "bilder/egil-klungtveit.jpg", tekst: "Egil har et stort hjerte for alle mennesker rundt seg. Han er mest engasjert i gatebordtennisen med Frelsesarmeen på tirsdager, der alle er velkomne uansett bakgrunn og ferdigheter. Med sin varme og inkluderende måte å være på sørger Egil for at alle føler seg sett." },
     { navn: "Kenneth Haugland", rolle: "Trener – rekrutter (onsdager)", telefon: "936 32 267", epost: "ff34@hotmail.com", bilde: "bilder/kenneth-haugland.jpg", tekst: "Kenneth er utdannet lærer, har idrettsutdanning fra Universitetet i Stavanger og er en ekte kjernekar i klubben. Han er engasjert og kunnskapsrik innen bordtennis, og med sin pedagogiske tilnærming gjør han en fantastisk jobb med rekruttene. Hos Kenneth blir de yngste møtt med både tålmodighet og glede for spillet." },
   ],
 
@@ -185,7 +185,7 @@ const INNHOLD = {
   styret: [
     { navn: "Kjetil Lindefjell Sætre", rolle: "Leder", bilde: "bilder/kjetil-lindefjell-saetre.jpg", tekst: "", epost: "kjsaetre@gmail.com", telefon: "949 79 992" },
     { navn: "Henning Pedersen", rolle: "Styremedlem", bilde: "bilder/henning-pedersen.jpg", tekst: "", foto: "Kjell Roar Bjørnsen", epost: "henning@facto.no", telefon: "920 47 061" },
-    { navn: "Egil Klungtveit", rolle: "Styremedlem", bilde: "bilder/egil-klungtveit.jpg", tekst: "" },
+    { navn: "Egil Klungtveit", rolle: "Styremedlem", bilde: "bilder/egil-klungtveit.jpg", tekst: "", epost: "klungtveit2013@gmail.com", telefon: "451 94 395" },
   ],
 
   // Sponsorer. lenke er valgfri
