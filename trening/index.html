@@ -148,6 +148,12 @@
   .tp-tr .add.on { background: #e7f3ec; color: #2e7d52; }
   .tp-more { display: block; width: calc(100% - 24px); margin: 6px 12px 12px; border: 0; background: #f4f5f7; border-radius: 12px; padding: 9px; font: 700 13px -apple-system, sans-serif; color: #1b1d22; }
   .tp-turn-note { padding: 0 12px 10px; color: #646973; font-size: 11.5px; line-height: 1.4; }
+  /* Turneringer fra treneren (lagt inn i dashbordet, 2026-11-19) */
+  .tp-turn-sub { padding: 2px 12px 6px; font: 800 11px -apple-system, sans-serif; letter-spacing: .06em; text-transform: uppercase; color: #646973; }
+  .tp-tr.coach .d { background: #14161b; } .tp-tr.coach .d b { color: #fff; } .tp-tr.coach .d span { color: rgba(255,255,255,.75); }
+  .tp-tr .x .fr { display: block; color: #a00d25; font: 700 12px/1.4 -apple-system, sans-serif; margin-top: 2px; }
+  .tp-tr .x .nt { display: block; color: #1b1d22; font-style: italic; margin-top: 2px; }
+  .tp-tr .tag { flex: none; border-radius: 12px; padding: 7px 9px; font: 800 11.5px -apple-system, sans-serif; background: #e7f3ec; color: #2e7d52; }
   /* Timer og utstyr */
   .hr-big { display: flex; align-items: baseline; gap: 8px; padding: 0 14px; }
   .hr-big b { font: 800 40px/1 "Outfit", -apple-system, sans-serif; letter-spacing: -.02em; } .hr-big span { color: #646973; font: 700 13px -apple-system, sans-serif; }
@@ -4444,6 +4450,10 @@
   .vk-activity .vk-act-drills.empty{ background:rgba(255,255,255,.2); color:#fff; box-shadow:inset 0 0 0 1px rgba(255,255,255,.45); }
   .vk-sport-drills{ display:grid; gap:8px; }
   .vk-drill-chips{ display:flex; flex-wrap:wrap; gap:6px; } .vk-drill-chips span{ font-size:.82rem; font-weight:700; padding:5px 10px; border-radius:999px; background:#f3eee7; color:#303d38; }
+  /* Turnering fra treneren: påmeldingsfrist og lenke (2026-11-19) */
+  .vk-activity .vk-act-tour{ position:relative; z-index:1; display:flex; flex-wrap:wrap; gap:6px; margin:10px 0 0; }
+  .vk-activity .vk-act-tour span, .vk-activity .vk-act-tour a{ display:inline-flex; align-items:center; padding:6px 11px; border-radius:999px; background:rgba(255,255,255,.2); box-shadow:inset 0 0 0 1px rgba(255,255,255,.45); color:#fff; font:800 12.5px -apple-system, sans-serif; text-decoration:none; }
+  .vk-activity .vk-act-tour a{ background:rgba(255,255,255,.92); color:#14161b; box-shadow:none; }
   .vk-activity .vk-act-note{ display:flex; gap:8px; align-items:center; margin:10px 0 0; color:rgba(255,255,255,.92); font-size:13.5px; line-height:1.35; }
   .vk-activity .vk-act-note img, .vk-activity .vk-act-note .dpp-coach-avatar{ width:26px; height:26px; border-radius:50%; flex:none; object-fit:cover; }
   .vk-activity.is-done .vk-cta{ background:rgba(255,255,255,.2); color:#fff; }
@@ -10036,6 +10046,11 @@ var DPP_IMG = [
     const ownTask = (data.assignedTasks || []).find(t => t && t.id === item.taskId);
     const drills = ownTask && Array.isArray(ownTask.drills) ? ownTask.drills : [];
     const canDrills = !!window.btDrillView && !item.isTournament && (item.activityPhoto === "bordtennis" || (ownTask && ownTask.sportType === "bordtennis"));
+    // Turnering fra treneren (dashbordet): påmeldingsfrist og lenke
+    const tourInfo = item.isTournament && ownTask && ownTask.tournament && ownTask.tournament.coach ? ownTask.tournament : null;
+    const tourLink = tourInfo && /^https?:\/\/[^\s"'<>]+$/i.test(String(tourInfo.lenke || "")) ? String(tourInfo.lenke) : "";
+    const tourFrist = tourInfo && /^\d{4}-\d{2}-\d{2}$/.test(String(tourInfo.frist || "")) && tourInfo.frist >= toDateValue(new Date()) && item.date <= String(tourInfo.endDate || item.date) ? tourInfo.frist : "";
+    const tourHtml = tourLink || tourFrist ? `<div class="vk-act-tour">${tourFrist ? `<span>Påmelding innen ${escapeHtmlText(parseDateValue(tourFrist).toLocaleDateString("nb-NO", { day: "numeric", month: "long" }))}</span>` : ""}${tourLink ? `<a href="${escapeHtmlText(tourLink)}" target="_blank" rel="noopener">Mer info ↗</a>` : ""}</div>` : "";
     const drillBtn = canDrills ? `<button type="button" class="vk-act-drills${drills.length ? "" : " empty"}">${drills.length ? "📚 " + drills.length + " øvelse" + (drills.length > 1 ? "r" : "") + " i økta" : "+ Legg inn øvelser"}</button>` : "";
     card.innerHTML = `<div class="vk-w-top">
         <div class="vk-wring" style="--p:${isDone ? 100 : 0}"><span>${isDone ? "✓" : item.isTournament ? "🏆" : (VK_ACTIVITY_EMOJI[item.activityPhoto] || "⭐")}</span></div>
@@ -10044,6 +10059,7 @@ var DPP_IMG = [
         <div class="vk-w-btns"><button type="button" class="vk-dots" aria-label="Hopp over denne dagen">${VK_DOTS_SVG}</button></div>
       </div>
       ${item.coachNote ? `<div class="vk-act-note"></div>` : ""}
+      ${tourHtml}
       ${drillBtn}
       <button type="button" class="vk-cta">${item.isTournament ? (isDone ? "✓ Jeg var med" : "Jeg var med") : (isDone ? "✓ Gjennomført" : "Marker som gjennomført")}</button>`;
     const noteEl = card.querySelector(".vk-act-note");
@@ -10059,6 +10075,7 @@ var DPP_IMG = [
         }
         return;
       }
+      if (e.target.closest(".vk-act-tour a")) { e.stopPropagation(); return; }
       if (e.target.closest(".vk-act-drills")) {
         e.stopPropagation();
         const saveDrills = nl => updateCoachTask(item.taskId, t => { t.drills = nl; }, "⚠️ Kunne ikke lagre øvelsene — sjekk internett og prøv igjen");
@@ -19122,6 +19139,16 @@ var DPP_IMG = [
       return true;
     } catch (e) { data[field] = prev; return false; }
   };
+  // Turneringer treneren har lagt inn fra dashbordet (tournament.coach) – vises under «Turneringer» i appen
+  window.vkCoachTournaments = function () {
+    const today = toDateValue(new Date());
+    return (data.assignedTasks || []).filter(t => t && t.tournament && t.tournament.coach && !t.removedAt && /^\d{4}-\d{2}-\d{2}$/.test(String(t.startDate || "")))
+      .filter(t => String(t.tournament.endDate || t.startDate) >= today)
+      .map(t => ({ id: t.id, tittel: vkStrip(t.title), dato: t.startDate, til: String(t.tournament.endDate || ""), tid: t.time || "", slutt: t.endTime || "",
+        sted: t.place || "", frist: String(t.tournament.frist || ""), lenke: String(t.tournament.lenke || ""), notat: String(t.note || ""),
+        var: (t.doneDates || []).length > 0 }))
+      .sort((a, b) => a.dato.localeCompare(b.dato));
+  };
   window.vkTournamentIds = function () {
     return (data.assignedTasks || []).filter(t => t && t.tournament && !t.removedAt).map(t => String(t.tournament.id || ""));
   };
@@ -27314,14 +27341,33 @@ function getExercisePR(exerciseName) {
   var all = false, many = false, busy = false;
   function list() { try { return (typeof TERMINLISTE !== "undefined" && TERMINLISTE && TERMINLISTE.turneringer) ? TERMINLISTE.turneringer : []; } catch (e) { return []; } }
   function chosen() { try { return window.vkTournamentIds ? window.vkTournamentIds() : []; } catch (e) { return []; } }
+  function fromCoach() { try { return window.vkCoachTournaments ? window.vkCoachTournaments() : []; } catch (e) { return []; } }
+  function dag(v, o) { return new Date(v + "T12:00:00").toLocaleDateString("nb-NO", o); }
+  function coachHtml(c) {
+    if (!c.length) return "";
+    var idag = new Date(); idag.setHours(0, 0, 0, 0);
+    return '<div class="tp-turn-sub">Fra treneren</div>' + c.map(function (t) {
+      var d = new Date(t.dato + "T12:00:00");
+      var flere = t.til && t.til !== t.dato, sammeMnd = flere && t.til.slice(0, 7) === t.dato.slice(0, 7);
+      var when = (flere ? (sammeMnd ? dag(t.dato, { day: "numeric" }) : dag(t.dato, { day: "numeric", month: "short" })) + "–" + dag(t.til, { day: "numeric", month: "short" }) : dag(t.dato, { weekday: "long" })) + (t.tid ? " kl. " + t.tid + (t.slutt ? "–" + t.slutt : "") : "");
+      var frist = t.frist && new Date(t.frist + "T23:59:00") >= idag ? '<span class="fr">Påmelding innen ' + esc(dag(t.frist, { day: "numeric", month: "long" })) + '</span>' : "";
+      var lenke = /^https?:\/\/[^\s"'<>]+$/i.test(t.lenke || "") ? ' · <a href="' + esc(t.lenke) + '" target="_blank" rel="noopener">Mer info ↗</a>' : "";
+      return '<div class="tp-tr coach"><div class="d"><b>' + d.getDate() + '</b><span>' + esc(dag(t.dato, { month: "short" }).replace(".", "")) + '</span></div>' +
+        '<div class="x"><b>' + esc(t.tittel) + '</b><small>' + esc([when, t.sted].filter(Boolean).join(" · ")) + lenke + '</small>' + frist +
+        (t.notat ? '<small class="nt">«' + esc(t.notat) + '»</small>' : "") + '</div>' +
+        '<span class="tag">✓ I kalenderen</span></div>';
+    }).join("");
+  }
   function render() {
     var idag = new Date(); idag.setHours(0, 0, 0, 0);
-    var mine = chosen();
+    var mine = chosen(), coach = fromCoach();
     var rows = list().filter(function (t) { var d = new Date(t.dato + "T12:00:00"); return d >= idag && (all || VEST.test(t.sted || "") || mine.indexOf(t.id) >= 0); });
-    if (!list().length) { box.hidden = true; return; }
+    if (!list().length && !coach.length) { box.hidden = true; return; }
     var shown = many ? rows : rows.slice(0, 6);
     box.hidden = false;
-    box.innerHTML = '<div class="tp-team-head"><h2>Turneringer</h2><small>' + (mine.length ? mine.length + " i kalenderen din" : "fra terminlisten") + '</small></div>' +
+    var inCal = list().filter(function (t) { return mine.indexOf(t.id) >= 0 && new Date(t.dato + "T12:00:00") >= idag; }).length + coach.length;
+    box.innerHTML = '<div class="tp-team-head"><h2>Turneringer</h2><small>' + (inCal ? inCal + " i kalenderen din" : "fra terminlisten") + '</small></div>' +
+      coachHtml(coach) + (!list().length ? "" : (coach.length ? '<div class="tp-turn-sub">Fra terminlisten</div>' : "") +
       '<div class="tp-tf"><button type="button" data-f="vest" class="' + (all ? "" : "on") + '">Nær oss</button><button type="button" data-f="alle" class="' + (all ? "on" : "") + '">Hele landet</button></div>' +
       (shown.length ? shown.map(function (t) {
         var d = new Date(t.dato + "T12:00:00"), on = mine.indexOf(t.id) >= 0;
@@ -27330,7 +27376,7 @@ function getExercisePR(exerciseName) {
           '<button type="button" class="add' + (on ? " on" : "") + '" data-id="' + esc(t.id) + '">' + (on ? "✓ I kalenderen" : "+ Kalender") + '</button></div>';
       }).join("") : '<div class="tp-turn-note">Ingen turneringer her akkurat nå. Trykk «Hele landet» for å se alle.</div>') +
       (rows.length > 6 ? '<button type="button" class="tp-more" data-more>' + (many ? "Vis færre" : "Vis alle " + rows.length) + '</button>' : "") +
-      '<div class="tp-turn-note">«+ Kalender» legger turneringen i kalenderen din, så du kan planlegge – og treneren ser hvilke du vil være med på.</div>';
+      '<div class="tp-turn-note">«+ Kalender» legger turneringen i kalenderen din, så du kan planlegge – og treneren ser hvilke du vil være med på.</div>');
   }
   box.addEventListener("click", async function (e) {
     var f = e.target.closest("[data-f]"); if (f) { all = f.dataset.f === "alle"; render(); return; }
