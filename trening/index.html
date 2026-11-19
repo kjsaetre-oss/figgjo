@@ -4450,6 +4450,14 @@
   .vk-activity .vk-act-drills.empty{ background:rgba(255,255,255,.2); color:#fff; box-shadow:inset 0 0 0 1px rgba(255,255,255,.45); }
   .vk-sport-drills{ display:grid; gap:8px; }
   .vk-drill-chips{ display:flex; flex-wrap:wrap; gap:6px; } .vk-drill-chips span{ font-size:.82rem; font-weight:700; padding:5px 10px; border-radius:999px; background:#f3eee7; color:#303d38; }
+  /* Kopier økt/turnering til en annen dag + lagkamper (2026-11-19) */
+  .vk-copy-back{ position:fixed; inset:0; z-index:100060; background:rgba(20,22,27,.45); display:flex; align-items:flex-end; justify-content:center; }
+  .vk-copy-sheet{ width:100%; max-width:520px; background:#fff; border-radius:22px 22px 0 0; padding:18px 16px calc(18px + env(safe-area-inset-bottom)); display:grid; gap:10px; font:15px -apple-system, sans-serif; color:#14161b; box-shadow:0 -10px 30px rgba(0,0,0,.18); }
+  .vk-copy-sheet h3{ margin:0; font:800 17px/1.3 -apple-system, sans-serif; } .vk-copy-sheet p{ margin:0; color:#646973; font-size:13px; }
+  .vk-copy-sheet button{ border:0; border-radius:14px; padding:13px 14px; font:800 15px -apple-system, sans-serif; text-align:left; background:#f4f5f7; color:#14161b; cursor:pointer; }
+  .vk-copy-sheet button.main{ background:#c8102e; color:#fff; text-align:center; }
+  .vk-copy-sheet .row{ display:flex; gap:8px; } .vk-copy-sheet .row input{ flex:1; min-width:0; border:1px solid #e6e7eb; border-radius:14px; padding:11px; font:16px -apple-system, sans-serif; }
+  .vk-copy-sheet .ok{ color:#2e7d52; font-weight:800; text-align:center; }
   /* Turnering fra treneren: påmeldingsfrist og lenke (2026-11-19) */
   .vk-activity .vk-act-tour{ position:relative; z-index:1; display:flex; flex-wrap:wrap; gap:6px; margin:10px 0 0; }
   .vk-activity .vk-act-tour span, .vk-activity .vk-act-tour a{ display:inline-flex; align-items:center; padding:6px 11px; border-radius:999px; background:rgba(255,255,255,.2); box-shadow:inset 0 0 0 1px rgba(255,255,255,.45); color:#fff; font:800 12.5px -apple-system, sans-serif; text-decoration:none; }
@@ -10036,6 +10044,86 @@ var DPP_IMG = [
     if (typeof VK_WORKOUT_PHOTOS !== "undefined" && VK_WORKOUT_PHOTOS[k]) return vkPhoto(VK_WORKOUT_PHOTOS[k], 900);
     return "";
   }
+  // ── Kopier en økt/turnering til en annen dag (2026-11-19). F.eks. Trondheim Open som står på lørdag, men spilles begge dagene.
+  // Kopien blir et eget punkt (selfAdded) for den ene dagen, med samme tid, sted, notat og øvelser.
+  async function vkTaskAdd(task) {
+    const m = getMovementMember();
+    if (!m.id) return false;
+    data.assignedTasks = (data.assignedTasks || []).filter(t => t.id !== task.id).concat(task);
+    rebuildVirtualTaskItemsFromState(); renderWeekBar(); renderList();
+    try {
+      const client = await getSupabaseClient();
+      const { error } = await client.rpc("upsert_movement_plan_list_item", { p_member_id: m.id, p_member_name: m.name || "", p_field: "assignedTasks", p_item: task });
+      if (error) throw error;
+      return true;
+    } catch (err) {
+      data.assignedTasks = (data.assignedTasks || []).filter(t => t.id !== task.id);
+      rebuildVirtualTaskItemsFromState(); renderWeekBar(); renderList();
+      return false;
+    }
+  }
+  function vkCopyTask(src, dateValue) {
+    const id = "egen-" + Date.now().toString(36);
+    const copy = deepClone(src);
+    ["removedAt", "movedAt", "coachUpdatedAt", "answers"].forEach(k => delete copy[k]);
+    Object.assign(copy, { id, selfAdded: true, fromCoach: true, copiedFrom: src.id, startDate: dateValue,
+      days: [getWeekdayKeyFromDate(parseDateValue(dateValue))], weeks: 1, doneDates: [], skipDates: [], createdAt: new Date().toISOString() });
+    // Samme turnering (terminliste-id) – men ikke en ny «fra treneren»-turnering
+    if (copy.tournament) copy.tournament = Object.assign({}, copy.tournament, { coach: false, endDate: "" });
+    return vkTaskAdd(copy);
+  }
+  function vkTaskMenu(item, task) {
+    const fmt = v => parseDateValue(v).toLocaleDateString("nb-NO", { weekday: "long", day: "numeric", month: "long" });
+    const next = toDateValue(addDays(parseDateValue(item.date), 1));
+    const back = document.createElement("div");
+    back.className = "vk-copy-back";
+    back.innerHTML = `<div class="vk-copy-sheet" role="dialog" aria-label="Kopier eller hopp over">
+        <h3>${escapeHtmlText(vkStrip(item.title))}</h3>
+        <p>${escapeHtmlText(fmt(item.date))}${item.isTournament ? " · Spilles turneringen flere dager? Kopier den til neste dag." : ""}</p>
+        <button type="button" class="main" data-c="next">📋 Kopier til ${escapeHtmlText(fmt(next))}</button>
+        <div class="row"><input type="date" value="${next}" aria-label="Velg dag"><button type="button" data-c="pick">Kopier</button></div>
+        <button type="button" data-c="skip">Hopp over denne dagen</button>
+        <button type="button" data-c="close" style="text-align:center;background:none;color:#646973;">Avbryt</button>
+      </div>`;
+    const close = () => back.remove();
+    back.addEventListener("click", async (e) => {
+      if (e.target === back) return close();
+      const b = e.target.closest("button[data-c]"); if (!b) return;
+      const c = b.dataset.c;
+      if (c === "close") return close();
+      if (c === "skip") {
+        close();
+        return updateCoachTask(item.taskId, t => {
+          t.skipDates = Array.isArray(t.skipDates) ? t.skipDates : [];
+          if (!t.skipDates.includes(item.date)) t.skipDates.push(item.date);
+        });
+      }
+      const dv = c === "next" ? next : back.querySelector("input").value;
+      if (!/^\d{4}-\d{2}-\d{2}$/.test(dv || "")) return;
+      back.querySelectorAll("button").forEach(x => { x.disabled = true; });
+      const ok = await vkCopyTask(task, dv);
+      if (ok) {
+        const sheet = back.querySelector(".vk-copy-sheet");
+        sheet.insertAdjacentHTML("beforeend", `<div class="ok">✓ Kopiert til ${escapeHtmlText(fmt(dv))}</div>`);
+        setTimeout(close, 1300);
+      } else back.querySelectorAll("button").forEach(x => { x.disabled = false; }); // ingen feilmelding til spilleren – kan prøve igjen
+    });
+    document.body.appendChild(back);
+  }
+  // ── Lagkamper (2026-11-19): kampene til laget spilleren spiller på (serie.js) vises automatisk i kalenderen.
+  // De lagres ikke før spilleren trykker «Jeg spilte» – da blir kampen et eget punkt som teller som bordtennis.
+  async function vkTeamMatchPlayed(item, event) {
+    const src = item.teamMatch; if (!src) return;
+    const task = Object.assign(deepClone(src), { selfAdded: true, doneDates: [item.date], skipDates: [], createdAt: new Date().toISOString() });
+    const ok = await vkTaskAdd(task);
+    if (ok && event && event.target) {
+      const r = event.target.getBoundingClientRect();
+      burstStars(r.left + r.width / 2, r.top + r.height / 2 + 10, 14); burstConfetti(r.left + r.width / 2, r.top + r.height / 2 + 10, 46); playPling();
+    }
+  }
+  window.vkRefreshCalendar = function () {
+    try { if (!data || !Array.isArray(data.items)) return; rebuildVirtualTaskItemsFromState(); renderWeekBar(); renderList(); } catch (e) {}
+  };
   function vkActivityCard(item, isDone) {
     const card = document.createElement("div");
     card.className = "vk-card vk-workout vk-w-photo vk-activity" + (isDone ? " is-done" : "");
@@ -10045,7 +10133,7 @@ var DPP_IMG = [
     // Øvelser i bordtennisøkta (velges fra øvelsesbanken i bordtennisappen)
     const ownTask = (data.assignedTasks || []).find(t => t && t.id === item.taskId);
     const drills = ownTask && Array.isArray(ownTask.drills) ? ownTask.drills : [];
-    const canDrills = !!window.btDrillView && !item.isTournament && (item.activityPhoto === "bordtennis" || (ownTask && ownTask.sportType === "bordtennis"));
+    const canDrills = !!window.btDrillView && !item.isTournament && !item.isTeamMatch && !(ownTask && ownTask.teamMatch) && (item.activityPhoto === "bordtennis" || (ownTask && ownTask.sportType === "bordtennis"));
     // Turnering fra treneren (dashbordet): påmeldingsfrist og lenke
     const tourInfo = item.isTournament && ownTask && ownTask.tournament && ownTask.tournament.coach ? ownTask.tournament : null;
     const tourLink = tourInfo && /^https?:\/\/[^\s"'<>]+$/i.test(String(tourInfo.lenke || "")) ? String(tourInfo.lenke) : "";
@@ -10056,15 +10144,21 @@ var DPP_IMG = [
         <div class="vk-wring" style="--p:${isDone ? 100 : 0}"><span>${isDone ? "✓" : item.isTournament ? "🏆" : (VK_ACTIVITY_EMOJI[item.activityPhoto] || "⭐")}</span></div>
         <div class="vk-w-title"><h3>${escapeHtmlText(vkStrip(item.title))}</h3>
           <div class="vk-w-meta">${meta}</div></div>
-        <div class="vk-w-btns"><button type="button" class="vk-dots" aria-label="Hopp over denne dagen">${VK_DOTS_SVG}</button></div>
+        ${item.isTeamMatch ? "" : `<div class="vk-w-btns"><button type="button" class="vk-dots" aria-label="Kopier eller hopp over">${VK_DOTS_SVG}</button></div>`}
       </div>
       ${item.coachNote ? `<div class="vk-act-note"></div>` : ""}
       ${tourHtml}
       ${drillBtn}
-      <button type="button" class="vk-cta">${item.isTournament ? (isDone ? "✓ Jeg var med" : "Jeg var med") : (isDone ? "✓ Gjennomført" : "Marker som gjennomført")}</button>`;
+      <button type="button" class="vk-cta">${item.isTeamMatch || (ownTask && ownTask.teamMatch) ? (isDone ? "✓ Jeg spilte" : "Jeg spilte") : item.isTournament ? (isDone ? "✓ Jeg var med" : "Jeg var med") : (isDone ? "✓ Gjennomført" : "Marker som gjennomført")}</button>`;
     const noteEl = card.querySelector(".vk-act-note");
     if (noteEl) noteEl.textContent = item.coachNote;
     card.addEventListener("click", async (e) => {
+      if (e.target.closest(".vk-dots") && ownTask) {
+        e.stopPropagation();
+        vkTaskMenu(item, ownTask);
+        return;
+      }
+      if (e.target.closest(".vk-cta") && item.isTeamMatch) { e.stopPropagation(); await vkTeamMatchPlayed(item, e); return; }
       if (e.target.closest(".vk-dots")) {
         e.stopPropagation();
         if (confirm("Hoppe over «" + vkStrip(item.title) + "» denne dagen?")) {
@@ -19038,6 +19132,14 @@ var DPP_IMG = [
     (data.assignedTasks || []).forEach((task, index) => {
       data.items.push(...buildVirtualTaskItems(task, index));
     });
+    // Lagkamper fra serie.js (window.vkTeamMatchTasks i lag-treningsside.py) – bare visning, lagres ikke
+    try {
+      const extra = typeof window.vkTeamMatchTasks === "function" ? window.vkTeamMatchTasks() : [];
+      const have = new Set((data.assignedTasks || []).map(t => t && t.id));
+      extra.filter(t => t && t.id && !have.has(t.id)).forEach((t, i) => {
+        data.items.push(...buildVirtualTaskItems(t, 700 + i).map(it => Object.assign(it, { isTeamMatch: true, teamMatch: t })));
+      });
+    } catch (e) {}
     renderCoachLine();
   }
 
@@ -19167,12 +19269,16 @@ var DPP_IMG = [
       list.push(task);
     }
     if (on) delete task.removedAt; else task.removedAt = new Date().toISOString();
+    // Kopier av samme turnering (f.eks. dag 2) fjernes sammen med den
+    const copies = on ? [] : list.filter(x => x && x !== task && !x.removedAt && x.tournament && String(x.tournament.id) === String(t.id) && x.copiedFrom);
+    copies.forEach(x => { x.removedAt = task.removedAt; });
     rebuildVirtualTaskItemsFromState();
     renderWeekBar(); renderList();
     try {
       const client = await getSupabaseClient();
       const { error } = await client.rpc("upsert_movement_plan_list_item", { p_member_id: m.id, p_member_name: m.name || "", p_field: "assignedTasks", p_item: task });
       if (error) throw error;
+      for (const x of copies) { try { await client.rpc("upsert_movement_plan_list_item", { p_member_id: m.id, p_member_name: m.name || "", p_field: "assignedTasks", p_item: x }); } catch (e2) {} }
       return true;
     } catch (e) {
       data.assignedTasks = prev;
@@ -26412,8 +26518,32 @@ function getExercisePR(exerciseName) {
 (function () {
   var r = new URLSearchParams(location.search).get("r");
   var v = r || String(Math.floor(Date.now() / 600000));
-  ["/serie.js", "/terminliste.js", "/ranking.js"].forEach(function (u) { var s = document.createElement("script"); s.src = u + "?v=" + v; s.async = false; document.head.appendChild(s); });
+  ["/serie.js", "/terminliste.js", "/ranking.js"].forEach(function (u) { var s = document.createElement("script"); s.src = u + "?v=" + v; s.async = false;
+    if (u === "/serie.js") s.onload = function () { if (window.vkRefreshCalendar) window.vkRefreshCalendar(); };
+    document.head.appendChild(s); });
 })();
+// ── Lagkamper i kalenderen (2026-11-19): kampene til laget ditt (serie.js, lag fra lenken / «Laget ditt») vises automatisk.
+// Kalenderen (kalender-bordtennis.html) henter dem med window.vkTeamMatchTasks – de lagres først når spilleren trykker «Jeg spilte».
+window.vkTeamMatchTasks = function () {
+  var m = window.MVT_memberData; if (!m || !m.id) return [];
+  var t = ""; try { t = localStorage.getItem("tl_tp_team:" + m.id) || ""; } catch (e) {}
+  var S = null; try { S = (typeof SERIE !== "undefined" && SERIE && SERIE.lag) ? SERIE : null; } catch (e) {}
+  if (!S || !t || t === "0" || !S.lag["Figgjo " + t]) return [];
+  var nr = function (n) { return /figgjo/i.test(n || "") ? ((String(n).match(/(\d+)\s*$/) || [])[1] || "1") : null; };
+  var WD = ["sun", "mon", "tue", "wed", "thu", "fri", "sat"];
+  return (S.lag["Figgjo " + t].kamper || []).filter(function (k) { return /^\d{4}-\d{2}-\d{2}$/.test(k.dato || "") && (nr(k.hjemme) === t || nr(k.borte) === t); }).map(function (k) {
+    var vi = nr(k.hjemme) === t, mot = vi ? k.borte : k.hjemme;
+    var kl = String(k.kl || "").replace(".", ":"), ok = /^\d{1,2}:\d{2}$/.test(kl);
+    var hm = ok ? kl.split(":").map(Number) : null;
+    var slutt = hm ? String((hm[0] + 3) % 24).padStart(2, "0") + ":" + String(hm[1]).padStart(2, "0") : "";
+    var slug = (k.dato + "-" + k.hjemme + "-" + k.borte).toLowerCase().replace(/[æ]/g, "ae").replace(/[ø]/g, "o").replace(/[å]/g, "a").replace(/[^a-z0-9]+/g, "-").slice(0, 80);
+    return { id: "lag-" + slug, fromCoach: true, kind: "habit", sportType: "bordtennis", photo: "bordtennis",
+      teamMatch: { lag: "Figgjo " + t, hjemme: k.hjemme, borte: k.borte },
+      title: "🏓 Lagkamp mot " + mot, note: k.hjemme + " – " + k.borte + (S.lag["Figgjo " + t].divisjon ? " · " + S.lag["Figgjo " + t].divisjon : "") + (k.resultat ? " · resultat " + k.resultat : ""),
+      startDate: k.dato, days: [WD[new Date(k.dato + "T12:00:00").getDay()]], weeks: 1,
+      time: ok ? kl.padStart(5, "0") : "", endTime: slutt, place: String(k.sted || "").slice(0, 60), doneDates: [], skipDates: [] };
+  });
+};
 // ↻ Oppdater: henter alt på nytt (også når siden ligger på hjemskjermen og ikke har vanlig oppdatering)
 (function () {
   function refresh() {
@@ -27420,7 +27550,7 @@ function getExercisePR(exerciseName) {
   var nr = function (n) { return /figgjo/i.test(n || "") ? ((String(n).match(/(\d+)\s*$/) || [])[1] || "1") : null; };
   var dato = function (d) { var p = String(d || "").split("-"); return p.length === 3 ? new Date(+p[0], +p[1] - 1, +p[2]) : null; };
   function team() { try { return localStorage.getItem(KEY) || ""; } catch (e) { return ""; } }
-  function setTeam(t) { try { if (t) localStorage.setItem(KEY, t); else localStorage.setItem(KEY, "0"); } catch (e) {} render(); }
+  function setTeam(t) { try { if (t) localStorage.setItem(KEY, t); else localStorage.setItem(KEY, "0"); } catch (e) {} render(); if (window.vkRefreshCalendar) window.vkRefreshCalendar(); }
   function render() {
     var S = null; try { S = (typeof SERIE !== "undefined" && SERIE && SERIE.lag) ? SERIE : null; } catch (e) {}
     if (!S) return;
