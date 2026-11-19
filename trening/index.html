@@ -26519,14 +26519,32 @@ function getExercisePR(exerciseName) {
   var r = new URLSearchParams(location.search).get("r");
   var v = r || String(Math.floor(Date.now() / 600000));
   ["/serie.js", "/terminliste.js", "/ranking.js"].forEach(function (u) { var s = document.createElement("script"); s.src = u + "?v=" + v; s.async = false;
-    if (u === "/serie.js") s.onload = function () { if (window.vkRefreshCalendar) window.vkRefreshCalendar(); };
+    if (u === "/serie.js" || u === "/ranking.js") s.onload = function () { if (window.vkRefreshCalendar) window.vkRefreshCalendar(); };
     document.head.appendChild(s); });
 })();
 // ── Lagkamper i kalenderen (2026-11-19): kampene til laget ditt (serie.js, lag fra lenken / «Laget ditt») vises automatisk.
 // Kalenderen (kalender-bordtennis.html) henter dem med window.vkTeamMatchTasks – de lagres først når spilleren trykker «Jeg spilte».
+// Laget når det ikke står i lenken og spilleren ikke har valgt (2026-11-19, Samuel): finn det fra spillerens siste
+// seriespill denne sesongen på rankingen («2 Divisjon Oktober» → Figgjo-laget i 2. divisjon). Gjelder også lånespillere
+// fra andre klubber. Er det flere Figgjo-lag i samme divisjon (5. div), velges ingenting – da spør «Laget ditt» som før.
+window.tpAutoTeam = function () {
+  try {
+    var S = (typeof SERIE !== "undefined" && SERIE && SERIE.lag) ? SERIE : null;
+    var me = window.tpRankMe ? window.tpRankMe() : null;
+    if (!S || !me) return "";
+    var n = new Date(), start = (n.getMonth() >= 6 ? n.getFullYear() : n.getFullYear() - 1) + "-07-01";
+    var ev = (me.turneringer || []).filter(function (t) { return String(t.dato || "") >= start && /(\d)\.?\s*divisjon/i.test(t.navn || ""); })
+      .sort(function (a, b) { return String(b.dato).localeCompare(String(a.dato)); })[0];
+    if (!ev) return "";
+    var div = ev.navn.match(/(\d)\.?\s*divisjon/i)[1];
+    var lag = Object.keys(S.lag).filter(function (k) { return /^Figgjo \d$/.test(k) && new RegExp("^" + div + "\\.\\s*divisjon", "i").test(S.lag[k].divisjon || ""); });
+    return lag.length === 1 ? lag[0].slice(-1) : "";
+  } catch (e) { return ""; }
+};
 window.vkTeamMatchTasks = function () {
   var m = window.MVT_memberData; if (!m || !m.id) return [];
   var t = ""; try { t = localStorage.getItem("tl_tp_team:" + m.id) || ""; } catch (e) {}
+  if (!t) t = window.tpAutoTeam();
   var S = null; try { S = (typeof SERIE !== "undefined" && SERIE && SERIE.lag) ? SERIE : null; } catch (e) {}
   if (!S || !t || t === "0" || !S.lag["Figgjo " + t]) return [];
   var nr = function (n) { return /figgjo/i.test(n || "") ? ((String(n).match(/(\d+)\s*$/) || [])[1] || "1") : null; };
@@ -27549,7 +27567,7 @@ window.vkTeamMatchTasks = function () {
   var esc = function (v) { return String(v == null ? "" : v).replace(/[&<>"']/g, function (c) { return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]; }); };
   var nr = function (n) { return /figgjo/i.test(n || "") ? ((String(n).match(/(\d+)\s*$/) || [])[1] || "1") : null; };
   var dato = function (d) { var p = String(d || "").split("-"); return p.length === 3 ? new Date(+p[0], +p[1] - 1, +p[2]) : null; };
-  function team() { try { return localStorage.getItem(KEY) || ""; } catch (e) { return ""; } }
+  function team() { var t = ""; try { t = localStorage.getItem(KEY) || ""; } catch (e) {} return t || (window.tpAutoTeam ? window.tpAutoTeam() : ""); }
   function setTeam(t) { try { if (t) localStorage.setItem(KEY, t); else localStorage.setItem(KEY, "0"); } catch (e) {} render(); if (window.vkRefreshCalendar) window.vkRefreshCalendar(); }
   function render() {
     var S = null; try { S = (typeof SERIE !== "undefined" && SERIE && SERIE.lag) ? SERIE : null; } catch (e) {}
